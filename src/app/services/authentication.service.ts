@@ -19,6 +19,8 @@ export class AuthenticationService {
   }
 
   login(username: string, password: string) {
+    console.log(username)
+    console.log(password)
     return this.http.post<any>(`${environment.apiUrl}`, {username, password})
       .pipe(map(response => {
         console.log(response)
@@ -31,6 +33,11 @@ export class AuthenticationService {
     localStorage.removeItem('token');
     // @ts-ignore
     this.currentUserSubject.next(null);
+  }
+
+  register(user: User) {
+    console.log(user)
+    return this.http.post(`${environment.apiUrl}/auth/register`, user);
   }
 
   public currentUserValue(): User {

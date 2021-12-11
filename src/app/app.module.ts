@@ -15,6 +15,8 @@ import { NumberedComponent } from './components/blog/editor/editor-components/nu
 import { BulletedComponent } from './components/blog/editor/editor-components/bulleted/bulleted.component';
 import { BlogComponent } from './components/blog/blog/blog.component';
 import { BlogpostComponent } from './components/blog/blogpost/blogpost.component';
+import {ReactiveFormsModule} from "@angular/forms";
+import {HttpClient, HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -34,9 +36,14 @@ import { BlogpostComponent } from './components/blog/blogpost/blogpost.component
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [HttpClient, HttpClientModule],
+  bootstrap: [AppComponent],
+  exports: [
+    ReactiveFormsModule
+  ]
 })
 export class AppModule { }
