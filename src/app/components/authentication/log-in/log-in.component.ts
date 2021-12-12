@@ -46,10 +46,10 @@ export class LogInComponent implements OnInit {
     this.loading = true;
     this.authenticationService.login(
       this.f['username'].value, this.f['password'].value
-    ).pipe(first())
-      .subscribe(response => {
+    ).subscribe(response => {
         console.log(response)
         console.log('AUTHENTICATION SUCCESS')
+        localStorage.setItem('token', response.token)
       },
         error => {
         this.loading = false;

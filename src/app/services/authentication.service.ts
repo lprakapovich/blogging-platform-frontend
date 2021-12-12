@@ -9,6 +9,8 @@ import {environment} from "../../environments/environment";
 })
 export class AuthenticationService {
 
+  authUrl = `${environment.apiUrl}/auth`;
+
   private currentUserSubject: BehaviorSubject<User>;
   private currentUser: Observable<User>;
 
@@ -19,13 +21,7 @@ export class AuthenticationService {
   }
 
   login(username: string, password: string) {
-    console.log(username)
-    console.log(password)
-    return this.http.post<any>(`${environment.apiUrl}`, {username, password})
-      .pipe(map(response => {
-        console.log(response)
-        localStorage.setItem('token', JSON.stringify(response))
-      }))
+    return this.http.post<any>(`${this.authUrl}/login`, {username, password});
   }
 
   logout() {
@@ -35,9 +31,8 @@ export class AuthenticationService {
     this.currentUserSubject.next(null);
   }
 
-  register(user: User) {
-    console.log(user)
-    return this.http.post(`${environment.apiUrl}/auth/register`, user);
+  register(user: User): Observable<any> {
+    return this.http.post<any>(`${this.authUrl}/register`, user);
   }
 
   public currentUserValue(): User {
