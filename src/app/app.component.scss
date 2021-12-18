@@ -1,0 +1,16 @@
+@use "src/utilities/variables" as v;
+
+#app-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  div {
+    margin: 0;
+    padding: 0;
+    flex-grow: 1;
+    background: v.$dark-background;
+    color: v.$white-text;
+  }
+}

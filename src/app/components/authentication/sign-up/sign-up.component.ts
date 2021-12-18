@@ -24,10 +24,10 @@ export class SignUpComponent {
     }
 
     this.registerForm = this.formBuilder.group({
-      firstName: ['name', Validators.required],
-      lastName: ['surname', Validators.required],
-      username: [new Date(), Validators.required],
-      password: ['password', Validators.required]
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      username: ['', Validators.required],
+      password: ['', Validators.required]
     });
   }
 

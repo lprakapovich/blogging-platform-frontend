@@ -1,0 +1,17 @@
+@use "src/utilities/variables" as v;
+
+#navigation-root {
+  border-top: 0.1px solid v.$grey;
+  background: v.$dark-background;
+  color: v.$grey;
+  display: flex;
+  padding: 0 1.5rem;
+
+  a {
+    text-decoration: none;
+    color: inherit;
+    padding: 1rem;
+    font-size: 1rem;
+  }
+}
+
