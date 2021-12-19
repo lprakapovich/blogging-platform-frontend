@@ -1,0 +1,43 @@
+@use "src/utilities/variables" as v;
+
+#btn {
+  border-radius: 0.5rem;
+  background-color: v.$dark-background;
+  border: 0.5px solid v.$grey;
+  color: v.$white-text;
+  font-size: 1.5rem;
+  padding: 1rem;
+  width: 12rem;
+  transition: all 0.5s ease;
+  cursor: pointer;
+  margin-top: 1.5rem;
+
+  #span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s ease;
+  }
+
+  #span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -1.5rem;
+    transition: 0.5s;
+  }
+}
+
+#btn:hover {
+  cursor: pointer;
+
+  #span {
+    padding-right: 1.8rem;
+  }
+
+  #span:after {
+    opacity: 1;
+    right: 0;
+  }
+}
