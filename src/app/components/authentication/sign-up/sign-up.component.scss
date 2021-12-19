@@ -24,14 +24,12 @@
   }
 
   #registration-form-container {
-    padding: 3rem 5rem;
-
     form {
       .form-group {
         position: relative;
         width: 100%;
         overflow: hidden;
-        margin: 1rem 0;
+        margin: 0.5rem 0;
 
         input {
           border: none;
@@ -85,47 +83,47 @@
         }
       }
     }
-
-    #register-btn  {
-
-      border-radius: 0.5rem;
-      background-color: v.$dark-background;
-      border: 0.5px solid v.$grey;
-      color: v.$white-text;
-      font-size: 1.5rem;
-      padding: 1rem;
-      width: 12rem;
-      transition: all 0.5s ease;
-      cursor: pointer;
-
-      #register-span {
-        cursor: pointer;
-        display: inline-block;
-        position: relative;
-        transition: 0.5s ease;
-      }
-
-      #register-span:after {
-        content: '\00bb';
-        position: absolute;
-        opacity: 0;
-        top: 0;
-        right: -1.5rem;
-        transition: 0.5s;
-      }
-    }
-
-    #register-btn:hover {
-      cursor: pointer;
-
-      #register-span {
-        padding-right: 1.8rem;
-      }
-
-      #register-span:after {
-        opacity: 1;
-        right: 0;
-      }
-    }
+    //
+    //#register-btn  {
+    //  border-radius: 0.5rem;
+    //  background-color: v.$dark-background;
+    //  border: 0.5px solid v.$grey;
+    //  color: v.$white-text;
+    //  font-size: 1.5rem;
+    //  padding: 1rem;
+    //  width: 12rem;
+    //  transition: all 0.5s ease;
+    //  cursor: pointer;
+    //  margin-top: 1.5rem;
+    //
+    //  #register-span {
+    //    cursor: pointer;
+    //    display: inline-block;
+    //    position: relative;
+    //    transition: 0.5s ease;
+    //  }
+    //
+    //  #register-span:after {
+    //    content: '\00bb';
+    //    position: absolute;
+    //    opacity: 0;
+    //    top: 0;
+    //    right: -1.5rem;
+    //    transition: 0.5s;
+    //  }
+    //}
+    //
+    //#register-btn:hover {
+    //  cursor: pointer;
+    //
+    //  #register-span {
+    //    padding-right: 1.8rem;
+    //  }
+    //
+    //  #register-span:after {
+    //    opacity: 1;
+    //    right: 0;
+    //  }
+    //}
   }
 }

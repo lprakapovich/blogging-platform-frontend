@@ -17,6 +17,7 @@ import { BlogComponent } from './components/blog/blog/blog.component';
 import { BlogpostComponent } from './components/blog/blogpost/blogpost.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
+import { SubmitButtonComponent } from './components/ui-elements/submit-button/submit-button.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
     NumberedComponent,
     BulletedComponent,
     BlogComponent,
-    BlogpostComponent
+    BlogpostComponent,
+    SubmitButtonComponent
   ],
   imports: [
     BrowserModule,

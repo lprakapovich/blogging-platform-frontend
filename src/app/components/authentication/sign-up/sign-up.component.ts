@@ -35,7 +35,7 @@ export class SignUpComponent {
     return this.registerForm.controls;
   }
 
-  onSubmit() {
+  onSubmitSignUp() {
     this.submitted = true;
     if (this.registerForm.invalid) {
       console.log('INVALID FORM')

@@ -21,7 +21,6 @@ export class LogInComponent {
     if (authenticationService.currentUserValue()) {
       console.log('USER IS AUTHENTICATED::LEAVE LOGIN')
     }
-
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
@@ -30,7 +29,7 @@ export class LogInComponent {
 
   get f() { return this.loginForm.controls };
 
-  onSubmit() {
+  onSubmitLogin() {
     this.submitted = true;
 
     if (this.loginForm.invalid) {
