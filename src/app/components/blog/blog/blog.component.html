@@ -1,1 +1,43 @@
-<p>blog works!</p>
+<div id="blog-container">
+
+  <div id="blog-information">
+
+    <div id="blog-information-part">
+      <div class="heavy-bold author"> Lizaveta Prakapovich</div>
+      <div class="heavy-bold username"> @lpakapovich</div>
+    </div>
+    <div class="blog-information-part">
+      <app-default-button [ngClass]="'medium animated'" label="New Post"></app-default-button>
+    </div>
+    <div class="blog-information-part light-grey" id="blog-information-stats">
+      <div> Followers <span class="blog-information-stats-num"> 0 </span></div>
+      <div> Following <span class="blog-information-stats-num"> 2 </span> </div>
+      <div> Posts <span class="blog-information-stats-num"> 3 </span></div>
+    </div>
+<!--    <div class="light-grey" id="blog-information-post-sections">-->
+<!--      <div class="blog-information-post-section">-->
+<!--        <div>Draft</div>-->
+<!--        <div> 2 </div>-->
+<!--      </div>-->
+<!--      <div class="blog-information-post-section">-->
+<!--        <div>Scheduled</div>-->
+<!--        <div> 12 </div>-->
+<!--      </div>-->
+<!--      <div class="blog-information-post-section">-->
+<!--        <div>Hidden</div>-->
+<!--        <div> 1 </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div> All posts </div>-->
+  </div>
+
+  <div id="blog-posts">
+    <div id="blog-posts-preview-list">
+      <div *ngFor="let postPreview of [1, 2, 3, 4, 5]">
+        <app-post-preview></app-post-preview>
+      </div>
+    </div>
+    <!-- page is nicely spaced -->
+    <div id="unused"></div>
+  </div>
+</div>

@@ -12,8 +12,11 @@
   }
 
   form {
-
     width: 50%;
+
+    #login-form-inputs {
+      margin: 1.5rem 0;
+    }
 
     .form-group {
       position: relative;

@@ -1,6 +1,6 @@
+@use "utilities/variables" as v;
 @import url('https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&family=Montserrat:wght@300;600&family=Roboto+Mono:wght@700&family=Ubuntu+Mono&display=swap');
-//@import url('https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&family=Montserrat:wght@300;600&family=Roboto+Mono:wght@200;300;700&family=Ubuntu+Mono&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300;family=family=Nanum+Gothic;family=Montserrat:wght@100;family=Roboto+Mono:wght@200;300;700&family=Ubuntu+Mono&family=Ubuntu:wght@300&display=swap');
 html, body {
   min-height: 100%;
   height: 100vh;
@@ -9,9 +9,25 @@ html, body {
 }
 
 * {
-  font-family: 'Roboto Mono', monospace;
+  font-family: 'Source Code Pro', monospace;
 
   a {
     text-decoration: none;
+  }
+
+  .bold {
+    font-weight: 900;
+  }
+
+  .heavy-bold {
+    font-weight: 900;
+  }
+
+  .grey {
+    color: v.$grey;
+  }
+
+  .light-grey {
+    color: v.$light-grey;
   }
 }

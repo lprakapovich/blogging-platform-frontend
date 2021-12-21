@@ -32,18 +32,21 @@ export class LogInComponent {
   onSubmitLogin() {
     this.submitted = true;
 
-    if (this.loginForm.invalid) {
-      return;
-    }
+    // if (this.loginForm.invalid) {
+    //   return;
+    // }
 
     this.loading = true;
-    this.authenticationService.login(
-      this.f['username'].value, this.f['password'].value
-    ).subscribe(response => {
-        localStorage.setItem('token', response.token)
-      },
-        () => {
-        this.loading = false;
-      })
+
+    this.router.navigate(['/blog']);
+
+    // this.authenticationService.login(
+    //   this.f['username'].value, this.f['password'].value
+    // ).subscribe(response => {
+    //     localStorage.setItem('token', response.token)
+    //   },
+    //     () => {
+    //     this.loading = false;
+    //   })
   }
 }

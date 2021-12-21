@@ -1,0 +1,13 @@
+@use "src/utilities/variables" as v;
+.post-preview-item {
+
+  hr {
+    border: 0.5px solid v.$light-grey;
+    margin: 2rem 0;
+  }
+
+  .post-preview-metadata {
+    font-size: 0.9rem;
+    font-weight: 900;
+  }
+}

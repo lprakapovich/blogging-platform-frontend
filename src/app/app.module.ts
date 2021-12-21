@@ -17,7 +17,9 @@ import { BlogComponent } from './components/blog/blog/blog.component';
 import { BlogpostComponent } from './components/blog/blogpost/blogpost.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
-import { SubmitButtonComponent } from './components/ui-elements/submit-button/submit-button.component';
+import { DefaultButtonComponent } from './components/ui-elements/default-button/default-button.component';
+import { SearchBarComponent } from './components/ui-elements/search-bar/search-bar.component';
+import { PostPreviewComponent } from './components/blog/post-preview/post-preview.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import { SubmitButtonComponent } from './components/ui-elements/submit-button/su
     BulletedComponent,
     BlogComponent,
     BlogpostComponent,
-    SubmitButtonComponent
+    DefaultButtonComponent,
+    SearchBarComponent,
+    PostPreviewComponent,
   ],
   imports: [
     BrowserModule,
