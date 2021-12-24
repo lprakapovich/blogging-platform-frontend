@@ -1,0 +1,12 @@
+<div id="editor-container">
+  <div id="editor-container-header">
+    <span class="badge">
+      <span contenteditable="true" id="header-span" class="badge"
+          data-placeholder="Title of the post"
+            (keydown.enter)="releaseInputOnEnterKeyDown('header-span')">
+      </span>
+    </span>
+  </div>
+  <app-plus-circle-button (click)="addComponent()"></app-plus-circle-button>
+  <div #parent> </div>
+  </div>

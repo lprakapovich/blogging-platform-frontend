@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthenticationService} from "../../../services/authentication.service";
+import {NavbarTemplateService} from "../../../services/navbar-template.service";
 
 @Component({
   selector: 'app-log-in',
@@ -16,11 +17,10 @@ export class LogInComponent {
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
-              private authenticationService: AuthenticationService
-              ) {
-    if (authenticationService.currentUserValue()) {
-      console.log('USER IS AUTHENTICATED::LEAVE LOGIN')
-    }
+              private authenticationService: AuthenticationService,
+              private navbarTemplateService: NavbarTemplateService) {
+
+    this.navbarTemplateService.setDefault();
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required]

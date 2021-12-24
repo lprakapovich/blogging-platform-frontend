@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {Router} from "@angular/router";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../../../services/authentication.service";
+import {NavbarTemplateService} from "../../../services/navbar-template.service";
 
 @Component({
   selector: 'app-sign-up',
@@ -17,12 +18,10 @@ export class SignUpComponent {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private authenticationService: AuthenticationService) {
+    private authenticationService: AuthenticationService,
+    private navbarTemplateService: NavbarTemplateService) {
 
-    if (this.authenticationService.currentUserValue()) {
-      console.log('USER IS AUTHENTICATED::LEAVE REGISTER')
-    }
-
+    this.navbarTemplateService.setDefault();
     this.registerForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],

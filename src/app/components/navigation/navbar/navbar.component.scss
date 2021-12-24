@@ -1,5 +1,9 @@
 @use "src/utilities/variables" as v;
 
+:host.blog {
+  
+}
+
 #navigation-root {
   border-top: 0.1px solid v.$grey;
   background: v.$dark-background;

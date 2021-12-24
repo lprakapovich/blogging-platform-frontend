@@ -11,7 +11,6 @@
     margin: 0;
     padding: 0;
     flex: 1 0 auto;
-    //flex-grow: 1;
     background: v.$dark-background;
     color: v.$white-text;
   }
@@ -21,5 +20,13 @@
     bottom: 0;
     width: 100%;
     flex-shrink: 0;
+  }
+
+  app-navbar.bottom-fixed {
+    bottom: 0;
+  }
+
+  app-navbar.top-fixed {
+    top: 0;
   }
 }

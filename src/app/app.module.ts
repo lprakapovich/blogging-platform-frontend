@@ -20,6 +20,11 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
 import { DefaultButtonComponent } from './components/ui-elements/default-button/default-button.component';
 import { SearchBarComponent } from './components/ui-elements/search-bar/search-bar.component';
 import { PostPreviewComponent } from './components/blog/post-preview/post-preview.component';
+import { EditorComponent } from './components/blog/editor/editor/editor.component';
+import { EditorPageComponent } from './components/blog/editor/editor-page/editor-page.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { PlusCircleButtonComponent } from './components/ui-elements/plus-circle-button/plus-circle-button.component';
+import { DropDownMenuComponent } from './components/ui-elements/drop-down-menu/drop-down-menu.component';
 
 @NgModule({
   declarations: [
@@ -39,12 +44,17 @@ import { PostPreviewComponent } from './components/blog/post-preview/post-previe
     DefaultButtonComponent,
     SearchBarComponent,
     PostPreviewComponent,
+    EditorComponent,
+    EditorPageComponent,
+    PlusCircleButtonComponent,
+    DropDownMenuComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    FontAwesomeModule
   ],
   providers: [HttpClient, HttpClientModule],
   bootstrap: [AppComponent],

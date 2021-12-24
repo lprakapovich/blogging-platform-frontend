@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit, TemplateRef} from '@angular/core';
+import {NavbarTemplateService} from "../../../services/navbar-template.service";
 
 @Component({
   selector: 'app-navbar',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() { }
+  @Input()
+  navbarTemplate!: TemplateRef<any>;
+
+  template: string = 'default';
+
+  constructor(private navbarTemplateService: NavbarTemplateService) {
+    navbarTemplateService.getNavbarTemplateChangeSubject().subscribe(template => {
+      this.template = template;
+    })
+  }
 
   ngOnInit(): void {
   }
-
 }
