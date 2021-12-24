@@ -3,12 +3,13 @@
 .plus-circle-button {
   background-color: white;
   color: v.$dark-grey;
-  border-radius: 2rem;
+  //border-radius: 2rem;
   border: none;
   cursor: pointer;
 
   fa-icon {
-    font-size: 2rem;
+    font-size: 1.5rem;
+    font-weight: lighter;
   }
 }
 

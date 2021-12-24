@@ -21,4 +21,12 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  setBlogNavigationTabActive(tabId: string) {
+    console.log(tabId)
+    let blogNavigationElement = document.getElementById('blog-navigation');
+    console.log(blogNavigationElement)
+    blogNavigationElement?.querySelector('.active')?.classList.remove('active');
+    blogNavigationElement?.querySelector(`#${tabId}`)?.classList.add('active');
+  }
 }

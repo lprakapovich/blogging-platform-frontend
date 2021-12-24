@@ -5,7 +5,11 @@ div {
   justify-content: center;
 
   h2 {
-    font-weight: bolder;
+    margin: 2rem;
   }
+}
+
+@media only screen and (max-width: 620px) {
+
 }
 

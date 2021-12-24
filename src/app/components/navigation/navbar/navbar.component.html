@@ -1,5 +1,5 @@
-<ng-container *ngIf="template == 'default'; else customTemplateBlog">
-  <nav id="navigation-root">
+<ng-container *ngIf="template == 'default'; else blogTemplate">
+  <nav id="default-navigation">
     <a class="button" routerLink="/home" routerlinkactive="activeButton"> Home </a>
     <a class="button" routerLink="/about" routerlinkactive="activeButton">About</a>
     <a class="button" routerLink="/signup" routerLinkActive="activebutton">Sign up</a>
@@ -8,9 +8,31 @@
   </nav>
 </ng-container>
 
-<ng-template #customTemplateBlog>
-  <nav id="navigation-root-2">
-
+<ng-template #blogTemplate>
+  <nav id="blog-navigation">
+    <div>
+      <app-svg-button [ngClass]="'highlighted'"
+                      id='new-post'
+                      (click)="setBlogNavigationTabActive('new-post')"
+                      [iconTemplate]="'new-post'"
+                      routerLink="/editor-page">
+      </app-svg-button>
+      <app-svg-button id="news-feed"
+                      [ngClass]="'highlighted'"
+                      (click)="setBlogNavigationTabActive('news-feed')"
+                      [iconTemplate]="'news-feed'">
+      </app-svg-button>
+      <app-svg-button id="notification"
+                      [ngClass]="'highlighted'"
+                      (click)="setBlogNavigationTabActive('notification')"
+                      [iconTemplate]="'notification'">
+      </app-svg-button>
+      <app-svg-button id="profile"
+                      [ngClass]="'highlighted'"
+                      (click)="setBlogNavigationTabActive('profile')"
+                      [iconTemplate]="'profile'">
+      </app-svg-button>
+    </div>
   </nav>
 </ng-template>
 

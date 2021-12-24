@@ -23,8 +23,9 @@ import { PostPreviewComponent } from './components/blog/post-preview/post-previe
 import { EditorComponent } from './components/blog/editor/editor/editor.component';
 import { EditorPageComponent } from './components/blog/editor/editor-page/editor-page.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { PlusCircleButtonComponent } from './components/ui-elements/plus-circle-button/plus-circle-button.component';
+import { IconButtonComponent } from './components/ui-elements/plus-circle-button/icon-button.component';
 import { DropDownMenuComponent } from './components/ui-elements/drop-down-menu/drop-down-menu.component';
+import { SvgButtonComponent } from './components/ui-elements/svg-button/svg-button.component';
 
 @NgModule({
   declarations: [
@@ -46,8 +47,9 @@ import { DropDownMenuComponent } from './components/ui-elements/drop-down-menu/d
     PostPreviewComponent,
     EditorComponent,
     EditorPageComponent,
-    PlusCircleButtonComponent,
+    IconButtonComponent,
     DropDownMenuComponent,
+    SvgButtonComponent,
   ],
   imports: [
     BrowserModule,

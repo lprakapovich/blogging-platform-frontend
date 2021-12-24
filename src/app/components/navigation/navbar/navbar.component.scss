@@ -1,10 +1,6 @@
 @use "src/utilities/variables" as v;
 
-:host.blog {
-  
-}
-
-#navigation-root {
+#default-navigation {
   border-top: 0.1px solid v.$grey;
   background: v.$dark-background;
   color: v.$grey;
@@ -18,5 +14,29 @@
     padding: 0.5rem 1rem;
     font-size: 1rem;
   }
+
+  a:hover {
+    color: white;
+  }
 }
 
+#blog-navigation {
+  padding: 1rem;
+
+  div {
+    display: flex;
+    width: 100%;
+    justify-content: end;
+
+    div:first-child {
+      display: flex;
+      justify-content: left;
+    }
+  }
+}
+
+@media only screen and (max-width: 620px) {
+  #default-navigation {
+    flex-direction: column;
+  }
+}
