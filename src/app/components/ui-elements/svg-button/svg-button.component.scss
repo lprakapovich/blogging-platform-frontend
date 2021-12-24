@@ -1,0 +1,18 @@
+:host.active,
+:host.hover.highlighted {
+  button {
+    background: #eeeeee;
+    border-radius: 1rem;
+  }
+}
+
+button {
+  background: white;
+  color: #292929;
+  border: none;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
