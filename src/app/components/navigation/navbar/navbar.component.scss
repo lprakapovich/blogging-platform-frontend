@@ -24,7 +24,7 @@
   padding: 1rem;
   background-color: white;
 
-  div {
+  #blog-navigation-items {
     display: flex;
     width: 100%;
     justify-content: end;
@@ -32,8 +32,38 @@
   }
 }
 
+#editor-navigation {
+  display: flex;
+  justify-content: end;
+  justify-items: end;
+
+  .editor-navigation-item:first-child {
+    flex-grow: 1;
+  }
+
+  .editor-navigation-item {
+    display: flex;
+
+    .editor-navigation-image {
+      width: 2rem;
+      height: 2rem;
+      min-width: 2rem;
+      min-height: 2rem;
+      border-radius: 2rem;
+      background-color: #003b85;
+      margin: 0 1rem;
+    }
+  }
+}
+
 @media only screen and (max-width: 620px) {
   #default-navigation {
     flex-direction: column;
+  }
+
+  .editor-navigation-item {
+    .editor-navigation-image {
+     display: none;
+    }
   }
 }

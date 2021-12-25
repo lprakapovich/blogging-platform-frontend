@@ -1,7 +1,7 @@
 <ng-container [ngSwitch]="[template]">
   <div *ngSwitchCase="'blog'">
     <nav id="blog-navigation">
-      <div>
+      <div id="blog-navigation-items">
         <app-svg-button [ngClass]="'highlighted'"
                         id='new-post'
                         (click)="setBlogNavigationTabActive('new-post')"
@@ -29,7 +29,11 @@
 
   <div *ngSwitchCase="'editor'">
     <nav id="editor-navigation">
-      <div>
+      <div class="editor-navigation-item">
+        <div class="editor-navigation-image"></div>
+        <div> Lizaveta Prakapovich</div>
+      </div>
+      <div class="editor-navigation-item">
         <app-svg-button [iconTemplate]="'check'"></app-svg-button>
         <app-svg-button [iconTemplate]="'delete'"></app-svg-button>
         <app-svg-button [iconTemplate]="'publish'"></app-svg-button>
