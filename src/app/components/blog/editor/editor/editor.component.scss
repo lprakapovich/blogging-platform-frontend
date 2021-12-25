@@ -5,6 +5,7 @@
   flex-direction: column;
   color: v.$light-grey;
   background-color: white;
+  padding: 8rem 4rem;
 
   #editor-container-header {
     span.badge[contenteditable] {
@@ -18,7 +19,7 @@
 
     span {
       width: 100%;
-      font-size: 2rem;
+      font-size: 2.5rem;
       line-height: 2.5rem;
       font-weight: 800;
       border: none;
