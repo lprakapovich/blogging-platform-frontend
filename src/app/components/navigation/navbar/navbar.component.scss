@@ -20,18 +20,15 @@
   }
 }
 
-#blog-navigation {
+#blog-navigation,
+#editor-navigation {
   padding: 1rem;
 
   div {
     display: flex;
     width: 100%;
     justify-content: end;
-
-    div:first-child {
-      display: flex;
-      justify-content: left;
-    }
+    justify-items: end;
   }
 }
 

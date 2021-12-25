@@ -26,6 +26,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IconButtonComponent } from './components/ui-elements/plus-circle-button/icon-button.component';
 import { DropDownMenuComponent } from './components/ui-elements/drop-down-menu/drop-down-menu.component';
 import { SvgButtonComponent } from './components/ui-elements/svg-button/svg-button.component';
+import { CircleButtonComponent } from './components/ui-elements/circle-button/circle-button.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { SvgButtonComponent } from './components/ui-elements/svg-button/svg-butt
     IconButtonComponent,
     DropDownMenuComponent,
     SvgButtonComponent,
+    CircleButtonComponent,
   ],
   imports: [
     BrowserModule,

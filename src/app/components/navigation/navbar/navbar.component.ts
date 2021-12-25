@@ -6,7 +6,7 @@ import {NavbarTemplateService} from "../../../services/navbar-template.service";
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent {
 
   @Input()
   navbarTemplate!: TemplateRef<any>;
@@ -19,13 +19,8 @@ export class NavbarComponent implements OnInit {
     })
   }
 
-  ngOnInit(): void {
-  }
-
   setBlogNavigationTabActive(tabId: string) {
-    console.log(tabId)
     let blogNavigationElement = document.getElementById('blog-navigation');
-    console.log(blogNavigationElement)
     blogNavigationElement?.querySelector('.active')?.classList.remove('active');
     blogNavigationElement?.querySelector(`#${tabId}`)?.classList.add('active');
   }

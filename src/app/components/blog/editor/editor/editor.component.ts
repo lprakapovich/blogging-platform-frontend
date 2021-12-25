@@ -1,5 +1,6 @@
 import {Component, ComponentFactoryResolver, ComponentRef, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {H2Component} from "../editor-components/h2/h2.component";
+import {NavbarTemplateService} from "../../../../services/navbar-template.service";
 
 @Component({
   selector: 'app-editor',
@@ -11,7 +12,8 @@ export class EditorComponent {
   @ViewChild('parent', {read: ViewContainerRef}) target!: ViewContainerRef;
   private componentRef!: ComponentRef<any>;
 
-  constructor(private componentFactoryResolver: ComponentFactoryResolver) { }
+  constructor(private componentFactoryResolver: ComponentFactoryResolver) {
+  }
 
   releaseInputOnEnterKeyDown(inputId: string) {
     let inputToRelease = document.getElementById(inputId);

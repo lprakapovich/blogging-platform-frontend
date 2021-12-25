@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {NavbarTemplateService} from "../../../../services/navbar-template.service";
 
 @Component({
   selector: 'app-editor-page',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditorPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private navbarTemplateService: NavbarTemplateService) {
+    this.navbarTemplateService.setNavbarTemplate('editor');
+  }
 
   ngOnInit(): void {
   }

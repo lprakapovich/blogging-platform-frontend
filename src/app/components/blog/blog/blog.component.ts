@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {NavbarTemplateService} from "../../../services/navbar-template.service";
 
@@ -14,24 +14,20 @@ export class BlogComponent implements OnInit {
   private sticky: any;
 
   constructor(private router: Router, private navbarTemplateService: NavbarTemplateService) {
-    console.log('changing navbarTemplate...')
     navbarTemplateService.setNavbarTemplate('blog')
   }
 
   ngOnInit(): void {
      this.blogInfo = document.getElementById('statistics-information');
      this.authorInfo = document.getElementById('author-information')
-     this.sticky = this.blogInfo && this.blogInfo.offsetTop;
+     this.sticky = this.blogInfo?.offsetTop;
+
      window.onscroll = () => this.onScroll();
 
-     let elementById = document.getElementById('navbar');
-    if (elementById) {
-      elementById.classList.remove('bottom-fixed');
-      elementById.classList.add('top-fixed');
-      elementById.classList.add('blog');
-    }
-
-
+     let navbar = document.getElementById('navbar');
+     navbar?.classList.remove('bottom-fixed');
+     navbar?.classList.add('top-fixed');
+     navbar?.classList.add('blog');
   }
 
   onScroll() {
