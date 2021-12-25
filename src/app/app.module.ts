@@ -14,12 +14,12 @@ import { PlainTextComponent } from './components/blog/editor/editor-components/p
 import { NumberedComponent } from './components/blog/editor/editor-components/numbered/numbered.component';
 import { BulletedComponent } from './components/blog/editor/editor-components/bulleted/bulleted.component';
 import { BlogComponent } from './components/blog/blog/blog.component';
-import { BlogpostComponent } from './components/blog/blogpost/blogpost.component';
+import { BlogPostComponent } from './components/blog/blog-post/blog-post.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import { DefaultButtonComponent } from './components/ui-elements/default-button/default-button.component';
 import { SearchBarComponent } from './components/ui-elements/search-bar/search-bar.component';
-import { PostPreviewComponent } from './components/blog/post-preview/post-preview.component';
+import { BlogPostPreviewComponent } from './components/blog/blog-post-preview/blog-post-preview.component';
 import { EditorComponent } from './components/blog/editor/editor/editor.component';
 import { EditorPageComponent } from './components/blog/editor/editor-page/editor-page.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -27,6 +27,9 @@ import { IconButtonComponent } from './components/ui-elements/plus-circle-button
 import { DropDownMenuComponent } from './components/ui-elements/drop-down-menu/drop-down-menu.component';
 import { SvgButtonComponent } from './components/ui-elements/svg-button/svg-button.component';
 import { CircleButtonComponent } from './components/ui-elements/circle-button/circle-button.component';
+import { AuthorDataComponent } from './components/blog/author-data/author-data.component';
+import { BlogStatisticsDataComponent } from './components/blog/blog-statistics-data/blog-statistics-data.component';
+import { BlogPostPreviewListComponent } from './components/blog/blog-post-preview-list/blog-post-preview-list.component';
 
 @NgModule({
   declarations: [
@@ -42,16 +45,19 @@ import { CircleButtonComponent } from './components/ui-elements/circle-button/ci
     NumberedComponent,
     BulletedComponent,
     BlogComponent,
-    BlogpostComponent,
+    BlogPostComponent,
     DefaultButtonComponent,
     SearchBarComponent,
-    PostPreviewComponent,
+    BlogPostPreviewComponent,
     EditorComponent,
     EditorPageComponent,
     IconButtonComponent,
     DropDownMenuComponent,
     SvgButtonComponent,
     CircleButtonComponent,
+    AuthorDataComponent,
+    BlogStatisticsDataComponent,
+    BlogPostPreviewListComponent,
   ],
   imports: [
     BrowserModule,

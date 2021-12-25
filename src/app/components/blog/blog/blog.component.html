@@ -1,25 +1,18 @@
 <div id="blog-container">
   <div id="blog-information">
-    <div class="blog-information-section" id="author-information">
-      <div class="heavy-bold author-full-name"> Lizaveta Prakapovich</div>
-      <div class="heavy-bold author-username"> @lpakapovich</div>
+    <div class="blog-information-item">
+      <app-author-data [fullName]="'LP'"></app-author-data>
     </div>
-    <div class="blog-information-section">
-      <app-default-button (click)="onNewPostClicked()"
-        [ngClass]="'medium animated'" label="New Post">
-      </app-default-button>
+    <div class="blog-information-item">
+      <app-default-button (click)="onNewPostClicked()" [ngClass]="'medium animated'" label="New Post"></app-default-button>
     </div>
-    <div class="blog-information-section light-grey" id="statistics-information">
-      <div> Followers <span class="blog-information-stats-num"> 0 </span></div>
-      <div> Following <span class="blog-information-stats-num"> 2 </span> </div>
-      <div> Posts <span class="blog-information-stats-num"> 3 </span></div>
+    <div class="blog-information-item light-grey">
+     <app-blog-statistics-data></app-blog-statistics-data>
     </div>
   </div>
   <div id="blog-posts">
     <div id="blog-posts-preview-list">
-      <div *ngFor="let postPreview of [1, 2, 3, 4, 5]">
-        <app-post-preview></app-post-preview>
-      </div>
+     <app-blog-post-preview-list></app-blog-post-preview-list>
     </div>
   </div>
 </div>

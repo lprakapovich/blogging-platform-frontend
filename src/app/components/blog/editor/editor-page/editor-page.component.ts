@@ -6,13 +6,9 @@ import {NavbarTemplateService} from "../../../../services/navbar-template.servic
   templateUrl: './editor-page.component.html',
   styleUrls: ['./editor-page.component.scss']
 })
-export class EditorPageComponent implements OnInit {
+export class EditorPageComponent {
 
   constructor(private navbarTemplateService: NavbarTemplateService) {
-    this.navbarTemplateService.setNavbarTemplate('editor');
+    this.navbarTemplateService.setEditorTemplate();
   }
-
-  ngOnInit(): void {
-  }
-
 }

@@ -5,13 +5,12 @@
   background: v.$dark-background;
   color: v.$grey;
   display: flex;
-  padding: 0 1.5rem;
+  padding: 1rem 1.5rem;
 
   a {
-    font-weight: lighter;
     text-decoration: none;
     color: inherit;
-    padding: 0.5rem 1rem;
+    padding: 0.25rem 1rem;
     font-size: 1rem;
   }
 
@@ -23,6 +22,7 @@
 #blog-navigation,
 #editor-navigation {
   padding: 1rem;
+  background-color: white;
 
   div {
     display: flex;

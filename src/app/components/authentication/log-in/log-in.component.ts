@@ -20,7 +20,7 @@ export class LogInComponent {
               private authenticationService: AuthenticationService,
               private navbarTemplateService: NavbarTemplateService) {
 
-    this.navbarTemplateService.setDefault();
+    this.navbarTemplateService.setDefaultTemplate();
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required]

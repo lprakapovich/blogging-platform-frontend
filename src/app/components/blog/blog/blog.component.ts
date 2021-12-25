@@ -14,20 +14,14 @@ export class BlogComponent implements OnInit {
   private sticky: any;
 
   constructor(private router: Router, private navbarTemplateService: NavbarTemplateService) {
-    navbarTemplateService.setNavbarTemplate('blog')
+    navbarTemplateService.setBlogTemplate()
   }
 
   ngOnInit(): void {
      this.blogInfo = document.getElementById('statistics-information');
      this.authorInfo = document.getElementById('author-information')
      this.sticky = this.blogInfo?.offsetTop;
-
      window.onscroll = () => this.onScroll();
-
-     let navbar = document.getElementById('navbar');
-     navbar?.classList.remove('bottom-fixed');
-     navbar?.classList.add('top-fixed');
-     navbar?.classList.add('blog');
   }
 
   onScroll() {

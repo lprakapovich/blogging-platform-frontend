@@ -13,7 +13,8 @@
         </div>
         <div class="form-group">
           <input autocomplete="off" required
-                 class="form-control" [ngClass]="{ 'is-invalid': submitted && f['password'].errors }"
+                 class="form-control"
+                 [ngClass]="{ 'is-invalid': submitted && f['password'].errors }"
                  type="password" id="password" formControlName="password" class="form-control" >
           <label for="password">
             <span>Password</span>
@@ -21,7 +22,7 @@
         </div>
       </div>
       <div>
-        <app-default-button [ngClass]="'large animated'" label="Log in" (click)="onSubmitLogin()"></app-default-button>
+        <app-default-button [ngClass]="'large animated bold'" label="Log in" (click)="onSubmitLogin()"></app-default-button>
       </div>
     </form>
   </div>

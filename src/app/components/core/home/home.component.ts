@@ -9,6 +9,6 @@ import {NavbarTemplateService} from "../../../services/navbar-template.service";
 export class HomeComponent {
 
   constructor(private navbarTemplateService: NavbarTemplateService) {
-    this.navbarTemplateService.setDefault();
+    this.navbarTemplateService.setDefaultTemplate();
   }
 }

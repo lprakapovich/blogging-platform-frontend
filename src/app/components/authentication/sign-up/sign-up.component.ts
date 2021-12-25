@@ -21,7 +21,7 @@ export class SignUpComponent {
     private authenticationService: AuthenticationService,
     private navbarTemplateService: NavbarTemplateService) {
 
-    this.navbarTemplateService.setDefault();
+    this.navbarTemplateService.setDefaultTemplate();
     this.registerForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],

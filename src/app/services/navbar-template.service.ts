@@ -15,12 +15,19 @@ export class NavbarTemplateService {
     });
   }
 
-  setNavbarTemplate(template: string) {
-    this.navbarTemplateChange.next(template);
+  setBlogTemplate() {
+    this.navbarTemplateChange.next('blog');
+    this.moveNavbarToTop();
   }
 
-  setDefault() {
+  setEditorTemplate() {
+    this.navbarTemplateChange.next('editor');
+    this.moveNavbarToTop()
+  }
+
+  setDefaultTemplate() {
     this.navbarTemplateChange.next('default');
+    this.moveNavbarToBottom()
   }
 
   getNavbarTemplate() {
@@ -29,5 +36,19 @@ export class NavbarTemplateService {
 
   getNavbarTemplateChangeSubject() {
     return this.navbarTemplateChange;
+  }
+
+  private moveNavbarToBottom() {
+    this.swapNavbarStyles('top-fixed', 'bottom-fixed')
+  }
+
+  private moveNavbarToTop() {
+    this.swapNavbarStyles('bottom-fixed', 'top-fixed')
+  }
+
+  private swapNavbarStyles(from: string, to: string) {
+    let navbar = document.getElementById('navbar');
+    navbar?.classList.remove(from);
+    navbar?.classList.add(to);
   }
 }

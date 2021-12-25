@@ -1,0 +1,21 @@
+@use "src/utilities/variables" as v;
+.blog-post-preview-container {
+  border: 1px solid v.$extra-light-grey;
+  border-radius: 3rem;
+  padding: 2rem;
+
+  hr {
+    border: 0.5px solid v.$light-grey;
+    margin: 2rem 0;
+  }
+
+  .time {
+    font-size: 0.9rem;
+    font-weight: 900;
+  }
+}
+
+.blog-post-preview-container:hover {
+  border: 1px solid v.$dark-grey;
+  cursor: pointer;
+}

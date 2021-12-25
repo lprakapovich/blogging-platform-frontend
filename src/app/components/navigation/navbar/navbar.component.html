@@ -1,13 +1,3 @@
-<!--<ng-container *ngIf="template == 'default'; else blogTemplate">-->
-<!--  <nav id="default-navigation">-->
-<!--    <a class="button" routerLink="/home" routerlinkactive="activeButton"> Home </a>-->
-<!--    <a class="button" routerLink="/about" routerlinkactive="activeButton">About</a>-->
-<!--    <a class="button" routerLink="/signup" routerLinkActive="activebutton">Sign up</a>-->
-<!--    <a class="button" routerLink="/login" routerLinkActive="activebutton">Login</a>-->
-<!--    <a class="ui-button" routerLink="/privacy" routerlinkactive="activebutton">Privacy</a>-->
-<!--  </nav>-->
-<!--</ng-container>-->
-
 <ng-container [ngSwitch]="[template]">
   <div *ngSwitchCase="'blog'">
     <nav id="blog-navigation">
@@ -49,41 +39,14 @@
 
   <div *ngSwitchDefault>
     <nav id="default-navigation">
-      <a class="button" routerLink="/home" routerlinkactive="activeButton"> Home </a>
-      <a class="button" routerLink="/about" routerlinkactive="activeButton">About</a>
-      <a class="button" routerLink="/signup" routerLinkActive="activebutton">Sign up</a>
-      <a class="button" routerLink="/login" routerLinkActive="activebutton">Login</a>
-      <a class="ui-button" routerLink="/privacy" routerlinkactive="activebutton">Privacy</a>
+      <a class="button bold" routerLink="/home" routerlinkactive="activeButton"> Home </a>
+      <a class="button bold" routerLink="/about" routerlinkactive="activeButton">About</a>
+      <a class="button bold" routerLink="/signup" routerLinkActive="activebutton">Sign up</a>
+      <a class="button bold" routerLink="/login" routerLinkActive="activebutton">Login</a>
+      <a class="button bold" routerLink="/privacy" routerlinkactive="activebutton">Privacy</a>
     </nav>
   </div>
 
 </ng-container>
-<!--<ng-template #blogTemplate>-->
-<!--  <nav id="blog-navigation">-->
-<!--    <div>-->
-<!--      <app-svg-button [ngClass]="'highlighted'"-->
-<!--                      id='new-post'-->
-<!--                      (click)="setBlogNavigationTabActive('new-post')"-->
-<!--                      [iconTemplate]="'new-post'"-->
-<!--                      routerLink="/editor-page">-->
-<!--      </app-svg-button>-->
-<!--      <app-svg-button id="news-feed"-->
-<!--                      [ngClass]="'highlighted'"-->
-<!--                      (click)="setBlogNavigationTabActive('news-feed')"-->
-<!--                      [iconTemplate]="'news-feed'">-->
-<!--      </app-svg-button>-->
-<!--      <app-svg-button id="notification"-->
-<!--                      [ngClass]="'highlighted'"-->
-<!--                      (click)="setBlogNavigationTabActive('notification')"-->
-<!--                      [iconTemplate]="'notification'">-->
-<!--      </app-svg-button>-->
-<!--      <app-svg-button id="profile"-->
-<!--                      [ngClass]="'highlighted active'"-->
-<!--                      (click)="setBlogNavigationTabActive('profile')"-->
-<!--                      [iconTemplate]="'profile'">-->
-<!--      </app-svg-button>-->
-<!--    </div>-->
-<!--  </nav>-->
-<!--</ng-template>-->
 
 
