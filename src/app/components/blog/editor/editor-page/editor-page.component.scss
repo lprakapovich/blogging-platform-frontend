@@ -1,5 +1,13 @@
 #editor-page-container {
   height: 100%;
-  background-color: white;
-  padding: 5rem 25rem;
+  background-color: #ddbbbb;
+  display: flex;
+  flex-direction: column;
+  padding: 0 10rem;
+}
+
+@media only screen and (max-width: 1000px) {
+  #editor-page-container {
+    padding: 0 2rem;
+  }
 }

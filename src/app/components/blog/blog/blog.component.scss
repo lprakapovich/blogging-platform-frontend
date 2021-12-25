@@ -36,7 +36,7 @@
 
 @media only screen and (max-width: 1300px) {
   #blog-container {
-    padding: 3rem;
+    padding: 3rem 1rem;
   }
 }
 
@@ -47,6 +47,10 @@
     #statistics-information {
       display: flex;
       flex-direction: row;
+    }
+
+    #blog-posts {
+      padding: 2rem;
     }
   }
 }
