@@ -1,0 +1,22 @@
+#status-list-container {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0;
+  border-top: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+
+  .status-list-item {
+    margin-right: 1rem;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  #status-list-container {
+    font-size: 1rem;
+    flex-direction: row;
+    justify-content: flex-start;
+    border-bottom: none;
+    border-top: none;
+    padding: 0;
+  }
+}

@@ -45,6 +45,11 @@
   #blog-container {
     flex-direction: column;
 
+    .common-blog-information-items {
+      border-top: 1px solid lightgray;
+      border-bottom: 1px solid lightgray;
+    }
+
     #statistics-information {
       display: flex;
       flex-direction: row;
@@ -53,5 +58,6 @@
     #blog-posts {
       padding: 2rem;
     }
+
   }
 }
