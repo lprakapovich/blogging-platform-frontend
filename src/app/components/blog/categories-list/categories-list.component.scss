@@ -1,0 +1,29 @@
+@use "src/utilities/variables" as v;
+
+#categories-list-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  .categories-list-item {
+    margin-right: 1rem;
+  }
+
+  .categories-list-item:hover {
+    color: v.$dark-grey;
+    cursor: pointer;
+  }
+
+  .all:hover {
+    font-weight: bolder;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  #categories-list-container {
+    font-size: 1rem;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+}

@@ -30,6 +30,8 @@ import { CircleButtonComponent } from './components/ui-elements/circle-button/ci
 import { AuthorDataComponent } from './components/blog/author-data/author-data.component';
 import { BlogStatisticsDataComponent } from './components/blog/blog-statistics-data/blog-statistics-data.component';
 import { BlogPostPreviewListComponent } from './components/blog/blog-post-preview-list/blog-post-preview-list.component';
+import { ModalComponent } from './components/ui-elements/modal/modal.component';
+import { CategoriesListComponent } from './components/blog/categories-list/categories-list.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +60,8 @@ import { BlogPostPreviewListComponent } from './components/blog/blog-post-previe
     AuthorDataComponent,
     BlogStatisticsDataComponent,
     BlogPostPreviewListComponent,
+    ModalComponent,
+    CategoriesListComponent,
   ],
   imports: [
     BrowserModule,

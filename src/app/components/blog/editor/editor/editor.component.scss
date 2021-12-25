@@ -1,11 +1,10 @@
 @use "src/utilities/variables" as v;
 #editor-container {
-  height: 100%;
   display: flex;
   flex-direction: column;
   color: v.$light-grey;
   background-color: white;
-  padding: 8rem 4rem;
+  padding-top: 10rem;
 
   #editor-container-header {
     span.badge[contenteditable] {
@@ -29,6 +28,27 @@
 
     span:focus {
       outline: none !important;
+    }
+  }
+}
+
+@media only screen and (max-width: 620px) {
+  #editor-container {
+    #editor-container-header {
+      span {
+        font-size: 1.5rem;
+      }
+    }
+  }
+}
+
+
+@media only screen and (max-width: 620px) {
+  #editor-container {
+    #editor-container-header {
+      span {
+        font-size: 1.5rem;
+      }
     }
   }
 }
