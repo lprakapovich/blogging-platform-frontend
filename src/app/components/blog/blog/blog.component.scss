@@ -1,7 +1,6 @@
 @use "src/utilities/variables" as v;
 
 #blog-container {
-
   padding: 3rem 6rem;
   height: 100%;
   display: flex;
@@ -28,16 +27,12 @@
     padding: 4rem 2rem;
     flex: 3;
     display: flex;
-
-    #blog-posts-preview-list {
-      flex: 2;
-    }
   }
 }
 
 @media only screen and (max-width: 1300px) {
   #blog-container {
-    padding: 3rem 1rem;
+    padding: 2rem 1rem;
   }
 }
 
@@ -56,8 +51,7 @@
     }
 
     #blog-posts {
-      padding: 2rem;
+      padding: 0;
     }
-
   }
 }

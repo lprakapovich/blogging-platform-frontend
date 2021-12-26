@@ -1,27 +1,37 @@
 @use "src/utilities/variables" as v;
 
-#categories-list-container {
+.default-list-container {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   flex-wrap: wrap;
 
-  .categories-list-item {
+  .default-list-item {
     margin-right: 1rem;
   }
 
-  .categories-list-item:hover {
+  .default-list-item:hover {
     color: v.$dark-grey;
     cursor: pointer;
   }
+}
 
-  .all:hover {
-    font-weight: bolder;
+:host ::ng-deep .all:hover {
+  color: v.$dark-grey;
+  cursor: pointer;
+  font-weight: bolder;
+}
+
+:host(.bordered) {
+  .default-list-container {
+    padding: 1rem 0;
+    border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
   }
 }
 
 @media only screen and (max-width: 1000px) {
-  #categories-list-container {
+  .default-list-container {
     font-size: 1rem;
     flex-direction: row;
     justify-content: flex-start;

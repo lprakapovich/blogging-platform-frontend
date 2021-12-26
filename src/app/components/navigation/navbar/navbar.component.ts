@@ -17,6 +17,14 @@ export class NavbarComponent {
     navbarTemplateService.getNavbarTemplateChangeSubject().subscribe(template => {
       this.template = template;
     })
+
+    this.setModalListener();
+  }
+
+  private setModalListener() {
+    let profileButton = document.getElementById('blog-navigation');
+    console.log('blog navigation:')
+    console.log(profileButton)
   }
 
   setBlogNavigationTabActive(tabId: string) {
@@ -25,3 +33,4 @@ export class NavbarComponent {
     blogNavigationElement?.querySelector(`#${tabId}`)?.classList.add('active');
   }
 }
+

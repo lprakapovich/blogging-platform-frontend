@@ -1,0 +1,20 @@
+@use "src/utilities/variables" as v;
+
+:host ::ng-deep .navbar-modal-item {
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 2rem;
+}
+
+:host ::ng-deep .navbar-modal-item:hover {
+  cursor: pointer;
+  background: v.$extra-light-grey;
+}
+
+#navbar-modal-container {
+  width: 15rem;
+  padding: 1rem;
+  font-size: 1rem;
+  border-radius: 2rem;
+}

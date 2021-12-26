@@ -58,6 +58,12 @@
     .editor-navigation-author {
       background-color: white;
       border: none;
+      padding: 0.2rem;
+    }
+
+    .editor-navigation-author:hover {
+      background-color: v.$extra-light-grey;
+      border-radius: 1rem;
     }
   }
 }

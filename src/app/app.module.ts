@@ -31,8 +31,7 @@ import { AuthorDataComponent } from './components/blog/author-data/author-data.c
 import { BlogStatisticsDataComponent } from './components/blog/blog-statistics-data/blog-statistics-data.component';
 import { BlogPostPreviewListComponent } from './components/blog/blog-post-preview-list/blog-post-preview-list.component';
 import { ModalComponent } from './components/ui-elements/modal/modal.component';
-import { CategoriesListComponent } from './components/blog/categories-list/categories-list.component';
-import { StatusListComponent } from './components/blog/status-list/status-list.component';
+import { DefaultListComponent } from './components/ui-elements/default-list/default-list.component';
 
 @NgModule({
   declarations: [
@@ -62,8 +61,7 @@ import { StatusListComponent } from './components/blog/status-list/status-list.c
     BlogStatisticsDataComponent,
     BlogPostPreviewListComponent,
     ModalComponent,
-    CategoriesListComponent,
-    StatusListComponent,
+    DefaultListComponent,
   ],
   imports: [
     BrowserModule,
