@@ -4,10 +4,11 @@ import {Subject} from "rxjs";
 @Injectable({
   providedIn: 'root'
 })
-export class NavbarTemplateService {
+export class NavbarService {
 
   private navbarTemplate = 'default';
   private navbarTemplateChange: Subject<string> = new Subject<string>();
+  private navbarShowModalChange: Subject<boolean> = new Subject<boolean>();
 
   constructor() {
     this.navbarTemplateChange.subscribe(value => {
@@ -30,12 +31,16 @@ export class NavbarTemplateService {
     this.moveNavbarToBottom()
   }
 
-  getNavbarTemplate() {
-    return this.navbarTemplate;
-  }
-
   getNavbarTemplateChangeSubject() {
     return this.navbarTemplateChange;
+  }
+
+  getNavbarShowModalChangeSubject() {
+    return this.navbarShowModalChange;
+  }
+
+  showProfileSettingsModal(show: boolean) {
+    this.navbarShowModalChange.next(show);
   }
 
   private moveNavbarToBottom() {

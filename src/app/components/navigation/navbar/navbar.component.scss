@@ -21,7 +21,7 @@
 
 #blog-navigation,
 #editor-navigation {
-  padding: 1rem;
+  padding: 0 1rem;
   background-color: white;
 
   #blog-navigation-items {
@@ -59,6 +59,7 @@
       background-color: white;
       border: none;
       padding: 0.2rem;
+      font-size: 1rem;
     }
 
     .editor-navigation-author:hover {
@@ -73,9 +74,11 @@
     flex-direction: column;
   }
 
-  .editor-navigation-item {
-    .editor-navigation-image {
-     display: none;
+  #editor-navigation {
+    .editor-navigation-item {
+      .editor-navigation-image {
+        display: none;
+      }
     }
   }
 }

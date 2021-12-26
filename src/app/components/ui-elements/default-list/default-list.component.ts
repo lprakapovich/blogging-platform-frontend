@@ -14,5 +14,4 @@ export class DefaultListComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }

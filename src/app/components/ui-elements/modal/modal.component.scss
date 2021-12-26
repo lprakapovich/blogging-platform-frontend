@@ -1,7 +1,7 @@
 @use "src/utilities/variables" as v;
 
 :host ::ng-deep .navbar-modal-item {
-  padding: 0.5rem;
+  padding: 0.25rem;
   display: flex;
   justify-content: space-between;
   border-radius: 2rem;
@@ -13,8 +13,10 @@
 }
 
 #navbar-modal-container {
+  height: fit-content;
   width: 15rem;
-  padding: 1rem;
+  padding: 0.5rem;
   font-size: 1rem;
-  border-radius: 2rem;
+  border-radius: 1.5rem;
+  background: white;
 }

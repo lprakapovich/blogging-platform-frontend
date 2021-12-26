@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {Router} from "@angular/router";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../../../services/authentication.service";
-import {NavbarTemplateService} from "../../../services/navbar-template.service";
+import {NavbarService} from "../../../services/navbar.service";
 
 @Component({
   selector: 'app-sign-up',
@@ -19,7 +19,7 @@ export class SignUpComponent {
     private formBuilder: FormBuilder,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private navbarTemplateService: NavbarTemplateService) {
+    private navbarTemplateService: NavbarService) {
 
     this.navbarTemplateService.setDefaultTemplate();
     this.registerForm = this.formBuilder.group({

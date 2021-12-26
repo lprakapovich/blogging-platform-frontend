@@ -1,5 +1,5 @@
 import {Component, Input, OnInit, TemplateRef} from '@angular/core';
-import {NavbarTemplateService} from "../../../services/navbar-template.service";
+import {NavbarService} from "../../../services/navbar.service";
 
 @Component({
   selector: 'app-navbar',
@@ -7,30 +7,25 @@ import {NavbarTemplateService} from "../../../services/navbar-template.service";
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent {
-
   @Input()
   navbarTemplate!: TemplateRef<any>;
-
   template: string = 'default';
 
-  constructor(private navbarTemplateService: NavbarTemplateService) {
+  showModal: boolean = false;
+
+  constructor(private navbarTemplateService: NavbarService) {
     navbarTemplateService.getNavbarTemplateChangeSubject().subscribe(template => {
       this.template = template;
     })
-
-    this.setModalListener();
-  }
-
-  private setModalListener() {
-    let profileButton = document.getElementById('blog-navigation');
-    console.log('blog navigation:')
-    console.log(profileButton)
   }
 
   setBlogNavigationTabActive(tabId: string) {
     let blogNavigationElement = document.getElementById('blog-navigation');
     blogNavigationElement?.querySelector('.active')?.classList.remove('active');
     blogNavigationElement?.querySelector(`#${tabId}`)?.classList.add('active');
+
+    this.showModal = tabId == 'profile' ? !this.showModal : false;
+    this.navbarTemplateService.showProfileSettingsModal(this.showModal);
   }
 }
 

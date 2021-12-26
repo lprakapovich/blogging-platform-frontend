@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {NavbarTemplateService} from "../../../services/navbar-template.service";
+import {NavbarService} from "../../../services/navbar.service";
 
 @Component({
   selector: 'app-home',
@@ -8,7 +8,7 @@ import {NavbarTemplateService} from "../../../services/navbar-template.service";
 })
 export class HomeComponent {
 
-  constructor(private navbarTemplateService: NavbarTemplateService) {
+  constructor(private navbarTemplateService: NavbarService) {
     this.navbarTemplateService.setDefaultTemplate();
   }
 }

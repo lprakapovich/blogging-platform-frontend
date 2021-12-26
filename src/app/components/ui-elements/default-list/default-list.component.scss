@@ -22,15 +22,25 @@
   font-weight: bolder;
 }
 
+:host ::ng-deep .default-list-item {
+  margin-right: 1rem;
+}
+
 :host(.bordered) {
   .default-list-container {
     padding: 1rem 0;
-    border-top: 1px solid lightgray;
-    border-bottom: 1px solid lightgray;
+    border-top: 1px solid v.$extra-light-grey;
+    border-bottom: 1px solid v.$extra-light-grey;
   }
 }
 
 @media only screen and (max-width: 1000px) {
+  :host(.bordered) {
+    .default-list-container {
+      border: none;
+    }
+  }
+
   .default-list-container {
     font-size: 1rem;
     flex-direction: row;

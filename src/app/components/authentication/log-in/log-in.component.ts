@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthenticationService} from "../../../services/authentication.service";
-import {NavbarTemplateService} from "../../../services/navbar-template.service";
+import {NavbarService} from "../../../services/navbar.service";
 
 @Component({
   selector: 'app-log-in',
@@ -18,7 +18,7 @@ export class LogInComponent {
               private route: ActivatedRoute,
               private router: Router,
               private authenticationService: AuthenticationService,
-              private navbarTemplateService: NavbarTemplateService) {
+              private navbarTemplateService: NavbarService) {
 
     this.navbarTemplateService.setDefaultTemplate();
     this.loginForm = this.formBuilder.group({
