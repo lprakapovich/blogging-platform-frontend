@@ -78,6 +78,7 @@ export class BlogComponent implements OnInit {
         break;
       case this.BLOG_SETTINGS_MODAL_ID:
         modal.style.justifyContent = 'center';
+        modal.style.alignItems = 'center';
         break;
     }
   }

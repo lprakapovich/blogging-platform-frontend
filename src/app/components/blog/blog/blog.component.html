@@ -11,13 +11,18 @@
     </div>
     <div class="common-blog-information-items">
       <div class="blog-information-item">
-        <app-default-list [ngClass]="'bordered'"
-                          [listItems]="['Hidden', 'Draft', 'Scheduled']"></app-default-list>
+        <app-default-list [ngClass]="'bordered'">
+          <div *ngFor="let item of ['Scheduled', 'Hidden', 'Drafts']">
+            <div class="light-grey default-list-item"> {{item}}</div>
+          </div>
+        </app-default-list>
       </div>
       <div class="blog-information-item">
-        <app-default-list
-          [listItems]="['Books', 'Scenarios', 'Thoughts']">
+        <app-default-list>
           <div class="default-list-item all"> All Posts </div>
+          <div *ngFor="let item of ['Books', 'Scenarios', 'Thoughts']">
+            <div class="light-grey default-list-item"> {{item}}</div>
+          </div>
         </app-default-list>
       </div>
     </div>
@@ -40,12 +45,8 @@
     </div>
   </app-modal>
   <app-modal id="blog-settings-modal">
-    <div id="blog-settings-modal-container" class="default-modal">
-      <div>Settings modal</div>
+    <div id="blog-settings-modal-container">
+      <app-blog-settings-modal></app-blog-settings-modal>
     </div>
   </app-modal>
-
-<!--  <app-blog-settings-modal>-->
-<!--    -->
-<!--  </app-blog-settings-modal>-->
 </div>

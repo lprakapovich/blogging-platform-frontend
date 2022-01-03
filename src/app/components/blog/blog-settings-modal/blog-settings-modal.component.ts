@@ -7,9 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BlogSettingsModalComponent implements OnInit {
 
-  constructor() { }
+  selectedSection: string;
+
+  constructor() {
+    this.selectedSection = 'account';
+  }
 
   ngOnInit(): void {
   }
 
+  onSettingsSectionSelected(section: string) {
+    this.selectedSection = section;
+  }
 }

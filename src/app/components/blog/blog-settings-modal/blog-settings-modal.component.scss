@@ -1,0 +1,36 @@
+@use 'src/utilities/variables' as v;
+
+#blog-settings-modal-container {
+  display: flex;
+  padding: 1rem;
+  background-color: white;
+
+  .blog-settings-container-item {
+    padding: 0.5rem 1rem;
+  }
+
+  #settings-section-menu {
+    border-right: 0.5px solid v.$light-grey;
+  }
+
+  app-default-list {
+    .settings-section-menu-item {
+      display: flex;
+      align-items: center;
+      padding: 0.25rem;
+      border-radius: 0.5rem;
+    }
+
+    .settings-section-menu-item:hover {
+      cursor: pointer;
+      background-color: v.$extra-light-grey;
+    }
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  #blog-settings-modal-container {
+    border-radius: 1rem;
+    width: 50rem;
+  }
+}
