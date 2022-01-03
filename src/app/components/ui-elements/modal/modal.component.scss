@@ -1,10 +1,26 @@
 @use "src/utilities/variables" as v;
 
+// navbar menu modal
+
+:host ::ng-deep .default-modal {
+  background: white;
+  height: fit-content;
+  border-radius: 1rem;
+  margin: 1rem;
+}
+
+:host ::ng-deep #navbar-modal-container {
+  width: 15rem;
+  //padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+}
+
 :host ::ng-deep .navbar-modal-item {
-  padding: 0.25rem;
+  padding: 0.25rem 0.5rem;
   display: flex;
   justify-content: space-between;
-  border-radius: 2rem;
+  border-radius: 0.5rem;
 }
 
 :host ::ng-deep .navbar-modal-item:hover {
@@ -12,11 +28,17 @@
   background: v.$extra-light-grey;
 }
 
-#navbar-modal-container {
-  height: fit-content;
-  width: 15rem;
-  padding: 0.5rem;
-  font-size: 1rem;
-  border-radius: 1.5rem;
-  background: white;
+// blog settings modal
+:host ::ng-deep #blog-settings-modal-container {
+}
+
+
+@media only screen and (max-width: 1000px) {
+  :host ::ng-deep #blog-settings-modal-container {
+    background: #005ccf;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+  }
 }
