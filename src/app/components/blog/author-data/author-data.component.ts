@@ -14,7 +14,7 @@ export class AuthorDataComponent implements OnInit {
 
   ngOnInit(): void {
     const initials = this.fullName.split(' ').map(name => name[0]).join('').toUpperCase();
-    let profileImage = document.getElementById('profile-image');
+    let profileImage = document.getElementById('image');
     if (profileImage) {
       profileImage.innerHTML = initials;
     }
