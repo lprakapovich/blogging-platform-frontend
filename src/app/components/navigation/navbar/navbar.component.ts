@@ -17,15 +17,27 @@ export class NavbarComponent {
     navbarTemplateService.getNavbarTemplateChangeSubject().subscribe(template => {
       this.template = template;
     })
+
+    navbarTemplateService.getNavbarUnselectChangeSubject().subscribe(() => {
+      let blogNavigationElement = document.getElementById('blog-navigation');
+      if (blogNavigationElement) {
+        this.removeSelection(blogNavigationElement)
+      }
+    })
   }
 
   setBlogNavigationTabActive(tabId: string) {
     let blogNavigationElement = document.getElementById('blog-navigation');
-    blogNavigationElement?.querySelector('.active')?.classList.remove('active');
-    blogNavigationElement?.querySelector(`#${tabId}`)?.classList.add('active');
+    if (blogNavigationElement) {
+      this.removeSelection(blogNavigationElement)
+      blogNavigationElement?.querySelector(`#${tabId}`)?.classList.add('active');
+      this.showModal = tabId == 'profile' ? !this.showModal : false;
+      this.navbarTemplateService.showProfileSettingsModal(this.showModal);
+    }
+  }
 
-    this.showModal = tabId == 'profile' ? !this.showModal : false;
-    this.navbarTemplateService.showProfileSettingsModal(this.showModal);
+  private removeSelection(element: HTMLElement) {
+    element?.querySelector('.active')?.classList.remove('active');
   }
 }
 

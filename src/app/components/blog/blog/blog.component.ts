@@ -82,4 +82,9 @@ export class BlogComponent implements OnInit {
         break;
     }
   }
+
+  onClosed() {
+    this.showModal(false, this.BLOG_SETTINGS_MODAL_ID);
+    this.navbarService.unselectAll();
+  }
 }

@@ -1,11 +1,9 @@
 @use "src/utilities/variables" as v;
 
 :host.active,
-//:host.hover,
 :host.hover.highlighted {
   button {
     background: #eeeeee;
-    border-radius: 1rem;
   }
 }
 
@@ -32,6 +30,6 @@ button.publish-button:hover {
 button:hover {
   cursor: pointer;
   background: #eeeeee;
-  border-radius: 1rem;
+  border-radius: 0.25rem;
 }
 

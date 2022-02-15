@@ -1,35 +1,110 @@
 @use 'src/utilities/variables' as v;
 
-#blog-settings-modal-container {
+#settings-modal-container {
   display: flex;
   padding: 1rem;
   background-color: white;
+  font-size: 1rem;
 
-  .blog-settings-container-item {
-    padding: 0.5rem 1rem;
-  }
-
-  #settings-section-menu {
+  #settings-menu {
+    flex: 1;
     border-right: 0.5px solid v.$light-grey;
+    padding-right: 1rem;
+
+    app-default-list {
+      .settings-menu-item {
+        display: flex;
+        align-items: center;
+        padding: 0.25rem;
+        border-radius: 0.5rem;
+      }
+
+      .settings-menu-item:hover {
+        cursor: pointer;
+        background-color: v.$extra-light-grey;
+      }
+    }
   }
 
-  app-default-list {
-    .settings-section-menu-item {
-      display: flex;
-      align-items: center;
-      padding: 0.25rem;
-      border-radius: 0.5rem;
+  #settings-section {
+    flex: 4;
+    padding: 1rem;
+
+    #general-container {
+      width: 100%;
+
+      .general-item {
+        margin-bottom: 1rem;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .general-item:last-child {
+        margin-bottom: 0;
+      }
+
+      #profile-photo {
+        display: flex;
+        align-items: center;
+        margin-top: 1rem;
+
+        div {
+          margin-right: 1rem;
+        }
+
+        #profile-photo-image {
+          width: 5rem;
+          height: 5rem;
+          background-color: #003b85;
+          color: white;
+          border-radius: 5rem;
+        }
+      }
+
+      #general-buttons {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: end;
+
+        app-default-button {
+          margin: 0 0.5rem;
+        }
+      }
     }
 
-    .settings-section-menu-item:hover {
-      cursor: pointer;
-      background-color: v.$extra-light-grey;
+    #categories-container {
+      #new-category-container {
+        display: flex;
+        padding: 0 1rem;
+
+        #new-category-input {
+          flex: 4;
+        }
+
+        #new-category-add-btn {
+          flex: 1;
+          display: flex;
+          justify-content: end;
+        }
+      }
+
+      #existing-categories-container {
+        padding: 1rem;
+
+        .category-list-item {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+      }
     }
   }
 }
 
 @media only screen and (min-width: 1000px) {
-  #blog-settings-modal-container {
+  #settings-modal-container {
     border-radius: 1rem;
     width: 50rem;
   }

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {UiService} from "./services/ui.service";
 
 @Component({
@@ -9,6 +9,11 @@ import {UiService} from "./services/ui.service";
 export class AppComponent implements OnInit {
 
   constructor(private uiService: UiService ) {
+  }
+
+  @HostListener('document:click', ['$event'])
+  documentClick(event: any): void {
+    this.uiService.documentClickedTarget.next(event.target)
   }
 
   ngOnInit(): void {

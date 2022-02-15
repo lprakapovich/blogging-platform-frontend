@@ -6,6 +6,13 @@
 
   .blog-statistics-data-item {
     margin-right: 1rem;
+    transition: color ease 200ms;
+  }
+
+  .blog-statistics-data-item:hover {
+    color: black;
+    cursor: pointer;
+    transition: color ease 200ms;
   }
 }
 

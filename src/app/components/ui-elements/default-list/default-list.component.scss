@@ -8,13 +8,16 @@
 
   .default-list-item {
     margin-right: 1rem;
+    transition: color ease 200ms;
   }
 
   .default-list-item:hover {
     color: v.$dark-grey;
     cursor: pointer;
+    transition: color ease 200ms;
   }
 }
+
 
 :host ::ng-deep .all:hover {
   color: v.$dark-grey;
@@ -30,6 +33,12 @@
     padding: 1rem 0;
     border-top: 1px solid v.$extra-light-grey;
     border-bottom: 1px solid v.$extra-light-grey;
+  }
+}
+
+:host(.row-flex) {
+  .default-list-container {
+    flex-direction: row;
   }
 }
 

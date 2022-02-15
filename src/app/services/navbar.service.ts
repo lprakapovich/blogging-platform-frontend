@@ -9,6 +9,7 @@ export class NavbarService {
   private navbarTemplate = 'default';
   private navbarTemplateChange: Subject<string> = new Subject<string>();
   private navbarShowModalChange: Subject<boolean> = new Subject<boolean>();
+  private navbarUnselectChange: Subject<void> = new Subject<void>();
 
   constructor() {
     this.navbarTemplateChange.subscribe(value => {
@@ -18,17 +19,17 @@ export class NavbarService {
 
   setBlogTemplate() {
     this.navbarTemplateChange.next('blog');
-    this.moveNavbarToTop();
+    // this.moveNavbarToTop();
   }
 
   setEditorTemplate() {
     this.navbarTemplateChange.next('editor');
-    this.moveNavbarToTop()
+    // this.moveNavbarToTop()
   }
 
   setDefaultTemplate() {
     this.navbarTemplateChange.next('default');
-    this.moveNavbarToBottom()
+    // this.moveNavbarToBottom()
   }
 
   getNavbarTemplateChangeSubject() {
@@ -39,8 +40,16 @@ export class NavbarService {
     return this.navbarShowModalChange;
   }
 
+  getNavbarUnselectChangeSubject() {
+    return this.navbarUnselectChange;
+  }
+
   showProfileSettingsModal(show: boolean) {
     this.navbarShowModalChange.next(show);
+  }
+
+  unselectAll() {
+    this.navbarUnselectChange.next();
   }
 
   private moveNavbarToBottom() {

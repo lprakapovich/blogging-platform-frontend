@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
+import {Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UiService {
 
-  constructor() { }
+  documentClickedTarget: Subject<HTMLElement> = new Subject<HTMLElement>()
 
   onResize() {
     let navbar = document.getElementById('navbar');

@@ -4,25 +4,18 @@
       <app-author-data [fullName]="'LP'"></app-author-data>
     </div>
     <div class="blog-information-item">
-      <app-default-button (click)="onNewPostClicked()" [ngClass]="'medium animated'" label="New Post"></app-default-button>
+      <app-default-button (click)="onNewPostClicked()" [ngClass]="'medium'" label="New Post"></app-default-button>
     </div>
     <div class="blog-information-item light-grey">
      <app-blog-statistics-data></app-blog-statistics-data>
     </div>
     <div class="common-blog-information-items">
       <div class="blog-information-item">
-        <app-default-list [ngClass]="'bordered'">
-          <div *ngFor="let item of ['Scheduled', 'Hidden', 'Drafts']">
-            <div class="light-grey default-list-item"> {{item}}</div>
-          </div>
-        </app-default-list>
+        <app-default-list [listItems]="['Scheduled', 'Hidden', 'Drafts']" [ngClass]="'bordered'"></app-default-list>
       </div>
       <div class="blog-information-item">
-        <app-default-list>
+        <app-default-list [listItems]="['Books', 'Scenarios', 'Thoughts']">
           <div class="default-list-item all"> All Posts </div>
-          <div *ngFor="let item of ['Books', 'Scenarios', 'Thoughts']">
-            <div class="light-grey default-list-item"> {{item}}</div>
-          </div>
         </app-default-list>
       </div>
     </div>
@@ -45,8 +38,8 @@
     </div>
   </app-modal>
   <app-modal id="blog-settings-modal">
-    <div id="blog-settings-modal-container">
-      <app-blog-settings-modal></app-blog-settings-modal>
+    <div id="settings-modal-container">
+      <app-blog-settings-modal (closeModalEventEmitter)="onClosed()"></app-blog-settings-modal>
     </div>
   </app-modal>
 </div>

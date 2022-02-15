@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import {User} from "../models/User";
-import {BehaviorSubject, map, Observable, Subject} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
+import {RegistrationData} from "../models/RegistrationData";
+import {LoginData} from "../models/LoginData";
 
 @Injectable({
-  providedIn: 'root'
+  "providedIn": 'root'
 })
 export class AuthenticationService {
 
@@ -20,8 +22,8 @@ export class AuthenticationService {
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
-  login(username: string, password: string) {
-    return this.http.post<any>(`${this.authUrl}/login`, {username, password});
+  login(loginData: LoginData) {
+    return this.http.post<any>(`${this.authUrl}/login`, loginData);
   }
 
   logout() {
@@ -31,8 +33,8 @@ export class AuthenticationService {
     this.currentUserSubject.next(null);
   }
 
-  register(user: User): Observable<any> {
-    return this.http.post<any>(`${this.authUrl}/register`, user);
+  register(registrationData: RegistrationData): Observable<any> {
+    return this.http.post<any>(`${this.authUrl}/register`, registrationData);
   }
 
   public currentUserValue(): User {
