@@ -10,6 +10,7 @@ export class AuthorDataComponent implements OnInit {
   @Input()
   fullName!: string;
 
+
   constructor() { }
 
   ngOnInit(): void {

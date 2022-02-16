@@ -1,10 +1,10 @@
 @use "src/utilities/variables" as v;
 .blog-post-preview-container {
   border: 1px solid v.$extra-light-grey;
-  border-radius: 3rem;
-  padding: 2rem;
+  border-radius: 1rem;
+  padding: 1.5rem;
   margin: 1rem 0;
-  transition: border ease 1000ms;
+  transition: border ease 500ms;
 
   hr {
     border: 0.5px solid v.$light-grey;
@@ -20,5 +20,5 @@
 .blog-post-preview-container:hover {
   border: 1px solid v.$dark-grey;
   cursor: pointer;
-  transition: border ease 1000ms;
+  transition: border ease 500ms;
 }

@@ -1,5 +1,12 @@
 @use "src/utilities/variables" as v;
 
+:host {
+  #btn {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+  }
+}
+
 :host.large {
   #btn {
     font-size: 1.5rem;
@@ -10,9 +17,9 @@
 
 :host.medium {
   #btn {
-    font-size: 0.9rem;
+    font-size: 1rem;
     padding: 0.5rem 1rem;
-    min-width: 5rem;
+    min-width: 7rem;
     max-width: 8rem;
   }
 }

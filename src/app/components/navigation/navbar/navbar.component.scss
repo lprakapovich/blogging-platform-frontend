@@ -1,18 +1,25 @@
 @use "src/utilities/variables" as v;
 
 #default-navigation {
-  display: flex;
   padding: 0.5rem 2rem;
+  background-color: #005ccf;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  width: 100%;
 }
 
 #blog-navigation,
 #editor-navigation {
-  padding: 0 1rem;
+  position: fixed;
   background-color: white;
+  top: 0;
+  width: 100%;
+  overflow: hidden;
 
   #blog-navigation-items {
+    margin: 0 2rem;
     display: flex;
-    width: 100%;
     justify-content: end;
     justify-items: end;
   }

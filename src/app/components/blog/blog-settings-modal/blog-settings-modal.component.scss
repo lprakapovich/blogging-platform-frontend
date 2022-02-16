@@ -5,6 +5,7 @@
   padding: 1rem;
   background-color: white;
   font-size: 1rem;
+  max-height: 50%;
 
   #settings-menu {
     flex: 1;
@@ -77,26 +78,32 @@
     #categories-container {
       #new-category-container {
         display: flex;
-        padding: 0 1rem;
 
         #new-category-input {
-          flex: 4;
+          width: 100%;
         }
 
         #new-category-add-btn {
-          flex: 1;
+          margin: 0 2rem;
+          //flex: 1;
           display: flex;
-          justify-content: end;
+          align-items: center;
         }
       }
 
       #existing-categories-container {
-        padding: 1rem;
+        overflow-y: scroll;
+        max-height: 22rem;
 
         .category-list-item {
           display: flex;
           align-items: center;
           justify-content: space-between;
+          padding: 0 1rem;
+        }
+
+        .category-list-item:hover {
+          cursor: pointer;
         }
       }
     }
@@ -107,5 +114,6 @@
   #settings-modal-container {
     border-radius: 1rem;
     width: 50rem;
+    max-height: 30rem;
   }
 }

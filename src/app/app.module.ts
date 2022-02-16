@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/core/home/home.component';
-import { AboutComponent } from './components/core/about/about.component';
 import { NavbarComponent } from './components/navigation/navbar/navbar.component';
 import { H2Component } from './components/blog/editor/editor-components/h2/h2.component';
 import { H3Component } from './components/blog/editor/editor-components/h3/h3.component';
@@ -22,10 +21,8 @@ import { BlogPostPreviewComponent } from './components/blog/blog-post-preview/bl
 import { EditorComponent } from './components/blog/editor/editor/editor.component';
 import { EditorPageComponent } from './components/blog/editor/editor-page/editor-page.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { IconButtonComponent } from './components/ui-elements/plus-circle-button/icon-button.component';
 import { DropDownMenuComponent } from './components/ui-elements/drop-down-menu/drop-down-menu.component';
 import { SvgButtonComponent } from './components/ui-elements/svg-button/svg-button.component';
-import { CircleButtonComponent } from './components/ui-elements/circle-button/circle-button.component';
 import { AuthorDataComponent } from './components/blog/author-data/author-data.component';
 import { BlogStatisticsDataComponent } from './components/blog/blog-statistics-data/blog-statistics-data.component';
 import { BlogPostPreviewListComponent } from './components/blog/blog-post-preview-list/blog-post-preview-list.component';
@@ -44,7 +41,6 @@ import { InformationModalComponent } from './components/ui-elements/information-
   declarations: [
     AppComponent,
     HomeComponent,
-    AboutComponent,
     NavbarComponent,
     H2Component,
     H3Component,
@@ -58,10 +54,8 @@ import { InformationModalComponent } from './components/ui-elements/information-
     BlogPostPreviewComponent,
     EditorComponent,
     EditorPageComponent,
-    IconButtonComponent,
     DropDownMenuComponent,
     SvgButtonComponent,
-    CircleButtonComponent,
     AuthorDataComponent,
     BlogStatisticsDataComponent,
     BlogPostPreviewListComponent,
