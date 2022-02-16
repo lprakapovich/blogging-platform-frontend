@@ -1,0 +1,12 @@
+.information-modal-container {
+  padding: 0.5rem 1rem;
+  color: white;
+  background-color: #797979;
+  border-radius: 1rem;
+  font-size: 1rem;
+  font-weight: bolder;
+}
+
+.information-modal-container.hidden {
+  display: none;
+}

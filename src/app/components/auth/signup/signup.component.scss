@@ -1,0 +1,81 @@
+@use "src/utilities/variables" as v;
+
+#registration-form-container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  #registration-form-modal {
+    padding: 2rem;
+    width: fit-content;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
+    background-color: white;
+
+    #registration-form-modal-navigation {
+      display: flex;
+      justify-content: space-around;
+
+      h3.active {
+        cursor: pointer;
+      }
+    }
+
+    #registration-form-container-inputs {
+      input {
+        font-size: 1rem;
+        border-radius: 0.2rem;
+        padding: 0.75rem;
+        margin: 0.25rem 1rem;
+        text-decoration: none;
+        border: 1px solid v.$light-grey;
+        width: 20rem;
+      }
+
+      input:focus {
+        border-radius: 0.2rem;
+        outline: none !important;
+        border: 1px solid v.$dark-grey;
+      }
+
+      label::after {
+        content: "";
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        left: 0;
+        bottom: 0;
+        border-bottom: 0.5px solid v.$grey;
+        transform: translate(-100%);
+        transition: all 0.3s ease;
+      }
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+    }
+
+    .registration-button {
+      background-color: v.$dark-background;
+      color: white;
+      border: none;
+      border-radius: 2rem;
+      padding: 0.75rem 2rem;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-top: 1rem;
+    }
+
+    .registration-button.enabled:hover {
+      cursor: pointer;
+      box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.05), 0 4px 4px 0 rgba(0, 0, 0, 0.05);
+    }
+
+    .registration-button.disabled, .registration-button.disabled:hover {
+      background-color: v.$light-grey;
+      cursor: auto;
+    }
+  }
+}

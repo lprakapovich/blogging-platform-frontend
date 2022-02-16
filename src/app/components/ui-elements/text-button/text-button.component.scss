@@ -1,0 +1,16 @@
+@use 'src/utilities/variables' as v;
+
+.text-button-container {
+  color: v.$light-grey;
+  border-radius: 0.5rem;
+  display: flex;
+  justify-content: center;
+  padding: 0.25rem 0.75rem
+}
+
+.text-button-container:hover {
+  background-color: v.$extra-light-grey;
+  color: black;
+  cursor: pointer;
+  transition: background-color 500ms linear;
+}
