@@ -2,7 +2,6 @@
 #editor-container {
   display: flex;
   flex-direction: column;
-  color: v.$light-grey;
   background-color: white;
   padding-top: 10rem;
 
@@ -14,6 +13,7 @@
     span.badge[contenteditable]:empty::before {
       content: attr(data-placeholder);
       display: inline-block;
+      color: grey;
     }
 
     span {

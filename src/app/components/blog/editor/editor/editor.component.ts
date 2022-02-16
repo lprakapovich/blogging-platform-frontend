@@ -33,6 +33,5 @@ export class EditorComponent {
 
   onFocusReleased($event: string) {
     console.log(this.componentRef)
-    // console.log($event)
   }
 }
