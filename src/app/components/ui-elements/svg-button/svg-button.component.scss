@@ -30,10 +30,13 @@ button.publish-button:hover {
 button:hover {
   cursor: pointer;
   background: #eeeeee;
+}
+
+button:not(.publish-button):hover {
   border-radius: 0.25rem;
 }
 
-button:focus {
+button:not(.publish-button):focus {
   border-radius: 0.25rem;
 }
 

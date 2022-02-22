@@ -11,8 +11,12 @@ export class BlogSettingsModalComponent implements OnInit {
   closeModalEventEmitter: EventEmitter<void> = new EventEmitter<void>();
 
   @Input()
-  categories: string[] = ['Scenarios',
-    'Poems', 'Scenarios', 'Poems', 'Scenarios', 'Poems', 'Scenarios', 'Poems', 'Scenarios', 'Poems', 'Scenarios', 'Poems'];
+  categories: string[] = [
+    'Scenarios',
+    'Poems', 'Scenarios', 'Poems',
+    'Scenarios', 'Poems', 'Scenarios',
+    'Poems', 'Scenarios', 'Poems',
+    'Scenarios', 'Poems'];
 
   selectedSection: string;
 

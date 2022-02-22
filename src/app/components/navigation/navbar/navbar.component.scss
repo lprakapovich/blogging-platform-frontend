@@ -1,35 +1,30 @@
 @use "src/utilities/variables" as v;
 
-#default-navigation {
-  padding: 0.5rem 2rem;
-  background-color: #005ccf;
-  overflow: hidden;
+#default-navigation,
+#editor-navigation,
+#blog-navigation {
   position: fixed;
   top: 0;
-  width: 100%;
-}
-
-#blog-navigation,
-#editor-navigation {
-  position: fixed;
-  background-color: white;
-  top: 0;
-  width: 100%;
   overflow: hidden;
+  background: white;
+  display: flex;
+  width: 100%;
 
   #blog-navigation-items {
-    margin: 0 2rem;
-    display: flex;
     justify-content: end;
     justify-items: end;
+    width: 100%;
+  }
+
+  #blog-navigation-items,
+  #editor-navigation-items,
+  #default-navigation-items {
+    padding: 0.25rem 2rem;
+    display: flex;
   }
 }
 
 #editor-navigation {
-  display: flex;
-  justify-content: end;
-  justify-items: end;
-
   .editor-navigation-item:first-child {
     flex-grow: 1;
   }
@@ -37,6 +32,7 @@
   .editor-navigation-item {
     display: flex;
     align-items: center;
+    margin: 0 1rem;
 
     .editor-navigation-image {
       width: 2rem;
@@ -45,19 +41,19 @@
       min-height: 2rem;
       border-radius: 2rem;
       background-color: #003b85;
-      margin: 0 1rem;
     }
 
     .editor-navigation-author {
       background-color: white;
       border: none;
-      padding: 0.2rem;
+      padding: 0.25rem 1rem;
+      margin: 0 0.5rem;
       font-size: 1rem;
     }
 
     .editor-navigation-author:hover {
       background-color: v.$extra-light-grey;
-      border-radius: 1rem;
+      border-radius: 0.25rem;
     }
   }
 }

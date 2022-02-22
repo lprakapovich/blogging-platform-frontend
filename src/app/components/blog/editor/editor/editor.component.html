@@ -1,24 +1,26 @@
 <div id="editor-container">
   <div id="editor-container-header">
     <span class="badge">
-      <span #header contenteditable="true" id="header-span"
+      <span #title contenteditable="true"
+            id="title"
             class="badge"
             data-placeholder="Title of the post"
             spellcheck="false"
-            [innerText]="innerHeader"
-            (keydown.enter)="releaseInputOnEnterKeyDown(header.id)">
+            [innerText]="postTitle ? postTitle : null"
+            (keydown.enter)="releaseInputOnEnterKeyDown(title.id)">
       </span>
     </span>
   </div>
   <div #parent>
     <div>
       <span>
-        <span id="input" #input
+        <span id="content" #content
               contenteditable="true"
+              class="badge"
               spellcheck="false"
               data-placeholder="Start typing here..."
-              (keydown.enter)="releaseInputOnEnterKeyDown(input.id)"
-              [innerHTML]="innerHtml">
+              (keydown.enter)="releaseInputOnEnterKeyDown(content.id)"
+              [innerHTML]="postContent ? postContent : null">
         </span>
       </span>
     </div>

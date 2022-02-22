@@ -5,11 +5,12 @@ import {Subject} from "rxjs";
   providedIn: 'root'
 })
 export class NavbarService {
-
   private navbarTemplate = 'default';
   private navbarTemplateChange: Subject<string> = new Subject<string>();
   private navbarShowModalChange: Subject<boolean> = new Subject<boolean>();
+  private navbarShowEditorRemoveButtonChange: Subject<boolean> = new Subject<boolean>();
   private navbarUnselectChange: Subject<void> = new Subject<void>();
+  private showRemove: boolean = false;
 
   constructor() {
     this.navbarTemplateChange.subscribe(value => {
@@ -29,6 +30,18 @@ export class NavbarService {
     this.navbarTemplateChange.next('default');
   }
 
+  showProfileSettingsModal(show: boolean) {
+    this.navbarShowModalChange.next(show);
+  }
+
+  unselectAll() {
+    this.navbarUnselectChange.next();
+  }
+
+  adjustRemoveButton(show: boolean) {
+    this.navbarShowEditorRemoveButtonChange.next(show);
+  }
+
   getNavbarTemplateChangeSubject() {
     return this.navbarTemplateChange;
   }
@@ -41,11 +54,7 @@ export class NavbarService {
     return this.navbarUnselectChange;
   }
 
-  showProfileSettingsModal(show: boolean) {
-    this.navbarShowModalChange.next(show);
-  }
-
-  unselectAll() {
-    this.navbarUnselectChange.next();
+  getNavBarEditorRemoveButtonSubject() {
+    return this.navbarShowEditorRemoveButtonChange;
   }
 }

@@ -28,24 +28,26 @@
   </div>
 
   <div *ngSwitchCase="'editor'">
-    <nav id="editor-navigation">
+    <div id="editor-navigation">
       <div class="editor-navigation-item">
-        <div class="editor-navigation-image"></div>
-        <a routerlinkactive="activeButton"
-           routerLink="/blog"
-           class="editor-navigation-author"> Lizaveta Prakapovich</a>
+          <div class="editor-navigation-image"></div>
+          <a routerlinkactive="activeButton"
+             routerLink="/blog"
+             class="editor-navigation-author"> Lizaveta Prakapovich</a>
+        </div>
+        <div class="editor-navigation-item">
+          <app-svg-button [iconTemplate]="'check'"></app-svg-button>
+          <app-svg-button *ngIf="showRemoveButton" [iconTemplate]="'delete'"></app-svg-button>
+          <app-svg-button [iconTemplate]="'publish'"></app-svg-button>
+        </div>
       </div>
-      <div class="editor-navigation-item">
-        <app-svg-button [iconTemplate]="'check'"></app-svg-button>
-        <app-svg-button [iconTemplate]="'delete'"></app-svg-button>
-        <app-svg-button [iconTemplate]="'publish'"></app-svg-button>
-      </div>
-    </nav>
   </div>
 
   <div *ngSwitchDefault>
     <div id="default-navigation">
-      <div class="label"> editee. </div>
+      <div id="default-navigation-items">
+        <div class="label"> editee. </div>
+      </div>
     </div>
   </div>
 

@@ -12,6 +12,7 @@ export class NavbarComponent {
   template: string = 'default';
 
   showModal: boolean = false;
+  showRemoveButton: boolean = false;
 
   constructor(private navbarTemplateService: NavbarService) {
     navbarTemplateService.getNavbarTemplateChangeSubject().subscribe(template => {
@@ -23,6 +24,10 @@ export class NavbarComponent {
       if (blogNavigationElement) {
         this.removeSelection(blogNavigationElement)
       }
+    })
+
+    navbarTemplateService.getNavBarEditorRemoveButtonSubject().subscribe(show => {
+      this.showRemoveButton = show;
     })
   }
 
