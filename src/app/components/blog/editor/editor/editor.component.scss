@@ -2,7 +2,6 @@
 #editor-container {
   display: flex;
   flex-direction: column;
-  background-color: white;
   padding-top: 10rem;
 
   #editor-container-header {
@@ -29,6 +28,28 @@
     span:focus {
       outline: none !important;
     }
+  }
+
+  span.badge[contenteditable] {
+    display: inline-block;
+  }
+
+  span.badge[contenteditable]:empty::before {
+    content: attr(data-placeholder);
+    display: inline-block;
+    height: 100%;
+    color: grey;
+  }
+
+  span {
+    width: 100%;
+    //font-size: 20px;
+    line-height: 2rem;
+    border: none;
+  }
+
+  span:focus {
+    outline: none !important;
   }
 }
 

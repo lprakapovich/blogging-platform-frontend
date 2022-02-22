@@ -6,11 +6,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/core/home/home.component';
 import { NavbarComponent } from './components/navigation/navbar/navbar.component';
-import { H2Component } from './components/blog/editor/editor-components/h2/h2.component';
-import { H3Component } from './components/blog/editor/editor-components/h3/h3.component';
-import { PlainTextComponent } from './components/blog/editor/editor-components/plain-text/plain-text.component';
-import { NumberedComponent } from './components/blog/editor/editor-components/numbered/numbered.component';
-import { BulletedComponent } from './components/blog/editor/editor-components/bulleted/bulleted.component';
 import { BlogComponent } from './components/blog/blog/blog.component';
 import { BlogPostComponent } from './components/blog/blog-post/blog-post.component';
 import { ReactiveFormsModule } from "@angular/forms";
@@ -32,7 +27,6 @@ import { BlogSettingsModalComponent } from './components/blog/blog-settings-moda
 import { TextButtonComponent } from './components/ui-elements/text-button/text-button.component';
 import { DefaultInputComponent } from './components/ui-elements/default-input/default-input.component';
 import { DefaultSearchBarComponent } from './components/ui-elements/default-search-bar/default-search-bar.component';
-import { ConfirmActionModalComponent } from './components/ui-elements/confirm-action-modal/confirm-action-modal.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { SignupComponent } from './components/auth/signup/signup.component';
 import { InformationModalComponent } from './components/ui-elements/information-modal/information-modal.component';
@@ -42,11 +36,6 @@ import { InformationModalComponent } from './components/ui-elements/information-
     AppComponent,
     HomeComponent,
     NavbarComponent,
-    H2Component,
-    H3Component,
-    PlainTextComponent,
-    NumberedComponent,
-    BulletedComponent,
     BlogComponent,
     BlogPostComponent,
     DefaultButtonComponent,
@@ -65,7 +54,6 @@ import { InformationModalComponent } from './components/ui-elements/information-
     TextButtonComponent,
     DefaultInputComponent,
     DefaultSearchBarComponent,
-    ConfirmActionModalComponent,
     LoginComponent,
     SignupComponent,
     InformationModalComponent,

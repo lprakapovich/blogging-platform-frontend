@@ -19,17 +19,14 @@ export class NavbarService {
 
   setBlogTemplate() {
     this.navbarTemplateChange.next('blog');
-    // this.moveNavbarToTop();
   }
 
   setEditorTemplate() {
     this.navbarTemplateChange.next('editor');
-    // this.moveNavbarToTop()
   }
 
   setDefaultTemplate() {
     this.navbarTemplateChange.next('default');
-    // this.moveNavbarToBottom()
   }
 
   getNavbarTemplateChangeSubject() {
@@ -50,19 +47,5 @@ export class NavbarService {
 
   unselectAll() {
     this.navbarUnselectChange.next();
-  }
-
-  private moveNavbarToBottom() {
-    this.swapNavbarStyles('top-fixed', 'bottom-fixed')
-  }
-
-  private moveNavbarToTop() {
-    this.swapNavbarStyles('bottom-fixed', 'top-fixed')
-  }
-
-  private swapNavbarStyles(from: string, to: string) {
-    let navbar = document.getElementById('navbar');
-    navbar?.classList.remove(from);
-    navbar?.classList.add(to);
   }
 }
