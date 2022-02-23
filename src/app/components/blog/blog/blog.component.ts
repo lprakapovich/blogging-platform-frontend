@@ -87,4 +87,8 @@ export class BlogComponent implements OnInit {
     this.showModal(false, this.BLOG_SETTINGS_MODAL_ID);
     this.navbarService.unselectAll();
   }
+
+  onSearchInputEvent(inputEvent: string) {
+    console.log(inputEvent)
+  }
 }
