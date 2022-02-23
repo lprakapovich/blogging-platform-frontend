@@ -1,11 +1,21 @@
 @use "src/utilities/variables" as v;
 
+#search-bar.form-active {
+  border: 1px solid black;
+  color: black;
+  transition: color, border 0.25s ease;
+}
+
+#search-bar:not(.form-active) {
+  border: 1px solid v.$extra-light-grey;
+  color: v.$extra-light-grey;
+  transition: color, border 0.25s ease;
+}
+
 #search-bar {
   display: flex;
   align-items: center;
   border-radius: 1.5rem;
-  border: 1px solid v.$extra-light-grey;
-  color: v.$extra-light-grey;
   width: 60%;
   min-width: 10rem;
   padding: 0 0.5rem;
@@ -15,6 +25,7 @@
     border: none;
     border-radius: 1.5rem;
     width: 90%;
+    font-size: 16px;
   }
 
   input::placeholder {
@@ -23,6 +34,7 @@
 
   input:focus {
     outline: none !important;
+    color: black;
   }
 
   #clear-input-button {
@@ -42,9 +54,4 @@
     background: v.$extra-light-grey;
     cursor: pointer;
   }
-}
-
-#search-bar:focus {
-  border: 1px solid black;
-  color: black;
 }

@@ -9,13 +9,16 @@ export class SearchBarComponent {
 
   @Output() searchInputEvent: EventEmitter<string> = new EventEmitter<string>();
   searchInput: string = '';
+  formActive: boolean = false;
 
   clearInput() {
     this.searchInput = '';
+    this.formActive = false;
   }
 
   onInputChanged(event: any) {
     this.searchInput = event.target.value;
     this.searchInputEvent.emit(this.searchInput);
+    this.formActive = !!this.searchInput;
   }
 }
