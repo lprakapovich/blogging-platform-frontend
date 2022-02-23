@@ -23,12 +23,9 @@
         </div>
       </div>
       <div class="registration-form-submit-buttons">
-        <button #registrationButton
-                (click)="onSignUp()"
-                [disabled]="registerForm.invalid"
-                [ngClass]="[
-                  registerForm.invalid ? 'disabled' : 'enabled',
-                  loading ? ' registration-button loading-button' : 'registration-button']">
+        <button (click)="onSignUp()" [disabled]="registerForm.invalid"
+                [ngClass]="[registerForm.invalid ? 'disabled' : 'enabled',
+                 loading ? ' registration-button loading-button' : 'registration-button']">
           <label id="registration-button-label">Create a blog</label>
         </button>
       </div>

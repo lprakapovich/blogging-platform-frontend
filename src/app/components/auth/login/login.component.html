@@ -23,7 +23,8 @@
         <div class="login-form-submit-buttons">
           <button class="login-button"
                   [disabled]="loginForm.invalid"
-                  [ngClass]=" loginForm.invalid ? 'disabled' : 'enabled'"
+                  [ngClass]="[loginForm.invalid ? 'disabled' : 'enabled',
+                  loading ? 'login-button loading-button' : 'login-button']"
                   (click)="onLogin()">
             Login
           </button>
