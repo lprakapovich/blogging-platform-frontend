@@ -1,10 +1,10 @@
-import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, ViewChild, ViewContainerRef} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../../../services/authentication.service";
 import {NavbarService} from "../../../services/navbar.service";
 import {InformationModalService} from "../../../services/information-modal.service";
-import {Subscription, timeout} from "rxjs";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-login',
