@@ -34,7 +34,7 @@ export class SignupComponent {
     return this.registerForm.controls;
   }
 
-  onSubmitSignUp() {
+  onSignUp() {
     this.submitted = true;
     if (this.registerForm.invalid) {
       console.log('INVALID FORM')
@@ -56,7 +56,7 @@ export class SignupComponent {
       });
   }
 
-  goToLoginView() {
+  goToLogin() {
     this.router.navigate(['login'])
   }
 }

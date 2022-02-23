@@ -49,7 +49,7 @@ export class LoginComponent implements AfterViewInit, OnDestroy {
     return this.loginForm.controls;
   }
 
-  onSubmitLogin() {
+  onLogin() {
     this.submitted = true;
     this.showAlert = true;
 

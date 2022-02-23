@@ -1,11 +1,11 @@
 <div id="registration-form-container">
-  <div id="registration-form-modal">
-    <div id="registration-form-modal-navigation">
-      <h3 class="bold active" (click)="goToLoginView()"> Sign In </h3>
+  <div id="registration-form">
+    <div id="registration-form-buttons">
+      <h3 class="bold active" (click)="goToLogin()"> Sign In </h3>
       <h3 class="grey bold"> Sign Up </h3>
     </div>
-    <form [formGroup]="registerForm" (ngSubmit)="onSubmitSignUp()">
-      <div id="registration-form-container-inputs">
+    <form [formGroup]="registerForm" (ngSubmit)="onSignUp()">
+      <div id="registration-form-inputs">
         <div class="form-group">
           <input type="text" id="username"  placeholder="Username"
                  formControlName="username" autocomplete="off" required
@@ -22,8 +22,9 @@
                  class="form-control" [ngClass]="{ 'is-invalid': submitted && f['lastName'].errors }"/>
         </div>
       </div>
-      <div class="button-container">
+      <div class="registration-form-submit-buttons">
         <button class="registration-button"
+                (click)="onSignUp()"
                 [disabled]="registerForm.invalid"
                 [ngClass]=" registerForm.invalid ? 'disabled' : 'enabled'">
           Create a blog

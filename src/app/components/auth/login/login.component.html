@@ -2,13 +2,13 @@
   <app-information-modal *ngIf="showAlert" (clickEvent)="showAlert=false"
                          id="modal">Invalid credentials</app-information-modal>
   <div>
-    <div id="login-form-modal">
-      <div id="login-form-modal-navigation">
+    <div id="login-form">
+      <div id="login-form-buttons">
         <h3 class="bold grey" > Sign In </h3>
         <h3 class="bold active" (click)="goToRegisterView()"> Sign Up </h3>
       </div>
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmitLogin()">
-        <div id="login-form-container-inputs">
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+        <div id="login-form-inputs">
           <div class="form-group">
             <input type="text" id="username"  placeholder="Username"
                    formControlName="username" autocomplete="off" required
@@ -20,11 +20,11 @@
                    class="form-control" [ngClass]="{ 'is-invalid': submitted && f['password'].errors }"/>
           </div>
         </div>
-        <div class="button-container">
+        <div class="login-form-submit-buttons">
           <button class="login-button"
                   [disabled]="loginForm.invalid"
                   [ngClass]=" loginForm.invalid ? 'disabled' : 'enabled'"
-                  (click)="onSubmitLogin()">
+                  (click)="onLogin()">
             Login
           </button>
         </div>

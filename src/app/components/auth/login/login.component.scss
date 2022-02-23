@@ -12,14 +12,14 @@
     top: 5rem;
   }
 
-  #login-form-modal {
+  #login-form {
     padding: 2rem;
     width: fit-content;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 4px 8px 0 rgba(0, 0, 0, 0.1);
     border-radius: 0.5rem;
     background-color: white;
 
-    #login-form-modal-navigation {
+    #login-form-buttons {
       display: flex;
       justify-content: space-around;
 
@@ -28,7 +28,7 @@
       }
     }
 
-    #login-form-container-inputs {
+    #login-form-inputs {
       input {
         font-size: 1rem;
         border-radius: 0.2rem;
@@ -58,7 +58,7 @@
       }
     }
 
-    .button-container {
+    .login-form-submit-buttons {
       display: flex;
       justify-content: center;
     }
