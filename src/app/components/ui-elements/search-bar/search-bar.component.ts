@@ -5,11 +5,18 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './search-bar.component.html',
   styleUrls: ['./search-bar.component.scss']
 })
-export class SearchBarComponent implements OnInit {
+export class SearchBarComponent {
+
+  searchInput: string = '';
 
   constructor() { }
 
-  ngOnInit(): void {
+  clearInput() {
+    this.searchInput = '';
   }
 
+  onInputChanged(event: any) {
+    this.searchInput = event.target.value;
+    console.log(event.target.value)
+  }
 }
