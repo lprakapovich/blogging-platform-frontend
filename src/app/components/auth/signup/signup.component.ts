@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../../../services/authentication.service";
-import {NavbarService} from "../../../services/navbar.service";
+import {Subject} from "rxjs";
 
 @Component({
   selector: 'app-signup',
@@ -18,30 +18,27 @@ export class SignupComponent {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private authenticationService: AuthenticationService,
-    private navbarTemplateService: NavbarService) {
-
-    // this.navbarTemplateService.setDefaultTemplate();
+    private authenticationService: AuthenticationService) {
 
     this.registerForm = this.formBuilder.group({
       blogUri: ['', Validators.required],
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
+
   }
 
-  get f() {
+  get form() {
     return this.registerForm.controls;
   }
 
   onSignUp() {
     this.submitted = true;
     if (this.registerForm.invalid) {
-      console.log('INVALID FORM')
       return;
     }
-    this.loading = true;
 
+    this.loading = true;
     const registrationData = {
       username: this.registerForm.get('username')?.value,
       password: this.registerForm.get('password')?.value,
@@ -50,10 +47,10 @@ export class SignupComponent {
     this.authenticationService.register(registrationData).subscribe(
       response => {
         localStorage.setItem('token', response.token);
-        console.log(response.token);
       }, () => {
-        this.loading = false;
+        // handle error
       });
+
   }
 
   goToLogin() {

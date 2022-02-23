@@ -9,25 +9,27 @@
         <div class="form-group">
           <input type="text" id="username"  placeholder="Username"
                  formControlName="username" autocomplete="off" required
-                 class="form-control" [ngClass]="{ 'is-invalid': submitted && f['username'].errors }"/>
+                 class="form-control" [ngClass]="{ 'is-invalid': submitted && form['username'].errors }"/>
         </div>
         <div class="form-group">
           <input type="password" id="password" placeholder="Password"
                  formControlName="password" autocomplete="off" required
-                 class="form-control" [ngClass]="{ 'is-invalid': submitted && f['password'].errors }"/>
+                 class="form-control" [ngClass]="{ 'is-invalid': submitted && form['password'].errors }"/>
         </div>
         <div class="form-group">
           <input type="text" id="blogUri" placeholder="editee.in/@"
                  formControlName="blogUri" autocomplete="off" required
-                 class="form-control" [ngClass]="{ 'is-invalid': submitted && f['lastName'].errors }"/>
+                 class="form-control" [ngClass]="{ 'is-invalid': submitted && form['blogUri'].errors }"/>
         </div>
       </div>
       <div class="registration-form-submit-buttons">
-        <button class="registration-button"
+        <button #registrationButton
                 (click)="onSignUp()"
                 [disabled]="registerForm.invalid"
-                [ngClass]=" registerForm.invalid ? 'disabled' : 'enabled'">
-          Create a blog
+                [ngClass]="[
+                  registerForm.invalid ? 'disabled' : 'enabled',
+                  loading ? ' registration-button loading-button' : 'registration-button']">
+          <label id="registration-button-label">Create a blog</label>
         </button>
       </div>
     </form>
