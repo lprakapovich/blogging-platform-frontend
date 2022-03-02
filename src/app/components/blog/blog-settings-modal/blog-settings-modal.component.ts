@@ -7,16 +7,17 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 })
 export class BlogSettingsModalComponent implements OnInit {
 
-  @Output()
-  closeModalEventEmitter: EventEmitter<void> = new EventEmitter<void>();
+  @Output() closeModalEventEmitter: EventEmitter<void> = new EventEmitter<void>();
+  @Output() onCreatedEventEmitter: EventEmitter<void> = new EventEmitter<void>();
 
   @Input()
   categories: string[] = [
-    'Scenarios',
-    'Poems', 'Scenarios', 'Poems',
-    'Scenarios', 'Poems', 'Scenarios',
-    'Poems', 'Scenarios', 'Poems',
-    'Scenarios', 'Poems'];
+    // 'Scenarios',
+    // 'Poems', 'Scenarios', 'Poems',
+    // 'Scenarios', 'Poems', 'Scenarios',
+    // 'Poems', 'Scenarios', 'Poems',
+    // 'Scenarios', 'Poems'
+  ];
 
   selectedSection: string;
 
@@ -27,6 +28,7 @@ export class BlogSettingsModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.onCreatedEventEmitter.emit();
   }
 
   onSettingsSectionSelected(section: string) {

@@ -1,0 +1,51 @@
+@use 'src/utilities/variables' as v;
+
+.feed-container {
+  padding: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .feed-container-label {
+    font-size: 2.75rem;
+    font-weight: 800;
+    color: v.$light-grey;
+    margin: 2rem;
+  }
+
+  #search-bar {
+    width: 60%;
+    min-width: 45rem;
+    display: flex;
+    justify-self: center;
+    justify-content: center;
+    justify-items: center;
+  }
+
+  #loading::after {
+    content: "";
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    border: 2px solid transparent;
+    border-top-color: black;
+    border-radius: 50%;
+    animation: loading-spinner 5s infinite;
+  }
+}
+
+@media only screen and (max-width: 440px) {
+  .feed-container {
+    padding: 5rem 2rem;
+
+    .feed-container-label {
+      font-size: 2rem;
+    }
+  }
+}

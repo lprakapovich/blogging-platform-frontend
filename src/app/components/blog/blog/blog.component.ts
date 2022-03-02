@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {NavbarService} from "../../../services/navbar.service";
+import { ClickOutsideDirective} from "../../../directive/click-outside.directive";
 
 @Component({
   selector: 'app-blog',
@@ -90,5 +91,14 @@ export class BlogComponent implements OnInit {
 
   onSearchInputEvent(inputEvent: string) {
     console.log(inputEvent)
+  }
+
+  onClickedOutside() {
+    console.log('on clicked outside')
+    // this.onClosed();
+  }
+
+  onCreated() {
+    console.log('created')
   }
 }

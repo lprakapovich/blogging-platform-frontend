@@ -1,0 +1,12 @@
+<div class="search-result-container">
+  <div class="search-result-container-label"> Search </div>
+  <app-search-bar id="search-bar"
+                  (enterEvent)="onEnterPressed($event)"
+                  [searchInput]="searchInput"
+                  (searchInputEvent)="onSearchInputEvent($event)"></app-search-bar>
+  <div class="search-result-navigation">
+    <div class="search-result-navigation-item active">Top</div>
+    <div class="search-result-navigation-item">Blogs</div>
+    <div class="search-result-navigation-item">Posts</div>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+@use 'src/utilities/variables' as v;
+
+.search-result-container {
+  padding: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .search-result-container-label {
+    font-size: 2.75rem;
+    font-weight: 800;
+    color: v.$light-grey;
+    margin: 2rem;
+  }
+
+  #search-bar {
+    width: 60%;
+    min-width: 45rem;
+    display: flex;
+    justify-self: center;
+    justify-content: center;
+    justify-items: center;
+  }
+
+  .search-result-navigation {
+    display: flex;
+
+    .search-result-navigation-item {
+      margin: 1rem 2rem;
+      font-size: 1rem;
+      color: v.$grey;
+    }
+
+    .search-result-navigation-item:hover {
+      cursor: pointer;
+    }
+
+    .search-result-navigation-item.active {
+      color: black;
+    }
+  }
+}

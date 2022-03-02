@@ -30,6 +30,9 @@ import { DefaultSearchBarComponent } from './components/ui-elements/default-sear
 import { LoginComponent } from './components/auth/login/login.component';
 import { SignupComponent } from './components/auth/signup/signup.component';
 import { InformationModalComponent } from './components/ui-elements/information-modal/information-modal.component';
+import { ClickOutsideDirective } from './directive/click-outside.directive';
+import { FeedComponent } from './components/blog/feed/feed.component';
+import { SearchResultComponent } from './components/blog/search-result/search-result.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +60,9 @@ import { InformationModalComponent } from './components/ui-elements/information-
     LoginComponent,
     SignupComponent,
     InformationModalComponent,
+    ClickOutsideDirective,
+    FeedComponent,
+    SearchResultComponent,
   ],
   imports: [
     BrowserModule,

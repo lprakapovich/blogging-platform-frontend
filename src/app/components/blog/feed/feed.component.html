@@ -1,0 +1,14 @@
+<ng-template [ngIf]="!loading" [ngIfElse]="loadingTemplate">
+  <div class="feed-container">
+    <div class="feed-container-label"> My Feed </div>
+    <app-search-bar id="search-bar"
+                    (enterEvent)="onEnterPressed($event)"
+                    (searchInputEvent)="onSearchInputEvent($event)"></app-search-bar>
+  </div>
+</ng-template>
+
+<ng-template #loadingTemplate>
+  <div class="feed-container">
+    <div id="loading"></div>
+  </div>
+</ng-template>
