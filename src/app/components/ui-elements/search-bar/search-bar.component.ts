@@ -1,4 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Blog} from "../../../models/Blog";
+import {BlogPost} from "../../../models/BlogPost";
 
 @Component({
   selector: 'app-search-bar',

@@ -9,4 +9,51 @@
     <div class="search-result-navigation-item">Blogs</div>
     <div class="search-result-navigation-item">Posts</div>
   </div>
+ <div class="blogs-search-result search-result">
+   <div class="search-result-label"> Blogs </div>
+   <ng-template [ngIf]="blogs && blogs.length > 0" [ngIfElse]="noBlogs">
+     <div class="search-result-item"
+          *ngFor="let blog of (!!blogSearchResultLimit ? blogs.slice(0, blogSearchResultLimit) : blogs)">
+       <div class="search-result-item-wrapper">
+         <div class="blog-avatar-search-result-item"></div>
+         <div>
+           <div class="blog-name-search-result-item">{{blog.name}} </div>
+           <div class="blog-id-search-result-item">@{{blog.id}}</div>
+           <div> {{blog.description}} </div>
+         </div>
+       </div>
+     </div>
+     <div *ngIf="!!blogSearchResultLimit && (blogs.length > blogSearchResultLimit)" class="more-search-result-btn-container">
+       <app-text-button (click)="onMoreBlogsClicked()"
+         class="more-search-result-btn">
+         More {{blogs.length - blogSearchResultLimit}}
+       </app-text-button>
+     </div>
+   </ng-template>
+   <ng-template #noBlogs class="no-search-result">
+     <div class="no-search-result"> No blog matches found </div>
+   </ng-template>
+ </div>
+  <div class="posts-search-result search-result">
+    <div class="search-result-label"> Posts </div>
+    <ng-template *ngIf="posts.length > 0; else noPosts">
+      <div *ngFor="let post of (!!postSearchResultLimit ? posts.slice(0, postSearchResultLimit) : posts)">
+        <div>
+          <div></div>
+          <div>
+
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!!postSearchResultLimit && posts.length > postSearchResultLimit" class="more-search-result-btn-container">
+        <app-text-button
+          class="more-search-result-btn">
+          More {{posts.length - postSearchResultLimit}}
+        </app-text-button>
+      </div>
+    </ng-template>
+    <ng-template #noPosts>
+      <div class="no-search-result"> No post matches found </div>
+    </ng-template>
+  </div>
 </div>

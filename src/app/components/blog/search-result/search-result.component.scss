@@ -40,4 +40,61 @@
       color: black;
     }
   }
+
+  .search-result {
+    background-color: white;
+    width: 50rem;
+    margin: 1rem;
+    padding: 1rem;
+    border-radius: 1rem;
+
+    .search-result-item {
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      margin: 0.5rem 0;
+
+
+      .search-result-item-wrapper {
+        line-height: 1.75rem;
+
+        .blog-name-search-result-item {
+          font-size: 1.05rem;
+          font-weight: 650;
+        }
+
+        .blog-id-search-result-item {
+          font-size: 1rem;
+          color: v.$light-grey;
+        }
+      }
+    }
+
+    .search-result-item:hover {
+      cursor: pointer;
+      background-color: #f6f6f6;
+    }
+
+    .search-result-label {
+      font-weight: 700;
+      font-size: 1.25rem;
+    }
+
+    .no-search-result {
+      font-size: 1rem;
+      color: v.$grey;
+    }
+
+    .more-search-result-btn-container {
+      display: flex;
+      justify-content: right;
+      margin-top: 1rem;
+      border-top: 1px solid v.$extra-light-grey;
+
+      .more-search-result-btn {
+        font-size: 0.85rem;
+        font-weight: bolder;
+        margin-top: 0.5rem
+      }
+    }
+  }
 }
