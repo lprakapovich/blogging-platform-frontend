@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, OnInit, QueryList, Renderer2, ViewChildren} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, Renderer2} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Blog} from "../../../models/Blog";
 import {BlogPost} from "../../../models/BlogPost";
@@ -9,9 +9,6 @@ import {BlogPost} from "../../../models/BlogPost";
   styleUrls: ['./search-result.component.scss']
 })
 export class SearchResultComponent implements OnInit, AfterViewInit {
-
-  @ViewChildren('searchResultItemWrapper') searchResultItemWrappers!: QueryList<HTMLElement>;
-
 
   searchInput: string = '';
   blogSearchResultLimit: number = 2;
@@ -44,19 +41,10 @@ export class SearchResultComponent implements OnInit, AfterViewInit {
       .subscribe(params => {
         this.searchInput = params['search'];
       });
-
-    // console.log(((<HTMLElement>this.elementRef.nativeElement).querySelector('.search-result-item-wrapper')));
-    // let blogs = document.querySelector('.search-result-item-wrapper');
-    // console.log(this.blogs)
-    // blogs.forEach((blog: any) => {
-    //   let id = blog.id;
-    //   let initials = this.elementRef.nativeElement.querySelector('.' + id + 'blog-name-search-result-item');
-    //   console.log(initials)
-    // })
   }
 
   ngAfterViewInit(): void {
-    const blogs = this.elementRef.nativeElement.querySelectorAll('.search-result-item-wrapper');
+    const blogs = this.elementRef.nativeElement.querySelectorAll('.blog-search-result-item-wrapper');
     Array.from(blogs).forEach((blog: any) => {
       const id = blog.id;
       console.log(id);

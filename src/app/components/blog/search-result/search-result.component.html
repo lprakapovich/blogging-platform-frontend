@@ -14,7 +14,7 @@
    <ng-template [ngIf]="blogs && blogs.length > 0" [ngIfElse]="noBlogs">
      <div class="search-result-item"
           *ngFor="let blog of (!!blogSearchResultLimit ? blogs.slice(0, blogSearchResultLimit) : blogs)">
-       <div class="search-result-item-wrapper" id="{{blog.id}}">
+       <div class="blog-search-result-item-wrapper" id="{{blog.id}}">
          <app-avatar [ngClass]="'small'"></app-avatar>
          <div>
            <div class="blog-avatar-search-result-item">
@@ -40,16 +40,14 @@
  </div>
   <div class="posts-search-result search-result">
     <div class="search-result-label"> Posts </div>
-    <ng-template *ngIf="posts.length > 0; else noPosts">
+    <ng-template [ngIf]="blogs && blogs.length > 0" [ngIfElse]="noBlogs">
       <div *ngFor="let post of (!!postSearchResultLimit ? posts.slice(0, postSearchResultLimit) : posts)">
         <div>
-          <div></div>
-          <div>
+          <app-svg-button [iconTemplate]="'post'"></app-svg-button>
 
-          </div>
         </div>
       </div>
-      <div *ngIf="!!postSearchResultLimit && posts.length > postSearchResultLimit" class="more-search-result-btn-container">
+      <div *ngIf="!!postSearchResultLimit && (posts.length > postSearchResultLimit)" class="more-search-result-btn-container">
         <app-text-button
           class="more-search-result-btn">
           More {{posts.length - postSearchResultLimit}}
