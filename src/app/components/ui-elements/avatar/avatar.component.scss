@@ -1,12 +1,16 @@
 .avatar-container {
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 9rem;
   color: white;
   text-align: center;
-  font-size: 1.5rem;
-  background-color: #005ccf;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+:host.small {
+  .avatar-container {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 9rem;
+    font-size: 1.5rem;
+  }
 }

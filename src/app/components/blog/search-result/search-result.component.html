@@ -15,7 +15,7 @@
      <div class="search-result-item"
           *ngFor="let blog of (!!blogSearchResultLimit ? blogs.slice(0, blogSearchResultLimit) : blogs)">
        <div class="search-result-item-wrapper" id="{{blog.id}}">
-         <app-avatar></app-avatar>
+         <app-avatar [ngClass]="'small'"></app-avatar>
          <div>
            <div class="blog-avatar-search-result-item">
            </div>
