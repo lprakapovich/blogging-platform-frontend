@@ -8,9 +8,9 @@
   align-items: center;
 
   .search-result-container-label {
-    font-size: 2.75rem;
-    font-weight: 800;
-    color: v.$light-grey;
+    font-size: 2.25rem;
+    font-weight: 600;
+    color: black;
     margin: 2rem;
   }
 
@@ -56,6 +56,24 @@
 
       .search-result-item-wrapper {
         line-height: 1.75rem;
+        display: flex;
+
+        > div:first-of-type {
+          padding: 0.5rem;
+          //background-color: red;
+          //display: flex;
+          //align-items: center;
+
+          //.blog-avatar-search-result-item {
+          //  width: 2.5rem;
+          //  height: 2.5rem;
+          //  border-radius: 9rem;
+          //  //background-color: #03437a;
+          //  color: white;
+          //  text-align: center;
+          //  font-size: 5rem;
+          //}
+        }
 
         .blog-name-search-result-item {
           font-size: 1.05rem;
@@ -91,9 +109,13 @@
       border-top: 1px solid v.$extra-light-grey;
 
       .more-search-result-btn {
-        font-size: 0.85rem;
-        font-weight: bolder;
-        margin-top: 0.5rem
+        font-family: Inter,Helvetica Neue,Helvetica,sans-serif;
+        font-size: 14px;
+        font-style: normal;
+        white-space: nowrap;
+        font-weight: 600;
+        font-stretch: normal;
+        margin-top: 0.5rem;
       }
     }
   }

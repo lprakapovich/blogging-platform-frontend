@@ -14,10 +14,14 @@
    <ng-template [ngIf]="blogs && blogs.length > 0" [ngIfElse]="noBlogs">
      <div class="search-result-item"
           *ngFor="let blog of (!!blogSearchResultLimit ? blogs.slice(0, blogSearchResultLimit) : blogs)">
-       <div class="search-result-item-wrapper">
-         <div class="blog-avatar-search-result-item"></div>
+       <div class="search-result-item-wrapper" id="{{blog.id}}">
+         <app-avatar></app-avatar>
          <div>
-           <div class="blog-name-search-result-item">{{blog.name}} </div>
+           <div class="blog-avatar-search-result-item">
+           </div>
+         </div>
+         <div>
+           <div class="blog-name-search-result-item"> {{blog.name}} </div>
            <div class="blog-id-search-result-item">@{{blog.id}}</div>
            <div> {{blog.description}} </div>
          </div>

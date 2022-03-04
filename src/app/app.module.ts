@@ -33,6 +33,7 @@ import { InformationModalComponent } from './components/ui-elements/information-
 import { ClickOutsideDirective } from './directive/click-outside.directive';
 import { FeedComponent } from './components/blog/feed/feed.component';
 import { SearchResultComponent } from './components/blog/search-result/search-result.component';
+import { AvatarComponent } from './components/ui-elements/avatar/avatar.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { SearchResultComponent } from './components/blog/search-result/search-re
     ClickOutsideDirective,
     FeedComponent,
     SearchResultComponent,
+    AvatarComponent,
   ],
   imports: [
     BrowserModule,
