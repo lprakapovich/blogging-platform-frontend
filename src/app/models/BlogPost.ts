@@ -1,4 +1,6 @@
 export interface BlogPost {
-  title: string;
   blogId: string;
+  title: string;
+  author: string;
+  content: any;
 }

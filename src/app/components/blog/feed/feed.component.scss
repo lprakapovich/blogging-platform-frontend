@@ -38,6 +38,30 @@
     border-radius: 50%;
     animation: loading-spinner 5s infinite;
   }
+
+  .feed-grid {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(300px,1fr));
+    grid-auto-rows: 20px;
+
+    .feed-grid-item {
+      height: min-content;
+      background-color: white;
+      border-radius: 1rem;
+      transition: box-shadow ease 500ms;
+
+      .feed-grid-item-content {
+        padding: 1rem;
+      }
+    }
+
+    .feed-grid-item:hover {
+      cursor: pointer;
+      box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.05), 0 4px 20px 0 rgba(0, 0, 0, 0.05);
+      transition: box-shadow ease 500ms;
+    }
+  }
 }
 
 @media only screen and (max-width: 440px) {

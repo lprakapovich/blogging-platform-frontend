@@ -25,14 +25,14 @@ export class SearchResultComponent implements OnInit, AfterViewInit {
     {id: '2lpa', name: 'Lizaveta Prakapovich 2', description: 'descr'}];
 
   posts: BlogPost[] = [
-    {blogId: 'lprakapoich', title: '1st day of the war'},
-    {blogId: 'lprakapoich', title: '2nd day of the war'},
-    {blogId: 'lprakapoich', title: '3rd day of the war'},
-    {blogId: 'lprakapoich', title: '4th day of the war'},
-    {blogId: 'lprakapoich', title: '5th day of the war'},
-    {blogId: 'lprakapoich', title: '6th day of the war'},
-    {blogId: 'lprakapoich', title: '7th day of the war'},
-    {blogId: 'lprakapoich', title: '8th day of the war'}
+    {blogId: 'lprakapoich', title: '1st day of the war', author: "", content: ""},
+    {blogId: 'lprakapoich', title: '2nd day of the war', author: "", content: ""},
+    {blogId: 'lprakapoich', title: '3rd day of the war', author: "", content: ""},
+    {blogId: 'lprakapoich', title: '4th day of the war', author: "", content: ""},
+    {blogId: 'lprakapoich', title: '5th day of the war', author: "", content: ""},
+    {blogId: 'lprakapoich', title: '6th day of the war', author: "", content: ""},
+    {blogId: 'lprakapoich', title: '7th day of the war', author: "", content: ""},
+    {blogId: 'lprakapoich', title: '8th day of the war', author: "", content: ""}
   ];
 
   constructor(private route: ActivatedRoute,
