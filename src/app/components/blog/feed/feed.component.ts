@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, HostListener, OnInit} from '@angular/core';
 import {NavbarService} from "../../../services/navbar.service";
 import {Router} from "@angular/router";
 import {BlogPost} from "../../../models/BlogPost";
@@ -33,6 +33,11 @@ export class FeedComponent implements OnInit, AfterViewInit {
   constructor(private navbarService: NavbarService,
               private router: Router) {
     this.navbarService.setBlogTemplate()
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event:any) {
+    this.resizeAllGridItems();
   }
 
   ngAfterViewInit(): void {

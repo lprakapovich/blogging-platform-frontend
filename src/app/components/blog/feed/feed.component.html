@@ -8,9 +8,17 @@
       <div class="feed-grid-item" *ngFor="let post of posts">
         <div class="feed-grid-item-content">
           <a class="post-card">
-            <div>{{post.author}}</div>
-            <div>{{post.title}}</div>
-            <div class="post-card-content"> {{post.content}}</div>
+            <div class="post-card-header">
+              <div class="post-card-avatar"></div>
+              <div class="post-card-author-data">
+                <div class="post-card-author-name"> {{post.author}}</div>
+                <div class="post-card-blog-id">@{{post.blogId}}</div>
+              </div>
+              <div class="post-card-publication-time"> 5d </div>
+            </div>
+            <div class="post-card-content">
+              {{post.content}}
+            </div>
           </a>
         </div>
       </div>

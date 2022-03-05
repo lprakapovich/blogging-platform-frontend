@@ -73,3 +73,15 @@
     }
   }
 }
+
+@media only screen and (min-width: 1220px) {
+  .feed-grid {
+    padding: 2rem 10rem;
+  }
+}
+
+@media only screen and (max-width: 1220px) {
+  .feed-grid {
+    padding: 1rem;
+  }
+}
