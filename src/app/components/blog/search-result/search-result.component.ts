@@ -2,6 +2,7 @@ import {AfterViewInit, Component, ElementRef, OnInit, Renderer2} from '@angular/
 import {ActivatedRoute} from "@angular/router";
 import {Blog} from "../../../models/Blog";
 import {BlogPost} from "../../../models/BlogPost";
+import {NavbarService} from "../../../services/navbar.service";
 
 @Component({
   selector: 'app-search-result',
@@ -36,7 +37,7 @@ export class SearchResultComponent implements OnInit, AfterViewInit {
 
   constructor(private route: ActivatedRoute,
               private elementRef: ElementRef,
-              private renderer: Renderer2) { }
+              private navbarService: NavbarService) { }
 
   ngOnInit(): void {
     this.route
@@ -44,6 +45,8 @@ export class SearchResultComponent implements OnInit, AfterViewInit {
       .subscribe(params => {
         this.searchInput = params['search'];
       });
+
+    this.navbarService.setBlogTemplate();
   }
 
   ngAfterViewInit(): void {

@@ -46,7 +46,7 @@
       <div class="search-result-item"
            *ngFor="let post of (!!postSearchResultLimit ? posts.slice(0, postSearchResultLimit) : posts)">
         <div class="post-search-result-item-wrapper">
-          <app-svg-button [iconTemplate]="'post'"></app-svg-button>
+          <app-icon [iconTemplate]="'post'"></app-icon>
           <div>
             <div class="post-title-search-result-item">{{post.title}}</div>
             <div class="post-author-search-result-item">@{{post.blogId}}</div>
