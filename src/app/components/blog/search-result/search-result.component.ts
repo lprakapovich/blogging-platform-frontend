@@ -14,6 +14,9 @@ export class SearchResultComponent implements OnInit, AfterViewInit {
   blogSearchResultLimit: number = 2;
   postSearchResultLimit: number = 4;
 
+  blogSearchResultHidden = false;
+  postSearchResultHidden = false;
+
   blogs: Blog[] = [
     {id: '1lpa', name: 'Lizaveta Prakapovich', description: 'descr'},
     {id: '2lpa', name: '', description: 'descr'},
@@ -65,5 +68,20 @@ export class SearchResultComponent implements OnInit, AfterViewInit {
 
   onMorePostsClicked() {
     this.postSearchResultLimit = 0;
+  }
+
+  showBlogAndPostSearchResult() {
+    this.postSearchResultHidden = false;
+    this.blogSearchResultHidden = false;
+  }
+
+  hidePostSearchResult() {
+    this.postSearchResultHidden = true;
+    this.blogSearchResultHidden = false;
+  }
+
+  hideBlogSearchResult() {
+    this.blogSearchResultHidden = true;
+    this.postSearchResultHidden = false;
   }
 }

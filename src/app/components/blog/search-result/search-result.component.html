@@ -5,11 +5,12 @@
                   [searchInput]="searchInput"
                   (searchInputEvent)="onSearchInputEvent($event)"></app-search-bar>
   <div class="search-result-navigation">
-    <div class="search-result-navigation-item active">Top</div>
-    <div class="search-result-navigation-item">Blogs</div>
-    <div class="search-result-navigation-item">Posts</div>
+    <div class="search-result-navigation-item active" (click)="showBlogAndPostSearchResult()">Top</div>
+    <div class="search-result-navigation-item" (click)="hidePostSearchResult()">Blogs</div>
+    <div class="search-result-navigation-item" (click)="hideBlogSearchResult()">Posts</div>
   </div>
- <div class="blogs-search-result search-result">
+
+ <div class="blogs-search-result search-result" [hidden]="blogSearchResultHidden">
    <div class="search-result-label"> Blogs </div>
    <ng-template [ngIf]="blogs && blogs.length > 0" [ngIfElse]="noBlogs">
      <div class="search-result-item"
@@ -38,7 +39,8 @@
      <div class="no-search-result"> No blog matches found </div>
    </ng-template>
  </div>
-  <div class="posts-search-result search-result">
+
+  <div class="posts-search-result search-result" [hidden]="postSearchResultHidden">
     <div class="search-result-label"> Posts </div>
     <ng-template [ngIf]="blogs && blogs.length > 0" [ngIfElse]="noBlogs">
       <div class="search-result-item"
