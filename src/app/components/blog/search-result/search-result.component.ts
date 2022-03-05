@@ -62,4 +62,8 @@ export class SearchResultComponent implements OnInit, AfterViewInit {
   onMoreBlogsClicked() {
     this.blogSearchResultLimit = 0;
   }
+
+  onMorePostsClicked() {
+    this.postSearchResultLimit = 0;
+  }
 }

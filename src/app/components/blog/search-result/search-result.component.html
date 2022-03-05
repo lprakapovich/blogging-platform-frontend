@@ -41,14 +41,19 @@
   <div class="posts-search-result search-result">
     <div class="search-result-label"> Posts </div>
     <ng-template [ngIf]="blogs && blogs.length > 0" [ngIfElse]="noBlogs">
-      <div *ngFor="let post of (!!postSearchResultLimit ? posts.slice(0, postSearchResultLimit) : posts)">
-        <div>
+      <div class="search-result-item"
+           *ngFor="let post of (!!postSearchResultLimit ? posts.slice(0, postSearchResultLimit) : posts)">
+        <div class="post-search-result-item-wrapper">
           <app-svg-button [iconTemplate]="'post'"></app-svg-button>
-
+          <div>
+            <div class="post-title-search-result-item">{{post.title}}</div>
+            <div class="post-author-search-result-item">@{{post.blogId}}</div>
+          </div>
         </div>
       </div>
       <div *ngIf="!!postSearchResultLimit && (posts.length > postSearchResultLimit)" class="more-search-result-btn-container">
         <app-text-button
+          (click)="onMorePostsClicked()"
           class="more-search-result-btn">
           More {{posts.length - postSearchResultLimit}}
         </app-text-button>
