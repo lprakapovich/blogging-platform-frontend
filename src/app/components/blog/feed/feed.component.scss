@@ -53,6 +53,38 @@
 
       .feed-grid-item-content {
         padding: 1rem;
+
+        .post-card {
+          .post-card-header {
+            display: flex;
+
+            .post-card-avatar {
+              flex-grow: 0.5;
+            }
+
+            .post-card-author-data {
+              flex-grow: 4;
+              line-height: 1.5rem;
+
+              .post-card-blog-id {
+                font-size: 16px;
+                color: v.$light-grey;
+              }
+            }
+
+            .post-card-publication-time {
+              flex-grow: 0.5;
+              color: v.$light-grey;
+              display: flex;
+              justify-content: end;
+              font-size: 16px;
+            }
+          }
+
+          .post-card-content {
+            padding: 0.5rem;
+          }
+        }
       }
     }
 

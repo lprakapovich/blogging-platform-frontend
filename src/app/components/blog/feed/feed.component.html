@@ -9,7 +9,7 @@
         <div class="feed-grid-item-content">
           <a class="post-card">
             <div class="post-card-header">
-              <div class="post-card-avatar"></div>
+              <app-avatar class="post-card-avatar" name="{{post.author}}" [ngClass]="'small'"></app-avatar>
               <div class="post-card-author-data">
                 <div class="post-card-author-name"> {{post.author}}</div>
                 <div class="post-card-blog-id">@{{post.blogId}}</div>
@@ -22,6 +22,10 @@
           </a>
         </div>
       </div>
+    </div>
+
+    <div class="selected-post-preview">
+      Elo
     </div>
   </div>
 </ng-template>
