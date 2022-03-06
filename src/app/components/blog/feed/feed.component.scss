@@ -6,6 +6,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  transition: all ease-in-out 400ms;
 
   &.inactive {
     position: fixed;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {NavbarService} from "../../../services/navbar.service";
 
 @Component({
@@ -8,6 +8,7 @@ import {NavbarService} from "../../../services/navbar.service";
 })
 export class FeedPostPreviewComponent implements OnInit {
 
+  @Output() closeFeedPostPreview: EventEmitter<void> = new EventEmitter<void>();
   postContent: any;
 
   constructor(private navbarTemplateService: NavbarService) {
@@ -17,5 +18,9 @@ export class FeedPostPreviewComponent implements OnInit {
   ngOnInit(): void {
     this.navbarTemplateService.setBlogTemplate();
     this.postContent = '<p> Elo </p> <p> Elo </p><p> Elo </p><p> Elo </p><p> Elo </p><p> Elo </p><p> Elo </p><p> Elo </p><p> Elo </p><p> Elo </p><p> Elo </p><p> Elo </p><p> Elo </p><p> Elo </p><p> Elo </p><p> Elo </p><p> Elo </p><p> Elo </p><p> Elo </p><p> Elo </p>';
+  }
+
+  onClose() {
+    this.closeFeedPostPreview.emit();
   }
 }
