@@ -1,0 +1,46 @@
+.feed-post-preview-container {
+  height: 100vh;
+  max-height: fit-content;
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  background: rgba(238, 238, 238, 0.7);
+
+  .feed-post-preview-slide {
+    width: 60%;
+    background-color: white;
+    padding: 2rem;
+    box-shadow: -22px 0 74px rgba(0,0,0,.14);
+    transition: all ease-in-out 600ms;
+    overflow-y: scroll;
+
+
+    .feed-post-preview-header {
+      display: flex;
+      align-items: center;
+      font-size: 1rem;
+
+      * {
+        margin: 0 0.5rem;
+      }
+
+      app-svg-button {
+        margin-left: auto;
+      }
+
+      span.icon {
+        color: grey;
+      }
+    }
+  }
+
+  .feed-post-preview-article {
+    padding: 2.5rem;
+
+    .feed-post-preview-title {
+      font-size: 2rem;
+      font-weight: 800;
+    }
+
+  }
+}

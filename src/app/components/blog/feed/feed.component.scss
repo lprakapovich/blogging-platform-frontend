@@ -7,6 +7,12 @@
   justify-content: center;
   align-items: center;
 
+  &.inactive {
+    position: fixed;
+    transition: all ease-in-out 600ms;
+    transform: translate(-20%,0)
+  }
+
   .feed-container-label {
     font-size: 2.75rem;
     font-weight: 700;
@@ -94,6 +100,13 @@
       transition: box-shadow ease 500ms;
     }
   }
+}
+
+.feed-post-preview-modal-container {
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  position: fixed;
 }
 
 @media only screen and (max-width: 440px) {

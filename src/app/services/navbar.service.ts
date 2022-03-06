@@ -10,7 +10,6 @@ export class NavbarService {
   private navbarShowModalChange: Subject<boolean> = new Subject<boolean>();
   private navbarShowEditorRemoveButtonChange: Subject<boolean> = new Subject<boolean>();
   private navbarUnselectChange: Subject<void> = new Subject<void>();
-  private showRemove: boolean = false;
 
   constructor() {
     this.navbarTemplateChange.subscribe(value => {
@@ -54,7 +53,7 @@ export class NavbarService {
     return this.navbarUnselectChange;
   }
 
-  getNavBarEditorRemoveButtonSubject() {
+  getNavbarEditorRemoveButtonSubject() {
     return this.navbarShowEditorRemoveButtonChange;
   }
 }

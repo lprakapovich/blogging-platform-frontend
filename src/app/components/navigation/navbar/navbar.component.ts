@@ -7,10 +7,8 @@ import {NavbarService} from "../../../services/navbar.service";
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent {
-  @Input()
-  navbarTemplate!: TemplateRef<any>;
-  template: string = 'default';
 
+  template: string = 'default';
   showModal: boolean = false;
   showRemoveButton: boolean = false;
 
@@ -26,7 +24,7 @@ export class NavbarComponent {
       }
     })
 
-    navbarTemplateService.getNavBarEditorRemoveButtonSubject().subscribe(show => {
+    navbarTemplateService.getNavbarEditorRemoveButtonSubject().subscribe(show => {
       this.showRemoveButton = show;
     })
   }

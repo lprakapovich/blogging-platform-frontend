@@ -1,11 +1,11 @@
 <ng-template [ngIf]="!loading" [ngIfElse]="loadingTemplate">
-  <div class="feed-container">
+  <div class="feed-container" aria-disabled="true" [ngClass]="showPostPreview ? 'inactive' : 'active'">
     <div class="feed-container-label"> My Feed </div>
     <app-search-bar id="search-bar"
                     (enterEvent)="onEnterPressed($event)"
                     (searchInputEvent)="onSearchInputEvent($event)"></app-search-bar>
     <div class="feed-grid">
-      <div class="feed-grid-item" *ngFor="let post of posts">
+      <div class="feed-grid-item" *ngFor="let post of posts" (click)="openPostPreview(post)">
         <div class="feed-grid-item-content">
           <a class="post-card">
             <div class="post-card-header">
@@ -23,10 +23,9 @@
         </div>
       </div>
     </div>
-
-    <div class="selected-post-preview">
-      Elo
-    </div>
+  </div>
+  <div class="feed-post-preview-modal-container" [hidden]="!showPostPreview">
+    <app-feed-post-preview> </app-feed-post-preview>
   </div>
 </ng-template>
 
