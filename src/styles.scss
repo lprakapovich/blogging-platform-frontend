@@ -47,9 +47,9 @@ html, body {
 
 @keyframes loading-spinner {
   from {
-    transform:  rotate(0turn);
+    transform:  rotate(0);
   }
   to {
-    transform: rotate(2turn);
+    transform: rotate(3turn);
   }
 }

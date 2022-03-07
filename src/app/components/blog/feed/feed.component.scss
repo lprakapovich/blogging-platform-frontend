@@ -40,10 +40,12 @@
     right: 0;
     bottom: 0;
     margin: auto;
-    border: 2px solid transparent;
+    border: 1px solid transparent;
     border-top-color: black;
+    border-right-color: black;
+    border-bottom-color: black;
     border-radius: 50%;
-    animation: loading-spinner 5s infinite;
+    animation: loading-spinner 3s infinite;
   }
 
   .feed-grid {
@@ -90,6 +92,12 @@
 
           .post-card-content {
             padding: 0.5rem;
+
+            .post-card-title {
+              font-size: 1.25rem;
+              font-weight: 750;
+              margin: 0.5rem 0;
+            }
           }
         }
       }

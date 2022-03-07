@@ -4,7 +4,7 @@
       <app-avatar class="post-author-avatar" [ngClass]="'small'" [name]="'Jana Frank'"> </app-avatar>
       <div class="post-author-name"> Jana Frank (Miu Mau) </div>
       <div class="post-category"> <span class="icon"> &#8594; </span> Reflections </div>
-      <app-svg-button [iconTemplate]="'open-post'"></app-svg-button>
+      <app-svg-button (click)="openPost()" [iconTemplate]="'open-post'"></app-svg-button>
       <app-text-button (click)="onClose()"> Close </app-text-button>
     </div>
     <div class="feed-post-preview-article">

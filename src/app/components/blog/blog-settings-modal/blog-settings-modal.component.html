@@ -77,24 +77,26 @@
             </div>
           </div>
           <div id="existing-categories-container">
-            <ng-container *ngIf="categories.length; else emptyCategoryList">
-              <div *ngFor="let category of categories" class="category-list-item">
-                <div class="bold">{{category}}</div>
-                <div class="category-actions">
-                  <app-svg-button [iconTemplate]="'edit'"></app-svg-button>
-                  <app-svg-button [iconTemplate]="'delete'" (click)="deleteCategory(category)"></app-svg-button>
+            <ng-container *ngIf="categories.length > 0; else emptyCategoryList">
+              <div class="category-list">
+                <div *ngFor="let category of categories" class="category-list-item">
+                  <div class="bold">{{category}}</div>
+                  <div class="category-actions">
+                    <app-svg-button [iconTemplate]="'edit'"></app-svg-button>
+                    <app-svg-button [iconTemplate]="'delete'" (click)="deleteCategory(category)"></app-svg-button>
+                  </div>
                 </div>
               </div>
             </ng-container>
+            <ng-template #emptyCategoryList>
+              <div class="grey category-empty-list">
+                Sections help designate posts by subject, which helps the reader navigate the blog.
+                You can create a maximum of 10 categories. Pick one of the suggested category or create your own.
+              </div>
+            </ng-template>
           </div>
         </div>
       </div>
     </ng-container>
   </div>
 </div>
-<ng-template #emptyCategoryList>
-  <div class="grey">
-    Sections help designate posts by subject, which helps the reader navigate the blog.
-    You can create a maximum of 10 categories. Pick one of the suggested category or create your own.
-  </div>
-</ng-template>

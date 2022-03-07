@@ -91,18 +91,26 @@
       }
 
       #existing-categories-container {
-        overflow-y: scroll;
-        max-height: 22rem;
+        padding: 1rem 0;
 
-        .category-list-item {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 0 1rem;
+        .category-list {
+          overflow-y: scroll;
+          max-height: 22rem;
+
+          .category-list-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1rem;
+          }
+
+          .category-list-item:hover {
+            cursor: pointer;
+          }
         }
 
-        .category-list-item:hover {
-          cursor: pointer;
+        .category-empty-list {
+          padding: 0.5rem;
         }
       }
     }

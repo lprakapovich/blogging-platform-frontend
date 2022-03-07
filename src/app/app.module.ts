@@ -7,7 +7,6 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './components/core/home/home.component';
 import { NavbarComponent } from './components/navigation/navbar/navbar.component';
 import { BlogComponent } from './components/blog/blog/blog.component';
-import { BlogPostComponent } from './components/blog/blog-post/blog-post.component';
 import { ReactiveFormsModule } from "@angular/forms";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { DefaultButtonComponent } from './components/ui-elements/default-button/default-button.component';
@@ -36,6 +35,7 @@ import { SearchResultComponent } from './components/blog/search-result/search-re
 import { AvatarComponent } from './components/ui-elements/avatar/avatar.component';
 import { IconComponent } from './components/ui-elements/icon/icon.component';
 import { FeedPostPreviewComponent } from './components/blog/feed-post-preview/feed-post-preview.component';
+import {BlogPostComponent} from "./components/blog/blog-post/blog-post.component";
 
 @NgModule({
   declarations: [

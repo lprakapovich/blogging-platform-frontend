@@ -1,5 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {NavbarService} from "../../../services/navbar.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-feed-post-preview',
@@ -11,7 +12,8 @@ export class FeedPostPreviewComponent implements OnInit {
   @Output() closeFeedPostPreview: EventEmitter<void> = new EventEmitter<void>();
   postContent: any;
 
-  constructor(private navbarTemplateService: NavbarService) {
+  constructor(private navbarTemplateService: NavbarService,
+              private router: Router) {
 
   }
 
@@ -22,5 +24,11 @@ export class FeedPostPreviewComponent implements OnInit {
 
   onClose() {
     this.closeFeedPostPreview.emit();
+  }
+
+  openPost() {
+    const blogId = 'lprakapovich';
+    const postId = '23ekapvo0v98';
+    this.router.navigate([`publication/@${blogId}/${postId}`])
   }
 }
