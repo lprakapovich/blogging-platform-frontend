@@ -4,14 +4,16 @@
   display: flex;
   flex-direction: column;
 
-  .username {
-    color: v.$light-grey;
-    font-size: 1.3rem;
-  }
+  .credentials {
+    .username {
+      color: v.$light-grey;
+      font-size: 1.3rem;
+    }
 
-  .full-name {
-    font-size: 1.5rem;
-    font-weight: bolder;
+    .full-name {
+      font-size: 1.5rem;
+      font-weight: bolder;
+    }
   }
 
   .profile-image {
@@ -28,6 +30,11 @@
       text-align: center;
       font-size: 5rem;
     }
+  }
+
+  .description {
+    padding: 1rem 0;
+    line-height: 1.5rem;
   }
 }
 

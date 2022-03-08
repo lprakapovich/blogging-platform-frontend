@@ -12,7 +12,7 @@ const routes: Routes = [
   {path: "home", component: FeedComponent},
   {path: "register", component: SignupComponent},
   {path: "login", component: LoginComponent},
-  {path: "blog", component: BlogComponent},
+  {path: "blog/:blogId", component: BlogComponent},
   {path: "editor-page", component: EditorPageComponent},
   {path: "search", component: SearchResultComponent},
   {path: "publication/:blogId/:postId", component: BlogPostComponent},

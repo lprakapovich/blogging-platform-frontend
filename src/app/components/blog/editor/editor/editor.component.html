@@ -1,7 +1,8 @@
 <div id="editor-container">
   <div id="editor-container-header">
     <span class="badge">
-      <span #title contenteditable="true"
+      <span #title
+            contenteditable="true"
             id="title"
             class="badge"
             data-placeholder="Title of the post"
@@ -19,8 +20,12 @@
               class="badge"
               spellcheck="false"
               data-placeholder="Start typing here..."
-              (keydown.enter)="releaseInputOnEnterKeyDown(content.id)"
-              [innerHTML]="postContent ? postContent : null">
+              (focus)="onFocus()"
+              (focusout)="onFocusLost()"
+              (keyup)="onKeyUp($event)"
+              (keydown.enter)="releaseInputOnEnterKeyDown(content.id); lostFocusOnEnter();"
+              [innerHTML]="postContent ?  postContent : null"
+        (input)="onKeyUp(this)">
         </span>
       </span>
     </div>

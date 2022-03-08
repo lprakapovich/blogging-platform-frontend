@@ -1,19 +1,21 @@
 <div id="blog-container">
   <div id="blog-information">
-    <div class="blog-information-item">
-      <app-author-data [fullName]="'LP'"></app-author-data>
+    <app-author-data
+      class="author-data blog-section" [fullName]="'LP'">
+    </app-author-data>
+    <app-default-button
+        class="new-post blog-section"
+        (click)="onNewPostClicked()" [ngClass]="'medium'" [label]="'New Post'">
+    </app-default-button>
+    <div class="description blog-section">
+      Иллюстратор и муза-партизан. В вечном поиске источников энергии и вдохновения.
     </div>
-    <div class="blog-information-item">
-      <app-default-button (click)="onNewPostClicked()" [ngClass]="'medium'" [label]="'New Post'"></app-default-button>
-    </div>
-    <div class="blog-information-item light-grey">
-     <app-blog-statistics-data></app-blog-statistics-data>
-    </div>
-    <div class="common-blog-information-items">
-      <div class="blog-information-item">
+    <app-blog-statistics-data class="blog-section light-grey"></app-blog-statistics-data>
+    <div class="common-blog-filters">
+      <div class="blog-section">
         <app-default-list [listItems]="['Scheduled', 'Hidden', 'Drafts']" [ngClass]="'bordered'"></app-default-list>
       </div>
-      <div class="blog-information-item">
+      <div class="blog-section">
         <app-default-list [listItems]="['Books', 'Scenarios', 'Thoughts']">
           <div class="default-list-item all"> All Posts </div>
         </app-default-list>

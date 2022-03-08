@@ -11,7 +11,8 @@
         <app-svg-button id="news-feed"
                         [ngClass]="'highlighted'"
                         (click)="setBlogNavigationTabActive('news-feed')"
-                        [iconTemplate]="'news-feed'">
+                        [iconTemplate]="'news-feed'"
+                        routerLink="/feed">
         </app-svg-button>
         <app-svg-button id="notification"
                         [ngClass]="'highlighted'"
@@ -21,7 +22,8 @@
         <app-svg-button id="profile"
                         [ngClass]="'highlighted'"
                         (click)="setBlogNavigationTabActive('profile')"
-                        [iconTemplate]="'profile'">
+                        [iconTemplate]="'profile'"
+                        routerLink="/blog/@lprakapovich">
         </app-svg-button>
       </div>
     </nav>
@@ -32,7 +34,7 @@
       <div class="editor-navigation-item">
           <div class="editor-navigation-image"></div>
           <a routerlinkactive="activeButton"
-             routerLink="/blog"
+             routerLink="/blog/@lprakapovich"
              class="editor-navigation-author"> Lizaveta Prakapovich</a>
         </div>
         <div class="editor-navigation-item">

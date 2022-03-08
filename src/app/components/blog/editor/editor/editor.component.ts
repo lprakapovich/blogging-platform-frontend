@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
 import {NavbarService} from "../../../../services/navbar.service";
 
 @Component({
@@ -9,19 +9,36 @@ import {NavbarService} from "../../../../services/navbar.service";
 export class EditorComponent implements AfterViewInit {
 
   @Input() postTitle = '';
-  @Input() postContent = '';
+  @Input() postContent = 'cxzjkcbzxkjc<br>vfjkdvbkdfjv<br>vkjfbvfbvkfdnv<br>';
+
+  @ViewChild('content') content!: ElementRef;
+  @ViewChild('title') title!: ElementRef;
+
+  input!: string;
 
   public constructor(private navbarService: NavbarService) {}
 
   releaseInputOnEnterKeyDown(componentId: string) {
     if (componentId == 'title') {
-      document.getElementById(componentId)?.blur();
-      document.getElementById('content')?.innerHTML.trimStart();
-      document.getElementById('content')?.focus();
+      this.title.nativeElement.blur();
+      this.content.nativeElement.innerHTML.trimStart();
+      this.content.nativeElement.focus();
     }
   }
 
   ngAfterViewInit(): void {
-    this.navbarService.adjustRemoveButton(!!this.postContent && !!this.postTitle);
+    // this.navbarService.adjustRemoveButton(!!this.postContent && !!this.postTitle);
+  }
+
+  onKeyUp(event: any) {
+  }
+
+  onFocus() {
+  }
+
+  onFocusLost() {
+  }
+
+  lostFocusOnEnter() {
   }
 }
