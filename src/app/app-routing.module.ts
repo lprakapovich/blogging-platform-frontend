@@ -15,6 +15,7 @@ const routes: Routes = [
   {path: "blog/:blogId", component: BlogComponent},
   {path: "editor-page", component: EditorPageComponent},
   {path: "search", component: SearchResultComponent},
+  {path: "feed", component: FeedComponent},
   {path: "publication/:blogId/:postId", component: BlogPostComponent},
   {path: '', component: FeedComponent}
 ];
