@@ -1,20 +1,23 @@
 import {AfterViewInit, Component, OnDestroy, ViewChild, ViewContainerRef} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import {AuthenticationService} from "../../../services/authentication.service";
 import {NavbarService} from "../../../services/navbar.service";
 import {InformationModalService} from "../../../services/information-modal.service";
-import {Subscription} from "rxjs";
-
+import {Observable, Subscription} from "rxjs";
+import {Store} from "@ngrx/store";
+import {AppState, isLoading} from "../../../store/app.state";
+import { Login } from "../../../store/actions/auth.actions"
+import * as FromRoot from "../../../store/app.state"
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements AfterViewInit, OnDestroy {
+export class LoginComponent implements OnDestroy {
+
+  isLoading$: Observable<boolean> = this.store.select(FromRoot.isLoading);
 
   loginForm: FormGroup;
-  loading = false;
   submitted = false;
   showAlert = false;
 
@@ -25,9 +28,9 @@ export class LoginComponent implements AfterViewInit, OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private authenticationService: AuthenticationService,
     private navbarTemplateService: NavbarService,
-    private informationModalService: InformationModalService) {
+    private informationModalService: InformationModalService,
+    private store: Store<AppState>) {
 
     this.navbarTemplateService.setDefaultTemplate();
     this.loginForm = this.formBuilder.group({
@@ -36,10 +39,6 @@ export class LoginComponent implements AfterViewInit, OnDestroy {
     });
 
   }
-
-  ngAfterViewInit(): void {
-        // this.showModal();
-    }
 
   ngOnDestroy(): void {
         this.sub?.unsubscribe();
@@ -57,18 +56,13 @@ export class LoginComponent implements AfterViewInit, OnDestroy {
       console.log('invalid form')
       return;
     }
-    this.loading = true;
+
     const loginData = {
        username: this.loginForm.get('username')?.value,
        password: this.loginForm.get('password')?.value
     }
-    this.authenticationService.login(loginData).subscribe(response => {
-        localStorage.setItem('token', response.token);
-        console.log(response.token);
-      }, (error) => {
-        this.showAlert = true;
-        this.loading = false;
-      });
+
+    this.store.dispatch(Login(loginData));
   }
 
   private showModal() {

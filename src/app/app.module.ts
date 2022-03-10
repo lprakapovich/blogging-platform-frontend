@@ -36,6 +36,10 @@ import { AvatarComponent } from './components/ui-elements/avatar/avatar.componen
 import { IconComponent } from './components/ui-elements/icon/icon.component';
 import { FeedPostPreviewComponent } from './components/blog/feed-post-preview/feed-post-preview.component';
 import {BlogPostComponent} from "./components/blog/blog-post/blog-post.component";
+import { StoreModule } from '@ngrx/store';
+import {AuthEffects} from "./store/effects/auth.effects";
+import {EffectsModule} from "@ngrx/effects";
+import {authReducer} from "./store/reducers/auth.reducers";
 
 @NgModule({
   declarations: [
@@ -75,7 +79,10 @@ import {BlogPostComponent} from "./components/blog/blog-post/blog-post.component
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    StoreModule.forRoot( {auth: authReducer}),
+    EffectsModule.forRoot([AuthEffects, ]),
+
   ],
   providers: [HttpClient, HttpClientModule],
   bootstrap: [AppComponent],

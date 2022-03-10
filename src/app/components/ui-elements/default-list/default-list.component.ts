@@ -13,5 +13,8 @@ export class DefaultListComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+
   }
+
+
 }

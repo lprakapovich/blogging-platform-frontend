@@ -5,16 +5,17 @@ import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {RegistrationData} from "../models/RegistrationData";
 import {LoginData} from "../models/LoginData";
+import {AuthResponse} from "../models/AuthResponse";
 
 @Injectable({
   "providedIn": 'root'
 })
-export class AuthenticationService {
+export class AuthService {
 
   authUrl = `${environment.apiUrl}/auth`;
 
   private currentUserSubject: BehaviorSubject<User>;
-  private currentUser: Observable<User>;
+  private currentUser: Observable<User> | null;
 
   constructor(private http: HttpClient) {
     const localStorageUser = localStorage.getItem('currentUser');
@@ -22,19 +23,19 @@ export class AuthenticationService {
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
-  login(loginData: LoginData) {
-    return this.http.post<any>(`${this.authUrl}/login`, loginData);
+  login(loginData: LoginData): Observable<AuthResponse> {
+    const url = `${this.authUrl}/login`;
+    return this.http.post<any>(url, loginData);
+  }
+
+  register(registrationData: RegistrationData): Observable<AuthResponse> {
+    const url = `${this.authUrl}/register`;
+    return this.http.post<any>(url, registrationData);
   }
 
   logout() {
     localStorage.removeItem('currentUser');
     localStorage.removeItem('token');
-    // @ts-ignore
-    this.currentUserSubject.next(null);
-  }
-
-  register(registrationData: RegistrationData): Observable<any> {
-    return this.http.post<any>(`${this.authUrl}/register`, registrationData);
   }
 
   public currentUserValue(): User {

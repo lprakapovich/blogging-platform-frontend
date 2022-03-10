@@ -1,11 +1,4 @@
 export class User {
-  get token(): string {
-    return this._token;
-  }
-
-  set token(value: string) {
-    this._token = value;
-  }
 
   private _id!: number;
   private _username!: string;
@@ -13,6 +6,14 @@ export class User {
   private _firstName!: string;
   private _lastName!: string;
   private _token!: string;
+
+  get token(): string {
+    return this._token;
+  }
+
+  set token(value: string) {
+    this._token = value;
+  }
 
   set id(value: number) {
     this._id = value;

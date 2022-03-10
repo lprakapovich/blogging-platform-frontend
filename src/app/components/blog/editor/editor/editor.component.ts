@@ -9,7 +9,7 @@ import {NavbarService} from "../../../../services/navbar.service";
 export class EditorComponent implements AfterViewInit {
 
   @Input() postTitle = '';
-  @Input() postContent = 'cxzjkcbzxkjc<br>vfjkdvbkdfjv<br>vkjfbvfbvkfdnv<br>';
+  @Input() postContent = 'First line<br>Second line<br>Third line<br>';
 
   @ViewChild('content') content!: ElementRef;
   @ViewChild('title') title!: ElementRef;
