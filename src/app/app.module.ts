@@ -40,6 +40,8 @@ import { StoreModule } from '@ngrx/store';
 import {AuthEffects} from "./store/effects/auth.effects";
 import {EffectsModule} from "@ngrx/effects";
 import {authReducer} from "./store/reducers/auth.reducers";
+import {environment} from "../environments/environment";
+import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 
 @NgModule({
   declarations: [
@@ -82,6 +84,12 @@ import {authReducer} from "./store/reducers/auth.reducers";
     FontAwesomeModule,
     StoreModule.forRoot( {auth: authReducer}),
     EffectsModule.forRoot([AuthEffects, ]),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production,
+      autoPause: true,
+    }),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
 
   ],
   providers: [HttpClient, HttpClientModule],

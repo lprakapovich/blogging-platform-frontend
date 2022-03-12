@@ -1,40 +1,35 @@
 import {Injectable} from "@angular/core";
 import {AuthService} from "../../services/auth.service";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
-import {Router} from "@angular/router";
-import {catchError, map, of, switchMap, tap} from "rxjs";
-import {AuthActionTypes} from "../actions/auth.actions"
-import { LoginFailure, LoginSuccess} from "../actions/auth.actions";
+import {catchError, debounceTime, map, of, switchMap} from "rxjs";
+import {AuthActionTypes, loginFailure, loginSuccess} from "../actions/auth.actions"
+import {Store} from "@ngrx/store";
+import {LoginData} from "../../models/LoginData";
 
 @Injectable()
 export class AuthEffects {
 
   constructor(
+    private store: Store,
     private actions$: Actions,
-    private authService: AuthService,
-    private router: Router) {
+    private authService: AuthService) {
   }
 
   login$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActionTypes.LOGIN),
-      map((action: {payload: any}) => action.payload),
-      switchMap((payload: any) => {
-        const loginData = {
-          username: payload.username,
-          password: payload.password
-        }
-        return this.authService.login(loginData)
+      debounceTime(500),
+      map((action: any) => action.payload),
+      switchMap((payload: LoginData) => {
+        return this.authService.login(payload)
           .pipe(
-            map(response => LoginSuccess(
+            map(response => loginSuccess(
               {
                 token: response.token
               }
             )),
-            catchError(error => of(LoginFailure(
-              {
-                error: error
-              })))
+            catchError(error => of(loginFailure({ error }
+            )))
           )
       })
     )
@@ -43,9 +38,7 @@ export class AuthEffects {
   loginSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActionTypes.LOGIN_SUCCESS),
-      tap((response) => {
-        console.log(response)
-      })
+      debounceTime(1000)
     ),
     {
       dispatch: false
@@ -56,6 +49,15 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthActionTypes.LOGIN_FAILURE)
     ),
+    {
+      dispatch: false
+    }
+  )
+
+  resetLoginFailure$ = createEffect(() =>
+      this.actions$.pipe(
+        ofType(AuthActionTypes.RESET_LOGIN_FAILURE),
+      ),
     {
       dispatch: false
     }

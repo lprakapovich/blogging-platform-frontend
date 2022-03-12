@@ -1,36 +1,36 @@
-import {AfterViewInit, Component, OnDestroy, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {NavbarService} from "../../../services/navbar.service";
 import {InformationModalService} from "../../../services/information-modal.service";
 import {Observable, Subscription} from "rxjs";
 import {Store} from "@ngrx/store";
-import {AppState, isLoading} from "../../../store/app.state";
-import { Login } from "../../../store/actions/auth.actions"
-import * as FromRoot from "../../../store/app.state"
+import {selectIsLoading, selectLoginError} from "../../../store/app.state";
+import {login, resetLoginFailure} from "../../../store/actions/auth.actions"
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnDestroy {
+export class LoginComponent implements OnInit, OnDestroy {
 
-  isLoading$: Observable<boolean> = this.store.select(FromRoot.isLoading);
+  isLoading$: Observable<boolean>;
+  isLoginFormSubmitted$: Observable<boolean>;
+  showLoginError$: Observable<boolean>;
 
   loginForm: FormGroup;
-  submitted = false;
-  showAlert = false;
 
   @ViewChild('modal', { read: ViewContainerRef })
-  entry!: ViewContainerRef;
-  sub!: Subscription;
+  entry: ViewContainerRef;
+  sub: Subscription;
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private navbarTemplateService: NavbarService,
     private informationModalService: InformationModalService,
-    private store: Store<AppState>) {
+    private store: Store) {
 
     this.navbarTemplateService.setDefaultTemplate();
     this.loginForm = this.formBuilder.group({
@@ -38,6 +38,11 @@ export class LoginComponent implements OnDestroy {
       password: ['', Validators.required]
     });
 
+  }
+
+  ngOnInit(): void {
+    this.isLoading$ = this.store.select(selectIsLoading);
+    this.showLoginError$ = this.store.select(selectLoginError)
   }
 
   ngOnDestroy(): void {
@@ -49,27 +54,27 @@ export class LoginComponent implements OnDestroy {
   }
 
   onLogin() {
-    this.submitted = true;
-    this.showAlert = true;
-
     if (this.loginForm.invalid) {
-      console.log('invalid form')
       return;
     }
-
     const loginData = {
        username: this.loginForm.get('username')?.value,
        password: this.loginForm.get('password')?.value
     }
-
-    this.store.dispatch(Login(loginData));
+    this.store.dispatch(login({payload: loginData}));
   }
 
+
+
   private showModal() {
-    this.showAlert = !this.showAlert;
+    // this.showAlert = !this.showAlert;
   }
 
   goToRegisterView() {
     this.router.navigate(['register'])
+  }
+
+  resetLoginFailure() {
+    this.store.dispatch(resetLoginFailure());
   }
 }

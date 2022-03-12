@@ -1,5 +1,6 @@
 <div id="login-form-container">
-  <app-information-modal *ngIf="showAlert" (clickEvent)="showAlert=false"
+  <app-information-modal *ngIf="(showLoginError$ | async)"
+                         (clickEvent)="resetLoginFailure()"
                          id="modal">Invalid credentials</app-information-modal>
   <div>
     <div id="login-form">
@@ -12,19 +13,20 @@
           <div class="form-group">
             <input type="text" id="username"  placeholder="Username"
                    formControlName="username" autocomplete="off" required
-                   class="form-control" [ngClass]="{ 'is-invalid': submitted && f['username'].errors }"/>
+                   class="form-control" [ngClass]="{ 'is-invalid': (isLoginFormSubmitted$ | async) && f['username'].errors }"/>
           </div>
           <div class="form-group">
             <input type="password" id="password" placeholder="Password"
                    formControlName="password" autocomplete="off" required
-                   class="form-control" [ngClass]="{ 'is-invalid': submitted && f['password'].errors }"/>
+                   class="form-control" [ngClass]="{ 'is-invalid': (isLoginFormSubmitted$ | async) && f['password'].errors }"/>
           </div>
         </div>
         <div class="login-form-submit-buttons">
+          <ng-template></ng-template>
           <button class="login-button"
                   [disabled]="loginForm.invalid"
                   [ngClass]="[loginForm.invalid ? 'disabled' : 'enabled',
-                  isLoading$ ? 'login-button loading-button' : 'login-button']"
+                              (isLoading$ | async) ? 'loading-button' : '']"
                   (click)="onLogin()">
             Login
           </button>
