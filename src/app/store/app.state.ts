@@ -27,3 +27,8 @@ export const selectLoginError = createSelector(
   selectAuth,
   (state: AuthState) => state.isLoginError
 )
+
+export const selectRegisterError = createSelector(
+  selectAuth,
+  (state: AuthState) => state.isRegisterError
+)

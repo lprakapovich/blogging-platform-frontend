@@ -1,23 +1,26 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import {AuthService} from "../../../services/auth.service";
+import {Observable} from "rxjs";
+import {Store} from "@ngrx/store";
+import {register} from "../../../store/actions/auth.actions";
+import {selectIsLoading, selectRegisterError} from "../../../store/app.state";
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss']
 })
-export class SignupComponent {
+export class SignupComponent implements OnInit {
 
   registerForm: FormGroup;
-  loading = false;
-  submitted = false;
+  isLoading$: Observable<boolean>;
+  isRegisterError$: Observable<boolean>;
 
   constructor(
+    private store: Store,
     private formBuilder: FormBuilder,
-    private router: Router,
-    private authenticationService: AuthService) {
+    private router: Router) {
 
     this.registerForm = this.formBuilder.group({
       blogUri: ['', Validators.required],
@@ -27,29 +30,25 @@ export class SignupComponent {
 
   }
 
+  ngOnInit(): void {
+    this.isLoading$ = this.store.select(selectIsLoading);
+    this.isRegisterError$ = this.store.select(selectRegisterError);
+  }
+
   get form() {
     return this.registerForm.controls;
   }
 
   onSignUp() {
-    this.submitted = true;
     if (this.registerForm.invalid) {
       return;
     }
-
-    this.loading = true;
     const registrationData = {
       username: this.registerForm.get('username')?.value,
       password: this.registerForm.get('password')?.value,
       blogUri: this.registerForm.get('blogUri')?.value
     }
-    this.authenticationService.register(registrationData).subscribe(
-      response => {
-        localStorage.setItem('token', response.token);
-      }, () => {
-        // handle error
-      });
-
+    this.store.dispatch(register({payload: registrationData}))
   }
 
   goToLogin() {

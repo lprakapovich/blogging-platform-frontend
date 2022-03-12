@@ -1,4 +1,4 @@
-export interface RegistrationData {
+export interface RegisterData {
   username: string;
   password: string;
   blogUri: string;

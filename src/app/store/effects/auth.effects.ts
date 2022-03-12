@@ -2,9 +2,10 @@ import {Injectable} from "@angular/core";
 import {AuthService} from "../../services/auth.service";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {catchError, debounceTime, map, of, switchMap} from "rxjs";
-import {AuthActionTypes, loginFailure, loginSuccess} from "../actions/auth.actions"
+import {AuthActionTypes, loginFailure, loginSuccess, registerFailure, registerSuccess} from "../actions/auth.actions"
 import {Store} from "@ngrx/store";
 import {LoginData} from "../../models/LoginData";
+import {RegisterData} from "../../models/RegisterData";
 
 @Injectable()
 export class AuthEffects {
@@ -28,7 +29,10 @@ export class AuthEffects {
                 token: response.token
               }
             )),
-            catchError(error => of(loginFailure({ error }
+            catchError(error => of(loginFailure(
+              {
+                error
+              }
             )))
           )
       })
@@ -45,22 +49,25 @@ export class AuthEffects {
     }
   )
 
-  loginFailure$ = createEffect(() =>
+  register$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthActionTypes.LOGIN_FAILURE)
-    ),
-    {
-      dispatch: false
-    }
-  )
-
-  resetLoginFailure$ = createEffect(() =>
-      this.actions$.pipe(
-        ofType(AuthActionTypes.RESET_LOGIN_FAILURE),
-      ),
-    {
-      dispatch: false
-    }
+      ofType(AuthActionTypes.REGISTER),
+      debounceTime(500),
+      map((action: any) => action.payload),
+      switchMap((payload: RegisterData) => {
+        return this.authService.register(payload)
+          .pipe(
+            map(response => registerSuccess(
+              {
+                token: response.token
+              }
+            )),
+            catchError(error => of(registerFailure(
+              error
+            )))
+          )
+      })
+    )
   )
 }
 

@@ -1,5 +1,6 @@
 import {createAction, props} from "@ngrx/store";
 import {LoginData} from "../../models/LoginData";
+import {RegisterData} from "../../models/RegisterData";
 
 export enum AuthActionTypes {
 
@@ -20,8 +21,8 @@ export const loginSuccess = createAction(AuthActionTypes.LOGIN_SUCCESS, props<{t
 export const loginFailure = createAction(AuthActionTypes.LOGIN_FAILURE, props<{error: any}>());
 export const resetLoginFailure = createAction(AuthActionTypes.RESET_LOGIN_FAILURE);
 
-export const register = createAction(AuthActionTypes.REGISTER);
-export const registerSuccess = createAction(AuthActionTypes.REGISTER_SUCCESS);
-export const registerFailure = createAction(AuthActionTypes.REGISTER_FAILURE);
+export const register = createAction(AuthActionTypes.REGISTER, props<{payload: RegisterData}>());
+export const registerSuccess = createAction(AuthActionTypes.REGISTER_SUCCESS, props<{token: string}>());
+export const registerFailure = createAction(AuthActionTypes.REGISTER_FAILURE, props<{error: any}>());
 
 export const logout = createAction(AuthActionTypes.LOGOUT);
