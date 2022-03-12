@@ -6,7 +6,7 @@
     <div id="login-form">
       <div id="login-form-buttons">
         <h3 class="bold grey" > Sign In </h3>
-        <h3 class="bold active" (click)="goToRegisterView()"> Sign Up </h3>
+        <h3 class="bold active" (click)="navigateToRegister()"> Sign Up </h3>
       </div>
       <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
         <div id="login-form-inputs">

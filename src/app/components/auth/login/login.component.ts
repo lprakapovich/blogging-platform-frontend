@@ -64,13 +64,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.store.dispatch(login({payload: loginData}));
   }
 
-
-
-  private showModal() {
-    // this.showAlert = !this.showAlert;
-  }
-
-  goToRegisterView() {
+  navigateToRegister() {
     this.router.navigate(['register'])
   }
 
