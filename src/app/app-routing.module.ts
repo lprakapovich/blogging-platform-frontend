@@ -17,7 +17,7 @@ const routes: Routes = [
   {path: "search", component: SearchResultComponent},
   {path: "feed", component: FeedComponent},
   {path: "publication/:blogId/:postId", component: BlogPostComponent},
-  {path: '', component: FeedComponent}
+  {path: '', redirectTo: 'feed', pathMatch: 'full'}
 ];
 
 @NgModule({

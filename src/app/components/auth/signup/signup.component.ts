@@ -4,7 +4,7 @@ import {Router} from "@angular/router";
 import {Observable} from "rxjs";
 import {Store} from "@ngrx/store";
 import {register} from "../../../store/actions/auth.actions";
-import {selectIsLoading, selectRegisterError} from "../../../store/app.state";
+import {selectIsLoading, selectRegisterError} from "../../../store/selectors/auth.selectors";
 
 @Component({
   selector: 'app-signup',

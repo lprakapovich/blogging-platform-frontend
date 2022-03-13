@@ -42,6 +42,10 @@ import {EffectsModule} from "@ngrx/effects";
 import {authReducer} from "./store/reducers/auth.reducers";
 import {environment} from "../environments/environment";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
+import {blogReducer} from "./store/reducers/blog.reducers";
+import {BlogEffects} from "./store/effects/blog.effects";
+import {postReducer} from "./store/reducers/post.reducers";
+import {PostEffects} from "./store/effects/post.effects";
 
 @NgModule({
   declarations: [
@@ -82,15 +86,25 @@ import { StoreDevtoolsModule } from "@ngrx/store-devtools";
     ReactiveFormsModule,
     HttpClientModule,
     FontAwesomeModule,
-    StoreModule.forRoot( {auth: authReducer}),
-    EffectsModule.forRoot([AuthEffects, ]),
+    StoreModule.forRoot( {
+      auth: authReducer,
+      blog: blogReducer,
+      post: postReducer
+    }),
+    EffectsModule.forRoot([
+      AuthEffects,
+      BlogEffects,
+      PostEffects
+    ]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
       autoPause: true,
     }),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production
+    }),
   ],
   providers: [HttpClient, HttpClientModule],
   bootstrap: [AppComponent],

@@ -1,8 +1,14 @@
-import {AfterViewInit, Component, ElementRef, OnInit, Renderer2} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Blog} from "../../../models/Blog";
 import {BlogPost} from "../../../models/BlogPost";
 import {NavbarService} from "../../../services/navbar.service";
+import {Observable} from "rxjs";
+import {Store} from "@ngrx/store";
+import {getBlogsBySearchCriteria} from "../../../store/actions/blog.actions";
+import {selectFeedBlogsSearchResult} from "../../../store/selectors/blog.selectors";
+import {selectFeedPostSearchResult} from "../../../store/selectors/post.selectors";
+import {getPostsByTitle, getPostsByTitleSuccess} from "../../../store/actions/post.actions";
 
 @Component({
   selector: 'app-search-result',
@@ -11,31 +17,18 @@ import {NavbarService} from "../../../services/navbar.service";
 })
 export class SearchResultComponent implements OnInit, AfterViewInit {
 
+  blogsSearchResult$: Observable<Blog[]>;
+  postsSearchResult$: Observable<BlogPost[]>;
+
   searchInput: string = '';
   blogSearchResultLimit: number = 2;
-  postSearchResultLimit: number = 4;
+  postSearchResultLimit: number = 2;
 
   blogSearchResultHidden = false;
   postSearchResultHidden = false;
 
-  blogs: Blog[] = [
-    {id: '1lpa', name: 'Lizaveta Prakapovich', description: 'descr'},
-    {id: '2lpa', name: '', description: 'descr'},
-    {id: '1lpa', name: 'Lizaveta Prakapovich', description: 'descr'},
-    {id: '2lpa', name: 'Lizaveta Prakapovich 2', description: 'descr'}];
-
-  posts: BlogPost[] = [
-    {id: '1', blogId: 'lprakapoich', title: '1st day of the war', author: "", content: ""},
-    {id: '1', blogId: 'lprakapoich', title: '2nd day of the war', author: "", content: ""},
-    {id: '1', blogId: 'lprakapoich', title: '3rd day of the war', author: "", content: ""},
-    {id: '1', blogId: 'lprakapoich', title: '4th day of the war', author: "", content: ""},
-    {id: '1', blogId: 'lprakapoich', title: '5th day of the war', author: "", content: ""},
-    {id: '1', blogId: 'lprakapoich', title: '6th day of the war', author: "", content: ""},
-    {id: '1', blogId: 'lprakapoich', title: '7th day of the war', author: "", content: ""},
-    {id: '1', blogId: 'lprakapoich', title: '8th day of the war', author: "", content: ""}
-  ];
-
-  constructor(private route: ActivatedRoute,
+  constructor(private store: Store,
+              private route: ActivatedRoute,
               private elementRef: ElementRef,
               private navbarService: NavbarService) { }
 
@@ -44,25 +37,25 @@ export class SearchResultComponent implements OnInit, AfterViewInit {
       .queryParams
       .subscribe(params => {
         this.searchInput = params['search'];
+        console.log('dispatch')
+        this.store.dispatch(getBlogsBySearchCriteria({payload: this.searchInput}))
+        this.store.dispatch(getPostsByTitle({title: this.searchInput}))
       });
 
     this.navbarService.setBlogTemplate();
+    this.blogsSearchResult$ = this.store.select(selectFeedBlogsSearchResult);
+    this.postsSearchResult$ = this.store.select(selectFeedPostSearchResult);
   }
 
   ngAfterViewInit(): void {
-    const blogs = this.elementRef.nativeElement.querySelectorAll('.blog-search-result-item-wrapper');
-    Array.from(blogs).forEach((blog: any) => {
-      const id = blog.id;
-      console.log(id);
-    })
+    // const blogs = this.elementRef.nativeElement.querySelectorAll('.blog-search-result-item-wrapper');
+    // Array.from(blogs).forEach((blog: any) => {
+    // })
   }
 
-  onEnterPressed($event: string) {
-
-  }
-
-  onSearchInputEvent($event: string) {
-
+  onEnterPressed(searchCriteria: string) {
+    this.store.dispatch(getBlogsBySearchCriteria({payload: searchCriteria}))
+    this.store.dispatch(getPostsByTitle({title: searchCriteria}))
   }
 
   onMoreBlogsClicked() {

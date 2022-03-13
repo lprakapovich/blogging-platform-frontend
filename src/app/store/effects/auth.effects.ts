@@ -6,6 +6,7 @@ import {AuthActionTypes, loginFailure, loginSuccess, registerFailure, registerSu
 import {Store} from "@ngrx/store";
 import {LoginData} from "../../models/LoginData";
 import {RegisterData} from "../../models/RegisterData";
+import {setSelectedBlogId} from "../actions/blog.actions";
 
 @Injectable()
 export class AuthEffects {
@@ -42,7 +43,6 @@ export class AuthEffects {
   loginSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActionTypes.LOGIN_SUCCESS),
-      debounceTime(1000)
     ),
     {
       dispatch: false
@@ -57,11 +57,18 @@ export class AuthEffects {
       switchMap((payload: RegisterData) => {
         return this.authService.register(payload)
           .pipe(
-            map(response => registerSuccess(
-              {
-                token: response.token
+            map(response => {
+              this.store.dispatch(setSelectedBlogId({
+                blogId: payload.blogUri
               }
-            )),
+              ))
+              return registerSuccess(
+                {
+                  token: response.token,
+                }
+              )
+            }
+            ),
             catchError(error => of(registerFailure(
               error
             )))

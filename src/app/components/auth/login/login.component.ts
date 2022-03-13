@@ -5,7 +5,7 @@ import {NavbarService} from "../../../services/navbar.service";
 import {InformationModalService} from "../../../services/information-modal.service";
 import {Observable, Subscription} from "rxjs";
 import {Store} from "@ngrx/store";
-import {selectIsLoading, selectLoginError} from "../../../store/app.state";
+import {selectIsLoading, selectLoginError} from "../../../store/selectors/auth.selectors";
 import {login, resetLoginFailure} from "../../../store/actions/auth.actions"
 
 @Component({
