@@ -12,3 +12,8 @@ export const selectIsPostLoading = createSelector(
   selectPostFeature,
   state => state.isLoading
 )
+
+export const selectPostsFromSubscriptions = createSelector(
+  selectPostFeature,
+  state => state.postsFromSubscriptions
+)

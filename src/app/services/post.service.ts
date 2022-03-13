@@ -14,4 +14,8 @@ export class PostService {
   getPostsByTitle(title: string): Observable<BlogPost[]>{
     return of(this.mock.getPosts());
   }
+
+  getPostsFromSubscriptions(blogId: string) {
+    return of(this.mock.getPostsFromSubscriptions())
+  }
 }

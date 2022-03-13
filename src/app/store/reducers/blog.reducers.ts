@@ -3,7 +3,7 @@ import {createReducer, on} from "@ngrx/store";
 import * as BlogActions from "../actions/blog.actions";
 
 export interface BlogState {
-  selectedBlogId: string | null;
+  selectedBlogId: string;
   selectedBlog: Blog | null;
   blogError: string | null;
   isLoading: boolean,
@@ -13,7 +13,7 @@ export interface BlogState {
 }
 
 export const initialState: BlogState = {
-  selectedBlogId: null,
+  selectedBlogId: '',
   selectedBlog: null,
   blogError: null,
   isLoading: false,

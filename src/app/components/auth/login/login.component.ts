@@ -37,7 +37,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
-
   }
 
   ngOnInit(): void {
