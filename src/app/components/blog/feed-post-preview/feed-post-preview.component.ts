@@ -1,6 +1,10 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {NavbarService} from "../../../services/navbar.service";
 import {Router} from "@angular/router";
+import {Observable} from "rxjs";
+import {BlogPost} from "../../../models/BlogPost";
+import {Store} from "@ngrx/store";
+import {selectSelectedPost} from "../../../store/selectors/post.selectors";
 
 @Component({
   selector: 'app-feed-post-preview',
@@ -9,17 +13,17 @@ import {Router} from "@angular/router";
 })
 export class FeedPostPreviewComponent implements OnInit {
 
+  selectedPost$: Observable<BlogPost | null>;
   @Output() closeFeedPostPreview: EventEmitter<void> = new EventEmitter<void>();
-  postContent: any;
 
-  constructor(private navbarTemplateService: NavbarService,
+  constructor(private store: Store,
+              private navbarTemplateService: NavbarService,
               private router: Router) {
-
   }
 
   ngOnInit(): void {
     this.navbarTemplateService.setBlogTemplate();
-    this.postContent = '<p> Elo </p> <p> Elo </p><p> Elo </p><p> Elo </p><p> Elo </p><p> Elo </p><p> Elo </p><p> Elo </p><p> Elo </p><p> Elo </p><p> Elo </p><p> Elo </p><p> Elo </p><p> Elo </p><p> Elo </p><p> Elo </p><p> Elo </p><p> Elo </p><p> Elo </p><p> Elo </p>';
+    this.selectedPost$ = this.store.select(selectSelectedPost)
   }
 
   onClose() {

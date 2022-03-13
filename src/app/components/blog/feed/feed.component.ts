@@ -5,7 +5,7 @@ import {BlogPost} from "../../../models/BlogPost";
 import {Observable} from "rxjs";
 import {Store} from "@ngrx/store";
 import {selectIsPostLoading, selectPostsFromSubscriptions} from "../../../store/selectors/post.selectors";
-import {getPostsFromSubscriptions} from "../../../store/actions/post.actions";
+import {getPostsFromSubscriptions, setSelectedPost, unselectPost} from "../../../store/actions/post.actions";
 
 @Component({
   selector: 'app-feed',
@@ -61,8 +61,14 @@ export class FeedComponent implements OnInit, AfterViewInit {
   }
 
   openPostPreview(post: BlogPost) {
+    this.store.dispatch(setSelectedPost({post}))
     if (!this.showPostPreview) {
       this.showPostPreview = true;
     }
+  }
+
+  closePostPreview() {
+    this.store.dispatch(unselectPost())
+    this.showPostPreview = false;
   }
 }

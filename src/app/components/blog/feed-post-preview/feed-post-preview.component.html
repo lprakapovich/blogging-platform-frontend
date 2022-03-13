@@ -1,15 +1,17 @@
 <div class="feed-post-preview-container">
   <div class="feed-post-preview-slide">
-    <div class="feed-post-preview-header">
-      <app-avatar class="post-author-avatar" [ngClass]="'small'" [name]="'Jana Frank'"> </app-avatar>
-      <div class="post-author-name"> Jana Frank (Miu Mau) </div>
-      <div class="post-category"> <span class="icon"> &#8594; </span> Reflections </div>
-      <app-svg-button (click)="openPost()" [iconTemplate]="'open-post'"></app-svg-button>
-      <app-text-button (click)="onClose()"> Close </app-text-button>
-    </div>
-    <div class="feed-post-preview-article">
-      <div class="feed-post-preview-title"> This is my blog</div>
-      <div class="feed-post-preview-content" [innerHTML]="postContent ? postContent : null">
+    <div *ngIf="selectedPost$ | async; let asyncSelectedPost; ">
+      <div class="feed-post-preview-header">
+        <app-avatar class="post-author-avatar" [ngClass]="'small'" [name]="asyncSelectedPost.author"> </app-avatar>
+        <div class="post-author-name"> {{asyncSelectedPost.author}} </div>
+        <div class="post-category"> <span class="icon"> &#8594; </span> Reflections </div>
+        <app-svg-button (click)="openPost()" [iconTemplate]="'open-post'"></app-svg-button>
+        <app-text-button (click)="onClose()"> Close </app-text-button>
+      </div>
+      <div class="feed-post-preview-article">
+        <div class="feed-post-preview-title"> {{asyncSelectedPost.title}}</div>
+        <div class="feed-post-preview-content" [innerHTML]="asyncSelectedPost.content ? asyncSelectedPost.content : null">
+        </div>
       </div>
     </div>
   </div>

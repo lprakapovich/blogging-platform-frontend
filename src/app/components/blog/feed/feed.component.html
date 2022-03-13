@@ -26,7 +26,8 @@
     </div>
   </div>
   <div class="feed-post-preview-modal-container" [hidden]="!showPostPreview">
-    <app-feed-post-preview (closeFeedPostPreview)="showPostPreview = false;"> </app-feed-post-preview>
+    <app-feed-post-preview (closeFeedPostPreview)="closePostPreview();">
+    </app-feed-post-preview>
   </div>
 </div>
 

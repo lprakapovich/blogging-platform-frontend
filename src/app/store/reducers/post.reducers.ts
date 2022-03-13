@@ -5,6 +5,7 @@ import * as PostActions from '../actions/post.actions';
 export interface PostState {
   isLoading: boolean,
   postsFromSubscriptions: BlogPost[],
+  selectedPost: BlogPost | null;
   feedSearchResult: {
     posts: BlogPost[]
   }
@@ -13,6 +14,7 @@ export interface PostState {
 export const initialState: PostState = {
   isLoading: false,
   postsFromSubscriptions: [],
+  selectedPost: null,
   feedSearchResult: {
     posts: []
   }
@@ -43,5 +45,15 @@ export const postReducer = createReducer(
     ...state,
     isLoading: false,
     postsFromSubscriptions: action.posts
+  })),
+
+  on(PostActions.setSelectedPost, (state, action) => ({
+    ...state,
+    selectedPost: action.post
+  })),
+
+  on(PostActions.unselectPost, (state) => ({
+    ...state,
+    selectedPost: null
   }))
 )
