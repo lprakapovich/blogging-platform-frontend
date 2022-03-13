@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Blog} from "../../../models/Blog";
 import {BlogPost} from "../../../models/BlogPost";
@@ -8,14 +8,14 @@ import {Store} from "@ngrx/store";
 import {getBlogsBySearchCriteria} from "../../../store/actions/blog.actions";
 import {selectFeedBlogsSearchResult} from "../../../store/selectors/blog.selectors";
 import {selectFeedPostSearchResult} from "../../../store/selectors/post.selectors";
-import {getPostsByTitle, getPostsByTitleSuccess} from "../../../store/actions/post.actions";
+import {getPostsByTitle} from "../../../store/actions/post.actions";
 
 @Component({
   selector: 'app-search-result',
   templateUrl: './search-result.component.html',
   styleUrls: ['./search-result.component.scss']
 })
-export class SearchResultComponent implements OnInit, AfterViewInit {
+export class SearchResultComponent implements OnInit {
 
   blogsSearchResult$: Observable<Blog[]>;
   postsSearchResult$: Observable<BlogPost[]>;
@@ -37,7 +37,6 @@ export class SearchResultComponent implements OnInit, AfterViewInit {
       .queryParams
       .subscribe(params => {
         this.searchInput = params['search'];
-        console.log('dispatch')
         this.store.dispatch(getBlogsBySearchCriteria({payload: this.searchInput}))
         this.store.dispatch(getPostsByTitle({title: this.searchInput}))
       });
@@ -45,12 +44,6 @@ export class SearchResultComponent implements OnInit, AfterViewInit {
     this.navbarService.setBlogTemplate();
     this.blogsSearchResult$ = this.store.select(selectFeedBlogsSearchResult);
     this.postsSearchResult$ = this.store.select(selectFeedPostSearchResult);
-  }
-
-  ngAfterViewInit(): void {
-    // const blogs = this.elementRef.nativeElement.querySelectorAll('.blog-search-result-item-wrapper');
-    // Array.from(blogs).forEach((blog: any) => {
-    // })
   }
 
   onEnterPressed(searchCriteria: string) {
