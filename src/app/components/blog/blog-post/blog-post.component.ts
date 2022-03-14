@@ -1,6 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {BlogPost} from "../../../models/BlogPost";
+import {Component, OnInit} from '@angular/core';
 import {NavbarService} from "../../../services/navbar.service";
+import {Observable} from "rxjs";
+import {BlogPost} from "../../../models/BlogPost";
+import {Store} from "@ngrx/store";
+import {selectSelectedPost} from "../../../store/selectors/post.selectors";
 
 @Component({
   selector: 'app-blog-post',
@@ -9,18 +12,14 @@ import {NavbarService} from "../../../services/navbar.service";
 })
 export class BlogPostComponent implements OnInit {
 
-  @Input() post!: BlogPost;
+  post$: Observable<BlogPost | null>;
 
-  constructor(private navbarService: NavbarService) {
-    this.post = {id: '1',
-      blogId: 'lprakapoich',
-      title: '1st day of the war',
-      author: "Liza",
-      content: "<p>Хотя я перестала вести блог в ЖЖ в этом году, около недели назад мне прилетело поздравление. С тем, что теперь я полных 20 лет там пишу.</p>" +
-        "<p>Cпасибо.</p>"};
+  constructor(private store: Store,
+              private navbarService: NavbarService) {
   }
 
   ngOnInit(): void {
     this.navbarService.setBlogTemplate();
+    this.post$ = this.store.select(selectSelectedPost);
   }
 }

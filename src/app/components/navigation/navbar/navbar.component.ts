@@ -42,5 +42,9 @@ export class NavbarComponent {
   private removeSelection(element: HTMLElement) {
     element?.querySelector('.active')?.classList.remove('active');
   }
+
+  navigateToBlog() {
+
+  }
 }
 

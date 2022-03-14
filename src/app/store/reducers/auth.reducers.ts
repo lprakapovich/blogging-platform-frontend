@@ -73,6 +73,13 @@ export const authReducer = createReducer(
     isRegisterError: true,
     errorMessage: action.error,
     token: null,
+  })),
+
+  on(AuthActions.logout, (state) => ({
+    ...state,
+    isLoading: false,
+    isAuthenticated: false,
+    token: null
   }))
 );
 

@@ -29,10 +29,16 @@ export class FeedComponent implements OnInit, AfterViewInit {
     this.isLoading$ = this.store.select(selectIsPostLoading);
     this.posts$ = this.store.select(selectPostsFromSubscriptions);
     this.store.dispatch(getPostsFromSubscriptions());
+
+
+    this.isLoading$.subscribe(() => {
+      console.log('resize')
+      this.resizeAllGridItems()
+    })
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event:any) {
+  onResize() {
     this.resizeAllGridItems();
   }
 

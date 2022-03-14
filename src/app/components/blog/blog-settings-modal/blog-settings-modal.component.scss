@@ -18,6 +18,11 @@
         align-items: center;
         padding: 0.25rem;
         border-radius: 0.5rem;
+
+        &.logout {
+          color: v.$light-grey;
+          padding: 0 0.5rem;
+        }
       }
 
       .settings-menu-item:hover {

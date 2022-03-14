@@ -31,8 +31,6 @@ export class FeedPostPreviewComponent implements OnInit {
   }
 
   openPost() {
-    const blogId = 'lprakapovich';
-    const postId = '23ekapvo0v98';
-    this.router.navigate([`publication/@${blogId}/${postId}`])
+    this.router.navigate([`publication/@${"blogId"}/${"postId"}`])
   }
 }

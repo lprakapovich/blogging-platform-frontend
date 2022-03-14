@@ -1,4 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Store} from "@ngrx/store";
+import {logout} from "../../../store/actions/auth.actions";
 
 @Component({
   selector: 'app-blog-settings-modal',
@@ -12,18 +14,13 @@ export class BlogSettingsModalComponent implements OnInit {
 
   @Input()
   categories: string[] = [
-    // 'Scenarios',
-    // 'Poems', 'Scenarios', 'Poems',
-    // 'Scenarios', 'Poems', 'Scenarios',
-    // 'Poems', 'Scenarios', 'Poems',
-    // 'Scenarios', 'Poems'
   ];
 
   selectedSection: string;
 
   newCategory: string = '';
 
-  constructor() {
+  constructor(private store: Store) {
     this.selectedSection = 'account';
   }
 
@@ -56,5 +53,9 @@ export class BlogSettingsModalComponent implements OnInit {
   onSave() {
     console.log('Save');
     this.closeModalEventEmitter.emit();
+  }
+
+  logout() {
+    this.store.dispatch(logout())
   }
 }

@@ -25,12 +25,14 @@ export class AuthService {
 
   login(loginData: LoginData): Observable<AuthResponse> {
     const url = `${this.authUrl}/login`;
-    return this.http.post<any>(url, loginData);
+    // return this.http.post<any>(url, loginData);
+    return of({ token: 'my-token-13/03/2022'})
   }
 
   register(registrationData: RegisterData): Observable<AuthResponse> {
     const url = `${this.authUrl}/register`;
-    return this.http.post<any>(url, registrationData);
+    // return this.http.post<any>(url, registrationData);
+    return of({ token: 'my-token-13/03/2022'})
   }
 
   logout() {

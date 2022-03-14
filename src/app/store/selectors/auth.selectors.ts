@@ -5,7 +5,7 @@ export const selectAuthFeature = createFeatureSelector<AuthState>('auth');
 
 export const selectIsAuthenticated = createSelector(
   selectAuthFeature,
-  (state: AuthState) => state.isAuthenticated
+  state => state.isAuthenticated
 );
 
 export const selectAuthenticatedUser = createSelector(
@@ -15,20 +15,20 @@ export const selectAuthenticatedUser = createSelector(
 
 export const selectToken = createSelector(
   selectAuthFeature,
-  (state: AuthState) => state.token
+  state => state.token
 );
 
 export const selectIsLoading = createSelector(
   selectAuthFeature,
-  (state: AuthState) => state.isLoading
+  state => state.isLoading
 );
 
 export const selectLoginError = createSelector(
   selectAuthFeature,
-  (state: AuthState) => state.isLoginError
+  state => state.isLoginError
 )
 
 export const selectRegisterError = createSelector(
   selectAuthFeature,
-  (state: AuthState) => state.isRegisterError
+  state => state.isRegisterError
 )

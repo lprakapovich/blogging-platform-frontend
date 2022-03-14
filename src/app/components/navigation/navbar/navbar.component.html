@@ -14,14 +14,14 @@
                         [iconTemplate]="'news-feed'"
                         routerLink="/feed">
         </app-svg-button>
-        <app-svg-button id="notification"
-                        [ngClass]="'highlighted'"
-                        (click)="setBlogNavigationTabActive('notification')"
-                        [iconTemplate]="'notification'">
-        </app-svg-button>
+<!--        <app-svg-button id="notification"-->
+<!--                        [ngClass]="'highlighted'"-->
+<!--                        (click)="setBlogNavigationTabActive('notification')"-->
+<!--                        [iconTemplate]="'notification'">-->
+<!--        </app-svg-button>-->
         <app-svg-button id="profile"
                         [ngClass]="'highlighted'"
-                        (click)="setBlogNavigationTabActive('profile')"
+                        (click)="setBlogNavigationTabActive('profile'); navigateToBlog();"
                         [iconTemplate]="'profile'"
                         routerLink="/blog/@lprakapovich">
         </app-svg-button>
@@ -36,13 +36,13 @@
           <a routerlinkactive="activeButton"
              routerLink="/blog/@lprakapovich"
              class="editor-navigation-author"> Lizaveta Prakapovich</a>
-        </div>
-        <div class="editor-navigation-item">
-          <app-svg-button [iconTemplate]="'check'"></app-svg-button>
-          <app-svg-button *ngIf="showRemoveButton" [iconTemplate]="'delete'"></app-svg-button>
-          <app-svg-button [iconTemplate]="'publish'"></app-svg-button>
-        </div>
       </div>
+      <div class="editor-navigation-item">
+        <app-svg-button [iconTemplate]="'check'"></app-svg-button>
+        <app-svg-button *ngIf="showRemoveButton" [iconTemplate]="'delete'"></app-svg-button>
+        <app-svg-button [iconTemplate]="'publish'"></app-svg-button>
+      </div>
+    </div>
   </div>
 
   <div *ngSwitchDefault>
