@@ -1,14 +1,15 @@
 import {Injectable} from "@angular/core";
 import {AuthService} from "../../services/auth.service";
-import {Actions, concatLatestFrom, createEffect, ofType} from "@ngrx/effects";
+import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {catchError, combineLatestWith, debounceTime, map, of, switchMap, tap} from "rxjs";
 import {AuthActionTypes, loginFailure, loginSuccess, registerFailure, registerSuccess} from "../actions/auth.actions"
 import {Store} from "@ngrx/store";
-import {LoginData} from "../../models/LoginData";
-import {RegisterData} from "../../models/RegisterData";
-import {setSelectedBlogId} from "../actions/blog.actions";
+import {LoginData} from "../../models/data/LoginData";
+import {RegisterData} from "../../models/data/RegisterData";
+import {getUserBlogsIds, setSelectedBlogId} from "../actions/blog.actions";
 import {Router} from "@angular/router";
 import {selectSelectedBlogId} from "../selectors/blog.selectors";
+import {selectIsAuthenticated} from "../selectors/auth.selectors";
 
 @Injectable()
 export class AuthEffects {
@@ -46,6 +47,10 @@ export class AuthEffects {
   loginSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActionTypes.LOGIN_SUCCESS),
+      tap(() => {
+        this.store.dispatch(getUserBlogsIds())
+        this.router.navigate(['/feed'])
+      })
     ),
     {
       dispatch: false
@@ -105,6 +110,20 @@ export class AuthEffects {
       dispatch: false
     }
   )
+
+  checkAuthenticationAndRedirect$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActionTypes.REDIRECT_AUTHENTICATED),
+      map((action: any) => action.to),
+      combineLatestWith(this.store.select(selectIsAuthenticated)),
+      tap(([path, isAuth]) => {
+        if (isAuth) {
+          this.router.navigate([`/${path}`])
+        }
+      })),
+    {
+      dispatch: false
+    })
 }
 
 

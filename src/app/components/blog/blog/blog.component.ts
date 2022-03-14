@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {NavbarService} from "../../../services/navbar.service";
+import {Observable} from "rxjs";
+import {Store} from "@ngrx/store";
+import {selectUserBlogIds} from "../../../store/selectors/blog.selectors";
 
 @Component({
   selector: 'app-blog',
@@ -9,24 +12,24 @@ import {NavbarService} from "../../../services/navbar.service";
 })
 export class BlogComponent implements OnInit {
 
+  userBlogIds$: Observable<string[]>;
+
   private blogInfo: any;
   private authorInfo: any;
   private sticky: any;
 
-  private navbarModal!: HTMLElement | null;
-  private blogSettingsModal!: HTMLElement | null;
-
   private NAVBAR_MODAL_ID = 'navbar-modal';
   private BLOG_SETTINGS_MODAL_ID = 'blog-settings-modal';
 
-  constructor(private router: Router, private navbarService: NavbarService) {
+  constructor(private store: Store,
+              private router: Router,
+              private navbarService: NavbarService) {
   }
 
   ngOnInit(): void {
-    this.navbarService.setBlogTemplate()
-    this.navbarModal = document.getElementById(this.NAVBAR_MODAL_ID);
-    this.blogSettingsModal = document.getElementById(this.BLOG_SETTINGS_MODAL_ID);
+    this.navbarService.setBlogTemplate();
     this.setUpShowModalListener();
+    this.userBlogIds$ = this.store.select(selectUserBlogIds);
   }
 
   onScroll() {
@@ -94,10 +97,9 @@ export class BlogComponent implements OnInit {
 
   onClickedOutside() {
     console.log('on clicked outside')
-    // this.onClosed();
   }
 
   onCreated() {
-    console.log('created')
+    console.log('on created')
   }
 }

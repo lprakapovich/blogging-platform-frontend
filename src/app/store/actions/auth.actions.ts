@@ -1,6 +1,6 @@
 import {createAction, props} from "@ngrx/store";
-import {LoginData} from "../../models/LoginData";
-import {RegisterData} from "../../models/RegisterData";
+import {LoginData} from "../../models/data/LoginData";
+import {RegisterData} from "../../models/data/RegisterData";
 
 export enum AuthActionTypes {
 
@@ -14,6 +14,8 @@ export enum AuthActionTypes {
 
   REGISTER_SUCCESS = '[Auth] Register Success',
   REGISTER_FAILURE = '[Auth] Register Failure',
+
+  REDIRECT_AUTHENTICATED = '[Auth] Redirect authenticated'
 }
 
 export const login = createAction(AuthActionTypes.LOGIN, props<{payload: LoginData}>());
@@ -26,3 +28,5 @@ export const registerSuccess = createAction(AuthActionTypes.REGISTER_SUCCESS, pr
 export const registerFailure = createAction(AuthActionTypes.REGISTER_FAILURE, props<{error: any}>());
 
 export const logout = createAction(AuthActionTypes.LOGOUT);
+
+export const checkAuthenticationAndRedirect = createAction(AuthActionTypes.REDIRECT_AUTHENTICATED, props<{to: string}>());

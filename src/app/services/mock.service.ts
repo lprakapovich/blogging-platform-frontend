@@ -51,4 +51,8 @@ export class MockService {
   constructor() {
 
   }
+
+  getAllUserBlogIds() {
+    return ['lprakapovich', 'lprakapovich2'];
+  }
 }

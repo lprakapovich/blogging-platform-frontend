@@ -9,7 +9,8 @@ export interface BlogState {
   isLoading: boolean,
   feedSearchResult: {
     blogs: Blog[]
-  }
+  },
+  userBlogIds: string[]
 }
 
 export const initialState: BlogState = {
@@ -19,7 +20,8 @@ export const initialState: BlogState = {
   isLoading: false,
   feedSearchResult: {
     blogs: []
-  }
+  },
+  userBlogIds: []
 }
 
 export const blogReducer = createReducer(
@@ -58,5 +60,36 @@ export const blogReducer = createReducer(
     feedSearchResult: {
       blogs: action.blogs
     }
+  })),
+
+  on(BlogActions.getUserBlogsIds, (state) => ({
+    ...state,
+    isLoading: true
+  })),
+
+  on(BlogActions.getUserBlogsIdsSuccess, (state, action) => ({
+    ...state,
+    isLoading: false,
+    userBlogIds: action.blogIds
+  })),
+
+  on(BlogActions.createBlog, (state) => ({
+    ...state,
+    isLoading: true
+  })),
+
+  on(BlogActions.createBlogSuccess, (state, action) => ({
+    ...state,
+    isLoading: false,
+    userBlogIds: [
+      ...state.userBlogIds,
+      action.createdBlogId
+    ]
+  })),
+
+  on(BlogActions.createBlogFailure, (state, action) => ({
+    ...state,
+    isLoading: false,
+    blogError: action.error
   }))
 )

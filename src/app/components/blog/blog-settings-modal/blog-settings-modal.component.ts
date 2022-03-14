@@ -12,13 +12,11 @@ export class BlogSettingsModalComponent implements OnInit {
   @Output() closeModalEventEmitter: EventEmitter<void> = new EventEmitter<void>();
   @Output() onCreatedEventEmitter: EventEmitter<void> = new EventEmitter<void>();
 
-  @Input()
-  categories: string[] = [
-  ];
+  @Input() categories: string[] = [];
 
   selectedSection: string;
-
-  newCategory: string = '';
+  newCategory: string;
+  newBlog: string;
 
   constructor(private store: Store) {
     this.selectedSection = 'account';
@@ -33,7 +31,6 @@ export class BlogSettingsModalComponent implements OnInit {
   }
 
   onNewCategoryClicked() {
-    console.log('new category created: '+ this.newCategory)
     this.newCategory = '';
   }
 
@@ -42,7 +39,6 @@ export class BlogSettingsModalComponent implements OnInit {
   }
 
   deleteCategory(category: string) {
-    console.log('deleting ' + category)
   }
 
   onCancel() {
@@ -56,6 +52,11 @@ export class BlogSettingsModalComponent implements OnInit {
   }
 
   logout() {
+    window.alert('You are about to logout')
     this.store.dispatch(logout())
+  }
+
+  onNewBlogClicked() {
+
   }
 }

@@ -19,6 +19,10 @@
   display: flex;
   justify-content: space-between;
   border-radius: 0.5rem;
+
+  .user-blog-id {
+    color: v.$light-grey;
+  }
 }
 
 :host ::ng-deep .navbar-modal-item:hover {

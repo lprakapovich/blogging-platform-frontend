@@ -5,6 +5,7 @@ import {BlogService} from "../../services/blog.service";
 import {catchError, map, of, switchMap} from "rxjs";
 import {
   BlogActionTypes,
+  getUserBlogsIdsSuccess,
   getBlogDetailsFailure,
   getBlogDetailsSuccess,
   getBlogsBySearchCriteriaSuccess
@@ -45,6 +46,20 @@ export class BlogEffects {
               console.log(response)
               return getBlogsBySearchCriteriaSuccess({blogs: response})
             })
+          )
+      })
+    )
+  )
+
+  getUserBlogsIds$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(BlogActionTypes.GET_USER_BLOGS_IDS),
+      switchMap(() => {
+        return this.blogService.getAllUserBlogIds()
+          .pipe(
+            map((response) => getUserBlogsIdsSuccess({
+              blogIds: response
+            }))
           )
       })
     )

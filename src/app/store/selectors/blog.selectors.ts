@@ -26,3 +26,8 @@ export const selectIsBlogLoading = createSelector(
   selectBlogFeature,
   state => state.isLoading
 )
+
+export const selectUserBlogIds = createSelector(
+  selectBlogFeature,
+  state => state.userBlogIds
+)

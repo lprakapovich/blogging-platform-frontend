@@ -3,8 +3,8 @@ import {User} from "../models/User";
 import {BehaviorSubject, Observable, of} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
-import {RegisterData} from "../models/RegisterData";
-import {LoginData} from "../models/LoginData";
+import {RegisterData} from "../models/data/RegisterData";
+import {LoginData} from "../models/data/LoginData";
 import {AuthResponse} from "../models/AuthResponse";
 
 @Injectable({

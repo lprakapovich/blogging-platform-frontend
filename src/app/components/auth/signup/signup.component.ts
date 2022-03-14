@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {Observable} from "rxjs";
 import {Store} from "@ngrx/store";
-import {register} from "../../../store/actions/auth.actions";
+import {checkAuthenticationAndRedirect, register} from "../../../store/actions/auth.actions";
 import {selectIsLoading, selectRegisterError} from "../../../store/selectors/auth.selectors";
 
 @Component({
@@ -33,6 +33,7 @@ export class SignupComponent implements OnInit {
   ngOnInit(): void {
     this.isLoading$ = this.store.select(selectIsLoading);
     this.isRegisterError$ = this.store.select(selectRegisterError);
+    this.store.dispatch(checkAuthenticationAndRedirect({to: '/feed'}));
   }
 
   get form() {

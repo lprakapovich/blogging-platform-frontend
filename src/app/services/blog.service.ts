@@ -24,4 +24,8 @@ export class BlogService {
   getBySearchCriteria(searchCriteria: string): Observable<Blog[]> {
     return of(this.mock.getBlogs());
   }
+
+  getAllUserBlogIds(): Observable<string[]> {
+    return of(this.mock.getAllUserBlogIds())
+  }
 }

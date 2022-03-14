@@ -6,7 +6,7 @@ import {InformationModalService} from "../../../services/information-modal.servi
 import {Observable, Subscription} from "rxjs";
 import {Store} from "@ngrx/store";
 import {selectIsLoading, selectLoginError} from "../../../store/selectors/auth.selectors";
-import {login, resetLoginFailure} from "../../../store/actions/auth.actions"
+import {checkAuthenticationAndRedirect, login, resetLoginFailure} from "../../../store/actions/auth.actions"
 
 @Component({
   selector: 'app-login',
@@ -42,11 +42,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isLoading$ = this.store.select(selectIsLoading);
     this.showLoginError$ = this.store.select(selectLoginError)
+    this.store.dispatch(checkAuthenticationAndRedirect({to: '/feed'}));
   }
 
   ngOnDestroy(): void {
         this.sub?.unsubscribe();
-    }
+  }
 
   get f() {
     return this.loginForm.controls;
