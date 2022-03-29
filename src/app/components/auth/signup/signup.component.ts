@@ -3,8 +3,13 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {Observable} from "rxjs";
 import {Store} from "@ngrx/store";
-import {checkAuthenticationAndRedirect, register} from "../../../store/actions/auth.actions";
-import {selectIsLoading, selectRegisterError} from "../../../store/selectors/auth.selectors";
+import {checkAuthenticationAndRedirect, register, validateUsername} from "../../../store/actions/auth.actions";
+import {
+  selectIsLoading,
+  selectRegisterError,
+  selectUsernameValidationIsLoading,
+  selectValidationMessage
+} from "../../../store/selectors/auth.selectors";
 
 @Component({
   selector: 'app-signup',
@@ -14,8 +19,12 @@ import {selectIsLoading, selectRegisterError} from "../../../store/selectors/aut
 export class SignupComponent implements OnInit {
 
   registerForm: FormGroup;
+  isUsernameValidationLoading$: Observable<boolean>;
   isLoading$: Observable<boolean>;
   isRegisterError$: Observable<boolean>;
+  registrationValidationMessage$: Observable<string>;
+
+  registrationProcessMessage: string;
 
   constructor(
     private store: Store,
@@ -27,12 +36,13 @@ export class SignupComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
-
   }
 
   ngOnInit(): void {
     this.isLoading$ = this.store.select(selectIsLoading);
     this.isRegisterError$ = this.store.select(selectRegisterError);
+    this.isUsernameValidationLoading$ = this.store.select(selectUsernameValidationIsLoading);
+    this.registrationValidationMessage$ = this.store.select(selectValidationMessage);
     this.store.dispatch(checkAuthenticationAndRedirect({to: '/feed'}));
   }
 
@@ -54,5 +64,12 @@ export class SignupComponent implements OnInit {
 
   goToLogin() {
     this.router.navigate(['login'])
+  }
+
+  inputChangeEvent($event: any) {
+    const username = $event.target.value;
+    if (username.trim().length > 0) {
+      this.store.dispatch(validateUsername({username}))
+    }
   }
 }

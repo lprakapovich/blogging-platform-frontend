@@ -32,3 +32,13 @@ export const selectRegisterError = createSelector(
   selectAuthFeature,
   state => state.isRegisterError
 )
+
+export const selectUsernameValidationIsLoading = createSelector(
+  selectAuthFeature,
+  state => state.validation.isLoading
+)
+
+export const selectValidationMessage = createSelector(
+  selectAuthFeature,
+  state => state.validation.validationMessage
+)

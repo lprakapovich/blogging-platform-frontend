@@ -13,12 +13,12 @@
           <div class="form-group">
             <input type="text" id="username"  placeholder="Username"
                    formControlName="username" autocomplete="off" required
-                   class="form-control" [ngClass]="{ 'is-invalid': (isLoginFormSubmitted$ | async) && f['username'].errors }"/>
+                   class="form-control" [ngClass]="{ 'is-invalid': (isLoginFormSubmitted$ | async) && form['username'].errors }"/>
           </div>
           <div class="form-group">
             <input type="password" id="password" placeholder="Password"
                    formControlName="password" autocomplete="off" required
-                   class="form-control" [ngClass]="{ 'is-invalid': (isLoginFormSubmitted$ | async) && f['password'].errors }"/>
+                   class="form-control" [ngClass]="{ 'is-invalid': (isLoginFormSubmitted$ | async) && form['password'].errors }"/>
           </div>
         </div>
         <div class="login-form-submit-buttons">

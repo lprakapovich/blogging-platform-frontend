@@ -27,9 +27,11 @@ export class BlogEffects {
           return this.blogService.getLastVisitedBlog()
             .pipe(
               map(response => getBlogDetailsSuccess({payload: response})),
-              catchError(error => of(getBlogDetailsFailure({
+              catchError(error => of(getBlogDetailsFailure(
+                {
                 error
-              })))
+              })
+              ))
             )
         })
     )

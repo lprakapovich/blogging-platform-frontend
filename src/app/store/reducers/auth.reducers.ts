@@ -4,22 +4,38 @@ import * as AuthActions from "../actions/auth.actions"
 
 export interface AuthState {
   isAuthenticated: boolean;
-  token: string | null;
+  token: string;
   authenticatedUser: User | null;
-  errorMessage: string | null;
+  errorMessage: string;
   isLoading: boolean;
   isLoginError: boolean;
   isRegisterError: boolean;
+  validation: {
+    form: {
+      username: string,
+      blogUri: string;
+    },
+    isLoading: boolean;
+    validationMessage: string;
+  }
 }
 
 export const initialState: AuthState = {
   isAuthenticated: false,
   authenticatedUser: null,
-  errorMessage: null,
-  token: null,
+  errorMessage: '',
+  token: '',
   isLoading: false,
   isLoginError: false,
-  isRegisterError: false
+  isRegisterError: false,
+  validation: {
+    form: {
+      username: '',
+      blogUri: ''
+    },
+    isLoading: false,
+    validationMessage: ''
+  }
 };
 
 export const authReducer = createReducer(
@@ -34,7 +50,7 @@ export const authReducer = createReducer(
     isLoading: false,
     isLoginError: false,
     isAuthenticated: true,
-    errorMessage: null,
+    errorMessage: '',
     token: action.token,
   })),
 
@@ -44,12 +60,39 @@ export const authReducer = createReducer(
     isLoginError: true,
     isLoading: false,
     errorMessage: action.error,
-    token: null,
+    token: '',
   })),
 
   on(AuthActions.resetLoginFailure, (state) => ({
     ...state,
     isLoginError: false
+  })),
+
+  on(AuthActions.validateUsername, (state) => ({
+    ...state,
+    validation: {
+      ...state.validation,
+      isLoading: true,
+      validationMessage: 'Validating username...'
+    }
+  })),
+
+  on(AuthActions.validateUsernameSuccess, (state) => ({
+    ...state,
+    validation: {
+      ...state.validation,
+      isLoading: false,
+      validationMessage: ''
+    }
+  })),
+
+  on(AuthActions.validateUsernameFailure, (state, action) => ({
+    ...state,
+    validation: {
+      ...state.validation,
+      isLoading: false,
+      validationMessage: action.error
+    }
   })),
 
   on(AuthActions.register, (state) => ({
@@ -62,7 +105,7 @@ export const authReducer = createReducer(
     isLoading: false,
     isAuthenticated: true,
     isRegisterError: false,
-    errorMessage: null,
+    errorMessage: '',
     token: action.token,
   })),
 
@@ -72,14 +115,14 @@ export const authReducer = createReducer(
     isAuthenticated: false,
     isRegisterError: true,
     errorMessage: action.error,
-    token: null,
+    token: '',
   })),
 
   on(AuthActions.logout, (state) => ({
     ...state,
     isLoading: false,
     isAuthenticated: false,
-    token: null
+    token: ''
   }))
 );
 

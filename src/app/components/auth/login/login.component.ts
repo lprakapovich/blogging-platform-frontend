@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.sub?.unsubscribe();
   }
 
-  get f() {
+  get form() {
     return this.loginForm.controls;
   }
 
