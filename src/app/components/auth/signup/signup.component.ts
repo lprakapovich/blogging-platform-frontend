@@ -18,6 +18,8 @@ import {
 })
 export class SignupComponent implements OnInit {
 
+  private validatedUsername: string;
+
   registerForm: FormGroup;
   isUsernameValidationLoading$: Observable<boolean>;
   isLoading$: Observable<boolean>;
@@ -32,7 +34,7 @@ export class SignupComponent implements OnInit {
     this.registerForm = this.formBuilder.group({
       blogUrl: ['', [
         Validators.required,
-        Validators.minLength(5)]
+        Validators.minLength(5)],
       ],
       username: ['', [
         Validators.required,
@@ -77,10 +79,10 @@ export class SignupComponent implements OnInit {
     if (this.form['username'].invalid) {
       return;
     }
-
     const username = $event.target.value;
-    if (username.trim().length > 0) {
+    if (username.trim().length > 0 && username !== this.validatedUsername) {
       this.store.dispatch(validateUsername({username}))
+      this.validatedUsername = username;
     }
   }
 }
