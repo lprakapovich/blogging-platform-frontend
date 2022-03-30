@@ -1,6 +1,5 @@
 import {createAction, props} from "@ngrx/store";
 import {Blog} from "../../models/Blog";
-import {BlogCreationData} from "../../models/data/BlogCreationData";
 
 export enum BlogActionTypes {
 
@@ -45,8 +44,8 @@ export const getBlogsBySearchCriteriaSuccess = createAction(BlogActionTypes.GET_
 
 export const setSelectedBlogId = createAction(BlogActionTypes.SET_SELECTED_BLOG_ID, props<{blogId: string}>());
 
-export const createBlog = createAction(BlogActionTypes.CREATE_BLOG, props<{data: BlogCreationData}>())
+export const createBlog = createAction(BlogActionTypes.CREATE_BLOG, props<{blogId: string}>())
 
-export const createBlogSuccess = createAction(BlogActionTypes.CREATE_BLOG_SUCCESS, props<{createdBlogId: string}>())
+export const createBlogSuccess = createAction(BlogActionTypes.CREATE_BLOG_SUCCESS, props<{blogId: string}>());
 
 export const createBlogFailure = createAction(BlogActionTypes.CREATE_BLOG_FAILURE, props<{error: any}>())

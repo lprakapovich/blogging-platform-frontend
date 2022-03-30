@@ -83,7 +83,7 @@ export const blogReducer = createReducer(
     isLoading: false,
     userBlogIds: [
       ...state.userBlogIds,
-      action.createdBlogId
+      action.blogId
     ]
   })),
 

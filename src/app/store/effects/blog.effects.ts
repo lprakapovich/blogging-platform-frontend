@@ -2,14 +2,15 @@ import {Injectable} from "@angular/core";
 import {Store} from "@ngrx/store";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {BlogService} from "../../services/blog.service";
-import {catchError, map, of, switchMap} from "rxjs";
+import {catchError, map, of, switchMap, tap} from "rxjs";
 import {
   BlogActionTypes,
   getUserBlogsIdsSuccess,
   getBlogDetailsFailure,
   getBlogDetailsSuccess,
-  getBlogsBySearchCriteriaSuccess
+  getBlogsBySearchCriteriaSuccess, createBlogSuccess, createBlogFailure
 } from "../actions/blog.actions";
+import {Router} from "@angular/router";
 
 @Injectable()
 export class BlogEffects {
@@ -17,10 +18,39 @@ export class BlogEffects {
   constructor(
     private store: Store,
     private actions$: Actions,
+    private router: Router,
     private blogService: BlogService) {
   }
 
-  getBlogData$ = createEffect(() =>
+  createBlog$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(BlogActionTypes.CREATE_BLOG),
+      map((action: any) => action.blogId),
+      switchMap((blogId) => {
+        return this.blogService.createBlog(blogId)
+          .pipe(
+            map(() => createBlogSuccess(blogId)),
+            catchError(error => of(createBlogFailure({
+              error
+            })))
+          )
+      })
+    )
+  )
+
+  createBlogSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(BlogActionTypes.CREATE_BLOG_SUCCESS),
+      tap(() => {
+        this.router.navigate(['/feed'])
+      })
+    ),
+    {
+      dispatch: false
+    }
+  )
+
+  getBlogDetails$ = createEffect(() =>
       this.actions$.pipe(
         ofType(BlogActionTypes.GET_BLOG_DETAILS),
         switchMap(() => {

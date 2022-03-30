@@ -14,7 +14,7 @@ import {
 import {Store} from "@ngrx/store";
 import {LoginData} from "../../models/data/LoginData";
 import {RegisterData} from "../../models/data/RegisterData";
-import {getUserBlogsIds, setSelectedBlogId} from "../actions/blog.actions";
+import {createBlog, getUserBlogsIds, setSelectedBlogId} from "../actions/blog.actions";
 import {Router} from "@angular/router";
 import {selectSelectedBlogId} from "../selectors/blog.selectors";
 import {selectIsAuthenticated} from "../selectors/auth.selectors";
@@ -70,7 +70,7 @@ export class AuthEffects {
   validateUsername$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActionTypes.BEFORE_REGISTER_VALIDATE_USERNAME),
-      debounceTime(5000),
+      debounceTime(1000),
       map((action: any) => action.username),
       switchMap((username: string) => {
         return this.userService.validateUsername(username)
@@ -91,7 +91,7 @@ export class AuthEffects {
   register$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActionTypes.REGISTER),
-      debounceTime(500),
+      debounceTime(1500),
       map((action: any) => action.payload),
       switchMap((payload: RegisterData) => {
         return this.authService.register(payload)
@@ -122,7 +122,7 @@ export class AuthEffects {
       combineLatestWith(this.store.select(selectSelectedBlogId)),
       map(([__, blogId]) => blogId),
       tap((blogId) => {
-        this.router.navigate([`blog/@${blogId}`])
+        this.store.dispatch(createBlog({blogId}))
       })
     ),
     {

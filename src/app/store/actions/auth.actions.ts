@@ -19,9 +19,9 @@ export enum AuthActionTypes {
   BEFORE_REGISTER_VALIDATE_USERNAME_FAILURE = '[Auth Validation] Username validation failure',
   BEFORE_REGISTER_VALIDATE_USERNAME_SUCCESS = '[Auth Validation] Username validation success',
 
-  BEFORE_REGISTER_VALIDATE_BLOG_URI = '[Auth Validation] Validate blog uri before registration',
-  BEFORE_REGISTER_VALIDATE_BLOG_URI_FAILURE = '[Auth Validation] Blog URI validation failure',
-  BEFORE_REGISTER_VALIDATE_BLOG_URI_SUCCESS = '[Auth Validation] Blog URI validation success',
+  // BEFORE_REGISTER_VALIDATE_BLOG_URI = '[Auth Validation] Validate blog uri before registration',
+  // BEFORE_REGISTER_VALIDATE_BLOG_URI_FAILURE = '[Auth Validation] Blog URI validation failure',
+  // BEFORE_REGISTER_VALIDATE_BLOG_URI_SUCCESS = '[Auth Validation] Blog URI validation success',
 
   REDIRECT_AUTHENTICATED = '[Auth] Check authentication and redirect',
 }
@@ -39,9 +39,9 @@ export const validateUsername = createAction(AuthActionTypes.BEFORE_REGISTER_VAL
 export const validateUsernameFailure = createAction(AuthActionTypes.BEFORE_REGISTER_VALIDATE_USERNAME_FAILURE, props<{error: string}>());
 export const validateUsernameSuccess = createAction(AuthActionTypes.BEFORE_REGISTER_VALIDATE_USERNAME_SUCCESS);
 
-export const validateBlogUri = createAction(AuthActionTypes.BEFORE_REGISTER_VALIDATE_BLOG_URI, props<{blogUri: string}>());
-export const validateBlogUriFailure = createAction(AuthActionTypes.BEFORE_REGISTER_VALIDATE_BLOG_URI_FAILURE, props<{error: string}>());
-export const validateBlogUriSuccess = createAction(AuthActionTypes.BEFORE_REGISTER_VALIDATE_BLOG_URI_SUCCESS);
+// export const validateBlogUri = createAction(AuthActionTypes.BEFORE_REGISTER_VALIDATE_BLOG_URI, props<{blogUri: string}>());
+// export const validateBlogUriFailure = createAction(AuthActionTypes.BEFORE_REGISTER_VALIDATE_BLOG_URI_FAILURE, props<{error: string}>());
+// export const validateBlogUriSuccess = createAction(AuthActionTypes.BEFORE_REGISTER_VALIDATE_BLOG_URI_SUCCESS);
 
 export const logout = createAction(AuthActionTypes.LOGOUT);
 

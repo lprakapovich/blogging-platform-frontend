@@ -8,7 +8,7 @@ import { HomeComponent } from './components/core/home/home.component';
 import { NavbarComponent } from './components/navigation/navbar/navbar.component';
 import { BlogComponent } from './components/blog/blog/blog.component';
 import { ReactiveFormsModule } from "@angular/forms";
-import { HttpClient, HttpClientModule } from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
 import { DefaultButtonComponent } from './components/ui-elements/default-button/default-button.component';
 import { SearchBarComponent } from './components/ui-elements/search-bar/search-bar.component';
 import { BlogPostPreviewComponent } from './components/blog/blog-post-preview/blog-post-preview.component';
@@ -46,6 +46,7 @@ import {blogReducer} from "./store/reducers/blog.reducers";
 import {BlogEffects} from "./store/effects/blog.effects";
 import {postReducer} from "./store/reducers/post.reducers";
 import {PostEffects} from "./store/effects/post.effects";
+import {JwtInterceptor} from "./common/http/jwt.interceptor";
 
 @NgModule({
   declarations: [
@@ -106,7 +107,10 @@ import {PostEffects} from "./store/effects/post.effects";
       logOnly: environment.production
     }),
   ],
-  providers: [HttpClient, HttpClientModule],
+  providers: [
+    HttpClient,
+    HttpClientModule,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },],
   bootstrap: [AppComponent],
   exports: [
     ReactiveFormsModule,

@@ -52,7 +52,7 @@ export class SignupComponent implements OnInit {
     this.isRegisterError$ = this.store.select(selectRegisterError);
     this.isUsernameValidationLoading$ = this.store.select(selectUsernameValidationIsLoading);
     this.registrationValidationMessage$ = this.store.select(selectValidationMessage);
-    this.store.dispatch(checkAuthenticationAndRedirect({to: '/feed'}));
+    // this.store.dispatch(checkAuthenticationAndRedirect({to: '/feed'}));
   }
 
   get form() {

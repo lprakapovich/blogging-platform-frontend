@@ -14,33 +14,24 @@ export class AuthService {
 
   authUrl = `${environment.apiUrl}/auth`;
 
-  private currentUserSubject: BehaviorSubject<User>;
-  private currentUser: Observable<User> | null;
-
-  constructor(private http: HttpClient) {
-    const localStorageUser = localStorage.getItem('currentUser');
-    this.currentUserSubject = new BehaviorSubject<User>(localStorageUser && JSON.parse(localStorageUser));
-    this.currentUser = this.currentUserSubject.asObservable();
-  }
+  constructor(private http: HttpClient) {}
 
   login(loginData: LoginData): Observable<AuthResponse> {
     const url = `${this.authUrl}/login`;
-    // return this.http.post<any>(url, loginData);
-    return of({ token: 'my-token-13/03/2022'})
-  }
+    return this.http.post<any>(url, loginData);
+    }
 
   register(registrationData: RegisterData): Observable<AuthResponse> {
     const url = `${this.authUrl}/register`;
-    // return this.http.post<any>(url, registrationData);
-    return of({ token: 'my-token-13/03/2022'})
+    const body = {
+      username: registrationData.username,
+      password: registrationData.password
+    }
+    return this.http.post<any>(url, body);
   }
 
   logout() {
     localStorage.removeItem('currentUser');
     localStorage.removeItem('token');
-  }
-
-  public currentUserValue(): User {
-    return this.currentUserSubject.value;
   }
 }
