@@ -75,12 +75,14 @@ export class AuthEffects {
       switchMap((username: string) => {
         return this.userService.validateUsername(username)
           .pipe(
-            map((response) => validateUsernameSuccess()),
-            catchError(error => of(validateUsernameFailure(
-              {
-                error
-              }
-            )))
+            map(() => validateUsernameSuccess()),
+            catchError(err =>{
+              return of(validateUsernameFailure(
+                {
+                  error: err.error
+                }
+              ))
+            })
           )
       })
     )
@@ -96,7 +98,7 @@ export class AuthEffects {
           .pipe(
             map(response => {
               this.store.dispatch(setSelectedBlogId({
-                blogId: payload.blogUri
+                blogId: payload.blogUrl
               }
               ))
               return registerSuccess(

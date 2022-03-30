@@ -13,7 +13,7 @@ export interface AuthState {
   validation: {
     form: {
       username: string,
-      blogUri: string;
+      blogUrl: string;
     },
     isLoading: boolean;
     validationMessage: string;
@@ -31,7 +31,7 @@ export const initialState: AuthState = {
   validation: {
     form: {
       username: '',
-      blogUri: ''
+      blogUrl: ''
     },
     isLoading: false,
     validationMessage: ''
@@ -73,7 +73,7 @@ export const authReducer = createReducer(
     validation: {
       ...state.validation,
       isLoading: true,
-      validationMessage: 'Validating username...'
+      validationMessage: 'Username availability...'
     }
   })),
 

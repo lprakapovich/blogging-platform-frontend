@@ -7,25 +7,63 @@
     <form [formGroup]="registerForm" (ngSubmit)="onSignUp()">
       <div id="registration-form-inputs">
         <div class="form-group">
-          <input type="text" id="username"  placeholder="Username"
-                 formControlName="username" autocomplete="off" required
-                 (focusout)="inputChangeEvent($event)"
-                 class="form-control" [ngClass]="{ 'is-invalid': form['username'].errors }"/>
+          <input type="text"
+                 id="username"
+                 name="username"
+                 placeholder="Username"
+                 class="form-control"
+                 formControlName="username"
+                 autocomplete="off"
+                 (focusout)="usernameInputEventChanged($event)"
+                 [ngClass]="{ 'is-invalid': form['username'].errors }">
         </div>
         <div class="form-group">
-          <input type="password" id="password" placeholder="Password"
-                 formControlName="password" autocomplete="off" required
-                 class="form-control" [ngClass]="{ 'is-invalid': form['password'].errors }"/>
+          <input type="password"
+                 id="password"
+                 placeholder="Password"
+                 formControlName="password"
+                 autocomplete="off"
+                 class="form-control"
+                 [ngClass]="{ 'is-invalid': form['password'].errors }"/>
         </div>
         <div class="form-group">
-          <input type="text" id="blogUri" placeholder="@URI"
-                 formControlName="blogUri" autocomplete="off" required
-                 class="form-control" [ngClass]="{ 'is-invalid': form['blogUri'].errors }"/>
+          <input type="text"
+                 id="blogUrl"
+                 placeholder="@url"
+                 formControlName="blogUrl"
+                 autocomplete="off"
+                 class="form-control"
+                 [ngClass]="{ 'is-invalid': form['blogUrl'].errors }"/>
+        </div>
+        <div *ngIf="form['username'].invalid && (form['username'].touched)">
+          <div class="validation-error" *ngIf="form['username'].errors?.['required']">
+            Username is required
+          </div>
+          <div class="validation-error" *ngIf="form['username'].errors?.['minlength']">
+            Username must be at least 5 chars long
+          </div>
+        </div>
+        <div *ngIf="form['password'].invalid && (form['password'].touched)">
+          <div class="validation-error" *ngIf="form['password'].errors?.['required']">
+            Password is required
+          </div>
+          <div class="validation-error" *ngIf="form['password'].errors?.['minlength']">
+            Password must be at least 5 chars long
+          </div>
+        </div>
+        <div *ngIf="form['blogUrl'].invalid && (form['blogUrl'].touched)">
+          <div class="validation-error" *ngIf="form['blogUrl'].errors?.['required']">
+            URL is required
+          </div>
+          <div class="validation-error" *ngIf="form['blogUrl'].errors?.['minlength']">
+            URL be at least 5 chars long
+          </div>
         </div>
         <div
           class="message"
+          *ngIf="!form['username'].errors"
           [ngClass]="(isUsernameValidationLoading$ | async) ? 'loading-message' : ''">
-           {{ (registrationValidationMessage$ | async) }}
+          {{ (registrationValidationMessage$ | async) }}
         </div>
       </div>
       <div class="registration-form-submit-buttons">

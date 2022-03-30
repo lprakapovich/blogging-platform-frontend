@@ -24,17 +24,24 @@ export class SignupComponent implements OnInit {
   isRegisterError$: Observable<boolean>;
   registrationValidationMessage$: Observable<string>;
 
-  registrationProcessMessage: string;
-
   constructor(
     private store: Store,
     private formBuilder: FormBuilder,
     private router: Router) {
 
     this.registerForm = this.formBuilder.group({
-      blogUri: ['', Validators.required],
-      username: ['', Validators.required],
-      password: ['', Validators.required]
+      blogUrl: ['', [
+        Validators.required,
+        Validators.minLength(5)]
+      ],
+      username: ['', [
+        Validators.required,
+        Validators.minLength(5)]
+      ],
+      password: ['', [
+        Validators.required,
+        Validators.minLength(5)]
+      ]
     });
   }
 
@@ -57,7 +64,7 @@ export class SignupComponent implements OnInit {
     const registrationData = {
       username: this.registerForm.get('username')?.value,
       password: this.registerForm.get('password')?.value,
-      blogUri: this.registerForm.get('blogUri')?.value
+      blogUrl: this.registerForm.get('blogUrl')?.value
     }
     this.store.dispatch(register({payload: registrationData}))
   }
@@ -66,7 +73,11 @@ export class SignupComponent implements OnInit {
     this.router.navigate(['login'])
   }
 
-  inputChangeEvent($event: any) {
+  usernameInputEventChanged($event: any) {
+    if (this.form['username'].invalid) {
+      return;
+    }
+
     const username = $event.target.value;
     if (username.trim().length > 0) {
       this.store.dispatch(validateUsername({username}))

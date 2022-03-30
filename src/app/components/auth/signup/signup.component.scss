@@ -75,6 +75,12 @@
       animation: loading-spinner 4s ease;
     }
 
+    .validation-error {
+      margin-left: 1rem;
+      color: firebrick;
+      font-size: 1rem;
+    }
+
     .registration-form-submit-buttons {
       display: flex;
       justify-content: center;
