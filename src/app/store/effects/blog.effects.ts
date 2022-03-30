@@ -5,12 +5,15 @@ import {BlogService} from "../../services/blog.service";
 import {catchError, map, of, switchMap, tap} from "rxjs";
 import {
   BlogActionTypes,
-  getUserBlogsIdsSuccess,
+  createBlogFailure,
+  createBlogSuccess,
   getBlogDetailsFailure,
   getBlogDetailsSuccess,
-  getBlogsBySearchCriteriaSuccess, createBlogSuccess, createBlogFailure
+  getBlogsBySearchCriteriaSuccess,
+  getUserBlogsIdsSuccess
 } from "../actions/blog.actions";
 import {Router} from "@angular/router";
+import {BlogId} from "../../models/Blog";
 
 @Injectable()
 export class BlogEffects {
@@ -75,7 +78,6 @@ export class BlogEffects {
         return this.blogService.getBySearchCriteria(searchCriteria)
           .pipe(
             map(response => {
-              console.log(response)
               return getBlogsBySearchCriteriaSuccess({blogs: response})
             })
           )
@@ -87,13 +89,27 @@ export class BlogEffects {
     this.actions$.pipe(
       ofType(BlogActionTypes.GET_USER_BLOGS_IDS),
       switchMap(() => {
-        return this.blogService.getAllUserBlogIds()
+        return this.blogService.getAuthenticatedUserBlogIds()
           .pipe(
-            map((response) => getUserBlogsIdsSuccess({
-              blogIds: response
-            }))
+            map((ids: BlogId[]) => {
+              let blogIds: Array<string> = ids.map(id => id.id)
+              return getUserBlogsIdsSuccess({
+                blogIds
+              })
+            })
           )
       })
     )
   )
+
+  getUserBlogIdsSuccessAndRedirect$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(BlogActionTypes.GET_USER_BLOGS_IDS_SUCCESS_REDIRECT),
+    tap((action: any) => {
+        this.router.navigate([action.path])
+      })
+    ),
+    {
+      dispatch: false
+    })
 }

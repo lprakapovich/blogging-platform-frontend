@@ -3,18 +3,9 @@ import {BlogState} from "../reducers/blog.reducers";
 
 export const selectBlogFeature = createFeatureSelector<BlogState>('blog')
 
-export const selectSelectedBlog = createSelector(selectBlogFeature,
-  state => state.selectedBlog
-)
-
 export const selectSelectedBlogId = createSelector(
   selectBlogFeature,
   state => state.selectedBlogId
-)
-
-export const selectSelectedBlogPublications = createSelector(
-  selectSelectedBlog,
-  blog => blog?.publications
 )
 
 export const selectFeedBlogsSearchResult = createSelector(

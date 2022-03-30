@@ -8,17 +8,19 @@ import {
   loginSuccess,
   registerFailure,
   registerSuccess,
+  setPrincipal,
   validateUsernameFailure,
   validateUsernameSuccess
 } from "../actions/auth.actions"
 import {Store} from "@ngrx/store";
-import {LoginData} from "../../models/data/LoginData";
-import {RegisterData} from "../../models/data/RegisterData";
-import {createBlog, getUserBlogsIds, setSelectedBlogId} from "../actions/blog.actions";
+import {LoginData} from "../../models/data/auth/LoginData";
+import {RegisterData} from "../../models/data/auth/RegisterData";
+import {createBlog, getUserBlogsIdsSuccessAndRedirect, setSelectedBlogId} from "../actions/blog.actions";
 import {Router} from "@angular/router";
 import {selectSelectedBlogId} from "../selectors/blog.selectors";
 import {selectIsAuthenticated} from "../selectors/auth.selectors";
 import {UserService} from "../../services/user.service";
+import {BlogService} from "../../services/blog.service";
 
 @Injectable()
 export class AuthEffects {
@@ -28,7 +30,8 @@ export class AuthEffects {
     private actions$: Actions,
     private router: Router,
     private authService: AuthService,
-    private userService: UserService) {
+    private userService: UserService,
+    private blogService: BlogService) {
   }
 
   login$ = createEffect(() =>
@@ -39,11 +42,14 @@ export class AuthEffects {
       switchMap((payload: LoginData) => {
         return this.authService.login(payload)
           .pipe(
-            map(response => loginSuccess(
+            map(response => {
+              return loginSuccess(
               {
+                principal: payload.username,
                 token: response.token
               }
-            )),
+            )}
+            ),
             catchError(error => of(loginFailure(
               {
                 error
@@ -57,14 +63,19 @@ export class AuthEffects {
   loginSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActionTypes.LOGIN_SUCCESS),
-      tap(() => {
-        this.store.dispatch(getUserBlogsIds())
-        this.router.navigate(['/feed'])
+      switchMap(() => {
+        return this.blogService.getAuthenticatedUserBlogIds()
+          .pipe(
+            map(ids => {
+              const blogIds = ids.map(id => id.id);
+              return getUserBlogsIdsSuccessAndRedirect({
+                blogIds: blogIds,
+                path: '/feed'
+              })
+            })
+          )
       })
-    ),
-    {
-      dispatch: false
-    }
+    )
   )
 
   validateUsername$ = createEffect(() =>
@@ -99,8 +110,10 @@ export class AuthEffects {
             map(response => {
               this.store.dispatch(setSelectedBlogId({
                 blogId: payload.blogUrl
-              }
-              ))
+              }))
+              this.store.dispatch(setPrincipal({
+                username: payload.username
+              }))
               return registerSuccess(
                 {
                   token: response.token,
@@ -134,7 +147,7 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthActionTypes.LOGOUT),
       tap(() => {
-        this.router.navigate(['login'])
+         this.router.navigate(['/login'])
       })
     ),
     {

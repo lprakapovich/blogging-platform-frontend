@@ -1,11 +1,10 @@
-import {User} from "../../models/User";
 import {createReducer, on} from "@ngrx/store";
 import * as AuthActions from "../actions/auth.actions"
 
 export interface AuthState {
   isAuthenticated: boolean;
   token: string;
-  authenticatedUser: User | null;
+  principal: string;
   errorMessage: string;
   isLoading: boolean;
   isLoginError: boolean;
@@ -22,7 +21,7 @@ export interface AuthState {
 
 export const initialState: AuthState = {
   isAuthenticated: false,
-  authenticatedUser: null,
+  principal: '',
   errorMessage: '',
   token: '',
   isLoading: false,
@@ -52,6 +51,7 @@ export const authReducer = createReducer(
     isAuthenticated: true,
     errorMessage: '',
     token: action.token,
+    principal: action.principal
   })),
 
   on(AuthActions.loginFailure, (state, action) => ({
@@ -61,6 +61,7 @@ export const authReducer = createReducer(
     isLoading: false,
     errorMessage: action.error,
     token: '',
+    principal: ''
   })),
 
   on(AuthActions.resetLoginFailure, (state) => ({
@@ -123,6 +124,12 @@ export const authReducer = createReducer(
     isLoading: false,
     isAuthenticated: false,
     token: ''
+  })),
+
+  on(AuthActions.setPrincipal, (state, action) => ({
+    ...state,
+    isAuthenticated: true,
+    principal: action.username
   }))
 );
 

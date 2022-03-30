@@ -3,8 +3,9 @@ import {Store} from "@ngrx/store";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {PostService} from "../../services/post.service";
 import {getPostsByTitleSuccess, getPostsFromSubscriptionsSuccess, PostActionTypes} from "../actions/post.actions";
-import {combineLatestWith, debounceTime, map, switchMap, timeout} from "rxjs";
+import {combineLatestWith, map, switchMap} from "rxjs";
 import {selectSelectedBlogId} from "../selectors/blog.selectors";
+import {selectPrincipal} from "../selectors/auth.selectors";
 
 @Injectable()
 export class PostEffects {
@@ -32,10 +33,11 @@ export class PostEffects {
   getPostsFromSubscriptions$ = createEffect(() =>
     this.actions$.pipe(
       ofType(PostActionTypes.GET_POSTS_FROM_SUBSCRIPTIONS),
-      combineLatestWith(this.store.select(selectSelectedBlogId)),
-      map(([__, blogId]) => blogId),
-      switchMap((blogId) => {
-        return this.postService.getPostsFromSubscriptions(blogId).pipe(
+      combineLatestWith(
+        this.store.select(selectSelectedBlogId),
+        this.store.select(selectPrincipal)),
+      switchMap(([__, blogId, principal]) => {
+        return this.postService.getPostsFromSubscriptions(blogId, principal).pipe(
           map(response => getPostsFromSubscriptionsSuccess({posts: response}))
         )
       })

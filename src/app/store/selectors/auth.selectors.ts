@@ -8,11 +8,6 @@ export const selectIsAuthenticated = createSelector(
   state => state.isAuthenticated
 );
 
-export const selectAuthenticatedUser = createSelector(
-  selectAuthFeature,
-  state => state.authenticatedUser
-)
-
 export const selectToken = createSelector(
   selectAuthFeature,
   state => state.token
@@ -41,4 +36,9 @@ export const selectUsernameValidationIsLoading = createSelector(
 export const selectValidationMessage = createSelector(
   selectAuthFeature,
   state => state.validation.validationMessage
+)
+
+export const selectPrincipal = createSelector(
+  selectAuthFeature,
+  authState => authState.principal
 )

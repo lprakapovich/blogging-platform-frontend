@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isLoading$ = this.store.select(selectIsLoading);
     this.showLoginError$ = this.store.select(selectLoginError)
-    this.store.dispatch(checkAuthenticationAndRedirect({to: '/feed'}));
+    // this.store.dispatch(checkAuthenticationAndRedirect({to: '/feed'}));
   }
 
   ngOnDestroy(): void {

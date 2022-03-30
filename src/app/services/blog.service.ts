@@ -1,9 +1,11 @@
 import {Injectable} from "@angular/core";
-import {Blog} from "../models/Blog";
+import {Blog, BlogId} from "../models/Blog";
 import {Observable, of} from "rxjs";
 import {MockService} from "./mock.service";
 import {environment} from "../../environments/environment";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
+import {CreateBlogData} from "../models/data/blog/CreateBlogData";
+import {UpdateBlogData} from "../models/data/blog/UpdateBlogData";
 
 @Injectable({
   "providedIn": 'root'
@@ -16,28 +18,38 @@ export class BlogService {
               private httpClient: HttpClient) {
   }
 
-  createBlog(blogId: string): Observable<any> {
+  createBlog(blogId: string): Observable<void> {
     const url = `${this.publicationServiceUrl}/blogs`;
-    return this.httpClient.post(url, {
+    const body: CreateBlogData = {
       id: blogId
+    };
+    return this.httpClient.post<void>(url, body);
+  }
+
+  updateBlog(blogId: string, principal: string, updateData: UpdateBlogData): Observable<Blog> {
+    const url = `${this.publicationServiceUrl}/blogs/${blogId},${principal}`;
+    return this.httpClient.put<Blog>(url, updateData);
+  }
+
+  deleteBlog(blogId: string, principal: string): Observable<void> {
+    const url = `${this.publicationServiceUrl}/blogs/${blogId},${principal}`;
+    return this.httpClient.delete<void>(url);
+  }
+
+  getAuthenticatedUserBlogIds(): Observable<BlogId[]> {
+    const url = `${this.publicationServiceUrl}/blogs/owned`
+    return this.httpClient.get<BlogId[]>(url);
+  }
+
+  getLastVisitedBlog(): Observable<any> {
+    return of();
+  }
+
+  getBySearchCriteria(criteria: string): Observable<Blog[]> {
+    const url = `${this.publicationServiceUrl}/blogs`
+    const params = new HttpParams().set("search", criteria);
+    return this.httpClient.get<Blog[]>(url, {
+      params
     })
-  }
-
-  getLastVisitedBlog(): Observable<Blog> {
-    const blog: Blog = {
-      id: 'lprakapovich',
-      name: 'Lizaveta Prakapovich',
-      description: "This is by fokeng blog!!",
-      publications: []
-    }
-    return of(blog);
-  }
-
-  getBySearchCriteria(searchCriteria: string): Observable<Blog[]> {
-    return of(this.mock.getBlogs());
-  }
-
-  getAllUserBlogIds(): Observable<string[]> {
-    return of(this.mock.getAllUserBlogIds())
   }
 }

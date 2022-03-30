@@ -4,8 +4,7 @@ import * as BlogActions from "../actions/blog.actions";
 
 export interface BlogState {
   selectedBlogId: string;
-  selectedBlog: Blog | null;
-  blogError: string | null;
+  blogError: string;
   isLoading: boolean,
   feedSearchResult: {
     blogs: Blog[]
@@ -15,8 +14,7 @@ export interface BlogState {
 
 export const initialState: BlogState = {
   selectedBlogId: '',
-  selectedBlog: null,
-  blogError: null,
+  blogError: '',
   isLoading: false,
   feedSearchResult: {
     blogs: []
@@ -35,7 +33,7 @@ export const blogReducer = createReducer(
   on(BlogActions.getBlogDetailsSuccess, (state) => ({
     ...state,
     isLoading: false,
-    blogError: null
+    blogError: ''
   })),
 
   on(BlogActions.getBlogDetailsFailure, (state, action) => ({
@@ -49,9 +47,17 @@ export const blogReducer = createReducer(
     selectedBlogId: action.blogId
   })),
 
+  on(BlogActions.setUserBlogsIds, (state, action) => ({
+    ...state,
+    userBlogIds: action.blogIds
+  })),
+
   on(BlogActions.getBlogsBySearchCriteria, (state) => ({
     ...state,
-    isLoading: true
+    isLoading: true,
+    feedSearchResult: {
+      blogs: []
+    }
   })),
 
   on(BlogActions.getBlogsBySearchCriteriaSuccess, (state, action) => ({
@@ -64,13 +70,21 @@ export const blogReducer = createReducer(
 
   on(BlogActions.getUserBlogsIds, (state) => ({
     ...state,
-    isLoading: true
+    isLoading: true,
   })),
 
   on(BlogActions.getUserBlogsIdsSuccess, (state, action) => ({
     ...state,
     isLoading: false,
-    userBlogIds: action.blogIds
+    userBlogIds: action.blogIds,
+    selectedBlogId: action.blogIds[0]
+  })),
+
+  on(BlogActions.getUserBlogsIdsSuccessAndRedirect, (state, action) => ({
+    ...state,
+    isLoading: false,
+    userBlogIds: action.blogIds,
+    selectedBlogId: action.blogIds[0]
   })),
 
   on(BlogActions.createBlog, (state) => ({

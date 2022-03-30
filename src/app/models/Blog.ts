@@ -1,8 +1,14 @@
 import {BlogPost} from "./BlogPost";
 
 export interface Blog {
-  id: string,
-  name: string;
+  id: BlogId,
+  displayName: string;
   description: string;
   publications: BlogPost[]
 }
+
+export type BlogId = {
+  id: string;
+  username: string;
+}
+

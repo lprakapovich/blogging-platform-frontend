@@ -1,9 +1,8 @@
 <div *ngIf="!(isLoading$ | async); else loadingTemplate">
   <div class="feed-container" aria-disabled="true" [ngClass]="showPostPreview ? 'inactive' : 'active'">
     <div class="feed-container-label"> My Feed </div>
-    <app-search-bar id="search-bar"
-                    (enterEvent)="onEnterPressed($event)">
-    </app-search-bar>
+    <app-search-bar id="search-bar" (enterEvent)="onEnterPressed($event)"></app-search-bar>
+    <div class="empty-feed-message" *ngIf="(posts$|async)?.length === 0"> Search for new blogs and publications </div>
     <div class="feed-grid" *ngIf="posts$|async; let asyncPostList">
       <div class="feed-grid-item" *ngFor="let post of asyncPostList" (click)="openPostPreview(post)">
         <div class="feed-grid-item-content">

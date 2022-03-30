@@ -14,6 +14,12 @@
     transform: translate(-20%,0)
   }
 
+  .empty-feed-message {
+    font-size: 1rem;
+    color: v.$light-grey;
+    padding: 1rem;
+  }
+
   .feed-container-label {
     font-size: 2.75rem;
     font-weight: 700;
