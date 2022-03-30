@@ -12,7 +12,7 @@ import {AuthResponse} from "../models/AuthResponse";
 })
 export class AuthService {
 
-  authUrl = `${environment.apiUrl}/auth`;
+  authUrl = `${environment.apiUrl}/auth-service`;
 
   constructor(private http: HttpClient) {}
 
