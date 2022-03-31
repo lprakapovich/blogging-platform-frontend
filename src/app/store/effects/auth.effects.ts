@@ -8,16 +8,15 @@ import {
   loginSuccess,
   registerFailure,
   registerSuccess,
-  setPrincipal,
   validateUsernameFailure,
   validateUsernameSuccess
 } from "../actions/auth.actions"
 import {Store} from "@ngrx/store";
 import {LoginData} from "../../models/data/auth/LoginData";
 import {RegisterData} from "../../models/data/auth/RegisterData";
-import {createBlog, getUserBlogsIdsSuccessAndRedirect, setSelectedBlogId} from "../actions/blog.actions";
+import {createBlog, getUserBlogsIdsSuccessAndRedirect, setAuthenticatedUserBlogId} from "../actions/blog.actions";
 import {Router} from "@angular/router";
-import {selectSelectedBlogId} from "../selectors/blog.selectors";
+import {selectAuthenticatedUserBlogId} from "../selectors/blog.selectors";
 import {selectIsAuthenticated} from "../selectors/auth.selectors";
 import {UserService} from "../../services/user.service";
 import {BlogService} from "../../services/blog.service";
@@ -108,7 +107,7 @@ export class AuthEffects {
         return this.authService.register(payload)
           .pipe(
             map(response => {
-              this.store.dispatch(setSelectedBlogId({
+              this.store.dispatch(setAuthenticatedUserBlogId({
                 blogId: payload.blogUrl
               }))
               return registerSuccess(
@@ -130,7 +129,7 @@ export class AuthEffects {
   registerSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActionTypes.REGISTER_SUCCESS),
-      combineLatestWith(this.store.select(selectSelectedBlogId)),
+      combineLatestWith(this.store.select(selectAuthenticatedUserBlogId)),
       map(([__, blogId]) => blogId),
       tap((blogId) => {
         this.store.dispatch(createBlog({blogId}))

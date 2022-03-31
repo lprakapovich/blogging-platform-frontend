@@ -3,7 +3,7 @@ import {createReducer, on} from "@ngrx/store";
 import * as BlogActions from "../actions/blog.actions";
 
 export interface BlogState {
-  currentBlogId: string,
+  authenticatedUserBlogId: string,
   selectedBlogId: string,
   blogError: string,
   isLoading: boolean,
@@ -12,7 +12,7 @@ export interface BlogState {
 }
 
 export const initialState: BlogState = {
-  currentBlogId: '',
+  authenticatedUserBlogId: '',
   selectedBlogId: '',
   blogError: '',
   isLoading: false,
@@ -45,6 +45,11 @@ export const blogReducer = createReducer(
     selectedBlogId: action.blogId,
   })),
 
+  on(BlogActions.setAuthenticatedUserBlogId, (state, action) => ({
+    ...state,
+    authenticatedUserBlogId: action.blogId,
+  })),
+
   on(BlogActions.setUserBlogsIds, (state, action) => ({
     ...state,
     userBlogIds: action.blogIds
@@ -71,14 +76,14 @@ export const blogReducer = createReducer(
     ...state,
     isLoading: false,
     userBlogIds: action.blogIds,
-    selectedBlogId: action.blogIds[0]
+    authenticatedUserBlogId: action.blogIds[0]
   })),
 
   on(BlogActions.getUserBlogsIdsSuccessAndRedirect, (state, action) => ({
     ...state,
     isLoading: false,
     userBlogIds: action.blogIds,
-    selectedBlogId: action.blogIds[0]
+    authenticatedUserBlogId: action.blogIds[0]
   })),
 
   on(BlogActions.createBlog, (state) => ({

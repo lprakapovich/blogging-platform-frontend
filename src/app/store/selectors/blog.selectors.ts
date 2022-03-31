@@ -8,6 +8,11 @@ export const selectSelectedBlogId = createSelector(
   state => state.selectedBlogId
 )
 
+export const selectAuthenticatedUserBlogId = createSelector(
+  selectBlogFeature,
+  state => state.authenticatedUserBlogId
+)
+
 export const selectBlogsBySearchCriteria = createSelector(
   selectBlogFeature,
   state => state.blogsBySearchCriteria

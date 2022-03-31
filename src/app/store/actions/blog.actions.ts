@@ -27,6 +27,7 @@ export enum BlogActionTypes {
   GET_BLOGS_BY_SEARCH_CRITERIA_SUCCESS = "[Blog] Get blogs by display name or description success",
 
   SET_SELECTED_BLOG_ID = "[Blog] Set selected blog id",
+  SET_AUTHENTICATED_USER_BLOG_ID = "[Blog] Set authenticated user blog id",
   SET_USER_BLOG_IDS = "[BLOG] Set user blog ids"
 }
 
@@ -42,6 +43,7 @@ export const getBlogsBySearchCriteria = createAction(BlogActionTypes.GET_BLOGS_B
 export const getBlogsBySearchCriteriaSuccess = createAction(BlogActionTypes.GET_BLOGS_BY_SEARCH_CRITERIA_SUCCESS, props<{blogs: Blog[]}>())
 
 export const setSelectedBlogId = createAction(BlogActionTypes.SET_SELECTED_BLOG_ID, props<{blogId: string}>());
+export const setAuthenticatedUserBlogId = createAction(BlogActionTypes.SET_AUTHENTICATED_USER_BLOG_ID, props<{blogId: string}>())
 export const setUserBlogsIds = createAction(BlogActionTypes.SET_USER_BLOG_IDS, props<{blogIds: string[]}>())
 
 export const createBlog = createAction(BlogActionTypes.CREATE_BLOG, props<{blogId: string}>())
