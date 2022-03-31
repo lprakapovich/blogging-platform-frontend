@@ -46,8 +46,8 @@ export class BlogService {
   }
 
   getBySearchCriteria(criteria: string): Observable<Blog[]> {
-    const url = `${this.publicationServiceUrl}/blogs`
-    const params = new HttpParams().set("search", criteria);
+    const url = `${this.publicationServiceUrl}/blogs/search`
+    const params = new HttpParams().set("criteria", criteria);
     return this.httpClient.get<Blog[]>(url, {
       params
     })

@@ -8,7 +8,7 @@ export const selectSelectedBlogId = createSelector(
   state => state.selectedBlogId
 )
 
-export const selectFeedBlogsSearchResult = createSelector(
+export const selectBlogsBySearchCriteria = createSelector(
   selectBlogFeature,
   state => state.blogsBySearchCriteria
 )

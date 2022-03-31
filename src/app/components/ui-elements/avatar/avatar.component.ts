@@ -7,8 +7,8 @@ import {AfterViewInit, Component, ElementRef, Input, OnInit} from '@angular/core
 })
 export class AvatarComponent implements OnInit, AfterViewInit {
 
-  @Input() name: string = 'lpr';
-  color!: string;
+  @Input() name: string = '';
+  color: string;
 
   constructor(private elementRef: ElementRef) { }
 

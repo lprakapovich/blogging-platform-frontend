@@ -17,12 +17,15 @@ export class PostEffects {
   ) {
   }
 
-  getPostsByTitle$ = createEffect(() =>
+  getPostsBySearchCriteria$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(PostActionTypes.GET_POSTS_BY_TITLE),
+      ofType(PostActionTypes.GET_POSTS_BY_SEARCH_CRITERIA),
       map((action: any) => action.title),
-      switchMap((title: string) => {
-        return this.postService.getPostsByTitle(title)
+      combineLatestWith(
+        this.store.select(selectSelectedBlogId),
+        this.store.select(selectPrincipal)),
+      switchMap(([title, blogId, principal]) => {
+        return this.postService.getPostsBySearchCriteria(title, blogId, principal)
           .pipe(
             map(response => getPostsByTitleSuccess({posts: response}))
           )

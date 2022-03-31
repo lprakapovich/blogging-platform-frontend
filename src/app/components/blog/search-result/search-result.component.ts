@@ -1,12 +1,12 @@
 import {Component, ElementRef, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {Blog} from "../../../models/Blog";
+import {Blog, BlogId} from "../../../models/Blog";
 import {BlogPost} from "../../../models/BlogPost";
 import {NavbarService} from "../../../services/navbar.service";
 import {Observable} from "rxjs";
 import {Store} from "@ngrx/store";
 import {getBlogsBySearchCriteria} from "../../../store/actions/blog.actions";
-import {selectFeedBlogsSearchResult} from "../../../store/selectors/blog.selectors";
+import {selectBlogsBySearchCriteria} from "../../../store/selectors/blog.selectors";
 import {selectPostsBySearchCriteria} from "../../../store/selectors/post.selectors";
 import {getPostsByTitle} from "../../../store/actions/post.actions";
 
@@ -42,7 +42,7 @@ export class SearchResultComponent implements OnInit {
       });
 
     this.navbarService.setBlogTemplate();
-    this.blogsSearchResult$ = this.store.select(selectFeedBlogsSearchResult);
+    this.blogsSearchResult$ = this.store.select(selectBlogsBySearchCriteria);
     this.postsSearchResult$ = this.store.select(selectPostsBySearchCriteria);
   }
 
@@ -72,5 +72,9 @@ export class SearchResultComponent implements OnInit {
   hideBlogSearchResult() {
     this.blogSearchResultHidden = true;
     this.postSearchResultHidden = false;
+  }
+
+  onBlogSelected(id: BlogId) {
+    console.log(`Selected blog ${id.id},${id.username}`)
   }
 }

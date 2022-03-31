@@ -1,9 +1,8 @@
 import {Injectable} from "@angular/core";
-import {Observable, of} from "rxjs";
+import {Observable} from "rxjs";
 import {BlogPost} from "../models/BlogPost";
-import {MockService} from "./mock.service";
 import {environment} from "../../environments/environment";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 
 @Injectable({
   "providedIn": 'root'
@@ -12,12 +11,13 @@ export class PostService {
 
   private publicationServiceUrl = `${environment.apiUrl}/publication-service`;
 
-  constructor(private mock: MockService,
-              private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient) {
   }
 
-  getPostsByTitle(title: string): Observable<BlogPost[]>{
-    return of(this.mock.getPosts());
+  getPostsBySearchCriteria(criteria: string, blogId: string, principal: string): Observable<BlogPost[]>{
+    const url = `${this.publicationServiceUrl}/${blogId},${principal}/publications/search`
+    const params = new HttpParams().set('criteria', criteria);
+    return this.httpClient.get<BlogPost[]>(url, { params: params})
   }
 
   getPostsFromSubscriptions(blogId: string, principal: string): Observable<any> {

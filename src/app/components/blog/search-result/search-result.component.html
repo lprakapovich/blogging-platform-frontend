@@ -5,7 +5,7 @@
                   [searchInput]="searchInput">
   </app-search-bar>
   <div class="search-result-navigation">
-    <div class="search-result-navigation-item active" (click)="showBlogAndPostSearchResult()">Top</div>
+    <div class="search-result-navigation-item active" (click)="showBlogAndPostSearchResult()">All</div>
     <div class="search-result-navigation-item" (click)="hidePostSearchResult()">Blogs</div>
     <div class="search-result-navigation-item" (click)="hideBlogSearchResult()">Posts</div>
   </div>
@@ -16,15 +16,15 @@
      <div *ngIf="asyncBlogList && asyncBlogList.length > 0; else noBlogs">
        <div class="search-result-item"
             *ngFor="let blog of (!!blogSearchResultLimit ? asyncBlogList.slice(0, blogSearchResultLimit) : asyncBlogList)">
-         <div class="blog-search-result-item-wrapper" id="{{blog.id}}">
-           <app-avatar [ngClass]="'small'"></app-avatar>
+         <div class="blog-search-result-item-wrapper" id="{{blog.id}}" (click)="onBlogSelected(blog.id)">
+           <app-avatar [name]="blog.displayName ? blog.displayName : blog.id.id" [ngClass]="'small'"></app-avatar>
            <div>
              <div class="blog-avatar-search-result-item">
              </div>
            </div>
            <div>
              <div class="blog-name-search-result-item"> {{blog.displayName}} </div>
-             <div class="blog-id-search-result-item">@{{blog.id}}</div>
+             <div class="blog-id-search-result-item">@{{blog.id.id}}</div>
              <div> {{blog.description}} </div>
            </div>
          </div>

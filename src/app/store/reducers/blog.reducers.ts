@@ -3,6 +3,7 @@ import {createReducer, on} from "@ngrx/store";
 import * as BlogActions from "../actions/blog.actions";
 
 export interface BlogState {
+  currentBlogId: string,
   selectedBlogId: string,
   blogError: string,
   isLoading: boolean,
@@ -11,6 +12,7 @@ export interface BlogState {
 }
 
 export const initialState: BlogState = {
+  currentBlogId: '',
   selectedBlogId: '',
   blogError: '',
   isLoading: false,
