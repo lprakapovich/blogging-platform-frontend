@@ -3,12 +3,10 @@ import {createReducer, on} from "@ngrx/store";
 import * as BlogActions from "../actions/blog.actions";
 
 export interface BlogState {
-  selectedBlogId: string;
-  blogError: string;
+  selectedBlogId: string,
+  blogError: string,
   isLoading: boolean,
-  feedSearchResult: {
-    blogs: Blog[]
-  },
+  blogsBySearchCriteria: Blog[],
   userBlogIds: string[]
 }
 
@@ -16,9 +14,7 @@ export const initialState: BlogState = {
   selectedBlogId: '',
   blogError: '',
   isLoading: false,
-  feedSearchResult: {
-    blogs: []
-  },
+  blogsBySearchCriteria: [],
   userBlogIds: []
 }
 
@@ -55,17 +51,13 @@ export const blogReducer = createReducer(
   on(BlogActions.getBlogsBySearchCriteria, (state) => ({
     ...state,
     isLoading: true,
-    feedSearchResult: {
-      blogs: []
-    }
+    blogsBySearchCriteria: []
   })),
 
   on(BlogActions.getBlogsBySearchCriteriaSuccess, (state, action) => ({
     ...state,
     isLoading: false,
-    feedSearchResult: {
-      blogs: action.blogs
-    }
+    blogsBySearchCriteria: action.blogs
   })),
 
   on(BlogActions.getUserBlogsIds, (state) => ({

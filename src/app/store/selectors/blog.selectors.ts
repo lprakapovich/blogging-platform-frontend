@@ -10,7 +10,7 @@ export const selectSelectedBlogId = createSelector(
 
 export const selectFeedBlogsSearchResult = createSelector(
   selectBlogFeature,
-  state => state.feedSearchResult.blogs
+  state => state.blogsBySearchCriteria
 )
 
 export const selectIsBlogLoading = createSelector(
