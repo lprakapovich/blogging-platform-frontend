@@ -30,7 +30,7 @@ export const loginFailure = createAction(AuthActionTypes.LOGIN_FAILURE, props<{e
 export const resetLoginFailure = createAction(AuthActionTypes.RESET_LOGIN_FAILURE);
 
 export const register = createAction(AuthActionTypes.REGISTER, props<{payload: RegisterData}>());
-export const registerSuccess = createAction(AuthActionTypes.REGISTER_SUCCESS, props<{token: string}>());
+export const registerSuccess = createAction(AuthActionTypes.REGISTER_SUCCESS, props<{token: string, principal: string}>());
 export const registerFailure = createAction(AuthActionTypes.REGISTER_FAILURE, props<{error: any}>());
 
 export const validateUsername = createAction(AuthActionTypes.BEFORE_REGISTER_VALIDATE_USERNAME, props<{username: string}>());

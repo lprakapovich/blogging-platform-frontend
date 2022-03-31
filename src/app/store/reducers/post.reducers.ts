@@ -6,18 +6,14 @@ export interface PostState {
   isLoading: boolean,
   postsFromSubscriptions: BlogPost[],
   selectedPost: BlogPost | null;
-  feedSearchResult: {
-    posts: BlogPost[]
-  }
+  postsBySearchCriteria: BlogPost[],
 }
 
 export const initialState: PostState = {
   isLoading: false,
   postsFromSubscriptions: [],
   selectedPost: null,
-  feedSearchResult: {
-    posts: []
-  }
+  postsBySearchCriteria: [],
 }
 
 export const postReducer = createReducer(
@@ -31,9 +27,7 @@ export const postReducer = createReducer(
   on(PostActions.getPostsByTitleSuccess, (state, action) => ({
     ...state,
     isLoading: false,
-    feedSearchResult: {
-      posts: action.posts
-    }
+    postsBySearchCriteria: action.posts
   })),
 
   on(PostActions.getPostsFromSubscriptions, (state) => ({

@@ -111,11 +111,9 @@ export class AuthEffects {
               this.store.dispatch(setSelectedBlogId({
                 blogId: payload.blogUrl
               }))
-              this.store.dispatch(setPrincipal({
-                username: payload.username
-              }))
               return registerSuccess(
                 {
+                  principal: payload.username,
                   token: response.token,
                 }
               )

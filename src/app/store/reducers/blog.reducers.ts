@@ -40,7 +40,7 @@ export const blogReducer = createReducer(
 
   on(BlogActions.setSelectedBlogId, (state, action) => ({
     ...state,
-    selectedBlogId: action.blogId
+    selectedBlogId: action.blogId,
   })),
 
   on(BlogActions.setUserBlogsIds, (state, action) => ({

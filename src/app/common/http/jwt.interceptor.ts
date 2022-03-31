@@ -18,7 +18,6 @@ export class JwtInterceptor implements HttpInterceptor {
     return this.store.select(selectToken).pipe(
       first(),
       mergeMap(token => {
-        console.log('JwtInterceptor: attach token')
         const authenticatedRequest = !!token ? request.clone({
           setHeaders: {
             Authorization: 'Bearer ' + token

@@ -3,10 +3,10 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {Observable} from "rxjs";
 import {Store} from "@ngrx/store";
-import {checkAuthenticationAndRedirect, register, validateUsername} from "../../../store/actions/auth.actions";
+import {register, validateUsername} from "../../../store/actions/auth.actions";
 import {
-  selectIsLoading,
-  selectRegisterError,
+  selectRegisterIsError,
+  selectRegisterIsLoading,
   selectUsernameValidationIsLoading,
   selectValidationMessage
 } from "../../../store/selectors/auth.selectors";
@@ -18,13 +18,13 @@ import {
 })
 export class SignupComponent implements OnInit {
 
-  private validatedUsername: string;
-
-  registerForm: FormGroup;
   isUsernameValidationLoading$: Observable<boolean>;
   isLoading$: Observable<boolean>;
   isRegisterError$: Observable<boolean>;
   registrationValidationMessage$: Observable<string>;
+
+  validatedUsername: string;
+  registerForm: FormGroup;
 
   constructor(
     private store: Store,
@@ -48,8 +48,8 @@ export class SignupComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isLoading$ = this.store.select(selectIsLoading);
-    this.isRegisterError$ = this.store.select(selectRegisterError);
+    this.isLoading$ = this.store.select(selectRegisterIsLoading);
+    this.isRegisterError$ = this.store.select(selectRegisterIsError);
     this.isUsernameValidationLoading$ = this.store.select(selectUsernameValidationIsLoading);
     this.registrationValidationMessage$ = this.store.select(selectValidationMessage);
     // this.store.dispatch(checkAuthenticationAndRedirect({to: '/feed'}));

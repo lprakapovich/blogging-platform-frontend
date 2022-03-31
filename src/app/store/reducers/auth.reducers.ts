@@ -5,125 +5,170 @@ export interface AuthState {
   isAuthenticated: boolean;
   token: string;
   principal: string;
-  errorMessage: string;
-  isLoading: boolean;
-  isLoginError: boolean;
-  isRegisterError: boolean;
-  validation: {
-    form: {
-      username: string,
-      blogUrl: string;
-    },
+
+  registration: {
     isLoading: boolean;
-    validationMessage: string;
+    isError: boolean;
+    errorMessage: string;
+    validation: {
+      isLoading: boolean;
+      validationMessage: string;
+    }
+  }
+
+  login: {
+    isLoading: boolean;
+    isError: boolean;
+    errorMessage: string;
   }
 }
 
 export const initialState: AuthState = {
   isAuthenticated: false,
   principal: '',
-  errorMessage: '',
   token: '',
-  isLoading: false,
-  isLoginError: false,
-  isRegisterError: false,
-  validation: {
-    form: {
-      username: '',
-      blogUrl: ''
-    },
+
+  registration: {
     isLoading: false,
-    validationMessage: ''
+    isError: false,
+    errorMessage: '',
+    validation: {
+      isLoading: false,
+      validationMessage: ''
+    }
+  },
+
+  login: {
+    isLoading: false,
+    isError: false,
+    errorMessage: ''
   }
 };
 
 export const authReducer = createReducer(
   initialState,
+
   on(AuthActions.login, (state) => ({
     ...state,
-    isLoading: true,
+    login: {
+      ...state.login,
+      isLoading: true
+    },
+    registration: initialState.registration
   })),
 
   on(AuthActions.loginSuccess, (state, action) => ({
     ...state,
-    isLoading: false,
-    isLoginError: false,
     isAuthenticated: true,
-    errorMessage: '',
     token: action.token,
-    principal: action.principal
+    principal: action.principal,
+    login: {
+      ...state.login,
+      isLoading: false,
+      isError: false,
+      errorMessage: ''
+    }
   })),
 
   on(AuthActions.loginFailure, (state, action) => ({
     ...state,
     isAuthenticated: false,
-    isLoginError: true,
-    isLoading: false,
-    errorMessage: action.error,
     token: '',
-    principal: ''
+    principal: '',
+    login: {
+      ...state.login,
+      isError: true,
+      isLoading: false,
+      errorMessage: action.error
+    }
   })),
 
   on(AuthActions.resetLoginFailure, (state) => ({
     ...state,
-    isLoginError: false
+    login: {
+      ...state.login,
+      isError: false
+    }
   })),
 
   on(AuthActions.validateUsername, (state) => ({
     ...state,
-    validation: {
-      ...state.validation,
-      isLoading: true,
-      validationMessage: 'Username availability...'
+    registration: {
+      ...state.registration,
+      validation: {
+        isLoading: true,
+        validationMessage: 'Username availability check...'
+      }
     }
   })),
 
   on(AuthActions.validateUsernameSuccess, (state) => ({
     ...state,
-    validation: {
-      ...state.validation,
-      isLoading: false,
-      validationMessage: ''
+    registration: {
+      ...state.registration,
+      validation: {
+        isLoading: false,
+        validationMessage: ''
+      }
     }
   })),
 
   on(AuthActions.validateUsernameFailure, (state, action) => ({
     ...state,
-    validation: {
-      ...state.validation,
-      isLoading: false,
-      validationMessage: action.error
+    registration: {
+      ...state.registration,
+      validation: {
+        isLoading: false,
+        validationMessage: action.error
+      }
     }
   })),
 
   on(AuthActions.register, (state) => ({
     ...state,
-    isLoading: true
+    state: initialState,
+    registration: {
+      ...state.registration,
+      isLoading: true
+    },
+    login: initialState.login
   })),
 
   on(AuthActions.registerSuccess, (state, action) => ({
     ...state,
-    isLoading: false,
     isAuthenticated: true,
-    isRegisterError: false,
-    errorMessage: '',
     token: action.token,
+    principal: action.principal,
+    registration: {
+      ...state.registration,
+      isLoading: false,
+      isError: false,
+      errorMessage: ''
+    }
   })),
 
   on(AuthActions.registerFailure, (state, action) => ({
     ...state,
-    isLoading: false,
     isAuthenticated: false,
-    isRegisterError: true,
-    errorMessage: action.error,
     token: '',
+    principal: '',
+    registration: {
+      ...state.registration,
+      isLoading: false,
+      isError: true,
+      errorMessage: action.error
+    }
   })),
 
   on(AuthActions.logout, (state) => ({
     ...state,
-    isLoading: false,
     isAuthenticated: false,
-    token: ''
+    token: '',
+    principal: '',
+    login: {
+      ...state.login,
+      isLoading: false
+    },
   })),
 
   on(AuthActions.setPrincipal, (state, action) => ({

@@ -10,7 +10,7 @@ import {
   getBlogDetailsFailure,
   getBlogDetailsSuccess,
   getBlogsBySearchCriteriaSuccess,
-  getUserBlogsIdsSuccess
+  getUserBlogsIdsSuccess, setUserBlogsIds
 } from "../actions/blog.actions";
 import {Router} from "@angular/router";
 import {BlogId} from "../../models/Blog";
@@ -32,7 +32,7 @@ export class BlogEffects {
       switchMap((blogId) => {
         return this.blogService.createBlog(blogId)
           .pipe(
-            map(() => createBlogSuccess(blogId)),
+            map(() => createBlogSuccess({blogId})),
             catchError(error => of(createBlogFailure({
               error
             })))
@@ -44,7 +44,10 @@ export class BlogEffects {
   createBlogSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(BlogActionTypes.CREATE_BLOG_SUCCESS),
-      tap(() => {
+      map((action: any) => action.blogId),
+      tap((blogId: string) => {
+        console.log(blogId)
+        this.store.dispatch(setUserBlogsIds({blogIds: [blogId]}))
         this.router.navigate(['/feed'])
       })
     ),

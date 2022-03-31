@@ -13,32 +13,47 @@ export const selectToken = createSelector(
   state => state.token
 );
 
-export const selectIsLoading = createSelector(
+export const selectPrincipal = createSelector(
   selectAuthFeature,
-  state => state.isLoading
-);
-
-export const selectLoginError = createSelector(
-  selectAuthFeature,
-  state => state.isLoginError
+  authState => authState.principal
 )
 
-export const selectRegisterError = createSelector(
+export const selectLoginIsLoading = createSelector(
   selectAuthFeature,
-  state => state.isRegisterError
+  state => state.login.isLoading
+)
+
+export const selectLoginErrorMessage = createSelector(
+  selectAuthFeature,
+  state => state.login.errorMessage
+)
+
+export const selectLoginIsError = createSelector(
+  selectAuthFeature,
+  state => state.login.isError
+)
+
+export const selectRegisterIsLoading = createSelector(
+  selectAuthFeature,
+  state => state.registration.isLoading
+);
+
+export const selectRegisterIsError = createSelector(
+  selectAuthFeature,
+  state => state.registration.isError
+)
+
+export const selectRegisterErrorMessage = createSelector(
+  selectAuthFeature,
+  state => state.registration.errorMessage
 )
 
 export const selectUsernameValidationIsLoading = createSelector(
   selectAuthFeature,
-  state => state.validation.isLoading
+  state => state.registration.validation.isLoading
 )
 
 export const selectValidationMessage = createSelector(
   selectAuthFeature,
-  state => state.validation.validationMessage
-)
-
-export const selectPrincipal = createSelector(
-  selectAuthFeature,
-  authState => authState.principal
+  state => state.registration.validation.validationMessage
 )

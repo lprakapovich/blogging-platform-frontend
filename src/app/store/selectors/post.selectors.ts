@@ -3,9 +3,9 @@ import {PostState} from "../reducers/post.reducers";
 
 export const selectPostFeature = createFeatureSelector<PostState>('post')
 
-export const selectFeedPostSearchResult = createSelector(
+export const selectPostsBySearchCriteria = createSelector(
   selectPostFeature,
-  state => state.feedSearchResult.posts
+  state => state.postsBySearchCriteria
 )
 
 export const selectIsPostLoading = createSelector(
