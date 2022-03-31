@@ -5,8 +5,8 @@ import {NavbarService} from "../../../services/navbar.service";
 import {InformationModalService} from "../../../services/information-modal.service";
 import {Observable, Subscription} from "rxjs";
 import {Store} from "@ngrx/store";
-import {selectRegisterIsLoading, selectLoginIsError} from "../../../store/selectors/auth.selectors";
-import {checkAuthenticationAndRedirect, login, resetLoginFailure} from "../../../store/actions/auth.actions"
+import {selectLoginIsError, selectLoginIsLoading} from "../../../store/selectors/auth.selectors";
+import {login, resetLoginFailure} from "../../../store/actions/auth.actions"
 
 @Component({
   selector: 'app-login',
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.isLoading$ = this.store.select(selectRegisterIsLoading);
+    this.isLoading$ = this.store.select(selectLoginIsLoading);
     this.showLoginError$ = this.store.select(selectLoginIsError)
     // this.store.dispatch(checkAuthenticationAndRedirect({to: '/feed'}));
   }
