@@ -82,4 +82,9 @@ export class BlogComponent implements OnInit, OnDestroy {
   onSettingsModalClosed() {
     this.modalService.showAppSettingsModal(false)
   }
+
+  onSettingsSelectedEvent() {
+    this.modalService.showAppMenuModal(false);
+    this.modalService.showAppSettingsModal(true);
+  }
 }

@@ -38,7 +38,8 @@
                   id="app-menu-modal"
                   [hidden]="!showAppMenuModal"
                   [userBlogIds]="(userBlogIds$ | async)"
-  (userBlogSelectedEmitter)="onUserBlogSelectedEvent($event)">
+                  (settingsEmitter)="onSettingsSelectedEvent()"
+                  (userBlogSelectedEmitter)="onUserBlogSelectedEvent($event)">
   </app-menu-modal>
   <app-blog-settings-modal #appBlogSettingsModal
                            id="app-blog-settings-modal"
