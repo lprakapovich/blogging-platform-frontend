@@ -60,7 +60,7 @@
           </div>
         </div>
         <div
-          class="message"
+          class="error-message"
           *ngIf="!form['username'].errors"
           [ngClass]="(isUsernameValidationLoading$ | async) ? 'loading-message' : ''">
           {{ (registrationValidationMessage$ | async) }}

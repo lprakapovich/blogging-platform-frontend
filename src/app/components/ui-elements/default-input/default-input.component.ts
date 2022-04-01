@@ -13,12 +13,14 @@ export class DefaultInputComponent {
   @Input()
   userInput: string;
 
+  @Input()
+  disabled: boolean;
+
   @Output()
   userInputEventEmitter: EventEmitter<string> = new EventEmitter<string>();
 
   constructor() {
     this.placeholder = 'Your input...';
-    this.userInput = '';
   }
 
   onKeyUp(value: string) {

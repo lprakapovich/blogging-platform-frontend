@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavbarService} from "../../../../services/navbar.service";
+import {NavbarService} from "../../../../services/ui/navbar.service";
 
 @Component({
   selector: 'app-editor-page',

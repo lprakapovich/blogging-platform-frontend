@@ -1,11 +1,11 @@
 import {Injectable} from "@angular/core";
 import {Blog, BlogId} from "../models/Blog";
 import {Observable, of} from "rxjs";
-import {MockService} from "./mock.service";
 import {environment} from "../../environments/environment";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {CreateBlogData} from "../models/data/blog/CreateBlogData";
 import {UpdateBlogData} from "../models/data/blog/UpdateBlogData";
+import {BlogView} from "../models/BlogView";
 
 @Injectable({
   "providedIn": 'root'
@@ -14,8 +14,7 @@ export class BlogService {
 
   private publicationServiceUrl = `${environment.apiUrl}/publication-service`;
 
-  constructor(private mock: MockService,
-              private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient) {
   }
 
   createBlog(blogId: string): Observable<void> {
@@ -34,6 +33,11 @@ export class BlogService {
   deleteBlog(blogId: string, principal: string): Observable<void> {
     const url = `${this.publicationServiceUrl}/blogs/${blogId},${principal}`;
     return this.httpClient.delete<void>(url);
+  }
+
+  getBlogById(blogId: string, principal: string): Observable<BlogView> {
+    const url = `${this.publicationServiceUrl}/blogs/${blogId},${principal}`;
+    return this.httpClient.get<BlogView>(url);
   }
 
   getAuthenticatedUserBlogIds(): Observable<BlogId[]> {

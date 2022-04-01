@@ -1,11 +1,17 @@
-import {AfterViewInit, Component, HostListener, OnInit} from '@angular/core';
-import {NavbarService} from "../../../services/navbar.service";
+import {AfterViewInit, Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {NavbarService} from "../../../services/ui/navbar.service";
 import {Router} from "@angular/router";
 import {BlogPost} from "../../../models/BlogPost";
 import {Observable} from "rxjs";
 import {Store} from "@ngrx/store";
 import {selectIsPostLoading, selectPostsFromSubscriptions} from "../../../store/selectors/post.selectors";
 import {getPostsFromSubscriptions, setSelectedPost, unselectPost} from "../../../store/actions/post.actions";
+import {AppMenuModalComponent} from "../../ui-elements/app-menu-modal/app-menu-modal.component";
+import {selectAuthenticatedUserBlog, selectUserBlogIds} from "../../../store/selectors/blog.selectors";
+import {getBlogDetailsAndRedirect} from "../../../store/actions/blog.actions";
+import {BlogSettingsModalComponent} from "../blog-settings-modal/blog-settings-modal.component";
+import {ModalService} from "../../../services/ui/modal.service";
+import {BlogView} from "../../../models/BlogView";
 
 @Component({
   selector: 'app-feed',
@@ -16,13 +22,34 @@ export class FeedComponent implements OnInit, AfterViewInit {
 
   isLoading$: Observable<boolean>;
   posts$: Observable<BlogPost[]>;
+  userBlogIds$: Observable<string[]>;
+  userBlog$: Observable<BlogView>;
 
-  showPostPreview: boolean = false;
+  @ViewChild('appMenuModal')
+  appMenuModal: AppMenuModalComponent;
+
+  @ViewChild('appBlogSettingsModal')
+  appBlogSettingsModal: BlogSettingsModalComponent;
+
+  showPostPreview: boolean;
+  showAppMenuModal: boolean;
+  showAppBlogSettingsModal: boolean;
 
   constructor(private store: Store,
               private navbarService: NavbarService,
+              private modalService: ModalService,
               private router: Router) {
+
+    this.showPostPreview = false;
+    this.showAppMenuModal = false;
+    this.showAppBlogSettingsModal = false;
     this.navbarService.setBlogTemplate()
+    this.fetchDataFromStore();
+  }
+
+  private fetchDataFromStore() {
+    this.userBlogIds$ = this.store.select(selectUserBlogIds);
+    this.userBlog$ = this.store.select(selectAuthenticatedUserBlog);
   }
 
   ngOnInit(): void {
@@ -30,11 +57,15 @@ export class FeedComponent implements OnInit, AfterViewInit {
     this.posts$ = this.store.select(selectPostsFromSubscriptions);
     this.store.dispatch(getPostsFromSubscriptions());
 
-
     this.isLoading$.subscribe(() => {
-      console.log('resize')
       this.resizeAllGridItems()
     })
+
+    this.modalService.getAppMenuModalSubject()
+      .subscribe(show => this.showAppMenuModal = show)
+
+    this.modalService.getAppSettingsModalSubject()
+      .subscribe(show => this.showAppBlogSettingsModal = show)
   }
 
   @HostListener('window:resize', ['$event'])
@@ -76,5 +107,19 @@ export class FeedComponent implements OnInit, AfterViewInit {
   closePostPreview() {
     this.store.dispatch(unselectPost())
     this.showPostPreview = false;
+  }
+
+  onUserBlogSelectedEvent(blogId: string) {
+    this.showAppMenuModal = false;
+    this.store.dispatch(getBlogDetailsAndRedirect({blogId}))
+  }
+
+  onSettingsSelectedEvent() {
+    this.modalService.showAppMenuModal(false);
+    this.modalService.showAppSettingsModal(true);
+  }
+
+  onSettingsModalClosed() {
+    this.modalService.showAppSettingsModal(false);
   }
 }

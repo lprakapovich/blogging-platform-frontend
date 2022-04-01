@@ -1,35 +1,33 @@
-import {Component, OnDestroy, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import {NavbarService} from "../../../services/navbar.service";
-import {InformationModalService} from "../../../services/information-modal.service";
-import {Observable, Subscription} from "rxjs";
+import {NavbarService} from "../../../services/ui/navbar.service";
+import {Observable} from "rxjs";
 import {Store} from "@ngrx/store";
 import {selectLoginIsError, selectLoginIsLoading} from "../../../store/selectors/auth.selectors";
-import {login, resetLoginFailure} from "../../../store/actions/auth.actions"
+import {login} from "../../../store/actions/auth.actions"
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit {
 
   isLoading$: Observable<boolean>;
   isLoginFormSubmitted$: Observable<boolean>;
-  showLoginError$: Observable<boolean>;
+  isLoginError$: Observable<boolean>;
 
   loginForm: FormGroup;
 
-  @ViewChild('modal', { read: ViewContainerRef })
-  entry: ViewContainerRef;
-  sub: Subscription;
+  // @ViewChild('modal', { read: ViewContainerRef })
+  // entry: ViewContainerRef;
+  // sub: Subscription;
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private navbarTemplateService: NavbarService,
-    private informationModalService: InformationModalService,
     private store: Store) {
 
     this.navbarTemplateService.setDefaultTemplate();
@@ -41,12 +39,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isLoading$ = this.store.select(selectLoginIsLoading);
-    this.showLoginError$ = this.store.select(selectLoginIsError)
+    this.isLoginError$ = this.store.select(selectLoginIsError)
     // this.store.dispatch(checkAuthenticationAndRedirect({to: '/feed'}));
-  }
-
-  ngOnDestroy(): void {
-        this.sub?.unsubscribe();
   }
 
   get form() {
@@ -66,9 +60,5 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   navigateToRegister() {
     this.router.navigate(['register'])
-  }
-
-  resetLoginFailure() {
-    this.store.dispatch(resetLoginFailure());
   }
 }

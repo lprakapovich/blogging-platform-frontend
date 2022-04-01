@@ -14,7 +14,7 @@ import {
 import {Store} from "@ngrx/store";
 import {LoginData} from "../../models/data/auth/LoginData";
 import {RegisterData} from "../../models/data/auth/RegisterData";
-import {createBlog, getUserBlogsIdsSuccessAndRedirect, setAuthenticatedUserBlogId} from "../actions/blog.actions";
+import {createBlog, getUserBlogsIdsSuccessAndRedirect, getBlogDetailsAndRedirect} from "../actions/blog.actions";
 import {Router} from "@angular/router";
 import {selectAuthenticatedUserBlogId} from "../selectors/blog.selectors";
 import {selectIsAuthenticated} from "../selectors/auth.selectors";
@@ -107,7 +107,7 @@ export class AuthEffects {
         return this.authService.register(payload)
           .pipe(
             map(response => {
-              this.store.dispatch(setAuthenticatedUserBlogId({
+              this.store.dispatch(getBlogDetailsAndRedirect({
                 blogId: payload.blogUrl
               }))
               return registerSuccess(

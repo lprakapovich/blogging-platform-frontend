@@ -1,7 +1,4 @@
 <div id="login-form-container">
-  <app-information-modal *ngIf="(showLoginError$ | async)"
-                         (clickEvent)="resetLoginFailure()"
-                         id="modal">Invalid credentials</app-information-modal>
   <div>
     <div id="login-form">
       <div id="login-form-buttons">
@@ -20,6 +17,7 @@
                    formControlName="password" autocomplete="off" required
                    class="form-control" [ngClass]="{ 'is-invalid': (isLoginFormSubmitted$ | async) && form['password'].errors }"/>
           </div>
+          <div class="error-message" *ngIf="(isLoginError$ | async)"> Authentication failed </div>
         </div>
         <div class="login-form-submit-buttons">
           <ng-template></ng-template>

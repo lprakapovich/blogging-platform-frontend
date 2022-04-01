@@ -1,5 +1,5 @@
 import {Component, HostListener, OnInit} from '@angular/core';
-import {UiService} from "./services/ui.service";
+import {UiService} from "./services/ui/ui.service";
 
 @Component({
   selector: 'app-root',

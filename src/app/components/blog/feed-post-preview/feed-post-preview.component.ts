@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {NavbarService} from "../../../services/navbar.service";
+import {NavbarService} from "../../../services/ui/navbar.service";
 import {Router} from "@angular/router";
 import {Observable} from "rxjs";
 import {BlogPost} from "../../../models/BlogPost";

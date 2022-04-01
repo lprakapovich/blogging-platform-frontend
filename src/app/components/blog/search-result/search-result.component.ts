@@ -2,7 +2,7 @@ import {Component, ElementRef, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Blog, BlogId} from "../../../models/Blog";
 import {BlogPost} from "../../../models/BlogPost";
-import {NavbarService} from "../../../services/navbar.service";
+import {NavbarService} from "../../../services/ui/navbar.service";
 import {Observable} from "rxjs";
 import {Store} from "@ngrx/store";
 import {getBlogsBySearchCriteria} from "../../../store/actions/blog.actions";

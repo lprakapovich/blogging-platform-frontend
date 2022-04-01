@@ -52,7 +52,9 @@ export const authReducer = createReducer(
     ...state,
     login: {
       ...state.login,
-      isLoading: true
+      isLoading: true,
+      isError: false,
+      errorMessage: ''
     },
     registration: initialState.registration
   })),

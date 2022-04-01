@@ -1,23 +1,28 @@
 import {Blog} from "../../models/Blog";
 import {createReducer, on} from "@ngrx/store";
 import * as BlogActions from "../actions/blog.actions";
+import {BlogView} from "../../models/BlogView";
 
 export interface BlogState {
   authenticatedUserBlogId: string,
+  authenticatedUserBlog: BlogView,
   selectedBlogId: string,
   blogError: string,
   isLoading: boolean,
   blogsBySearchCriteria: Blog[],
-  userBlogIds: string[]
+  userBlogIds: string[],
+  userBlogs: BlogView[]
 }
 
 export const initialState: BlogState = {
   authenticatedUserBlogId: '',
+  authenticatedUserBlog: {} as BlogView,
   selectedBlogId: '',
   blogError: '',
   isLoading: false,
   blogsBySearchCriteria: [],
-  userBlogIds: []
+  userBlogIds: [],
+  userBlogs: []
 }
 
 export const blogReducer = createReducer(
@@ -40,13 +45,27 @@ export const blogReducer = createReducer(
     blogError: action.error
   })),
 
+  on(BlogActions.getBlogDetailsAndRedirect, (state, action) => ({
+    ...state,
+    isLoading: true,
+    selectedBlogId: action.blogId,
+    authenticatedUserBlogId: action.blogId,
+  })),
+
+  on(BlogActions.getBlogDetailsAndRedirectSuccess, (state, action) => ({
+    ...state,
+    isLoading: false,
+    authenticatedUserBlog: action.blog
+  })),
+
   on(BlogActions.setSelectedBlogId, (state, action) => ({
     ...state,
     selectedBlogId: action.blogId,
   })),
 
-  on(BlogActions.setAuthenticatedUserBlogId, (state, action) => ({
+  on(BlogActions.setBlogIdAndRedirect, (state, action) => ({
     ...state,
+    selectedBlogId: action.blogId,
     authenticatedUserBlogId: action.blogId,
   })),
 
@@ -83,7 +102,7 @@ export const blogReducer = createReducer(
     ...state,
     isLoading: false,
     userBlogIds: action.blogIds,
-    authenticatedUserBlogId: action.blogIds[0]
+    authenticatedUserBlogId: action.blogIds[0],
   })),
 
   on(BlogActions.createBlog, (state) => ({

@@ -13,6 +13,11 @@ export const selectAuthenticatedUserBlogId = createSelector(
   state => state.authenticatedUserBlogId
 )
 
+export const selectAuthenticatedUserBlog = createSelector(
+  selectBlogFeature,
+  state => state.authenticatedUserBlog
+)
+
 export const selectBlogsBySearchCriteria = createSelector(
   selectBlogFeature,
   state => state.blogsBySearchCriteria
@@ -26,4 +31,10 @@ export const selectIsBlogLoading = createSelector(
 export const selectUserBlogIds = createSelector(
   selectBlogFeature,
   state => state.userBlogIds
+)
+
+export const isVisitorView = createSelector(
+  selectAuthenticatedUserBlogId,
+  selectSelectedBlogId,
+  (authBlogId, selectSelectedBlogId) => authBlogId !== selectSelectedBlogId
 )

@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Store} from "@ngrx/store";
 import {logout} from "../../../store/actions/auth.actions";
+import {BlogView} from "../../../models/BlogView";
 
 @Component({
   selector: 'app-blog-settings-modal',
@@ -9,10 +10,9 @@ import {logout} from "../../../store/actions/auth.actions";
 })
 export class BlogSettingsModalComponent implements OnInit {
 
-  @Output() closeModalEventEmitter: EventEmitter<void> = new EventEmitter<void>();
-  @Output() onCreatedEventEmitter: EventEmitter<void> = new EventEmitter<void>();
-
+  @Output() onCloseEmitter: EventEmitter<void> = new EventEmitter<void>();
   @Input() categories: string[] = [];
+  @Input() blog: BlogView | null;
 
   selectedSection: string;
   newCategory: string;
@@ -23,7 +23,6 @@ export class BlogSettingsModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.onCreatedEventEmitter.emit();
   }
 
   onSettingsSectionSelected(section: string) {
@@ -42,13 +41,11 @@ export class BlogSettingsModalComponent implements OnInit {
   }
 
   onCancel() {
-    console.log('Cancel')
-    this.closeModalEventEmitter.emit();
+    this.onCloseEmitter.emit();
   }
 
   onSave() {
-    console.log('Save');
-    this.closeModalEventEmitter.emit();
+    this.onCloseEmitter.emit();
   }
 
   logout() {

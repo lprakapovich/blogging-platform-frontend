@@ -1,121 +1,123 @@
-<div id="settings-modal-container">
-  <div id="settings-menu" class="settings-modal-container-item">
-    <app-default-list>
-      <div (click)="onSettingsSectionSelected('account')" class="settings-menu-item">
-        <svg data-v-57065a00="" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
-             viewBox="0 0 32 32" class="icon">
-          <path fill-rule="evenodd"
-                d="M17.591 14.41a2.25 2.25 0 00-3.184 0 2.254 2.254 0 000 3.184c.88.88 2.307.878 3.184 0a2.254 2.254 0 000-3.184m1.06-1.061a3.75 3.75 0 00-5.304 0l-.001.001a3.754 3.754 0 000 5.305 3.754 3.754 0 005.306 0 3.754 3.754 0 000-5.305"
-                clip-rule="evenodd"></path>
-          <path fill-rule="evenodd"
-                d="M16 9.75c-3.43 0-6.502 1.85-7.88 4.668l-.68-.333.68.333A3.59 3.59 0 007.75 16c0 .543.125 1.082.37 1.582C9.498 20.4 12.57 22.25 16 22.25c3.43 0 6.502-1.85 7.88-4.668.245-.5.37-1.039.37-1.582a3.59 3.59 0 00-.37-1.582C22.502 11.6 19.43 9.75 16 9.75zm-9.228 4.008C8.424 10.382 12.048 8.25 16 8.25s7.576 2.132 9.228 5.508c.343.703.522 1.467.522 2.242 0 .775-.179 1.54-.522 2.242-1.652 3.376-5.276 5.508-9.228 5.508s-7.576-2.132-9.228-5.508A5.097 5.097 0 016.25 16c0-.775.179-1.54.522-2.242z"
-                clip-rule="evenodd"></path>
-        </svg>
-        <div>
-          General
-        </div>
-      </div>
-      <div (click)="onSettingsSectionSelected('categories')" class="settings-menu-item">
-        <svg data-v-57065a00="" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
-             viewBox="0 0 32 32" class="icon">
-          <path fill-rule="evenodd"
-                d="M9 7.25A1.75 1.75 0 007.25 9v2.586c0 .462.183.909.513 1.238h.001l4.986 4.987v5.938a2 2 0 002.485 1.94l2.5-.624a2 2 0 001.515-1.941v-5.313l4.987-4.988c.329-.328.513-.773.513-1.237V9A1.75 1.75 0 0023 7.25H9zm8.965 9.725a.748.748 0 00-.215.525v5.624a.5.5 0 01-.379.485l-2.5.625a.5.5 0 01-.621-.485V17.5a.747.747 0 00-.22-.53m0 0l-5.207-5.207-.001-.002a.248.248 0 01-.072-.175V9A.25.25 0 019 8.75h14a.25.25 0 01.25.25v2.586a.25.25 0 01-.073.177l-5.207 5.206"
-                clip-rule="evenodd"></path>
-        </svg>
-        <div>
-          Categories
-        </div>
-      </div>
-      <div class="settings-menu-item logout" (click)="logout()">
-        Logout
-      </div>
-    </app-default-list>
-  </div>
-  <div id="settings-section" class="settings-modal-container-item">
-    <ng-container [ngSwitch]="[selectedSection]">
-      <div *ngSwitchCase="'account'">
-        <div id="general-container">
-          <div class="general-item">
-            <div> Profile photo</div>
-            <div id="profile-photo">
-              <div id="profile-photo-image">
-              </div>
-              <div>
-                <app-text-button> Upload Image</app-text-button>
-              </div>
-              <div>
-                <app-text-button> Remove</app-text-button>
-              </div>
-            </div>
-          </div>
-          <div class="general-item">
-            <div> Username </div>
-            <app-default-input [placeholder]="'Your username'"></app-default-input>
-          </div>
-          <div id="display-name" class="general-item">
-            <div> Display Name </div>
-            <app-default-input [placeholder]="'Your name'"></app-default-input>
-          </div>
-          <div id="about" class="general-item">
-            <div> About </div>
-            <app-default-input [placeholder]="'Something about you'"></app-default-input>
-          </div>
-          <div id="general-buttons" class="general-item">
-            <app-default-button (click)="onCancel()" [ngClass]="'medium reverted'" [label]="'Cancel'"></app-default-button>
-            <app-default-button (click)="onSave()" [ngClass]="'medium'" [label]="'Save'"></app-default-button>
+<div class="blog-settings-modal-container" *ngIf="blog">
+  <div class="settings">
+    <div class="settings-navbar">
+      <app-default-list>
+        <div (click)="onSettingsSectionSelected('account')" class="settings-menu-item">
+          <svg data-v-57065a00="" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+               viewBox="0 0 32 32" class="icon">
+            <path fill-rule="evenodd"
+                  d="M17.591 14.41a2.25 2.25 0 00-3.184 0 2.254 2.254 0 000 3.184c.88.88 2.307.878 3.184 0a2.254 2.254 0 000-3.184m1.06-1.061a3.75 3.75 0 00-5.304 0l-.001.001a3.754 3.754 0 000 5.305 3.754 3.754 0 005.306 0 3.754 3.754 0 000-5.305"
+                  clip-rule="evenodd"></path>
+            <path fill-rule="evenodd"
+                  d="M16 9.75c-3.43 0-6.502 1.85-7.88 4.668l-.68-.333.68.333A3.59 3.59 0 007.75 16c0 .543.125 1.082.37 1.582C9.498 20.4 12.57 22.25 16 22.25c3.43 0 6.502-1.85 7.88-4.668.245-.5.37-1.039.37-1.582a3.59 3.59 0 00-.37-1.582C22.502 11.6 19.43 9.75 16 9.75zm-9.228 4.008C8.424 10.382 12.048 8.25 16 8.25s7.576 2.132 9.228 5.508c.343.703.522 1.467.522 2.242 0 .775-.179 1.54-.522 2.242-1.652 3.376-5.276 5.508-9.228 5.508s-7.576-2.132-9.228-5.508A5.097 5.097 0 016.25 16c0-.775.179-1.54.522-2.242z"
+                  clip-rule="evenodd"></path>
+          </svg>
+          <div>
+            General
           </div>
         </div>
-      </div>
-      <div *ngSwitchCase="'categories'">
-        <div id="categories-container">
-          <div id="new-category-container">
-            <div id="new-category-input">
-              <app-default-input (userInputEventEmitter)="newCategory = $event"
-                                 [userInput]="newCategory"
-                                 [placeholder]="'New category...'">
-              </app-default-input>
-            </div>
-            <div id="new-category-add-btn">
-              <app-default-button (click)="onNewCategoryClicked()" [label]="'Add'"></app-default-button>
-            </div>
+        <div (click)="onSettingsSectionSelected('categories')" class="settings-menu-item">
+          <svg data-v-57065a00="" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+               viewBox="0 0 32 32" class="icon">
+            <path fill-rule="evenodd"
+                  d="M9 7.25A1.75 1.75 0 007.25 9v2.586c0 .462.183.909.513 1.238h.001l4.986 4.987v5.938a2 2 0 002.485 1.94l2.5-.624a2 2 0 001.515-1.941v-5.313l4.987-4.988c.329-.328.513-.773.513-1.237V9A1.75 1.75 0 0023 7.25H9zm8.965 9.725a.748.748 0 00-.215.525v5.624a.5.5 0 01-.379.485l-2.5.625a.5.5 0 01-.621-.485V17.5a.747.747 0 00-.22-.53m0 0l-5.207-5.207-.001-.002a.248.248 0 01-.072-.175V9A.25.25 0 019 8.75h14a.25.25 0 01.25.25v2.586a.25.25 0 01-.073.177l-5.207 5.206"
+                  clip-rule="evenodd"></path>
+          </svg>
+          <div>
+            Categories
           </div>
-          <div id="existing-categories-container">
-            <ng-container *ngIf="categories.length > 0; else emptyCategoryList">
-              <div class="category-list">
-                <div *ngFor="let category of categories" class="category-list-item">
-                  <div class="bold">{{category}}</div>
-                  <div class="category-actions">
-                    <app-svg-button [iconTemplate]="'edit'"></app-svg-button>
-                    <app-svg-button [iconTemplate]="'delete'" (click)="deleteCategory(category)"></app-svg-button>
-                  </div>
+        </div>
+        <div class="settings-menu-item logout" (click)="logout()">
+          Logout
+        </div>
+      </app-default-list>
+    </div>
+    <div class="settings-selected-navbar-section">
+      <ng-container [ngSwitch]="[selectedSection]">
+        <div *ngSwitchCase="'account'">
+          <div id="general-container">
+            <div class="general-item">
+              <div> Profile photo</div>
+              <div id="profile-photo">
+                <div id="profile-photo-image">
+                </div>
+                <div>
+                  <app-text-button> Upload Image</app-text-button>
+                </div>
+                <div>
+                  <app-text-button> Remove</app-text-button>
                 </div>
               </div>
-            </ng-container>
-            <ng-template #emptyCategoryList>
-              <div class="grey category-empty-list">
-                Categories help designate posts by subject, which helps the reader navigate the blog.
-                You can create a maximum of 10 categories. Pick one of the suggested category or create your own.
+            </div>
+            <div class="general-item">
+              <div> Domain </div>
+              <app-default-input [disabled]="true"></app-default-input>
+            </div>
+            <div id="display-name" class="general-item">
+              <div> Display Name </div>
+              <app-default-input [placeholder]="'Your name'" [userInput]="blog.displayName"></app-default-input>
+            </div>
+            <div id="about" class="general-item">
+              <div> Description </div>
+              <app-default-input [placeholder]="'Something about your blog'" [userInput]="blog.description"></app-default-input>
+            </div>
+            <div id="general-buttons" class="general-item">
+              <app-default-button (click)="onCancel()" [ngClass]="'medium reverted'" [label]="'Cancel'"></app-default-button>
+              <app-default-button (click)="onSave()" [ngClass]="'medium'" [label]="'Save'"></app-default-button>
+            </div>
+          </div>
+        </div>
+        <div *ngSwitchCase="'categories'">
+          <div id="categories-container">
+            <div id="new-category-container">
+              <div id="new-category-input">
+                <app-default-input (userInputEventEmitter)="newCategory = $event"
+                                   [userInput]="newCategory"
+                                   [placeholder]="'New category...'">
+                </app-default-input>
               </div>
-            </ng-template>
+              <div id="new-category-add-btn">
+                <app-default-button (click)="onNewCategoryClicked()" [label]="'Add'"></app-default-button>
+              </div>
+            </div>
+            <div id="existing-categories-container">
+              <ng-container *ngIf="categories.length > 0; else emptyCategoryList">
+                <div class="category-list">
+                  <div *ngFor="let category of categories" class="category-list-item">
+                    <div class="bold">{{category}}</div>
+                    <div class="category-actions">
+                      <app-svg-button [iconTemplate]="'edit'"></app-svg-button>
+                      <app-svg-button [iconTemplate]="'delete'" (click)="deleteCategory(category)"></app-svg-button>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+              <ng-template #emptyCategoryList>
+                <div class="grey category-empty-list">
+                  Categories help designate posts by subject, which helps the reader navigate the blog.
+                  You can create a maximum of 10 categories. Pick one of the suggested category or create your own.
+                </div>
+              </ng-template>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div *ngSwitchCase="'new-blog'">
-        <div id="blogs-container">
-          <div id="new-blog-container">
-            <div id="new-blog-input">
-              <app-default-input (userInputEventEmitter)="newBlog = $event"
-                                 [userInput]="newBlog"
-                                 [placeholder]="'New blog...'">
-              </app-default-input>
-            </div>
-            <div id="new-blog-add-btn">
-              <app-default-button (click)="onNewBlogClicked()" [label]="'Add'"></app-default-button>
+        <div *ngSwitchCase="'new-blog'">
+          <div id="blogs-container">
+            <div id="new-blog-container">
+              <div id="new-blog-input">
+                <app-default-input (userInputEventEmitter)="newBlog = $event"
+                                   [userInput]="newBlog"
+                                   [placeholder]="'New blog...'">
+                </app-default-input>
+              </div>
+              <div id="new-blog-add-btn">
+                <app-default-button (click)="onNewBlogClicked()" [label]="'Add'"></app-default-button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </ng-container>
+      </ng-container>
+    </div>
   </div>
 </div>

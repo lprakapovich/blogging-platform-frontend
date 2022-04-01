@@ -5,9 +5,14 @@ import {Subject} from "rxjs";
   providedIn: 'root'
 })
 export class NavbarService {
-  private navbarTemplate = 'default';
+
+  public static BLOG_TEMPLATE = 'blog';
+  public static EDITOR_TEMPLATE = 'editor';
+  public static DEFAULT_TEMPLATE = 'default';
+
+  private navbarTemplate = NavbarService.DEFAULT_TEMPLATE;
+
   private navbarTemplateChange: Subject<string> = new Subject<string>();
-  private navbarShowModalChange: Subject<boolean> = new Subject<boolean>();
   private navbarShowEditorRemoveButtonChange: Subject<boolean> = new Subject<boolean>();
   private navbarUnselectChange: Subject<void> = new Subject<void>();
 
@@ -18,19 +23,15 @@ export class NavbarService {
   }
 
   setBlogTemplate() {
-    this.navbarTemplateChange.next('blog');
+    this.navbarTemplateChange.next(NavbarService.BLOG_TEMPLATE);
   }
 
   setEditorTemplate() {
-    this.navbarTemplateChange.next('editor');
+    this.navbarTemplateChange.next(NavbarService.EDITOR_TEMPLATE);
   }
 
   setDefaultTemplate() {
-    this.navbarTemplateChange.next('default');
-  }
-
-  showProfileSettingsModal(show: boolean) {
-    this.navbarShowModalChange.next(show);
+    this.navbarTemplateChange.next(NavbarService.DEFAULT_TEMPLATE);
   }
 
   unselectAll() {
@@ -43,14 +44,6 @@ export class NavbarService {
 
   getNavbarTemplateChangeSubject() {
     return this.navbarTemplateChange;
-  }
-
-  getNavbarShowModalChangeSubject() {
-    return this.navbarShowModalChange;
-  }
-
-  getNavbarUnselectChangeSubject() {
-    return this.navbarUnselectChange;
   }
 
   getNavbarEditorRemoveButtonSubject() {

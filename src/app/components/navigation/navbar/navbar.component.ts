@@ -1,5 +1,7 @@
-import {Component, Input, OnInit, TemplateRef} from '@angular/core';
-import {NavbarService} from "../../../services/navbar.service";
+import {Component} from '@angular/core';
+import {NavbarService} from "../../../services/ui/navbar.service";
+import {Store} from "@ngrx/store";
+import {ModalService} from "../../../services/ui/modal.service";
 
 @Component({
   selector: 'app-navbar',
@@ -8,43 +10,40 @@ import {NavbarService} from "../../../services/navbar.service";
 })
 export class NavbarComponent {
 
-  template: string = 'default';
-  showModal: boolean = false;
-  showRemoveButton: boolean = false;
+  template: string;
+  showNavbarMenuModal: boolean;
+  showRemoveButton: boolean;
 
-  constructor(private navbarTemplateService: NavbarService) {
-    navbarTemplateService.getNavbarTemplateChangeSubject().subscribe(template => {
+  constructor(private store: Store,
+              private navbarService: NavbarService,
+              private modalService: ModalService) {
+
+    this.template = NavbarService.DEFAULT_TEMPLATE;
+    this.showRemoveButton = false;
+    this.showNavbarMenuModal = false;
+
+    navbarService.getNavbarTemplateChangeSubject().subscribe(template => {
       this.template = template;
     })
 
-    navbarTemplateService.getNavbarUnselectChangeSubject().subscribe(() => {
-      let blogNavigationElement = document.getElementById('blog-navigation');
-      if (blogNavigationElement) {
-        this.removeSelection(blogNavigationElement)
-      }
-    })
-
-    navbarTemplateService.getNavbarEditorRemoveButtonSubject().subscribe(show => {
+    navbarService.getNavbarEditorRemoveButtonSubject().subscribe(show => {
       this.showRemoveButton = show;
     })
   }
 
-  setBlogNavigationTabActive(tabId: string) {
-    let blogNavigationElement = document.getElementById('blog-navigation');
-    if (blogNavigationElement) {
-      this.removeSelection(blogNavigationElement)
-      blogNavigationElement?.querySelector(`#${tabId}`)?.classList.add('active');
-      this.showModal = tabId == 'profile' ? !this.showModal : false;
-      this.navbarTemplateService.showProfileSettingsModal(this.showModal);
+  onBlogNavbarComponentClicked(tabId: string) {
+    if (this.template === NavbarService.BLOG_TEMPLATE) {
+      this.showNavbarMenuModal = tabId == 'profile' ? !this.showNavbarMenuModal : false;
+      this.modalService.showAppMenuModal(this.showNavbarMenuModal)
     }
   }
 
-  private removeSelection(element: HTMLElement) {
-    element?.querySelector('.active')?.classList.remove('active');
-  }
-
-  navigateToBlog() {
-
-  }
+  // navigateToBlog() {
+  //   this.store.select(selectAuthenticatedUserBlogId)
+  //     .pipe(take(1))
+  //     .subscribe(id => {
+  //       this.router.navigate([`/blog/@${id}`])
+  //     })
+  // }
 }
 

@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {Category} from "../../../models/Category";
 
 @Component({
   selector: 'app-default-list',

@@ -1,5 +1,6 @@
 <div class="default-input-container">
   <input #input (keyup)="onKeyUp(input.value)"
          placeholder="{{placeholder}}"
-         value="{{userInput}}">
+         value="{{userInput}}"
+         [disabled]="disabled">
 </div>

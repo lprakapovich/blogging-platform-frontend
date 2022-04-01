@@ -58,6 +58,12 @@
       }
     }
 
+    .error-message {
+      padding: 0.25rem 1rem;
+      font-size: 1rem;
+      color: darkred;
+    }
+
     .login-form-submit-buttons {
       display: flex;
       justify-content: center;

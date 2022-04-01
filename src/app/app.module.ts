@@ -20,7 +20,6 @@ import { SvgButtonComponent } from './components/ui-elements/svg-button/svg-butt
 import { AuthorDataComponent } from './components/blog/author-data/author-data.component';
 import { BlogStatisticsDataComponent } from './components/blog/blog-statistics-data/blog-statistics-data.component';
 import { BlogPostPreviewListComponent } from './components/blog/blog-post-preview-list/blog-post-preview-list.component';
-import { ModalComponent } from './components/ui-elements/modal/modal.component';
 import { DefaultListComponent } from './components/ui-elements/default-list/default-list.component';
 import { BlogSettingsModalComponent } from './components/blog/blog-settings-modal/blog-settings-modal.component';
 import { TextButtonComponent } from './components/ui-elements/text-button/text-button.component';
@@ -28,7 +27,7 @@ import { DefaultInputComponent } from './components/ui-elements/default-input/de
 import { DefaultSearchBarComponent } from './components/ui-elements/default-search-bar/default-search-bar.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { SignupComponent } from './components/auth/signup/signup.component';
-import { InformationModalComponent } from './components/ui-elements/information-modal/information-modal.component';
+import { AppMenuModalComponent } from './components/ui-elements/app-menu-modal/app-menu-modal.component';
 import { ClickOutsideDirective } from './directive/click-outside.directive';
 import { FeedComponent } from './components/blog/feed/feed.component';
 import { SearchResultComponent } from './components/blog/search-result/search-result.component';
@@ -65,7 +64,6 @@ import {JwtInterceptor} from "./common/http/jwt.interceptor";
     AuthorDataComponent,
     BlogStatisticsDataComponent,
     BlogPostPreviewListComponent,
-    ModalComponent,
     DefaultListComponent,
     BlogSettingsModalComponent,
     TextButtonComponent,
@@ -73,7 +71,7 @@ import {JwtInterceptor} from "./common/http/jwt.interceptor";
     DefaultSearchBarComponent,
     LoginComponent,
     SignupComponent,
-    InformationModalComponent,
+    AppMenuModalComponent,
     ClickOutsideDirective,
     FeedComponent,
     SearchResultComponent,

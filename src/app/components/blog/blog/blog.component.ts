@@ -1,105 +1,85 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Router} from "@angular/router";
-import {NavbarService} from "../../../services/navbar.service";
-import {Observable} from "rxjs";
+import {NavbarService} from "../../../services/ui/navbar.service";
+import {Observable, Subscription} from "rxjs";
 import {Store} from "@ngrx/store";
-import {selectUserBlogIds} from "../../../store/selectors/blog.selectors";
+import {
+  selectAuthenticatedUserBlog,
+  selectIsBlogLoading,
+  selectUserBlogIds
+} from "../../../store/selectors/blog.selectors";
+import {AppMenuModalComponent} from "../../ui-elements/app-menu-modal/app-menu-modal.component";
+import {BlogView} from "../../../models/BlogView";
+import {BlogSettingsModalComponent} from "../blog-settings-modal/blog-settings-modal.component";
+import {ModalService} from "../../../services/ui/modal.service";
 
 @Component({
   selector: 'app-blog',
   templateUrl: './blog.component.html',
   styleUrls: ['./blog.component.scss']
 })
-export class BlogComponent implements OnInit {
+export class BlogComponent implements OnInit, OnDestroy {
 
   userBlogIds$: Observable<string[]>;
+  userBlog$: Observable<BlogView>;
+  isLoadingBlogData$: Observable<boolean>;
 
-  private blogInfo: any;
-  private authorInfo: any;
-  private sticky: any;
+  @ViewChild('appMenuModal')
+  appMenuModal: AppMenuModalComponent;
 
-  private NAVBAR_MODAL_ID = 'navbar-modal';
-  private BLOG_SETTINGS_MODAL_ID = 'blog-settings-modal';
+  @ViewChild('appBlogSettingsModal')
+  appBlogSettingsModal: BlogSettingsModalComponent;
+
+  showAppMenuModal: boolean;
+  showAppBlogSettingsModal: boolean;
+
+  appMenuModalSub: Subscription;
+  appSettingsModalSub: Subscription;
 
   constructor(private store: Store,
               private router: Router,
-              private navbarService: NavbarService) {
+              private navbarService: NavbarService,
+              private modalService: ModalService) {
+
+    this.showAppMenuModal = false;
+    this.showAppBlogSettingsModal = false;
   }
 
   ngOnInit(): void {
+    this.fetchDataFromStore();
     this.navbarService.setBlogTemplate();
-    this.setUpShowModalListener();
-    this.userBlogIds$ = this.store.select(selectUserBlogIds);
+
+    this.appMenuModalSub = this.modalService.getAppMenuModalSubject().subscribe(
+      show => this.showAppMenuModal = show);
+
+    this.appSettingsModalSub = this.modalService.getAppSettingsModalSubject().subscribe(
+      show => this.showAppBlogSettingsModal = show)
   }
 
-  onScroll() {
-    if (this.sticky < window.pageYOffset) {
-      this.authorInfo.classList.add('sticky');
-    } else {
-      this.authorInfo.classList.remove('sticky');
-    }
+  ngOnDestroy() {
+    this.appMenuModalSub.unsubscribe();
+    this.appSettingsModalSub.unsubscribe();
   }
 
   onNewPostClicked() {
     this.router.navigate(['/editor-page']);
   }
 
-  onSettingsClicked() {
-    this.showModal(false, this.NAVBAR_MODAL_ID);
-    this.showModal(true, this.BLOG_SETTINGS_MODAL_ID);
-  }
-
-  private setUpShowModalListener() {
-    this.navbarService.getNavbarShowModalChangeSubject().subscribe(show => {
-      this.showModal(show, this.NAVBAR_MODAL_ID)
-    })
-  }
-
-  private setUpOnPageScrollListener() {
-    this.blogInfo = document.getElementById('statistics-information');
-    this.authorInfo = document.getElementById('author-information')
-    this.sticky = this.blogInfo?.offsetTop;
-    window.onscroll = () => this.onScroll();
-  }
-
-  private showModal(show: boolean, modalId: string) {
-    const modal = document.getElementById(modalId);
-    if (modal) {
-      if (show) {
-        modal.style.display = 'flex';
-        this.adjustPositioning(modalId, modal);
-      } else {
-        modal.style.display = 'none';
-      }
-    }
-  }
-
-  private adjustPositioning(modalId: string, modal: HTMLElement) {
-    switch (modalId) {
-      case this.NAVBAR_MODAL_ID:
-        modal.style.justifyContent = 'end';
-        break;
-      case this.BLOG_SETTINGS_MODAL_ID:
-        modal.style.justifyContent = 'center';
-        modal.style.alignItems = 'center';
-        break;
-    }
-  }
-
-  onClosed() {
-    this.showModal(false, this.BLOG_SETTINGS_MODAL_ID);
-    this.navbarService.unselectAll();
-  }
-
   onSearchInputEvent(inputEvent: string) {
     console.log(inputEvent)
   }
 
-  onClickedOutside() {
-    console.log('on clicked outside')
+  private fetchDataFromStore() {
+    this.userBlogIds$ = this.store.select(selectUserBlogIds);
+    this.userBlog$ = this.store.select(selectAuthenticatedUserBlog)
+    this.isLoadingBlogData$ = this.store.select(selectIsBlogLoading);
   }
 
-  onCreated() {
-    console.log('on created')
+  onUserBlogSelectedEvent($event: string) {
+    console.log(`selected ${$event}`)
+  }
+
+  onSettingsModalClosed() {
+    this.modalService.showAppSettingsModal(false)
   }
 }
