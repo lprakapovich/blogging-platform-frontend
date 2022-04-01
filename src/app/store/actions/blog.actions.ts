@@ -20,9 +20,8 @@ export enum BlogActionTypes {
   GET_USER_BLOGS_IDS_SUCCESS = "[Blog] Get all user blogs ids success",
   GET_USER_BLOGS_IDS_SUCCESS_REDIRECT = "[Blog] Get all user blogs ids success and redirect",
 
-  GET_USER_BLOGS = "[Blog] Get all user blogs",
-  GET_USER_BLOGS_SUCCESS = "[Blog] Get all user blogs success",
-  GET_USER_BLOGS_SUCCESS_REDIRECT = "[Blog] Get all user blogs success and redirect",
+  GET_USER_BLOGS_AND_REDIRECT = "[Blog] Get all user blogs and redirect",
+  GET_USER_BLOGS_AND_REDIRECT_SUCCESS = "[Blog] Get all user blogs success and redirect",
 
   GET_BLOG_DETAILS = "[Blog] Get blog details",
   GET_BLOG_DETAILS_SUCCESS = "[Blog] Get blog details success",
@@ -37,16 +36,17 @@ export enum BlogActionTypes {
   SET_SELECTED_BLOG_ID = "[Blog] Set selected blog id",
   SET_AUTHENTICATED_USER_BLOG_ID = "[Blog] Set authenticated user blog id",
 
-  SET_USER_BLOG_IDS = "[BLOG] Set user blog ids"
+  SET_USER_BLOG_IDS = "[BLOG] Set user blog ids",
+  SET_USER_BLOGS_AND_REDIRECT = "[Blog] Set user blogs and redirect"
 }
 
 export const getUserBlogsIds = createAction(BlogActionTypes.GET_USER_BLOGS_IDS);
 export const getUserBlogsIdsSuccess = createAction(BlogActionTypes.GET_USER_BLOGS_IDS_SUCCESS, props<{blogIds: string[]}>());
 export const getUserBlogsIdsSuccessAndRedirect = createAction(BlogActionTypes.GET_USER_BLOGS_IDS_SUCCESS_REDIRECT, props<{blogIds: string[], path: string}>());
+export const setUserBlogsIds = createAction(BlogActionTypes.SET_USER_BLOG_IDS, props<{blogIds: string[]}>())
 
-export const getUserBlogs = createAction(BlogActionTypes.GET_USER_BLOGS);
-export const getUserBlogsSuccess = createAction(BlogActionTypes.GET_USER_BLOGS_SUCCESS, props<{blogs: BlogView[]}>());
-export const getUserBlogsSuccessAndRedirect = createAction(BlogActionTypes.GET_USER_BLOGS_SUCCESS_REDIRECT, props<{blogs: BlogView[], path: string}>());
+export const getUserBlogsAndRedirect = createAction(BlogActionTypes.GET_USER_BLOGS_AND_REDIRECT, props<{path: string}>());
+export const getUserBlogsAndRedirectSuccess = createAction(BlogActionTypes.GET_USER_BLOGS_AND_REDIRECT_SUCCESS, props<{blogs: BlogView[], path: string}>());
 
 export const getBlogDetails = createAction(BlogActionTypes.GET_BLOG_DETAILS);
 export const getBlogDetailsSuccess = createAction(BlogActionTypes.GET_BLOG_DETAILS_SUCCESS, props<{payload: any}>());
@@ -60,8 +60,6 @@ export const getBlogsBySearchCriteriaSuccess = createAction(BlogActionTypes.GET_
 
 export const setSelectedBlogId = createAction(BlogActionTypes.SET_SELECTED_BLOG_ID, props<{blogId: string}>());
 export const setBlogIdAndRedirect = createAction(BlogActionTypes.SET_AUTHENTICATED_USER_BLOG_ID, props<{blogId: string}>())
-
-export const setUserBlogsIds = createAction(BlogActionTypes.SET_USER_BLOG_IDS, props<{blogIds: string[]}>())
 
 export const createBlog = createAction(BlogActionTypes.CREATE_BLOG, props<{blogId: string}>())
 export const createBlogSuccess = createAction(BlogActionTypes.CREATE_BLOG_SUCCESS, props<{blogId: string}>());

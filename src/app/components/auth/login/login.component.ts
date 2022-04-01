@@ -20,10 +20,7 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
 
-  // @ViewChild('modal', { read: ViewContainerRef })
-  // entry: ViewContainerRef;
-  // sub: Subscription;
-
+  // todo display validation errors
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,

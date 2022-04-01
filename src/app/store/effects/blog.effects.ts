@@ -11,6 +11,7 @@ import {
   getBlogDetailsFailure,
   getBlogDetailsSuccess,
   getBlogsBySearchCriteriaSuccess,
+  getUserBlogsAndRedirectSuccess,
   getUserBlogsIdsSuccess,
   setUserBlogsIds
 } from "../actions/blog.actions";
@@ -143,4 +144,29 @@ export class BlogEffects {
       this.router.navigate([`/blog/@${blogId}`])
     })
   ))
+
+  getUserBlogsAndRedirect$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(BlogActionTypes.GET_USER_BLOGS_AND_REDIRECT),
+    map((action: any) => action.path),
+    switchMap((path: string) => {
+      return this.blogService.getUserManagedBlogs()
+        .pipe(
+          map(blogs => {
+            return getUserBlogsAndRedirectSuccess({ blogs, path})
+          })
+        )
+    })
+  ))
+
+  getUserBlogsAndRedirectSuccess$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(BlogActionTypes.GET_USER_BLOGS_AND_REDIRECT_SUCCESS),
+    map((action: any) => action.path),
+    tap((path) => {
+      this.router.navigate([`${path}`])
+    })
+  ), {
+    dispatch: false
+  })
 }

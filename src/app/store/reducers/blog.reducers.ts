@@ -105,6 +105,19 @@ export const blogReducer = createReducer(
     authenticatedUserBlogId: action.blogIds[0],
   })),
 
+  on(BlogActions.getUserBlogsAndRedirect, (state) => ({
+    ...state,
+    isLoading: true
+  })),
+
+  on(BlogActions.getUserBlogsAndRedirectSuccess, (state, action) => ({
+    ...state,
+    userBlogs: action.blogs,
+    userBlogIds: action.blogs.map(b => b.id.id),
+    authenticatedUserBlog: action.blogs.length > 0 ? action.blogs[0] : {} as BlogView,
+    authenticatedUserBlogId: action.blogs.length > 0 ? action.blogs[0].id.id : ''
+  })),
+
   on(BlogActions.createBlog, (state) => ({
     ...state,
     isLoading: true

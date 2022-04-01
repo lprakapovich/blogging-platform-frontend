@@ -56,4 +56,9 @@ export class BlogService {
       params
     })
   }
+
+  getUserManagedBlogs(): Observable<BlogView[]> {
+    const url = `${this.publicationServiceUrl}/blogs/owned/views`
+    return this.httpClient.get<BlogView[]>(url)
+  }
 }

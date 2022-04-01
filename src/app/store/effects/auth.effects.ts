@@ -14,7 +14,7 @@ import {
 import {Store} from "@ngrx/store";
 import {LoginData} from "../../models/data/auth/LoginData";
 import {RegisterData} from "../../models/data/auth/RegisterData";
-import {createBlog, getUserBlogsIdsSuccessAndRedirect, getBlogDetailsAndRedirect} from "../actions/blog.actions";
+import {createBlog, getBlogDetailsAndRedirect, getUserBlogsAndRedirect} from "../actions/blog.actions";
 import {Router} from "@angular/router";
 import {selectAuthenticatedUserBlogId} from "../selectors/blog.selectors";
 import {selectIsAuthenticated} from "../selectors/auth.selectors";
@@ -42,8 +42,7 @@ export class AuthEffects {
         return this.authService.login(payload)
           .pipe(
             map(response => {
-              return loginSuccess(
-              {
+              return loginSuccess({
                 principal: payload.username,
                 token: response.token
               }
@@ -59,23 +58,32 @@ export class AuthEffects {
     )
   )
 
+  // loginSuccess$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(AuthActionTypes.LOGIN_SUCCESS),
+  //     switchMap(() => {
+  //       return this.blogService.getAuthenticatedUserBlogIds()
+  //         .pipe(
+  //           map(ids => {
+  //             const blogIds = ids.map(id => id.id);
+  //             // get user blogs and redirect
+  //             return getUserBlogsIdsSuccessAndRedirect({
+  //               blogIds: blogIds,
+  //               path: '/feed'
+  //             })
+  //           })
+  //         )
+  //     })
+  //   )
+  // )
+
   loginSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActionTypes.LOGIN_SUCCESS),
-      switchMap(() => {
-        return this.blogService.getAuthenticatedUserBlogIds()
-          .pipe(
-            map(ids => {
-              const blogIds = ids.map(id => id.id);
-              return getUserBlogsIdsSuccessAndRedirect({
-                blogIds: blogIds,
-                path: '/feed'
-              })
-            })
-          )
-      })
-    )
-  )
+      switchMap(() =>
+        of(getUserBlogsAndRedirect({path: "/feed"}))
+      )
+    ))
 
   validateUsername$ = createEffect(() =>
     this.actions$.pipe(
