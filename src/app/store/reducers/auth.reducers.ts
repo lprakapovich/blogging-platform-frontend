@@ -85,14 +85,6 @@ export const authReducer = createReducer(
     }
   })),
 
-  on(AuthActions.resetLoginFailure, (state) => ({
-    ...state,
-    login: {
-      ...state.login,
-      isError: false
-    }
-  })),
-
   on(AuthActions.validateUsername, (state) => ({
     ...state,
     registration: {

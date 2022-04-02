@@ -13,14 +13,6 @@ export enum BlogActionTypes {
   UPDATE_BLOG_SUCCESS = "[Blog] Update blog success",
   UPDATE_BLOG_FAILURE = "[Blog] Update blog failure",
 
-  DELETE_BLOG = "[Blog] Delete blog",
-  DELETE_BLOG_SUCCESS = "[Blog] Delete blog",
-  DELETE_BLOG_FAILURE = "[Blog] Delete blog",
-
-  GET_USER_BLOGS_IDS = "[Blog] Get all user blogs ids",
-  GET_USER_BLOGS_IDS_SUCCESS = "[Blog] Get all user blogs ids success",
-  GET_USER_BLOGS_IDS_SUCCESS_REDIRECT = "[Blog] Get all user blogs ids success and redirect",
-
   GET_USER_BLOGS_AND_REDIRECT = "[Blog] Get all user blogs and redirect",
   GET_USER_BLOGS_AND_REDIRECT_SUCCESS = "[Blog] Get all user blogs success and redirect",
 
@@ -41,9 +33,6 @@ export enum BlogActionTypes {
   SET_USER_BLOGS_AND_REDIRECT = "[Blog] Set user blogs and redirect"
 }
 
-export const getUserBlogsIds = createAction(BlogActionTypes.GET_USER_BLOGS_IDS);
-export const getUserBlogsIdsSuccess = createAction(BlogActionTypes.GET_USER_BLOGS_IDS_SUCCESS, props<{blogIds: string[]}>());
-export const getUserBlogsIdsSuccessAndRedirect = createAction(BlogActionTypes.GET_USER_BLOGS_IDS_SUCCESS_REDIRECT, props<{blogIds: string[], path: string}>());
 export const setUserBlogsIds = createAction(BlogActionTypes.SET_USER_BLOG_IDS, props<{blogIds: string[]}>())
 
 export const getUserBlogsAndRedirect = createAction(BlogActionTypes.GET_USER_BLOGS_AND_REDIRECT, props<{path: string}>());

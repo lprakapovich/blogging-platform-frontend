@@ -33,8 +33,8 @@ export class BlogComponent implements OnInit, OnDestroy {
   showAppMenuModal: boolean;
   showAppBlogSettingsModal: boolean;
 
-  appMenuModalSub: Subscription;
-  appSettingsModalSub: Subscription;
+  appMenuModalSubscription: Subscription;
+  appSettingsModalSubscription: Subscription;
 
   constructor(private store: Store,
               private router: Router,
@@ -46,19 +46,14 @@ export class BlogComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.init();
     this.fetchDataFromStore();
-    this.navbarService.setBlogTemplate();
-
-    this.appMenuModalSub = this.modalService.getAppMenuModalSubject().subscribe(
-      show => this.showAppMenuModal = show);
-
-    this.appSettingsModalSub = this.modalService.getAppSettingsModalSubject().subscribe(
-      show => this.showAppBlogSettingsModal = show)
+    this.subscribeToModalChanges();
   }
 
   ngOnDestroy() {
-    this.appMenuModalSub.unsubscribe();
-    this.appSettingsModalSub.unsubscribe();
+    this.appMenuModalSubscription.unsubscribe();
+    this.appSettingsModalSubscription.unsubscribe();
   }
 
   onNewPostClicked() {
@@ -86,5 +81,20 @@ export class BlogComponent implements OnInit, OnDestroy {
   onSettingsSelectedEvent() {
     this.modalService.showAppMenuModal(false);
     this.modalService.showAppSettingsModal(true);
+  }
+
+  private subscribeToModalChanges() {
+    this.appMenuModalSubscription = this.modalService.getAppMenuModalSubject()
+      .subscribe(show =>
+        this.showAppMenuModal = show
+      );
+    this.appSettingsModalSubscription = this.modalService.getAppSettingsModalSubject()
+      .subscribe(show =>
+        this.showAppBlogSettingsModal = show
+      )
+  }
+
+  private init() {
+    this.navbarService.setBlogTemplate();
   }
 }

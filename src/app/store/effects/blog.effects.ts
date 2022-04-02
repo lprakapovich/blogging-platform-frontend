@@ -12,13 +12,11 @@ import {
   getBlogDetailsSuccess,
   getBlogsBySearchCriteriaSuccess,
   getUserBlogsAndRedirectSuccess,
-  getUserBlogsIdsSuccess,
   setUserBlogsIds,
   updateBlogFailure,
   updateBlogSuccess
 } from "../actions/blog.actions";
 import {Router} from "@angular/router";
-import {BlogId} from "../../models/Blog";
 import {selectPrincipal} from "../selectors/auth.selectors";
 import {selectAuthenticatedUserBlogId} from "../selectors/blog.selectors";
 
@@ -112,34 +110,6 @@ export class BlogEffects {
     )
   )
 
-  getUserBlogsIds$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(BlogActionTypes.GET_USER_BLOGS_IDS),
-      switchMap(() => {
-        return this.blogService.getAuthenticatedUserBlogIds()
-          .pipe(
-            map((ids: BlogId[]) => {
-              let blogIds: Array<string> = ids.map(id => id.id)
-              return getUserBlogsIdsSuccess({
-                blogIds
-              })
-            })
-          )
-      })
-    )
-  )
-
-  getUserBlogIdsSuccessAndRedirect$ = createEffect(() =>
-      this.actions$.pipe(
-        ofType(BlogActionTypes.GET_USER_BLOGS_IDS_SUCCESS_REDIRECT),
-        tap((action: any) => {
-          this.router.navigate([action.path])
-        })
-      ),
-    {
-      dispatch: false
-    })
-
   getBlogDetailsAndRedirect$ = createEffect(() =>
     this.actions$.pipe(
       ofType(BlogActionTypes.GET_BLOG_DETAILS_AND_REDIRECT),
@@ -164,6 +134,7 @@ export class BlogEffects {
         this.router.navigate([`/blog/@${blogId}`])
       })
     ))
+
 
   getUserBlogsAndRedirect$ = createEffect(() =>
     this.actions$.pipe(

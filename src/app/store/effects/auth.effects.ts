@@ -19,7 +19,6 @@ import {Router} from "@angular/router";
 import {selectAuthenticatedUserBlogId} from "../selectors/blog.selectors";
 import {selectIsAuthenticated} from "../selectors/auth.selectors";
 import {UserService} from "../../services/user.service";
-import {BlogService} from "../../services/blog.service";
 
 @Injectable()
 export class AuthEffects {
@@ -29,8 +28,7 @@ export class AuthEffects {
     private actions$: Actions,
     private router: Router,
     private authService: AuthService,
-    private userService: UserService,
-    private blogService: BlogService) {
+    private userService: UserService) {
   }
 
   login$ = createEffect(() =>
@@ -143,7 +141,7 @@ export class AuthEffects {
 
   checkAuthenticationAndRedirect$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthActionTypes.REDIRECT_AUTHENTICATED),
+      ofType(AuthActionTypes.REDIRECT_IF_AUTHENTICATED),
       map((action: any) => action.to),
       combineLatestWith(this.store.select(selectIsAuthenticated)),
       tap(([path, isAuth]) => {
