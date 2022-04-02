@@ -35,14 +35,14 @@ export class BlogService {
     return this.httpClient.delete<void>(url);
   }
 
+  getUserManagedBlogs(): Observable<BlogView[]> {
+    const url = `${this.publicationServiceUrl}/blogs/owned`
+    return this.httpClient.get<BlogView[]>(url)
+  }
+
   getBlogById(blogId: string, principal: string): Observable<BlogView> {
     const url = `${this.publicationServiceUrl}/blogs/${blogId},${principal}`;
     return this.httpClient.get<BlogView>(url);
-  }
-
-  getAuthenticatedUserBlogIds(): Observable<BlogId[]> {
-    const url = `${this.publicationServiceUrl}/blogs/owned`
-    return this.httpClient.get<BlogId[]>(url);
   }
 
   getLastVisitedBlog(): Observable<any> {
@@ -55,10 +55,5 @@ export class BlogService {
     return this.httpClient.get<Blog[]>(url, {
       params
     })
-  }
-
-  getUserManagedBlogs(): Observable<BlogView[]> {
-    const url = `${this.publicationServiceUrl}/blogs/owned/views`
-    return this.httpClient.get<BlogView[]>(url)
   }
 }

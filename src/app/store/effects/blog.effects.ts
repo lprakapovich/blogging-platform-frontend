@@ -78,22 +78,22 @@ export class BlogEffects {
       }))
   )
 
-  getBlogDetails$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(BlogActionTypes.GET_BLOG_DETAILS),
-      switchMap(() => {
-        return this.blogService.getLastVisitedBlog()
-          .pipe(
-            map(response => getBlogDetailsSuccess({payload: response})),
-            catchError(error => of(getBlogDetailsFailure(
-              {
-                error
-              })
-            ))
-          )
-      })
-    )
-  )
+  // getBlogDetails$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(BlogActionTypes.GET_BLOG_DETAILS),
+  //     switchMap(() => {
+  //       return this.blogService.getLastVisitedBlog()
+  //         .pipe(
+  //           map(response => getBlogDetailsSuccess({payload: response})),
+  //           catchError(error => of(getBlogDetailsFailure(
+  //             {
+  //               error
+  //             })
+  //           ))
+  //         )
+  //     })
+  //   )
+  // )
 
   getBlogsBySearchCriteria$ = createEffect(() =>
     this.actions$.pipe(
