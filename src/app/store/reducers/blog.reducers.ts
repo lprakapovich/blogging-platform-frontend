@@ -112,6 +112,7 @@ export const blogReducer = createReducer(
 
   on(BlogActions.getUserBlogsAndRedirectSuccess, (state, action) => ({
     ...state,
+    isLoading: false,
     userBlogs: action.blogs,
     userBlogIds: action.blogs.map(b => b.id.id),
     authenticatedUserBlog: action.blogs.length > 0 ? action.blogs[0] : {} as BlogView,
@@ -136,5 +137,25 @@ export const blogReducer = createReducer(
     ...state,
     isLoading: false,
     blogError: action.error
+  })),
+
+  on(BlogActions.updateBlog, (state) => ({
+    ...state,
+    isLoading: true
+  })),
+
+  on(BlogActions.updateBlogSuccess, (state, action) => ({
+    ...state,
+    isLoading: false,
+    authenticatedUserBlog: {
+      ...state.authenticatedUserBlog,
+      displayName: action.updatedBlog.displayName,
+      description: action.updatedBlog.description
+    }
+  })),
+
+  on(BlogActions.updateBlogFailure, (state) => ({
+    ...state,
+    isLoading: false
   }))
 )

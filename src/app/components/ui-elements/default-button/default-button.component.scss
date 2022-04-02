@@ -6,68 +6,76 @@
   }
 }
 
-:host.large {
-  #btn {
-    font-size: 1.5rem;
-    padding: 1rem;
-    width: 12rem;
+:host {
+  &.large {
+    #btn {
+      font-size: 1.5rem;
+      padding: 1rem;
+      width: 12rem;
+    }
   }
-}
 
-:host.medium {
-  #btn {
-    font-size: 1rem;
-    padding: 0.5rem 1rem;
-    min-width: 7rem;
-    max-width: 8rem;
+  &.medium {
+    #btn {
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+      min-width: 7rem;
+      max-width: 8rem;
+    }
   }
-}
 
-:host.small {
-  #btn {
-    font-size: 1rem;
-    padding: 0.5rem 1rem;
-    min-width: 4rem;
-    max-width: 6rem;
+  &.small {
+    #btn {
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+      min-width: 4rem;
+      max-width: 6rem;
+    }
   }
-}
 
-:host.reverted {
-  #btn {
-    background-color: white;
-    border: 1px solid black;
-    color: black;
+  &.reverted {
+    #btn {
+      background-color: white;
+      border: 1px solid black;
+      color: black;
+    }
   }
-}
 
-:host.animated {
-  #btn:hover {
-    cursor: pointer;
+  &.animated {
+    #btn:hover {
+      cursor: pointer;
+
+      #span {
+        padding-right: 1.8rem;
+      }
+
+      #span:after {
+        opacity: 1;
+        right: 0;
+      }
+    }
 
     #span {
-      padding-right: 1.8rem;
+      cursor: pointer;
+      display: inline-block;
+      position: relative;
+      transition: 0.5s ease;
     }
 
     #span:after {
-      opacity: 1;
-      right: 0;
+      content: '\00bb';
+      position: absolute;
+      opacity: 0;
+      top: 0;
+      right: -1.5rem;
+      transition: 0.5s;
     }
   }
 
-  #span {
-    cursor: pointer;
-    display: inline-block;
-    position: relative;
-    transition: 0.5s ease;
-  }
-
-  #span:after {
-    content: '\00bb';
-    position: absolute;
-    opacity: 0;
-    top: 0;
-    right: -1.5rem;
-    transition: 0.5s;
+  &.loading-button {
+    #btn {
+      color: transparent;
+    }
   }
 }
 
@@ -76,6 +84,6 @@
   background-color: v.$dark-background;
   border: 0.5px solid white;
   color: v.$white-text;
-  transition: all 0.5s linear;
   cursor: pointer;
 }
+

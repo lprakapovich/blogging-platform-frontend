@@ -58,25 +58,6 @@ export class AuthEffects {
     )
   )
 
-  // loginSuccess$ = createEffect(() =>
-  //   this.actions$.pipe(
-  //     ofType(AuthActionTypes.LOGIN_SUCCESS),
-  //     switchMap(() => {
-  //       return this.blogService.getAuthenticatedUserBlogIds()
-  //         .pipe(
-  //           map(ids => {
-  //             const blogIds = ids.map(id => id.id);
-  //             // get user blogs and redirect
-  //             return getUserBlogsIdsSuccessAndRedirect({
-  //               blogIds: blogIds,
-  //               path: '/feed'
-  //             })
-  //           })
-  //         )
-  //     })
-  //   )
-  // )
-
   loginSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActionTypes.LOGIN_SUCCESS),

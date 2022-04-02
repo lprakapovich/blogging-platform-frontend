@@ -51,19 +51,39 @@
             </div>
             <div class="general-item">
               <div> Domain </div>
-              <app-default-input [disabled]="true" [userInput]="blog.id.id"></app-default-input>
+              <app-default-input
+                [disabled]="true"
+                [userInput]="blog.id.id">
+              </app-default-input>
             </div>
             <div id="display-name" class="general-item">
               <div> Display Name </div>
-              <app-default-input [placeholder]="'Your name'" [userInput]="blog.displayName"></app-default-input>
+              <app-default-input
+                [placeholder]="'Your name'"
+                [userInput]="blog.displayName"
+                (userInputEventEmitter)="onDisplayNameChanged($event);">
+              </app-default-input>
             </div>
             <div id="about" class="general-item">
               <div> Description </div>
-              <app-default-input [placeholder]="'Something about your blog'" [userInput]="blog.description"></app-default-input>
+              <app-default-input
+                [placeholder]="'Something about your blog'"
+                [userInput]="blog.description"
+                (userInputEventEmitter)="onDescriptionChanged($event)"
+              ></app-default-input>
             </div>
             <div id="general-buttons" class="general-item">
-              <app-default-button (click)="onCancel()" [ngClass]="'medium reverted'" [label]="'Cancel'"></app-default-button>
-              <app-default-button (click)="onSave()" [ngClass]="'medium'" [label]="'Save'"></app-default-button>
+              <app-default-button
+                (click)="onCancel()"
+                [ngClass]="'medium reverted'"
+                [label]="'Cancel'">
+              </app-default-button>
+              <app-default-button
+                id="save-button"
+                (click)="onSave()"
+                [ngClass]="['medium', (isLoading$ | async) ? 'loading-button' : '']"
+                [label]="'Save'">
+              </app-default-button>
             </div>
           </div>
         </div>

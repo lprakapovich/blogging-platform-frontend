@@ -1,6 +1,7 @@
 import {createAction, props} from "@ngrx/store";
 import {Blog} from "../../models/Blog";
 import {BlogView} from "../../models/BlogView";
+import {UpdateBlogData} from "../../models/data/blog/UpdateBlogData";
 
 export enum BlogActionTypes {
 
@@ -64,3 +65,7 @@ export const setBlogIdAndRedirect = createAction(BlogActionTypes.SET_AUTHENTICAT
 export const createBlog = createAction(BlogActionTypes.CREATE_BLOG, props<{blogId: string}>())
 export const createBlogSuccess = createAction(BlogActionTypes.CREATE_BLOG_SUCCESS, props<{blogId: string}>());
 export const createBlogFailure = createAction(BlogActionTypes.CREATE_BLOG_FAILURE, props<{error: any}>())
+
+export const updateBlog = createAction(BlogActionTypes.UPDATE_BLOG, props<{data: UpdateBlogData}>())
+export const updateBlogSuccess = createAction(BlogActionTypes.UPDATE_BLOG_SUCCESS, props<{updatedBlog: BlogView}>())
+export const updateBlogFailure = createAction(BlogActionTypes.UPDATE_BLOG_FAILURE)

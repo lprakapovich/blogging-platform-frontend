@@ -25,9 +25,9 @@ export class BlogService {
     return this.httpClient.post<void>(url, body);
   }
 
-  updateBlog(blogId: string, principal: string, updateData: UpdateBlogData): Observable<Blog> {
+  updateBlog(blogId: string, principal: string, updateData: UpdateBlogData): Observable<BlogView> {
     const url = `${this.publicationServiceUrl}/blogs/${blogId},${principal}`;
-    return this.httpClient.put<Blog>(url, updateData);
+    return this.httpClient.put<BlogView>(url, updateData);
   }
 
   deleteBlog(blogId: string, principal: string): Observable<void> {

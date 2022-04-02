@@ -2,6 +2,10 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Store} from "@ngrx/store";
 import {logout} from "../../../store/actions/auth.actions";
 import {BlogView} from "../../../models/BlogView";
+import {UpdateBlogData} from "../../../models/data/blog/UpdateBlogData";
+import {updateBlog} from "../../../store/actions/blog.actions";
+import {Observable} from "rxjs";
+import {selectIsBlogLoading} from "../../../store/selectors/blog.selectors";
 
 @Component({
   selector: 'app-blog-settings-modal',
@@ -14,15 +18,26 @@ export class BlogSettingsModalComponent implements OnInit {
   @Input() categories: string[] = [];
   @Input() blog: BlogView | null;
 
+  isLoading$: Observable<boolean>;
+
   selectedSection: string;
   newCategory: string;
   newBlog: string;
+
+  changedBlogDisplayName: string;
+  changedBlogDescription: string;
 
   constructor(private store: Store) {
     this.selectedSection = 'account';
   }
 
   ngOnInit(): void {
+    if (this.blog && this.blog.description) {
+      this.changedBlogDescription = this.blog.description;
+      this.changedBlogDisplayName = this.blog.displayName;
+    }
+
+    this.isLoading$ = this.store.select(selectIsBlogLoading);
   }
 
   onSettingsSectionSelected(section: string) {
@@ -45,8 +60,13 @@ export class BlogSettingsModalComponent implements OnInit {
   }
 
   onSave() {
-    this.onCloseEmitter.emit();
+    const data: UpdateBlogData = {
+      displayName: this.changedBlogDisplayName,
+      description: this.changedBlogDescription
+    }
+    this.store.dispatch(updateBlog({data}))
   }
+
 
   logout() {
     window.alert('You are about to logout')
@@ -55,5 +75,13 @@ export class BlogSettingsModalComponent implements OnInit {
 
   onNewBlogClicked() {
 
+  }
+
+  onDisplayNameChanged(displayName: string) {
+    this.changedBlogDisplayName = displayName;
+  }
+
+  onDescriptionChanged(description: string) {
+    this.changedBlogDescription = description;
   }
 }
