@@ -28,15 +28,15 @@ export const loginSuccess = createAction(AuthActionTypes.LOGIN_SUCCESS, props<{t
 export const loginFailure = createAction(AuthActionTypes.LOGIN_FAILURE, props<{error: any}>());
 
 export const register = createAction(AuthActionTypes.REGISTER, props<{payload: RegisterData}>());
-export const registerSuccess = createAction(AuthActionTypes.REGISTER_SUCCESS, props<{token: string, principal: string}>());
+export const registerSuccess = createAction(AuthActionTypes.REGISTER_SUCCESS, props<{token: string, principal: string, blogId: string}>());
 export const registerFailure = createAction(AuthActionTypes.REGISTER_FAILURE, props<{error: any}>());
 
-export const validateUsername = createAction(AuthActionTypes.BEFORE_REGISTER_VALIDATE_USERNAME, props<{username: string}>());
+export const validateUsername = createAction(AuthActionTypes.BEFORE_REGISTER_VALIDATE_USERNAME, props<{principal: string}>());
 export const validateUsernameFailure = createAction(AuthActionTypes.BEFORE_REGISTER_VALIDATE_USERNAME_FAILURE, props<{error: string}>());
 export const validateUsernameSuccess = createAction(AuthActionTypes.BEFORE_REGISTER_VALIDATE_USERNAME_SUCCESS);
 
 export const logout = createAction(AuthActionTypes.LOGOUT);
 
-export const setPrincipal = createAction(AuthActionTypes.SET_PRINCIPAL, props<{username: string}>());
+export const setPrincipal = createAction(AuthActionTypes.SET_PRINCIPAL, props<{principal: string}>());
 
 export const redirectIfAuthenticated = createAction(AuthActionTypes.REDIRECT_IF_AUTHENTICATED, props<{to: string}>());

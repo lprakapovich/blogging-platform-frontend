@@ -80,7 +80,7 @@ export class SignupComponent implements OnInit {
     }
     const username = $event.target.value;
     if (username.trim().length > 0 && username !== this.validatedUsername) {
-      this.store.dispatch(validateUsername({username}))
+      this.store.dispatch(validateUsername({principal: username}))
       this.validatedUsername = username;
     }
   }

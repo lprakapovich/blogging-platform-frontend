@@ -44,18 +44,19 @@ export class FeedComponent implements OnInit, AfterViewInit {
     this.showAppMenuModal = false;
     this.showAppBlogSettingsModal = false;
     this.navbarService.setBlogTemplate()
-    this.fetchDataFromStore();
   }
 
   private fetchDataFromStore() {
-    this.userBlogIds$ = this.store.select(selectUserBlogIds);
-    this.userBlog$ = this.store.select(selectAuthenticatedUserBlog);
+
   }
 
   ngOnInit(): void {
+    this.userBlogIds$ = this.store.select(selectUserBlogIds);
+    this.userBlog$ = this.store.select(selectAuthenticatedUserBlog);
     this.isLoading$ = this.store.select(selectIsPostLoading);
     this.posts$ = this.store.select(selectPostsFromSubscriptions);
     this.store.dispatch(getPostsFromSubscriptions());
+
 
     this.isLoading$.subscribe(() => {
       this.resizeAllGridItems()

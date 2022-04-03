@@ -168,7 +168,7 @@ export const authReducer = createReducer(
   on(AuthActions.setPrincipal, (state, action) => ({
     ...state,
     isAuthenticated: true,
-    principal: action.username
+    principal: action.principal
   }))
 );
 

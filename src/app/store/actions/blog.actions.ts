@@ -52,7 +52,7 @@ export const setSelectedBlogId = createAction(BlogActionTypes.SET_SELECTED_BLOG_
 export const setBlogIdAndRedirect = createAction(BlogActionTypes.SET_AUTHENTICATED_USER_BLOG_ID, props<{blogId: string}>())
 
 export const createBlog = createAction(BlogActionTypes.CREATE_BLOG, props<{blogId: string}>())
-export const createBlogSuccess = createAction(BlogActionTypes.CREATE_BLOG_SUCCESS, props<{blogId: string}>());
+export const createBlogSuccess = createAction(BlogActionTypes.CREATE_BLOG_SUCCESS, props<{blogId: string, principal: string}>());
 export const createBlogFailure = createAction(BlogActionTypes.CREATE_BLOG_FAILURE, props<{error: any}>())
 
 export const updateBlog = createAction(BlogActionTypes.UPDATE_BLOG, props<{data: UpdateBlogData}>())
