@@ -2,8 +2,13 @@ import {Injectable} from "@angular/core";
 import {Store} from "@ngrx/store";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {PostService} from "../../services/post.service";
-import {getPostsByTitleSuccess, getPostsFromSubscriptionsSuccess, PostActionTypes} from "../actions/post.actions";
-import {combineLatestWith, map, switchMap} from "rxjs";
+import {
+  getPostsBySearchCriteriaSuccess, getPostsFailure,
+  getPostsFromSubscriptionsSuccess,
+  getPostsSuccess,
+  PostActionTypes
+} from "../actions/post.actions";
+import {catchError, combineLatestWith, map, of, switchMap, tap} from "rxjs";
 import {selectAuthenticatedUserBlogId} from "../selectors/blog.selectors";
 import {selectPrincipal} from "../selectors/auth.selectors";
 
@@ -17,6 +22,21 @@ export class PostEffects {
   ) {
   }
 
+  getPosts$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(PostActionTypes.GET_POSTS),
+    combineLatestWith(
+      this.store.select(selectAuthenticatedUserBlogId),
+      this.store.select(selectPrincipal)),
+    switchMap(([action, blogId, principal]: any) => {
+      return this.postService.getPosts(blogId, principal, action.status)
+        .pipe(
+          map(posts => getPostsSuccess({posts})),
+          catchError(error => of(getPostsFailure({error})))
+        )
+    })
+  ))
+
   getPostsBySearchCriteria$ = createEffect(() =>
     this.actions$.pipe(
       ofType(PostActionTypes.GET_POSTS_BY_SEARCH_CRITERIA),
@@ -27,7 +47,7 @@ export class PostEffects {
       switchMap(([title, blogId, principal]) => {
         return this.postService.getPostsBySearchCriteria(title, blogId, principal)
           .pipe(
-            map(response => getPostsByTitleSuccess({posts: response}))
+            map(response => getPostsBySearchCriteriaSuccess({posts: response}))
           )
       })
     )

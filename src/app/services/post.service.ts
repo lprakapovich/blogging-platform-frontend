@@ -14,6 +14,14 @@ export class PostService {
   constructor(private httpClient: HttpClient) {
   }
 
+  getPosts(blogId: string, principal: string, status?: string, categoryId?: string) {
+    const url = `${this.publicationServiceUrl}/${blogId},${principal}/publications`;
+    const params = new HttpParams()
+      .set('status', status ?? '')
+      .set('categoryId', categoryId ?? '');
+    return this.httpClient.get<BlogPost[]>(url, { params })
+  }
+
   getPostsBySearchCriteria(criteria: string, blogId: string, principal: string): Observable<BlogPost[]>{
     const url = `${this.publicationServiceUrl}/${blogId},${principal}/publications/search`
     const params = new HttpParams().set('criteria', criteria);

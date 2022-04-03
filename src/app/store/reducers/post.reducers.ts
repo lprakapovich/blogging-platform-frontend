@@ -3,28 +3,32 @@ import {createReducer, on} from "@ngrx/store";
 import * as PostActions from '../actions/post.actions';
 
 export interface PostState {
+  userBlogPosts: BlogPost[],
   isLoading: boolean,
   postsFromSubscriptions: BlogPost[],
   selectedPost: BlogPost | null;
   postsBySearchCriteria: BlogPost[],
+  postsError: any
 }
 
 export const initialState: PostState = {
+  userBlogPosts: [],
   isLoading: false,
   postsFromSubscriptions: [],
   selectedPost: null,
   postsBySearchCriteria: [],
+  postsError: null
 }
 
 export const postReducer = createReducer(
   initialState,
 
-  on(PostActions.getPostsByTitle, (state) => ({
+  on(PostActions.getPostsBySearchCriteria, (state) => ({
     ...state,
     isLoading: true
   })),
 
-  on(PostActions.getPostsByTitleSuccess, (state, action) => ({
+  on(PostActions.getPostsBySearchCriteriaSuccess, (state, action) => ({
     ...state,
     isLoading: false,
     postsBySearchCriteria: action.posts
@@ -46,8 +50,25 @@ export const postReducer = createReducer(
     selectedPost: action.post
   })),
 
-  on(PostActions.unselectPost, (state) => ({
+  on(PostActions.resetSelectedPost, (state) => ({
     ...state,
     selectedPost: null
+  })),
+
+  on(PostActions.getPosts, (state) => ({
+    ...state,
+    isLoading: true
+  })),
+
+  on(PostActions.getPostsSuccess, (state, action) => ({
+    ...state,
+    isLoading: false,
+    userBlogPosts: action.posts
+  })),
+
+  on(PostActions.getPostsFailure, (state, action) => ({
+    ...state,
+    isLoading: false,
+    postsError: action.error
   }))
 )

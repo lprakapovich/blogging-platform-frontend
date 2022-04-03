@@ -55,8 +55,7 @@ export class BlogEffects {
       ),
     {
       dispatch: false
-    }
-  )
+    })
 
   updateBlog$ = createEffect(() =>
     this.actions$.pipe(
@@ -75,23 +74,6 @@ export class BlogEffects {
       }))
   )
 
-  // getBlogDetails$ = createEffect(() =>
-  //   this.actions$.pipe(
-  //     ofType(BlogActionTypes.GET_BLOG_DETAILS),
-  //     switchMap(() => {
-  //       return this.blogService.getLastVisitedBlog()
-  //         .pipe(
-  //           map(response => getBlogDetailsSuccess({payload: response})),
-  //           catchError(error => of(getBlogDetailsFailure(
-  //             {
-  //               error
-  //             })
-  //           ))
-  //         )
-  //     })
-  //   )
-  // )
-
   getBlogsBySearchCriteria$ = createEffect(() =>
     this.actions$.pipe(
       ofType(BlogActionTypes.GET_BLOGS_BY_SEARCH_CRITERIA),
@@ -107,7 +89,7 @@ export class BlogEffects {
     )
   )
 
-  getBlogDetailsAndRedirect$ = createEffect(() =>
+  getBlogByIdAndRedirect$ = createEffect(() =>
     this.actions$.pipe(
       ofType(BlogActionTypes.GET_BLOG_DETAILS_AND_REDIRECT),
       map((action: any) => action.blogId),
@@ -130,8 +112,10 @@ export class BlogEffects {
       tap((blogId) => {
         this.router.navigate([`/blog/@${blogId}`])
       })
-    ))
-
+    ),
+    {
+      dispatch: false
+    })
 
   getUserBlogsAndRedirect$ = createEffect(() =>
     this.actions$.pipe(

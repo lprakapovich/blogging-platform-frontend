@@ -5,7 +5,7 @@ import {BlogPost} from "../../../models/BlogPost";
 import {Observable} from "rxjs";
 import {Store} from "@ngrx/store";
 import {selectIsPostLoading, selectPostsFromSubscriptions} from "../../../store/selectors/post.selectors";
-import {getPostsFromSubscriptions, setSelectedPost, unselectPost} from "../../../store/actions/post.actions";
+import {getPostsFromSubscriptions, setSelectedPost, resetSelectedPost} from "../../../store/actions/post.actions";
 import {AppMenuModalComponent} from "../../ui-elements/app-menu-modal/app-menu-modal.component";
 import {selectAuthenticatedUserBlog, selectUserBlogIds} from "../../../store/selectors/blog.selectors";
 import {getBlogDetailsAndRedirect} from "../../../store/actions/blog.actions";
@@ -57,7 +57,6 @@ export class FeedComponent implements OnInit, AfterViewInit {
     this.posts$ = this.store.select(selectPostsFromSubscriptions);
     this.store.dispatch(getPostsFromSubscriptions());
 
-
     this.isLoading$.subscribe(() => {
       this.resizeAllGridItems()
     })
@@ -106,7 +105,7 @@ export class FeedComponent implements OnInit, AfterViewInit {
   }
 
   closePostPreview() {
-    this.store.dispatch(unselectPost())
+    this.store.dispatch(resetSelectedPost())
     this.showPostPreview = false;
   }
 

@@ -22,3 +22,8 @@ export const selectSelectedPost = createSelector(
   selectPostFeature,
   state => state.selectedPost
 )
+
+export const selectUserBlogPosts = createSelector(
+  selectPostFeature,
+  state => state.userBlogPosts
+)

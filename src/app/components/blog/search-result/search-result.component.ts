@@ -8,7 +8,7 @@ import {Store} from "@ngrx/store";
 import {getBlogsBySearchCriteria} from "../../../store/actions/blog.actions";
 import {selectBlogsBySearchCriteria} from "../../../store/selectors/blog.selectors";
 import {selectPostsBySearchCriteria} from "../../../store/selectors/post.selectors";
-import {getPostsByTitle} from "../../../store/actions/post.actions";
+import {getPostsBySearchCriteria} from "../../../store/actions/post.actions";
 
 @Component({
   selector: 'app-search-result',
@@ -38,7 +38,7 @@ export class SearchResultComponent implements OnInit {
       .subscribe(params => {
         this.searchInput = params['search'];
         this.store.dispatch(getBlogsBySearchCriteria({payload: this.searchInput}))
-        this.store.dispatch(getPostsByTitle({title: this.searchInput}))
+        this.store.dispatch(getPostsBySearchCriteria({title: this.searchInput}))
       });
 
     this.navbarService.setBlogTemplate();
@@ -48,7 +48,7 @@ export class SearchResultComponent implements OnInit {
 
   onEnterPressed(searchCriteria: string) {
     this.store.dispatch(getBlogsBySearchCriteria({payload: searchCriteria}))
-    this.store.dispatch(getPostsByTitle({title: searchCriteria}))
+    this.store.dispatch(getPostsBySearchCriteria({title: searchCriteria}))
   }
 
   onMoreBlogsClicked() {

@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Router} from "@angular/router";
 import {NavbarService} from "../../../services/ui/navbar.service";
-import {Observable, Subscription} from "rxjs";
+import {combineLatest, map, Observable, Subscription} from "rxjs";
 import {Store} from "@ngrx/store";
 import {
   selectAuthenticatedUserBlog,
@@ -12,6 +12,9 @@ import {AppMenuModalComponent} from "../../ui-elements/app-menu-modal/app-menu-m
 import {BlogView} from "../../../models/BlogView";
 import {BlogSettingsModalComponent} from "../blog-settings-modal/blog-settings-modal.component";
 import {ModalService} from "../../../services/ui/modal.service";
+import {BlogPost} from "../../../models/BlogPost";
+import {selectUserBlogPosts} from "../../../store/selectors/post.selectors";
+import {getPosts} from "../../../store/actions/post.actions";
 
 @Component({
   selector: 'app-blog',
@@ -22,7 +25,10 @@ export class BlogComponent implements OnInit, OnDestroy {
 
   userBlogIds$: Observable<string[]>;
   userBlog$: Observable<BlogView>;
-  isLoadingBlogData$: Observable<boolean>;
+  userBlogPublications$: Observable<BlogPost[]>;
+  isLoading$: Observable<boolean>;
+
+  isLoaded$: Observable<boolean>;
 
   @ViewChild('appMenuModal')
   appMenuModal: AppMenuModalComponent;
@@ -65,9 +71,18 @@ export class BlogComponent implements OnInit, OnDestroy {
   }
 
   private fetchDataFromStore() {
+    this.store.dispatch(getPosts({status: 'Published'}));
     this.userBlogIds$ = this.store.select(selectUserBlogIds);
-    this.userBlog$ = this.store.select(selectAuthenticatedUserBlog)
-    this.isLoadingBlogData$ = this.store.select(selectIsBlogLoading);
+    this.userBlog$ = this.store.select(selectAuthenticatedUserBlog);
+    this.userBlogPublications$ = this.store.select(selectUserBlogPosts);
+    this.isLoading$ = this.store.select(selectIsBlogLoading);
+
+    this.isLoaded$ = combineLatest([
+      this.userBlog$, this.userBlogPublications$, this.isLoading$
+      ]).pipe(
+        map(([userBlogIsLoaded, userBlogPublicationsLoaded, isLoadingAnything]) =>
+          !!userBlogIsLoaded  && !!userBlogPublicationsLoaded && !isLoadingAnything)
+    )
   }
 
   onUserBlogSelectedEvent($event: string) {

@@ -1,5 +1,5 @@
-<div id="blog-container" *ngIf="((userBlog$ | async) && !(isLoadingBlogData$ | async)); else loadingTemplate;">
-  <div id="blog-information" *ngIf="(userBlog$ | async); let userBlogView">
+<div id="blog-container" *ngIf="(isLoaded$ | async); else loadingTemplate;">
+  <div id="blog-information" *ngIf="userBlog$ | async as userBlogView">
     <app-author-data
       class="author-data blog-section" [id]="userBlogView.id.id"
       [displayName]="userBlogView.displayName ? userBlogView.displayName : userBlogView.id.id">
@@ -20,20 +20,22 @@
       <div class="blog-section">
         <app-default-list [listItems]="['Scheduled', 'Hidden', 'Drafts']" [ngClass]="'bordered'"></app-default-list>
       </div>
-<!--      <div class="blog-section">-->
-<!--        <app-default-list [listItems]="userBlogView.categories">-->
-<!--          <div class="default-list-item all"> All Posts </div>-->
-<!--        </app-default-list>-->
-<!--      </div>-->
+      <div class="blog-section">
+        <app-default-list>
+          <div class="default-list-item all"> All Posts </div>
+        </app-default-list>
+      </div>
     </div>
   </div>
-  <div id="blog-posts">
+  <div id="blog-posts" *ngIf="userBlogPublications$ | async as userBlogPublications">
     <app-search-bar (searchInputEvent)="onSearchInputEvent($event)"></app-search-bar>
-    <div id="blog-posts-preview-list">
-     <app-blog-post-preview-list></app-blog-post-preview-list>
+    <div id="blog-posts-preview-list" *ngIf="!!userBlogPublications.length; else noBlogPublications">
+     <app-blog-post-preview-list [blogPosts]="userBlogPublications"></app-blog-post-preview-list>
     </div>
+    <ng-template #noBlogPublications>
+      <div class="no-blog-publications-message"> Blog has no publications yet </div>
+    </ng-template>
   </div>
-
   <app-menu-modal #appMenuModal
                   id="app-menu-modal"
                   [hidden]="!showAppMenuModal"
