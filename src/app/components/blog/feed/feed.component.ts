@@ -1,8 +1,8 @@
-import {AfterViewInit, Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {NavbarService} from "../../../services/ui/navbar.service";
 import {Router} from "@angular/router";
 import {BlogPost} from "../../../models/BlogPost";
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {Store} from "@ngrx/store";
 import {selectIsPostLoading, selectPostsFromSubscriptions} from "../../../store/selectors/post.selectors";
 import {getPostsFromSubscriptions, setSelectedPost, resetSelectedPost} from "../../../store/actions/post.actions";
@@ -18,7 +18,7 @@ import {BlogView} from "../../../models/BlogView";
   templateUrl: './feed.component.html',
   styleUrls: ['./feed.component.scss']
 })
-export class FeedComponent implements OnInit, AfterViewInit {
+export class FeedComponent implements OnInit, AfterViewInit, OnDestroy {
 
   isLoading$: Observable<boolean>;
   posts$: Observable<BlogPost[]>;
@@ -35,6 +35,15 @@ export class FeedComponent implements OnInit, AfterViewInit {
   showAppMenuModal: boolean;
   showAppBlogSettingsModal: boolean;
 
+  resizeSubscription: Subscription;
+  appMenuSubscription: Subscription;
+  appSettingsSubscription: Subscription;
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.resizeAllGridItems();
+  }
+
   constructor(private store: Store,
               private navbarService: NavbarService,
               private modalService: ModalService,
@@ -46,35 +55,39 @@ export class FeedComponent implements OnInit, AfterViewInit {
     this.navbarService.setBlogTemplate()
   }
 
-  private fetchDataFromStore() {
-
+  ngOnInit(): void {
+    this.fetchDataFromStore()
+    this.subscribeToStoreChanges();
   }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
+    this.resizeAllGridItems();
+  }
+
+  ngOnDestroy() {
+    this.resizeSubscription.unsubscribe();
+    this.appMenuSubscription.unsubscribe();
+    this.appSettingsSubscription.unsubscribe();
+  }
+
+  private fetchDataFromStore() {
     this.userBlogIds$ = this.store.select(selectUserBlogIds);
     this.userBlog$ = this.store.select(selectAuthenticatedUserBlog);
     this.isLoading$ = this.store.select(selectIsPostLoading);
     this.posts$ = this.store.select(selectPostsFromSubscriptions);
     this.store.dispatch(getPostsFromSubscriptions());
+  }
 
-    this.isLoading$.subscribe(() => {
+  private subscribeToStoreChanges() {
+    this.resizeSubscription = this.isLoading$.subscribe(() => {
       this.resizeAllGridItems()
-    })
+    });
 
-    this.modalService.getAppMenuModalSubject()
+    this.appMenuSubscription = this.modalService.getAppMenuModalSubject()
       .subscribe(show => this.showAppMenuModal = show)
 
-    this.modalService.getAppSettingsModalSubject()
+    this.appSettingsSubscription = this.modalService.getAppSettingsModalSubject()
       .subscribe(show => this.showAppBlogSettingsModal = show)
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResize() {
-    this.resizeAllGridItems();
-  }
-
-  ngAfterViewInit(): void {
-    this.resizeAllGridItems();
   }
 
   onEnterPressed($event: any) {
@@ -91,9 +104,9 @@ export class FeedComponent implements OnInit, AfterViewInit {
   }
 
    resizeAllGridItems(){
-    let allItems = document.getElementsByClassName("feed-grid-item");
-    for(let x=0; x< allItems.length; x++){
-      this.resizeGridItem(allItems[x]);
+    let gridItems = document.getElementsByClassName("feed-grid-item");
+    for (let gridItem of Array.of(gridItems)) {
+      this.resizeGridItem(gridItem)
     }
   }
 
