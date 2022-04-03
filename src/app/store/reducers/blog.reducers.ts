@@ -4,13 +4,9 @@ import * as BlogActions from "../actions/blog.actions";
 import {BlogView} from "../../models/BlogView";
 
 export interface BlogState {
-  authenticatedUserBlogId: string,
   authenticatedUserBlog: BlogView,
-
-  userBlogIds: string[],
   userBlogs: BlogView[]
 
-  selectedBlogId: string,
   selectedBlog: BlogView,
 
   blogError: string,
@@ -20,13 +16,9 @@ export interface BlogState {
 }
 
 export const initialState: BlogState = {
-  authenticatedUserBlogId: '',
   authenticatedUserBlog: {} as BlogView,
-
-  userBlogIds: [],
   userBlogs: [],
 
-  selectedBlogId: '',
   selectedBlog: {} as BlogView,
 
   blogError: '',
@@ -58,30 +50,21 @@ export const blogReducer = createReducer(
   on(BlogActions.getBlogDetailsAndRedirect, (state, action) => ({
     ...state,
     isLoading: true,
-    selectedBlogId: action.blogId,
-    authenticatedUserBlogId: action.blogId,
   })),
 
   on(BlogActions.getBlogDetailsAndRedirectSuccess, (state, action) => ({
     ...state,
     isLoading: false,
-    authenticatedUserBlog: action.blog,
+    authenticatedUserBlog: action.isPrincipal ? action.blog : state.authenticatedUserBlog,
+    selectedBlog: action.blog
   })),
 
   on(BlogActions.setSelectedBlogId, (state, action) => ({
     ...state,
-    selectedBlogId: action.blogId,
   })),
 
   on(BlogActions.setBlogIdAndRedirect, (state, action) => ({
     ...state,
-    selectedBlogId: action.blogId,
-    authenticatedUserBlogId: action.blogId,
-  })),
-
-  on(BlogActions.setUserBlogsIds, (state, action) => ({
-    ...state,
-    userBlogIds: action.blogIds
   })),
 
   on(BlogActions.getBlogsBySearchCriteria, (state) => ({
@@ -105,9 +88,7 @@ export const blogReducer = createReducer(
     ...state,
     isLoading: false,
     userBlogs: action.blogs,
-    userBlogIds: action.blogs.map(b => b.id.id),
     authenticatedUserBlog: action.blogs.length > 0 ? action.blogs[0] : {} as BlogView,
-    authenticatedUserBlogId: action.blogs.length > 0 ? action.blogs[0].id.id : ''
   })),
 
   on(BlogActions.createBlog, (state) => ({
@@ -118,7 +99,6 @@ export const blogReducer = createReducer(
   on(BlogActions.createBlogSuccess, (state, action) => ({
     ...state,
     isLoading: false,
-    authenticatedUserBlogId: action.blogId,
     authenticatedUserBlog: {
       id: {
         id: action.blogId,
@@ -130,10 +110,6 @@ export const blogReducer = createReducer(
       description: '',
       displayName: ''
     },
-    userBlogIds: [
-      ...state.userBlogIds,
-      action.blogId
-    ],
 
     userBlogs: [
       ...state.userBlogs,

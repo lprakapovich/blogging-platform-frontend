@@ -5,7 +5,7 @@ import {BlogPost} from "../../../models/BlogPost";
 import {NavbarService} from "../../../services/ui/navbar.service";
 import {Observable} from "rxjs";
 import {Store} from "@ngrx/store";
-import {getBlogsBySearchCriteria} from "../../../store/actions/blog.actions";
+import {getBlogDetailsAndRedirect, getBlogsBySearchCriteria} from "../../../store/actions/blog.actions";
 import {selectBlogsBySearchCriteria} from "../../../store/selectors/blog.selectors";
 import {selectPostsBySearchCriteria} from "../../../store/selectors/post.selectors";
 import {getPostsBySearchCriteria} from "../../../store/actions/post.actions";
@@ -75,6 +75,9 @@ export class SearchResultComponent implements OnInit {
   }
 
   onBlogSelected(id: BlogId) {
-    console.log(`Selected blog ${id.id},${id.username}`)
+    this.store.dispatch(getBlogDetailsAndRedirect({
+      blogId: id.id,
+      username: id.username
+    }))
   }
 }

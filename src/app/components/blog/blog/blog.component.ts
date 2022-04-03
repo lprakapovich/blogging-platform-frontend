@@ -4,8 +4,9 @@ import {NavbarService} from "../../../services/ui/navbar.service";
 import {combineLatest, map, Observable, Subscription} from "rxjs";
 import {Store} from "@ngrx/store";
 import {
-  selectAuthenticatedUserBlog,
   selectIsBlogLoading,
+  selectIsBlogOwner,
+  selectSelectedBlog,
   selectUserBlogIds
 } from "../../../store/selectors/blog.selectors";
 import {AppMenuModalComponent} from "../../ui-elements/app-menu-modal/app-menu-modal.component";
@@ -15,6 +16,8 @@ import {ModalService} from "../../../services/ui/modal.service";
 import {BlogPost} from "../../../models/BlogPost";
 import {selectUserBlogPosts} from "../../../store/selectors/post.selectors";
 import {getPosts} from "../../../store/actions/post.actions";
+import {BlogId} from "../../../models/Blog";
+import {getBlogDetailsAndRedirect} from "../../../store/actions/blog.actions";
 
 @Component({
   selector: 'app-blog',
@@ -23,12 +26,13 @@ import {getPosts} from "../../../store/actions/post.actions";
 })
 export class BlogComponent implements OnInit, OnDestroy {
 
-  userBlogIds$: Observable<string[]>;
-  userBlog$: Observable<BlogView>;
-  userBlogPublications$: Observable<BlogPost[]>;
+  userBlogIds$: Observable<BlogId[]>;
+  selectedBlog: Observable<BlogView>;
+  selectedBlogPublications: Observable<BlogPost[]>;
   isLoading$: Observable<boolean>;
 
   isLoaded$: Observable<boolean>;
+  isOwner$: Observable<boolean>;
 
   @ViewChild('appMenuModal')
   appMenuModal: AppMenuModalComponent;
@@ -73,20 +77,25 @@ export class BlogComponent implements OnInit, OnDestroy {
   private fetchDataFromStore() {
     this.store.dispatch(getPosts({status: 'Published'}));
     this.userBlogIds$ = this.store.select(selectUserBlogIds);
-    this.userBlog$ = this.store.select(selectAuthenticatedUserBlog);
-    this.userBlogPublications$ = this.store.select(selectUserBlogPosts);
+    this.selectedBlogPublications = this.store.select(selectUserBlogPosts);
+    this.selectedBlog = this.store.select(selectSelectedBlog);
     this.isLoading$ = this.store.select(selectIsBlogLoading);
+    this.isOwner$ = this.store.select(selectIsBlogOwner)
 
     this.isLoaded$ = combineLatest([
-      this.userBlog$, this.userBlogPublications$, this.isLoading$
+      this.selectedBlog, this.selectedBlogPublications, this.isLoading$
       ]).pipe(
         map(([userBlogIsLoaded, userBlogPublicationsLoaded, isLoadingAnything]) =>
           !!userBlogIsLoaded  && !!userBlogPublicationsLoaded && !isLoadingAnything)
     )
   }
 
-  onUserBlogSelectedEvent($event: string) {
-    console.log(`selected ${$event}`)
+  onUserBlogSelectedEvent(blogId: BlogId) {
+    this.showAppMenuModal = false;
+    this.store.dispatch(getBlogDetailsAndRedirect({
+      blogId: blogId.id,
+      username: blogId.username
+    }))
   }
 
   onSettingsModalClosed() {
@@ -111,5 +120,9 @@ export class BlogComponent implements OnInit, OnDestroy {
 
   private init() {
     this.navbarService.setBlogTemplate();
+  }
+
+  onSubscribeCLicked() {
+    console.log(`Subscribe!`)
   }
 }

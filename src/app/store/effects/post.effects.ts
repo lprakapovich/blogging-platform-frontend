@@ -9,7 +9,7 @@ import {
   PostActionTypes
 } from "../actions/post.actions";
 import {catchError, combineLatestWith, map, of, switchMap, tap} from "rxjs";
-import {selectAuthenticatedUserBlogId} from "../selectors/blog.selectors";
+import {selectAuthenticatedUserBlogId, selectSelectedBlogId} from "../selectors/blog.selectors";
 import {selectPrincipal} from "../selectors/auth.selectors";
 
 @Injectable()
@@ -26,10 +26,10 @@ export class PostEffects {
   this.actions$.pipe(
     ofType(PostActionTypes.GET_POSTS),
     combineLatestWith(
-      this.store.select(selectAuthenticatedUserBlogId),
-      this.store.select(selectPrincipal)),
-    switchMap(([action, blogId, principal]: any) => {
-      return this.postService.getPosts(blogId, principal, action.status)
+      this.store.select(selectSelectedBlogId)),
+    switchMap(([action, blogId]: any) => {
+
+      return this.postService.getPosts(blogId.id, blogId.username, action.status)
         .pipe(
           map(posts => getPostsSuccess({posts})),
           catchError(error => of(getPostsFailure({error})))
@@ -44,8 +44,8 @@ export class PostEffects {
       combineLatestWith(
         this.store.select(selectAuthenticatedUserBlogId),
         this.store.select(selectPrincipal)),
-      switchMap(([title, blogId, principal]) => {
-        return this.postService.getPostsBySearchCriteria(title, blogId, principal)
+      switchMap(([title, {id}, principal]) => {
+        return this.postService.getPostsBySearchCriteria(title, id, principal)
           .pipe(
             map(response => getPostsBySearchCriteriaSuccess({posts: response}))
           )
@@ -59,8 +59,8 @@ export class PostEffects {
       combineLatestWith(
         this.store.select(selectAuthenticatedUserBlogId),
         this.store.select(selectPrincipal)),
-      switchMap(([__, blogId, principal]) => {
-        return this.postService.getPostsFromSubscriptions(blogId, principal).pipe(
+      switchMap(([__, {id}, principal]) => {
+        return this.postService.getPostsFromSubscriptions(id, principal).pipe(
           map(response => getPostsFromSubscriptionsSuccess({posts: response}))
         )
       })

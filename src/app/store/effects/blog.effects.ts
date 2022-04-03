@@ -16,7 +16,7 @@ import {
 } from "../actions/blog.actions";
 import {Router} from "@angular/router";
 import {selectPrincipal} from "../selectors/auth.selectors";
-import {selectAuthenticatedUserBlogId} from "../selectors/blog.selectors";
+import {selectAuthenticatedUserBlogId, selectSelectedBlog, selectSelectedBlogId} from "../selectors/blog.selectors";
 
 @Injectable()
 export class BlogEffects {
@@ -65,8 +65,8 @@ export class BlogEffects {
       combineLatestWith(
         this.store.select(selectPrincipal),
         this.store.select(selectAuthenticatedUserBlogId)),
-      switchMap(([updateData, principal, blogId]) => {
-        return this.blogService.updateBlog(blogId, principal, updateData)
+      switchMap(([updateData, principal, {id}]) => {
+        return this.blogService.updateBlog(id, principal, updateData)
           .pipe(
             map((updatedBlog) => updateBlogSuccess({updatedBlog})),
             catchError((() => of(updateBlogFailure())))
@@ -89,16 +89,17 @@ export class BlogEffects {
     )
   )
 
-  getBlogByIdAndRedirect$ = createEffect(() =>
+  getBlogDetailsAndRedirect$ = createEffect(() =>
     this.actions$.pipe(
       ofType(BlogActionTypes.GET_BLOG_DETAILS_AND_REDIRECT),
-      map((action: any) => action.blogId),
-      combineLatestWith(this.store.select(selectPrincipal)),
-      switchMap(([blogId, principal]) => {
-        return this.blogService.getBlogById(blogId, principal)
+      combineLatestWith(
+        this.store.select(selectPrincipal)),
+      switchMap(([{blogId, username}, principal]) => {
+        const isPrincipal = username == principal
+        return this.blogService.getBlogDetails(blogId, username)
           .pipe(
             map((blog) => {
-              return getBlogDetailsAndRedirectSuccess({blog, blogId})
+              return getBlogDetailsAndRedirectSuccess({blog, blogId, isPrincipal})
             }),
             catchError((() => of(getBlogDetailsFailure)))
           )

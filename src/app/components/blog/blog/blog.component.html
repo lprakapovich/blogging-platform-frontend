@@ -1,14 +1,20 @@
 <div id="blog-container" *ngIf="(isLoaded$ | async); else loadingTemplate;">
-  <div id="blog-information" *ngIf="userBlog$ | async as userBlogView">
+  <div id="blog-information" *ngIf="selectedBlog | async as userBlogView">
     <app-author-data
       class="author-data blog-section" [id]="userBlogView.id.id"
       [displayName]="userBlogView.displayName ? userBlogView.displayName : userBlogView.id.id">
     </app-author-data>
     <app-default-button
+      *ngIf="isOwner$ | async"
         class="new-post blog-section"
-        (click)="onNewPostClicked()" [ngClass]="'medium'" [label]="'New Post'">
+        (click)="onNewPostClicked()" [ngClass]="'medium bold'" [label]="'New Post'">
     </app-default-button>
-    <div class="description blog-section">
+    <app-default-button
+      *ngIf="!(isOwner$ | async)"
+      class="new-post blog-section"
+      (click)="onSubscribeCLicked()" [ngClass]="'medium reverted'" [label]="'Subscribe'">
+    </app-default-button>
+    <div class="description blog-section" *ngIf="userBlogView.description">
       {{userBlogView.description}}
     </div>
     <app-blog-statistics-data
@@ -17,18 +23,19 @@
       class="blog-section light-grey">
     </app-blog-statistics-data>
     <div class="common-blog-filters">
-      <div class="blog-section">
+      <div class="blog-section" *ngIf="isOwner$ | async">
         <app-default-list [listItems]="['Scheduled', 'Hidden', 'Drafts']" [ngClass]="'bordered'"></app-default-list>
       </div>
       <div class="blog-section">
-        <app-default-list>
+        <app-default-list [ngClass]="'bordered'">
           <div class="default-list-item all"> All Posts </div>
         </app-default-list>
       </div>
     </div>
   </div>
-  <div id="blog-posts" *ngIf="userBlogPublications$ | async as userBlogPublications">
+  <div id="blog-posts" *ngIf="selectedBlogPublications | async as userBlogPublications">
     <app-search-bar (searchInputEvent)="onSearchInputEvent($event)"></app-search-bar>
+    <div>Am I blog owner? {{ isOwner$ | async }}</div>
     <div id="blog-posts-preview-list" *ngIf="!!userBlogPublications.length; else noBlogPublications">
      <app-blog-post-preview-list [blogPosts]="userBlogPublications"></app-blog-post-preview-list>
     </div>
@@ -45,7 +52,7 @@
   </app-menu-modal>
   <app-blog-settings-modal #appBlogSettingsModal
                            id="app-blog-settings-modal"
-                           [blog]="(userBlog$ | async)"
+                           [blog]="(selectedBlog | async)"
                            (onCloseEmitter)="onSettingsModalClosed()"
                            [hidden]="!showAppBlogSettingsModal">
   </app-blog-settings-modal>

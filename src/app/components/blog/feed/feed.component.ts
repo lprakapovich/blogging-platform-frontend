@@ -12,6 +12,7 @@ import {getBlogDetailsAndRedirect} from "../../../store/actions/blog.actions";
 import {BlogSettingsModalComponent} from "../blog-settings-modal/blog-settings-modal.component";
 import {ModalService} from "../../../services/ui/modal.service";
 import {BlogView} from "../../../models/BlogView";
+import {BlogId} from "../../../models/Blog";
 
 @Component({
   selector: 'app-feed',
@@ -22,7 +23,7 @@ export class FeedComponent implements OnInit, AfterViewInit, OnDestroy {
 
   isLoading$: Observable<boolean>;
   posts$: Observable<BlogPost[]>;
-  userBlogIds$: Observable<string[]>;
+  userBlogIds$: Observable<BlogId[]>;
   userBlog$: Observable<BlogView>;
 
   @ViewChild('appMenuModal')
@@ -122,9 +123,12 @@ export class FeedComponent implements OnInit, AfterViewInit, OnDestroy {
     this.showPostPreview = false;
   }
 
-  onUserBlogSelectedEvent(blogId: string) {
+  onUserBlogSelectedEvent(id: BlogId) {
     this.showAppMenuModal = false;
-    this.store.dispatch(getBlogDetailsAndRedirect({blogId}))
+    this.store.dispatch(getBlogDetailsAndRedirect({
+      blogId: id.id,
+      username: id.username
+    }))
   }
 
   onSettingsSelectedEvent() {

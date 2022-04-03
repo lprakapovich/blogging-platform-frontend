@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {BlogId} from "../../../models/Blog";
 
 @Component({
   selector: 'app-menu-modal',
@@ -7,9 +8,9 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 })
 export class AppMenuModalComponent {
 
-  @Input() userBlogIds: string[] | null = [] ;
+  @Input() userBlogIds: BlogId[] | null = [] ;
 
-  @Output() userBlogSelectedEmitter = new EventEmitter<string>();
+  @Output() userBlogSelectedEmitter = new EventEmitter<BlogId>();
   @Output() settingsEmitter = new EventEmitter<void>();
 
   constructor() { }

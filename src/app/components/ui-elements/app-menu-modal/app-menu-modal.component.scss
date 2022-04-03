@@ -26,6 +26,10 @@
       display: flex;
       justify-content: space-between;
       border-radius: 0.5rem;
+
+      &.blog-id {
+        color: v.$grey;
+      }
     }
 
     .menu-item:hover {

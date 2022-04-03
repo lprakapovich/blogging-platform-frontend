@@ -3,14 +3,19 @@ import {BlogState} from "../reducers/blog.reducers";
 
 export const selectBlogFeature = createFeatureSelector<BlogState>('blog')
 
+export const selectSelectedBlog = createSelector(
+  selectBlogFeature,
+  state => state.selectedBlog
+)
+
 export const selectSelectedBlogId = createSelector(
   selectBlogFeature,
-  state => state.selectedBlogId
+  state => state.selectedBlog?.id
 )
 
 export const selectAuthenticatedUserBlogId = createSelector(
   selectBlogFeature,
-  state => state.authenticatedUserBlogId
+  state => state.authenticatedUserBlog?.id
 )
 
 export const selectAuthenticatedUserBlog = createSelector(
@@ -30,11 +35,11 @@ export const selectIsBlogLoading = createSelector(
 
 export const selectUserBlogIds = createSelector(
   selectBlogFeature,
-  state => state.userBlogIds
+  state => state.userBlogs.map(b => b?.id)
 )
 
-export const isVisitorView = createSelector(
+export const selectIsBlogOwner = createSelector(
   selectAuthenticatedUserBlogId,
   selectSelectedBlogId,
-  (authBlogId, selectSelectedBlogId) => authBlogId !== selectSelectedBlogId
+  (authBlogId, selectedBlogId) => authBlogId === selectedBlogId
 )

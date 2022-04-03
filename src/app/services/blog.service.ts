@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Blog, BlogId} from "../models/Blog";
+import {Blog} from "../models/Blog";
 import {Observable, of} from "rxjs";
 import {environment} from "../../environments/environment";
 import {HttpClient, HttpParams} from "@angular/common/http";
@@ -40,7 +40,7 @@ export class BlogService {
     return this.httpClient.get<BlogView[]>(url)
   }
 
-  getBlogById(blogId: string, principal: string): Observable<BlogView> {
+  getBlogDetails(blogId: string, principal: string): Observable<BlogView> {
     const url = `${this.publicationServiceUrl}/blogs/${blogId},${principal}`;
     return this.httpClient.get<BlogView>(url);
   }
