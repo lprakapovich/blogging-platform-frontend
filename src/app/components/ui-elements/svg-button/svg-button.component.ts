@@ -8,7 +8,7 @@ import {Component, Input, OnInit} from '@angular/core';
 export class SvgButtonComponent implements OnInit {
 
   @Input()
-  iconTemplate!: string;
+  iconTemplate: string;
 
   constructor() { }
 

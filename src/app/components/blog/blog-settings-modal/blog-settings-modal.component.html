@@ -111,7 +111,6 @@
                   <div *ngFor="let category of categories" class="category-list-item">
                     <div>{{category}}</div>
                     <div class="category-actions">
-                      <app-svg-button [iconTemplate]="'edit'"></app-svg-button>
                       <app-svg-button [iconTemplate]="'delete'" (click)="deleteCategory(category)"></app-svg-button>
                     </div>
                   </div>
