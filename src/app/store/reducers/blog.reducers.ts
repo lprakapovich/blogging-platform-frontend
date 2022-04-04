@@ -59,14 +59,6 @@ export const blogReducer = createReducer(
     selectedBlog: action.blog
   })),
 
-  on(BlogActions.setSelectedBlogId, (state, action) => ({
-    ...state,
-  })),
-
-  on(BlogActions.setBlogIdAndRedirect, (state, action) => ({
-    ...state,
-  })),
-
   on(BlogActions.getBlogsBySearchCriteria, (state) => ({
     ...state,
     isLoading: true,

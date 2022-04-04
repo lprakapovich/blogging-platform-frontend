@@ -16,7 +16,7 @@ import {
 } from "../actions/blog.actions";
 import {Router} from "@angular/router";
 import {selectPrincipal} from "../selectors/auth.selectors";
-import {selectAuthenticatedUserBlogId, selectSelectedBlog, selectSelectedBlogId} from "../selectors/blog.selectors";
+import {selectAuthenticatedUserBlogId} from "../selectors/blog.selectors";
 
 @Injectable()
 export class BlogEffects {
@@ -120,7 +120,7 @@ export class BlogEffects {
 
   getUserBlogsAndRedirect$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(BlogActionTypes.GET_USER_BLOGS_AND_REDIRECT),
+      ofType(BlogActionTypes.GET_PRINCIPAL_BLOGS_AND_REDIRECT),
       map((action: any) => action.path),
       switchMap((path: string) => {
         return this.blogService.getUserManagedBlogs()
@@ -134,7 +134,7 @@ export class BlogEffects {
 
   getUserBlogsAndRedirectSuccess$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(BlogActionTypes.GET_USER_BLOGS_AND_REDIRECT_SUCCESS),
+      ofType(BlogActionTypes.GET_PRINCIPAL_BLOGS_AND_REDIRECT_SUCCESS),
       map((action: any) => action.path),
       tap((path) => {
         this.router.navigate([`${path}`])

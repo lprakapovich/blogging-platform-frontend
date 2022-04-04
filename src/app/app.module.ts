@@ -46,6 +46,8 @@ import {BlogEffects} from "./store/effects/blog.effects";
 import {postReducer} from "./store/reducers/post.reducers";
 import {PostEffects} from "./store/effects/post.effects";
 import {JwtInterceptor} from "./common/http/jwt.interceptor";
+import {categoryReducer} from "./store/reducers/category.reducers";
+import {CategoryEffects} from "./store/effects/category.effects";
 
 @NgModule({
   declarations: [
@@ -88,12 +90,14 @@ import {JwtInterceptor} from "./common/http/jwt.interceptor";
     StoreModule.forRoot( {
       auth: authReducer,
       blog: blogReducer,
-      post: postReducer
+      post: postReducer,
+      category: categoryReducer
     }),
     EffectsModule.forRoot([
       AuthEffects,
       BlogEffects,
-      PostEffects
+      PostEffects,
+      CategoryEffects
     ]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,

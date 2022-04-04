@@ -82,8 +82,35 @@
 
   &.loading-button {
     #btn {
+      position: relative;
       color: transparent;
+
+      ::after {
+        content: "";
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        border: 2px solid transparent;
+        border-top-color: white;
+        border-radius: 50%;
+        animation: loading-spinner 3s infinite;
+      }
     }
+  }
+
+  &.disabled {
+    #btn {
+      background-color: v.$grey;
+    }
+  }
+
+  &:not(.disabled) {
+    cursor: pointer;
   }
 }
 
@@ -92,6 +119,6 @@
   background-color: v.$dark-background;
   border: 0.5px solid white;
   color: v.$white-text;
-  cursor: pointer;
 }
+
 

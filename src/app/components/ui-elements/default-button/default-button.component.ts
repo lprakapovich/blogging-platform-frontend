@@ -7,6 +7,8 @@ import { Component, Input } from '@angular/core';
 })
 export class DefaultButtonComponent {
   @Input() label: string = 'Submit';
+  @Input() disabled: boolean = false;
 
   constructor() { }
 }
+

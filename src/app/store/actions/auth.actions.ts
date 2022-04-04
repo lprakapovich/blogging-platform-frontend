@@ -4,23 +4,23 @@ import {RegisterData} from "../../models/data/auth/RegisterData";
 
 export enum AuthActionTypes {
 
-  LOGIN = '[Auth] Login',
-  LOGIN_SUCCESS = '[Auth] Login Success',
-  LOGIN_FAILURE = '[Auth] Login Failure',
+  LOGIN = '[auth] login',
+  LOGIN_SUCCESS = '[auth] login success',
+  LOGIN_FAILURE = '[auth] login failure',
 
-  REGISTER = '[Auth] Register',
-  REGISTER_SUCCESS = '[Auth] Register Success',
-  REGISTER_FAILURE = '[Auth] Register Failure',
+  REGISTER = '[auth] register',
+  REGISTER_SUCCESS = '[auth] register success',
+  REGISTER_FAILURE = '[auth] register failure',
 
-  BEFORE_REGISTER_VALIDATE_USERNAME = '[Auth Validation] Validate username before registration',
-  BEFORE_REGISTER_VALIDATE_USERNAME_FAILURE = '[Auth Validation] Username validation failure',
-  BEFORE_REGISTER_VALIDATE_USERNAME_SUCCESS = '[Auth Validation] Username validation success',
+  VALIDATE_USERNAME = '[auth] validate username',
+  VALIDATE_USERNAME_FAILURE = '[auth] validate username failure',
+  VALIDATE_USERNAME_SUCCESS = '[auth] validate username success',
 
-  LOGOUT = '[Auth] Logout',
+  LOGOUT = '[auth] logout',
 
-  REDIRECT_IF_AUTHENTICATED = '[Auth] Check authentication and redirect',
+  SET_PRINCIPAL = '[auth] set principal',
 
-  SET_PRINCIPAL = '[Auth] Set principal'
+  REDIRECT_IF_AUTHENTICATED = '[auth] redirect to main if authenticated',
 }
 
 export const login = createAction(AuthActionTypes.LOGIN, props<{payload: LoginData}>());
@@ -31,9 +31,9 @@ export const register = createAction(AuthActionTypes.REGISTER, props<{payload: R
 export const registerSuccess = createAction(AuthActionTypes.REGISTER_SUCCESS, props<{token: string, principal: string, blogId: string}>());
 export const registerFailure = createAction(AuthActionTypes.REGISTER_FAILURE, props<{error: any}>());
 
-export const validateUsername = createAction(AuthActionTypes.BEFORE_REGISTER_VALIDATE_USERNAME, props<{principal: string}>());
-export const validateUsernameFailure = createAction(AuthActionTypes.BEFORE_REGISTER_VALIDATE_USERNAME_FAILURE, props<{error: string}>());
-export const validateUsernameSuccess = createAction(AuthActionTypes.BEFORE_REGISTER_VALIDATE_USERNAME_SUCCESS);
+export const validateUsername = createAction(AuthActionTypes.VALIDATE_USERNAME, props<{principal: string}>());
+export const validateUsernameFailure = createAction(AuthActionTypes.VALIDATE_USERNAME_FAILURE, props<{error: string}>());
+export const validateUsernameSuccess = createAction(AuthActionTypes.VALIDATE_USERNAME_SUCCESS);
 
 export const logout = createAction(AuthActionTypes.LOGOUT);
 

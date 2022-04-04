@@ -1,33 +1,41 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {Store} from "@ngrx/store";
 import {logout} from "../../../store/actions/auth.actions";
 import {BlogView} from "../../../models/BlogView";
 import {UpdateBlogData} from "../../../models/data/blog/UpdateBlogData";
 import {updateBlog} from "../../../store/actions/blog.actions";
-import {Observable} from "rxjs";
+import {Observable, Subject, takeUntil} from "rxjs";
 import {selectIsBlogLoading} from "../../../store/selectors/blog.selectors";
+import {CategoryActionTypes, createCategory} from "../../../store/actions/category.actions";
+import {selectCategoryError, selectIsCategoryLoading} from "../../../store/selectors/category.selectors";
+import {Actions, ofType} from "@ngrx/effects";
 
 @Component({
   selector: 'app-blog-settings-modal',
   templateUrl: './blog-settings-modal.component.html',
   styleUrls: ['./blog-settings-modal.component.scss']
 })
-export class BlogSettingsModalComponent implements OnInit {
+export class BlogSettingsModalComponent implements OnInit, OnDestroy {
 
   @Output() onCloseEmitter: EventEmitter<void> = new EventEmitter<void>();
   @Input() categories: string[] = [];
   @Input() blog: BlogView | null;
 
-  isLoading$: Observable<boolean>;
+  isBlogLoading$: Observable<boolean>;
+  isCategoryLoading$: Observable<boolean>;
+  categoryError$: Observable<string>;
+
+  destroyed$ = new Subject<boolean>();
 
   selectedSection: string;
-  newCategory: string;
+  newCategoryInput: string;
   newBlog: string;
 
   changedBlogDisplayName: string;
   changedBlogDescription: string;
 
-  constructor(private store: Store) {
+  constructor(private store: Store,
+              private actions$: Actions) {
     this.selectedSection = 'account';
   }
 
@@ -36,8 +44,21 @@ export class BlogSettingsModalComponent implements OnInit {
       this.changedBlogDescription = this.blog.description;
       this.changedBlogDisplayName = this.blog.displayName;
     }
+    this.isBlogLoading$ = this.store.select(selectIsBlogLoading);
+    this.isCategoryLoading$ = this.store.select(selectIsCategoryLoading);
+    this.categoryError$ = this.store.select(selectCategoryError);
 
-    this.isLoading$ = this.store.select(selectIsBlogLoading);
+    this.actions$.pipe(
+      ofType(
+        CategoryActionTypes.CREATE_CATEGORY_SUCCESS,
+        CategoryActionTypes.CREATE_CATEGORY_FAILURE),
+      takeUntil(this.destroyed$)
+    ).subscribe(() => this.newCategoryInput = '')
+  }
+
+  ngOnDestroy() {
+    this.destroyed$.next(true);
+    this.destroyed$.complete();
   }
 
   onSettingsSectionSelected(section: string) {
@@ -45,7 +66,10 @@ export class BlogSettingsModalComponent implements OnInit {
   }
 
   onNewCategoryClicked() {
-    this.newCategory = '';
+    if (!this.newCategoryInput) {
+      return;
+    }
+    this.store.dispatch(createCategory({ name: this.newCategoryInput }))
   }
 
   onInputEmitted($event: string) {

@@ -81,7 +81,7 @@
               <app-default-button
                 id="save-button"
                 (click)="onSave()"
-                [ngClass]="['medium', (isLoading$ | async) ? 'loading-button' : '']"
+                [ngClass]="['medium', (isBlogLoading$ | async) ? 'loading-button' : '']"
                 [label]="'Save'">
               </app-default-button>
             </div>
@@ -91,15 +91,21 @@
           <div id="categories-container">
             <div id="new-category-container">
               <div id="new-category-input">
-                <app-default-input (userInputEventEmitter)="newCategory = $event"
-                                   [userInput]="newCategory"
+                <app-default-input (userInputEventEmitter)="newCategoryInput = $event"
+                                   [userInput]="newCategoryInput"
                                    [placeholder]="'New category...'">
                 </app-default-input>
               </div>
               <div id="new-category-add-btn">
-                <app-default-button (click)="onNewCategoryClicked()" [label]="'Add'"></app-default-button>
+                <app-default-button [ngClass]="['medium', (isCategoryLoading$ | async) ? 'loading-button' : '', !newCategoryInput ? 'disabled' : '']"
+                                    (click)="onNewCategoryClicked()"
+                                    [label]="'Create'"
+                                    [disabled]="!newCategoryInput"
+                >
+                </app-default-button>
               </div>
             </div>
+            <div class='error-message' *ngIf="(categoryError$ | async) as categoryError"> {{ categoryError }}</div>
             <div id="existing-categories-container">
               <ng-container *ngIf="categories.length > 0; else emptyCategoryList">
                 <div class="category-list">
@@ -115,13 +121,11 @@
               <ng-template #emptyCategoryList>
                 <div class="grey category-empty-list">
                   Categories help designate posts by subject, which helps the reader navigate the blog.
-                  You can create a maximum of 10 categories. Pick one of the suggested category or create your own.
                 </div>
               </ng-template>
             </div>
           </div>
         </div>
-
         <div *ngSwitchCase="'new-blog'">
           <div id="blogs-container">
             <div id="new-blog-container">

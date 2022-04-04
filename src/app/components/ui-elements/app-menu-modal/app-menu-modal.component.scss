@@ -13,9 +13,8 @@
   display: flex;
 
   .menu-items {
-    width: 15rem;
+    min-width: 15rem;
     padding: 0.5rem;
-    font-size: 1rem;
     background: white;
     height: fit-content;
     border-radius: 1rem;
@@ -26,8 +25,9 @@
       display: flex;
       justify-content: space-between;
       border-radius: 0.5rem;
+      font-size: 0.9rem;
 
-      &.blog-id {
+      &:not(.blog-id) {
         color: v.$grey;
       }
     }

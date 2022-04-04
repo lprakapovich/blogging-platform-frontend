@@ -8,7 +8,7 @@
   position: fixed;
   z-index: 1;
   right: 0;
-  top: 55px;
+  top: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -89,26 +89,6 @@
           flex-direction: row;
           justify-content: end;
 
-          #save-button {
-            position: relative;
-
-            &.loading-button::after {
-              content: "";
-              position: absolute;
-              width: 16px;
-              height: 16px;
-              top: 0;
-              left: 0;
-              right: 0;
-              bottom: 0;
-              margin: auto;
-              border: 2px solid transparent;
-              border-top-color: white;
-              border-radius: 50%;
-              animation: loading-spinner 3s infinite;
-            }
-          }
-
           app-default-button {
             margin: 0 0.5rem;
           }
@@ -160,6 +140,16 @@
         }
       }
     }
+  }
+
+  .error-message {
+    color: darkred;
+    font-size: 0.9rem;
+    margin: 0.5rem 0;
+    padding: 0.25rem 1rem;
+    background-color: #fff3f3;
+    width: fit-content;
+    border-radius: 0.25rem;
   }
 }
 

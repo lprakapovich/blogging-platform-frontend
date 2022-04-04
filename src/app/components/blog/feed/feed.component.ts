@@ -85,7 +85,9 @@ export class FeedComponent implements OnInit, AfterViewInit, OnDestroy {
     });
 
     this.appMenuSubscription = this.modalService.getAppMenuModalSubject()
-      .subscribe(show => this.showAppMenuModal = show)
+      .subscribe(show => {
+        this.showAppMenuModal = show
+      })
 
     this.appSettingsSubscription = this.modalService.getAppSettingsModalSubject()
       .subscribe(show => this.showAppBlogSettingsModal = show)

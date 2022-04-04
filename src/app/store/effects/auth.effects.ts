@@ -65,7 +65,7 @@ export class AuthEffects {
 
   validateUsername$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthActionTypes.BEFORE_REGISTER_VALIDATE_USERNAME),
+      ofType(AuthActionTypes.VALIDATE_USERNAME),
       debounceTime(1000),
       map((action: any) => action.principal),
       switchMap((username: string) => {
