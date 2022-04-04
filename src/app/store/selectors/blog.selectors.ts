@@ -43,3 +43,8 @@ export const selectIsBlogOwner = createSelector(
   selectSelectedBlogId,
   (authBlogId, selectedBlogId) => authBlogId === selectedBlogId
 )
+
+export const selectSelectedBlogCategories = createSelector(
+  selectSelectedBlog,
+  (blog) => blog.categories?.map(c => c.name)
+)

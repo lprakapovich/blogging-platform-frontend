@@ -81,6 +81,7 @@ export const blogReducer = createReducer(
     isLoading: false,
     userBlogs: action.blogs,
     authenticatedUserBlog: action.blogs.length > 0 ? action.blogs[0] : {} as BlogView,
+    selectedBlog: action.blogs.length > 0 ? action.blogs[0] : {} as BlogView
   })),
 
   on(BlogActions.createBlog, (state) => ({

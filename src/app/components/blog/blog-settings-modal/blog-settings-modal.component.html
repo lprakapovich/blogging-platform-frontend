@@ -100,17 +100,16 @@
                 <app-default-button [ngClass]="['medium', (isCategoryLoading$ | async) ? 'loading-button' : '', !newCategoryInput ? 'disabled' : '']"
                                     (click)="onNewCategoryClicked()"
                                     [label]="'Create'"
-                                    [disabled]="!newCategoryInput"
-                >
+                                    [disabled]="!newCategoryInput">
                 </app-default-button>
               </div>
             </div>
             <div class='error-message' *ngIf="(categoryError$ | async) as categoryError"> {{ categoryError }}</div>
             <div id="existing-categories-container">
-              <ng-container *ngIf="categories.length > 0; else emptyCategoryList">
+              <ng-container *ngIf="(categories$ | async) as categories; else emptyCategoryList">
                 <div class="category-list">
                   <div *ngFor="let category of categories" class="category-list-item">
-                    <div class="bold">{{category}}</div>
+                    <div>{{category}}</div>
                     <div class="category-actions">
                       <app-svg-button [iconTemplate]="'edit'"></app-svg-button>
                       <app-svg-button [iconTemplate]="'delete'" (click)="deleteCategory(category)"></app-svg-button>
