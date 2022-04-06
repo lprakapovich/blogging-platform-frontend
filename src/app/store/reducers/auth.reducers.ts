@@ -48,8 +48,10 @@ export const initialState: AuthState = {
 export const authReducer = createReducer(
   initialState,
 
-  on(AuthActions.logout, () => ({
-    ...initialState,
+  on(AuthActions.logout, (state) => ({
+    ...state,
+    isAuthenticated: false,
+    token: '',
   })),
 
   on(AuthActions.login, (state) => ({

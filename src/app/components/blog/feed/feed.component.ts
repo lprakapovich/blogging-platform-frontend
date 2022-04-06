@@ -8,11 +8,12 @@ import {selectIsPostLoading, selectPostsFromSubscriptions} from "../../../store/
 import {getPostsFromSubscriptions, resetSelectedPost, setSelectedPost} from "../../../store/actions/post.actions";
 import {AppMenuModalComponent} from "../../ui-elements/app-menu-modal/app-menu-modal.component";
 import {selectAuthenticatedUserBlog, selectUserBlogIds} from "../../../store/selectors/blog.selectors";
-import {getBlogDetailsAndRedirect} from "../../../store/actions/blog.actions";
+import {BlogActionTypes, getBlogDetailsAndRedirect} from "../../../store/actions/blog.actions";
 import {BlogSettingsModalComponent} from "../blog-settings-modal/blog-settings-modal.component";
 import {ModalService} from "../../../services/ui/modal.service";
 import {BlogView} from "../../../models/BlogView";
 import {BlogId} from "../../../models/Blog";
+import {Actions, ofType} from "@ngrx/effects";
 
 @Component({
   selector: 'app-feed',
@@ -46,6 +47,7 @@ export class FeedComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   constructor(private store: Store,
+              private actions$: Actions,
               private navbarService: NavbarService,
               private modalService: ModalService,
               private router: Router) {
@@ -62,7 +64,7 @@ export class FeedComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.resizeAllGridItems();
+     this.resizeAllGridItems();
   }
 
   ngOnDestroy() {
@@ -76,7 +78,11 @@ export class FeedComponent implements OnInit, AfterViewInit, OnDestroy {
     this.userBlog$ = this.store.select(selectAuthenticatedUserBlog);
     this.isLoading$ = this.store.select(selectIsPostLoading);
     this.posts$ = this.store.select(selectPostsFromSubscriptions);
-    this.store.dispatch(getPostsFromSubscriptions());
+
+    this.actions$.pipe(
+      ofType(
+        BlogActionTypes.GET_PRINCIPAL_BLOGS_AND_REDIRECT_SUCCESS)
+    ).subscribe(() => this.store.dispatch(getPostsFromSubscriptions()))
   }
 
   private subscribeToStoreChanges() {
