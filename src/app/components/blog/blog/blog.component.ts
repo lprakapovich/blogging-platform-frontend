@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Router} from "@angular/router";
 import {NavbarService} from "../../../services/ui/navbar.service";
-import {combineLatest, map, Observable, Subject, Subscription} from "rxjs";
+import {combineLatest, map, Observable, Subscription} from "rxjs";
 import {Store} from "@ngrx/store";
 import {
   selectIsBlogLoading,
@@ -18,6 +18,7 @@ import {selectUserBlogPosts} from "../../../store/selectors/post.selectors";
 import {getPosts} from "../../../store/actions/post.actions";
 import {BlogId} from "../../../models/Blog";
 import {getBlogDetailsAndRedirect} from "../../../store/actions/blog.actions";
+import {Category} from "../../../models/Category";
 
 @Component({
   selector: 'app-blog',
@@ -125,4 +126,10 @@ export class BlogComponent implements OnInit, OnDestroy {
   onSubscribeCLicked() {
     console.log(`Subscribe!`)
   }
+
+  onCategorySelected(category: any) {
+    console.log(`Selected category id= ${category.id}, name= ${category.name}`)
+  }
+
+  categoryFormatter = (category: Category) => category.name
 }

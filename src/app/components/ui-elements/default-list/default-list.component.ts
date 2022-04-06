@@ -1,21 +1,17 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Category} from "../../../models/Category";
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 
 @Component({
   selector: 'app-default-list',
   templateUrl: './default-list.component.html',
   styleUrls: ['./default-list.component.scss']
 })
-export class DefaultListComponent implements OnInit {
+export class DefaultListComponent {
 
-  @Input()
-  listItems: string[] = [];
+  @Input() listItems: any[] = [];
+  @Input() listItemCallbackFormatter: (item: any) => string;
+  @Output() itemSelectedEmitter = new EventEmitter<any>();
 
-  constructor() { }
-
-  ngOnInit(): void {
-
+  onItemSelectedEmitter(item: any) {
+    this.itemSelectedEmitter.emit(item)
   }
-
-
 }
