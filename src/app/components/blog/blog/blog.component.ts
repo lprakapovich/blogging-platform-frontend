@@ -14,7 +14,7 @@ import {BlogView} from "../../../models/BlogView";
 import {BlogSettingsModalComponent} from "../blog-settings-modal/blog-settings-modal.component";
 import {ModalService} from "../../../services/ui/modal.service";
 import {BlogPost} from "../../../models/BlogPost";
-import {selectUserBlogPosts} from "../../../store/selectors/post.selectors";
+import {selectSelectedBlogPosts} from "../../../store/selectors/post.selectors";
 import {getPosts} from "../../../store/actions/post.actions";
 import {BlogId} from "../../../models/Blog";
 import {getBlogDetailsAndRedirect} from "../../../store/actions/blog.actions";
@@ -78,7 +78,7 @@ export class BlogComponent implements OnInit, OnDestroy {
   private fetchDataFromStore() {
     this.store.dispatch(getPosts({status: 'Published'}));
     this.userBlogIds$ = this.store.select(selectUserBlogIds);
-    this.selectedBlogPublications = this.store.select(selectUserBlogPosts);
+    this.selectedBlogPublications = this.store.select(selectSelectedBlogPosts);
     this.selectedBlog = this.store.select(selectSelectedBlog);
     this.isLoading$ = this.store.select(selectIsBlogLoading);
     this.isOwner$ = this.store.select(selectIsBlogOwner)
@@ -127,8 +127,12 @@ export class BlogComponent implements OnInit, OnDestroy {
     console.log(`Subscribe!`)
   }
 
-  onCategorySelected(category: any) {
-    console.log(`Selected category id= ${category.id}, name= ${category.name}`)
+  onCategorySelected(category: Category) {
+    this.store.dispatch(getPosts({categoryId: category.id}))
+  }
+
+  onStatusSelected(status: string) {
+    this.store.dispatch(getPosts({status}))
   }
 
   categoryFormatter = (category: Category) => category.name

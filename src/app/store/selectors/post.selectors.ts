@@ -23,7 +23,7 @@ export const selectSelectedPost = createSelector(
   state => state.selectedPost
 )
 
-export const selectUserBlogPosts = createSelector(
+export const selectSelectedBlogPosts = createSelector(
   selectPostFeature,
-  state => state.userBlogPosts
+  state => state.selectedBlogPosts
 )

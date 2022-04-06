@@ -24,7 +24,7 @@
     </app-blog-statistics-data>
     <div class="common-blog-filters">
       <div class="blog-section" *ngIf="isOwner$ | async">
-        <app-default-list [listItems]="['Scheduled', 'Hidden', 'Drafts']"  [ngClass]="'bordered'"></app-default-list>
+        <app-default-list (itemSelectedEmitter)="onStatusSelected($event)" [listItems]="['Scheduled', 'Hidden', 'Drafts']"  [ngClass]="'bordered'"></app-default-list>
       </div>
       <div class="blog-section">
         <app-default-list [ngClass]="'bordered'"

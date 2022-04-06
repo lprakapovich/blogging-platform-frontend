@@ -26,6 +26,6 @@ export const getPostsFromSubscriptionsSuccess = createAction(PostActionTypes.GET
 export const setSelectedPost = createAction(PostActionTypes.SET_SELECTED_POST, props<{post: BlogPost}>())
 export const resetSelectedPost = createAction(PostActionTypes.RESET_SELECTED_POST)
 
-export const getPosts = createAction(PostActionTypes.GET_POSTS, props<{status?: string, category?: string}>())
+export const getPosts = createAction(PostActionTypes.GET_POSTS, props<{status?: string, categoryId?: number}>())
 export const getPostsSuccess = createAction(PostActionTypes.GET_POSTS_SUCCESS, props<{posts: BlogPost[]}>())
 export const getPostsFailure = createAction(PostActionTypes.GET_POSTS_FAILURE, props<{error: any}>())

@@ -28,9 +28,8 @@ export class PostEffects {
     ofType(PostActionTypes.GET_POSTS),
     combineLatestWith(
       this.store.select(selectSelectedBlogId)),
-    switchMap(([action, blogId]: any) => {
-
-      return this.postService.getPosts(blogId.id, blogId.username, action.status)
+    switchMap(([{status, categoryId}, blogId]: any) => {
+      return this.postService.getPosts(blogId.id, blogId.username, status, categoryId)
         .pipe(
           map(posts => getPostsSuccess({posts})),
           catchError(error => of(getPostsFailure({error})))

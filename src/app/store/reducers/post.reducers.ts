@@ -4,7 +4,7 @@ import * as PostActions from '../actions/post.actions';
 import * as AuthActions from "../actions/auth.actions";
 
 export interface PostState {
-  userBlogPosts: BlogPost[],
+  selectedBlogPosts: BlogPost[],
   isLoading: boolean,
   postsFromSubscriptions: BlogPost[],
   selectedPost: BlogPost | null;
@@ -13,7 +13,7 @@ export interface PostState {
 }
 
 export const initialState: PostState = {
-  userBlogPosts: [],
+  selectedBlogPosts: [],
   isLoading: false,
   postsFromSubscriptions: [],
   selectedPost: null,
@@ -26,7 +26,7 @@ export const postReducer = createReducer(
 
   on(AuthActions.logout, (state) => ({
     ...state,
-    userBlogPosts: [],
+    selectedBlogPosts: [],
     isLoading: false,
     postsFromSubscriptions: [],
     selectedPost: null,
@@ -74,7 +74,7 @@ export const postReducer = createReducer(
   on(PostActions.getPostsSuccess, (state, action) => ({
     ...state,
     isLoading: false,
-    userBlogPosts: action.posts
+    selectedBlogPosts: action.posts
   })),
 
   on(PostActions.getPostsFailure, (state, action) => ({
