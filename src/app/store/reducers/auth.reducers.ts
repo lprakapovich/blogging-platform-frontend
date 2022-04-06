@@ -52,10 +52,12 @@ export const authReducer = createReducer(
     ...state,
     isAuthenticated: false,
     token: '',
+    principal: ''
   })),
 
   on(AuthActions.login, (state) => ({
     ...state,
+    principal: '',
     login: {
       ...state.login,
       isLoading: true,
@@ -93,6 +95,7 @@ export const authReducer = createReducer(
 
   on(AuthActions.validateUsername, (state) => ({
     ...state,
+    principal: '',
     registration: {
       ...state.registration,
       validation: {
@@ -126,7 +129,7 @@ export const authReducer = createReducer(
 
   on(AuthActions.register, (state) => ({
     ...state,
-    state: initialState,
+    principal: '',
     registration: {
       ...state.registration,
       isLoading: true

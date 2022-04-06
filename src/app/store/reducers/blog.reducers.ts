@@ -32,8 +32,17 @@ export const initialState: BlogState = {
 export const blogReducer = createReducer(
   initialState,
 
-  on(AuthActions.logout, () => ({
-    ...initialState,
+  on(AuthActions.logout, (state) => ({
+    ...state,
+    authenticatedUserBlog: {} as BlogView,
+    userBlogs: [],
+
+    selectedBlog: {} as BlogView,
+
+    blogError: '',
+    isLoading: false,
+
+    blogsBySearchCriteria: [],
   })),
 
   on(BlogActions.getBlogDetails, (state) => ({

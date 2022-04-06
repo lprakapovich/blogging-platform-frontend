@@ -24,9 +24,14 @@ export const initialState: PostState = {
 export const postReducer = createReducer(
   initialState,
 
-
-  on(AuthActions.logout, () => ({
-    ...initialState,
+  on(AuthActions.logout, (state) => ({
+    ...state,
+    userBlogPosts: [],
+    isLoading: false,
+    postsFromSubscriptions: [],
+    selectedPost: null,
+    postsBySearchCriteria: [],
+    postsError: null
   })),
 
   on(PostActions.getPostsBySearchCriteria, (state) => ({

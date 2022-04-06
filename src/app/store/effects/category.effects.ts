@@ -12,9 +12,7 @@ import {
 import {catchError, combineLatestWith, debounceTime, map, of, switchMap} from "rxjs";
 import {selectAuthenticatedUserBlogId} from "../selectors/blog.selectors";
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class CategoryEffects {
 
   constructor(private store: Store,

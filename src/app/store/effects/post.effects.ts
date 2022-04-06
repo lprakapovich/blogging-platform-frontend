@@ -3,12 +3,13 @@ import {Store} from "@ngrx/store";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {PostService} from "../../services/post.service";
 import {
-  getPostsBySearchCriteriaSuccess, getPostsFailure,
+  getPostsBySearchCriteriaSuccess,
+  getPostsFailure,
   getPostsFromSubscriptionsSuccess,
   getPostsSuccess,
   PostActionTypes
 } from "../actions/post.actions";
-import {catchError, combineLatestWith, map, of, switchMap, tap} from "rxjs";
+import {catchError, combineLatestWith, map, of, switchMap} from "rxjs";
 import {selectAuthenticatedUserBlogId, selectSelectedBlogId} from "../selectors/blog.selectors";
 import {selectPrincipal} from "../selectors/auth.selectors";
 

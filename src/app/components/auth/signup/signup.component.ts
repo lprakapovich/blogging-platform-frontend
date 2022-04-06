@@ -1,22 +1,25 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import {Observable} from "rxjs";
+import {map, Observable, Subject, takeUntil} from "rxjs";
 import {Store} from "@ngrx/store";
-import {register, validateUsername} from "../../../store/actions/auth.actions";
+import {AuthActionTypes, register, validateUsername} from "../../../store/actions/auth.actions";
 import {
   selectRegisterIsError,
   selectRegisterIsLoading,
   selectUsernameValidationIsLoading,
   selectValidationMessage
 } from "../../../store/selectors/auth.selectors";
+import {Actions, ofType} from "@ngrx/effects";
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss']
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent implements OnInit, OnDestroy {
+
+  unsubscribe$ = new Subject<void>();
 
   isUsernameValidationLoading$: Observable<boolean>;
   isLoading$: Observable<boolean>;
@@ -28,8 +31,13 @@ export class SignupComponent implements OnInit {
 
   constructor(
     private store: Store,
+    private actions$: Actions,
     private formBuilder: FormBuilder,
     private router: Router) {
+  }
+
+  ngOnInit(): void {
+    this.validatedUsername = '';
 
     this.registerForm = this.formBuilder.group({
       blogUrl: ['', [
@@ -45,13 +53,25 @@ export class SignupComponent implements OnInit {
         Validators.minLength(5)]
       ]
     });
-  }
 
-  ngOnInit(): void {
     this.isLoading$ = this.store.select(selectRegisterIsLoading);
     this.isRegisterError$ = this.store.select(selectRegisterIsError);
     this.isUsernameValidationLoading$ = this.store.select(selectUsernameValidationIsLoading);
     this.registrationValidationMessage$ = this.store.select(selectValidationMessage);
+
+    this.actions$.pipe(
+      ofType(AuthActionTypes.VALIDATE_USERNAME_SUCCESS),
+      map((action: any) => action.username),
+      takeUntil(this.unsubscribe$)
+    ).subscribe(val => this.validatedUsername = val)
+  }
+
+  ngOnDestroy() {
+    console.log('destroy SignupComponent');
+    this.registerForm.reset();
+    this.validatedUsername = '';
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   get form() {
@@ -68,6 +88,7 @@ export class SignupComponent implements OnInit {
       blogUrl: this.registerForm.get('blogUrl')?.value
     }
     this.store.dispatch(register({payload: registrationData}))
+    this.registerForm.reset();
   }
 
   goToLogin() {
@@ -81,7 +102,6 @@ export class SignupComponent implements OnInit {
     const username = $event.target.value;
     if (username.trim().length > 0 && username !== this.validatedUsername) {
       this.store.dispatch(validateUsername({principal: username}))
-      this.validatedUsername = username;
     }
   }
 }

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {NavbarService} from "../../../services/ui/navbar.service";
@@ -12,7 +12,7 @@ import {login} from "../../../store/actions/auth.actions"
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
   isLoading$: Observable<boolean>;
   isLoginFormSubmitted$: Observable<boolean>;
@@ -37,7 +37,10 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.isLoading$ = this.store.select(selectLoginIsLoading);
     this.isLoginError$ = this.store.select(selectLoginIsError)
-    // this.store.dispatch(checkAuthenticationAndRedirect({to: '/feed'}));
+  }
+
+  ngOnDestroy() {
+    console.log('destroy LoginComponent')
   }
 
   get form() {

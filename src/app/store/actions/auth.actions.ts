@@ -33,7 +33,7 @@ export const registerFailure = createAction(AuthActionTypes.REGISTER_FAILURE, pr
 
 export const validateUsername = createAction(AuthActionTypes.VALIDATE_USERNAME, props<{principal: string}>());
 export const validateUsernameFailure = createAction(AuthActionTypes.VALIDATE_USERNAME_FAILURE, props<{error: string}>());
-export const validateUsernameSuccess = createAction(AuthActionTypes.VALIDATE_USERNAME_SUCCESS);
+export const validateUsernameSuccess = createAction(AuthActionTypes.VALIDATE_USERNAME_SUCCESS, props<{username: string}>());
 
 export const logout = createAction(AuthActionTypes.LOGOUT);
 

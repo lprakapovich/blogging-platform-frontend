@@ -71,7 +71,7 @@ export class AuthEffects {
       switchMap((username: string) => {
         return this.userService.validateUsername(username)
           .pipe(
-            map(() => validateUsernameSuccess()),
+            map(() => validateUsernameSuccess({username})),
             catchError(err =>{
               return of(validateUsernameFailure(
                 {

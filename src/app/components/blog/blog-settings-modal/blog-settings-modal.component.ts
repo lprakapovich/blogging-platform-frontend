@@ -65,11 +65,14 @@ export class BlogSettingsModalComponent implements OnInit, OnDestroy {
 
     this.actions$.pipe(
       ofType(
-        CategoryActionTypes.CREATE_CATEGORY_SUCCESS),
+        CategoryActionTypes.CREATE_CATEGORY_SUCCESS,
+        CategoryActionTypes.CREATE_CATEGORY_FAILURE),
       takeUntil(this.destroyed$)
-    ).subscribe(() => {
+    ).subscribe((action: any) => {
+      if (action.type === CategoryActionTypes.CREATE_CATEGORY_SUCCESS) {
+        this.showSuccessMessage = true;
+      }
       this.newCategoryInput = ''
-      this.showSuccessMessage = true;
     })
   }
 
@@ -91,6 +94,7 @@ export class BlogSettingsModalComponent implements OnInit, OnDestroy {
   }
 
   onDeleteCategoryClicked(category: Category) {
+    this.showSuccessMessage = false;
     const deleteCategoryMessage = `Sure you want to delete a category ${category.name}?`
     if (confirm(deleteCategoryMessage)) {
       this.store.dispatch(deleteCategory({ id: category.id }))
