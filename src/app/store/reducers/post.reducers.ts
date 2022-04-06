@@ -1,6 +1,7 @@
 import {BlogPost} from "../../models/BlogPost";
 import {createReducer, on} from "@ngrx/store";
 import * as PostActions from '../actions/post.actions';
+import * as AuthActions from "../actions/auth.actions";
 
 export interface PostState {
   userBlogPosts: BlogPost[],
@@ -22,6 +23,11 @@ export const initialState: PostState = {
 
 export const postReducer = createReducer(
   initialState,
+
+
+  on(AuthActions.logout, () => ({
+    ...initialState,
+  })),
 
   on(PostActions.getPostsBySearchCriteria, (state) => ({
     ...state,
@@ -70,5 +76,5 @@ export const postReducer = createReducer(
     ...state,
     isLoading: false,
     postsError: action.error
-  }))
+  })),
 )

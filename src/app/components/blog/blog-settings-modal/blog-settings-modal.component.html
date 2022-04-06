@@ -1,4 +1,4 @@
-<div class="blog-settings-modal-container" *ngIf="blog">
+<div class="blog-settings-modal-container" *ngIf="blog$ | async as blog">
   <div class="settings">
     <div class="settings-navbar">
       <app-default-list>
@@ -91,7 +91,7 @@
           <div id="categories-container">
             <div id="new-category-container">
               <div id="new-category-input">
-                <app-default-input (userInputEventEmitter)="newCategoryInput = $event"
+                <app-default-input (userInputEventEmitter)="onNewCategoryInputChanged($event)"
                                    [userInput]="newCategoryInput"
                                    [placeholder]="'New category...'">
                 </app-default-input>
@@ -104,14 +104,15 @@
                 </app-default-button>
               </div>
             </div>
-            <div class='error-message' *ngIf="(categoryError$ | async) as categoryError"> {{ categoryError }}</div>
+            <div class='error-message' *ngIf="!newCategoryInput && (categoryError$ | async) as categoryError"> {{ categoryError }}</div>
+            <div class="success-message" *ngIf="showSuccessMessage"> Success! Category was created. </div>
             <div id="existing-categories-container">
               <ng-container *ngIf="(categories$ | async) as categories; else emptyCategoryList">
                 <div class="category-list">
                   <div *ngFor="let category of categories" class="category-list-item">
-                    <div>{{category}}</div>
+                    <div>{{category.name}}</div>
                     <div class="category-actions">
-                      <app-svg-button [iconTemplate]="'delete'" (click)="deleteCategory(category)"></app-svg-button>
+                      <app-svg-button [iconTemplate]="'delete'" (click)="onDeleteCategoryClicked(category)"></app-svg-button>
                     </div>
                   </div>
                 </div>

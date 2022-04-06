@@ -52,7 +52,6 @@
   </app-menu-modal>
   <app-blog-settings-modal #appBlogSettingsModal
                            id="app-blog-settings-modal"
-                           [blog]="(selectedBlog | async)"
                            (onCloseEmitter)="onSettingsModalClosed()"
                            [hidden]="!showAppBlogSettingsModal">
   </app-blog-settings-modal>

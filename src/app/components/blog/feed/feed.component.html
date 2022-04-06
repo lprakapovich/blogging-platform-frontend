@@ -37,7 +37,6 @@
   </app-menu-modal>
 
   <app-blog-settings-modal #appBlogSettingsModal
-                           [blog]="(userBlog$ | async)"
                            (onCloseEmitter)="onSettingsModalClosed()"
                            [hidden]="!showAppBlogSettingsModal"
                            id="app-blog-settings-modal">

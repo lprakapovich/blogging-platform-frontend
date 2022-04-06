@@ -156,14 +156,22 @@
     }
   }
 
-  .error-message {
-    color: darkred;
+  .error-message, .success-message {
     font-size: 0.9rem;
     margin: 0.5rem 0;
     padding: 0.25rem 1rem;
-    background-color: #fff3f3;
     width: fit-content;
     border-radius: 0.25rem;
+  }
+
+  .error-message {
+    color: darkred;
+    background-color: #fff3f3;
+  }
+
+  .success-message {
+    color: #074007;
+    background-color: #e9ffe9;
   }
 }
 

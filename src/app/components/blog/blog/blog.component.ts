@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Router} from "@angular/router";
 import {NavbarService} from "../../../services/ui/navbar.service";
-import {combineLatest, map, Observable, Subscription} from "rxjs";
+import {combineLatest, map, Observable, Subject, Subscription} from "rxjs";
 import {Store} from "@ngrx/store";
 import {
   selectIsBlogLoading,

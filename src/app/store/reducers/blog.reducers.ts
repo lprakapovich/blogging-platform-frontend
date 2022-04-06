@@ -2,6 +2,8 @@ import {Blog} from "../../models/Blog";
 import {createReducer, on} from "@ngrx/store";
 import * as BlogActions from "../actions/blog.actions";
 import {BlogView} from "../../models/BlogView";
+import * as CategoryActions from "../actions/category.actions";
+import * as AuthActions from "../actions/auth.actions";
 
 export interface BlogState {
   authenticatedUserBlog: BlogView,
@@ -29,6 +31,10 @@ export const initialState: BlogState = {
 
 export const blogReducer = createReducer(
   initialState,
+
+  on(AuthActions.logout, () => ({
+    ...initialState,
+  })),
 
   on(BlogActions.getBlogDetails, (state) => ({
     ...state,
@@ -144,5 +150,33 @@ export const blogReducer = createReducer(
   on(BlogActions.updateBlogFailure, (state) => ({
     ...state,
     isLoading: false
-  }))
+  })),
+
+  on(CategoryActions.deleteCategorySuccess, (state, action) => ({
+    ...state,
+    isLoading: false,
+    authenticatedUserBlog: {
+      ...state.authenticatedUserBlog,
+      categories: state.authenticatedUserBlog.categories.filter(c => c.id !== action.categoryId)
+    },
+    selectedBlog: {
+      ...state.selectedBlog,
+      categories: state.selectedBlog.id === state.authenticatedUserBlog.id ?
+        state.selectedBlog.categories.filter(c => c.id !== action.categoryId) : state.selectedBlog.categories
+    }
+  })),
+
+  on(CategoryActions.createCategorySuccess, (state, action) => ({
+    ...state,
+    isLoading: false,
+    authenticatedUserBlog: {
+      ...state.authenticatedUserBlog,
+      categories: [...state.authenticatedUserBlog.categories, action.category]
+    },
+    selectedBlog: {
+      ...state.selectedBlog,
+      categories: state.selectedBlog.id === state.authenticatedUserBlog.id ?
+        [...state.selectedBlog.categories, action.category] : state.selectedBlog.categories
+    }
+  })),
 )

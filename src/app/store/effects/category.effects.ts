@@ -2,7 +2,13 @@ import {Injectable} from "@angular/core";
 import {Store} from "@ngrx/store";
 import {CategoryService} from "../../services/category.service";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
-import {CategoryActionTypes, createCategoryFailure, createCategorySuccess} from "../actions/category.actions";
+import {
+  CategoryActionTypes,
+  createCategoryFailure,
+  createCategorySuccess,
+  deleteCategoryFailure,
+  deleteCategorySuccess
+} from "../actions/category.actions";
 import {catchError, combineLatestWith, debounceTime, map, of, switchMap} from "rxjs";
 import {selectAuthenticatedUserBlogId} from "../selectors/blog.selectors";
 
@@ -17,8 +23,8 @@ export class CategoryEffects {
               ) {
   }
 
-  createCategory$ = createEffect(() => {
-    return this.actions$.pipe(
+  createCategory$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(CategoryActionTypes.CREATE_CATEGORY),
       debounceTime(500),
       map((action: any) => action.name),
@@ -26,18 +32,36 @@ export class CategoryEffects {
       switchMap(([categoryName, {id, username}]) => {
         return this.categoryService.createCategory(id, username, categoryName)
           .pipe(
-            map((response: any) => {
-              const createdCategoryId = response.headers.get('Location');
+            map((categoryId: any) => {
               return createCategorySuccess({
                 category: {
-                  id: createdCategoryId,
+                  id: categoryId,
                   name: categoryName
                 }
               })
             }),
-            catchError((response) => of(createCategoryFailure({error: response.error?.message})))
+            catchError((response) => {
+              // todo cleanup
+              console.log(response)
+              return of(createCategoryFailure({error: response.error?.message}))
+            })
           )
       })
-    );
-  })
+    )
+  )
+
+  deleteCategory$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CategoryActionTypes.DELETE_CATEGORY),
+      map((action: any) => action.id),
+      combineLatestWith(this.store.select(selectAuthenticatedUserBlogId)),
+      switchMap(([categoryId, {id, username}]) => {
+        return this.categoryService.deleteCategory(id, username, categoryId)
+          .pipe(
+            map(() => deleteCategorySuccess({categoryId})),
+            catchError(error => of(deleteCategoryFailure({ error })))
+          )
+      })
+    )
+  )
 }

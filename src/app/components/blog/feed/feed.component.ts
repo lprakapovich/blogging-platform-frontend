@@ -5,7 +5,7 @@ import {BlogPost} from "../../../models/BlogPost";
 import {Observable, Subscription} from "rxjs";
 import {Store} from "@ngrx/store";
 import {selectIsPostLoading, selectPostsFromSubscriptions} from "../../../store/selectors/post.selectors";
-import {getPostsFromSubscriptions, setSelectedPost, resetSelectedPost} from "../../../store/actions/post.actions";
+import {getPostsFromSubscriptions, resetSelectedPost, setSelectedPost} from "../../../store/actions/post.actions";
 import {AppMenuModalComponent} from "../../ui-elements/app-menu-modal/app-menu-modal.component";
 import {selectAuthenticatedUserBlog, selectUserBlogIds} from "../../../store/selectors/blog.selectors";
 import {getBlogDetailsAndRedirect} from "../../../store/actions/blog.actions";
@@ -80,14 +80,11 @@ export class FeedComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private subscribeToStoreChanges() {
-    this.resizeSubscription = this.isLoading$.subscribe(() => {
-      this.resizeAllGridItems()
-    });
+    this.resizeSubscription = this.isLoading$
+      .subscribe(() => this.resizeAllGridItems());
 
     this.appMenuSubscription = this.modalService.getAppMenuModalSubject()
-      .subscribe(show => {
-        this.showAppMenuModal = show
-      })
+      .subscribe(show => this.showAppMenuModal = show)
 
     this.appSettingsSubscription = this.modalService.getAppSettingsModalSubject()
       .subscribe(show => this.showAppBlogSettingsModal = show)

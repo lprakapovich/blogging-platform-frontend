@@ -48,6 +48,10 @@ export const initialState: AuthState = {
 export const authReducer = createReducer(
   initialState,
 
+  on(AuthActions.logout, () => ({
+    ...initialState,
+  })),
+
   on(AuthActions.login, (state) => ({
     ...state,
     login: {
@@ -152,17 +156,6 @@ export const authReducer = createReducer(
       isError: true,
       errorMessage: action.error
     }
-  })),
-
-  on(AuthActions.logout, (state) => ({
-    ...state,
-    isAuthenticated: false,
-    token: '',
-    principal: '',
-    login: {
-      ...state.login,
-      isLoading: false
-    },
   })),
 
   on(AuthActions.setPrincipal, (state, action) => ({

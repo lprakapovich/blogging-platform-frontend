@@ -1,14 +1,24 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {Store} from "@ngrx/store";
 import {logout} from "../../../store/actions/auth.actions";
 import {BlogView} from "../../../models/BlogView";
 import {UpdateBlogData} from "../../../models/data/blog/UpdateBlogData";
 import {updateBlog} from "../../../store/actions/blog.actions";
 import {Observable, Subject, takeUntil} from "rxjs";
-import {selectIsBlogLoading, selectSelectedBlogCategories} from "../../../store/selectors/blog.selectors";
-import {CategoryActionTypes, createCategory} from "../../../store/actions/category.actions";
+import {
+  selectAuthenticatedUserBlog,
+  selectAuthenticatedUserBlogCategories,
+  selectIsBlogLoading
+} from "../../../store/selectors/blog.selectors";
+import {
+  CategoryActionTypes,
+  createCategory,
+  deleteCategory,
+  resetCategoryError
+} from "../../../store/actions/category.actions";
 import {selectCategoryError, selectIsCategoryLoading} from "../../../store/selectors/category.selectors";
 import {Actions, ofType} from "@ngrx/effects";
+import {Category} from "../../../models/Category";
 
 @Component({
   selector: 'app-blog-settings-modal',
@@ -18,18 +28,19 @@ import {Actions, ofType} from "@ngrx/effects";
 export class BlogSettingsModalComponent implements OnInit, OnDestroy {
 
   @Output() onCloseEmitter: EventEmitter<void> = new EventEmitter<void>();
-  @Input() blog: BlogView | null;
 
+  blog$: Observable<BlogView>;
   isBlogLoading$: Observable<boolean>;
   isCategoryLoading$: Observable<boolean>;
   categoryError$: Observable<string>;
-  categories$: Observable<string[]>;
+  categories$: Observable<Category[]>;
 
   destroyed$ = new Subject<boolean>();
 
   selectedSection: string;
   newCategoryInput: string;
   newBlog: string;
+  showSuccessMessage: boolean;
 
   changedBlogDisplayName: string;
   changedBlogDescription: string;
@@ -40,21 +51,26 @@ export class BlogSettingsModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    if (this.blog && this.blog.description) {
-      this.changedBlogDescription = this.blog.description;
-      this.changedBlogDisplayName = this.blog.displayName;
-    }
+    // if (this.blog && this.blog.description) {
+    //   this.changedBlogDescription = this.blog.description;
+    //   this.changedBlogDisplayName = this.blog.displayName;
+    // }
+
+    this.blog$ = this.store.select(selectAuthenticatedUserBlog);
     this.isBlogLoading$ = this.store.select(selectIsBlogLoading);
+
     this.isCategoryLoading$ = this.store.select(selectIsCategoryLoading);
     this.categoryError$ = this.store.select(selectCategoryError);
-    this.categories$ = this.store.select(selectSelectedBlogCategories);
+    this.categories$ = this.store.select(selectAuthenticatedUserBlogCategories);
 
     this.actions$.pipe(
       ofType(
-        CategoryActionTypes.CREATE_CATEGORY_SUCCESS,
-        CategoryActionTypes.CREATE_CATEGORY_FAILURE),
+        CategoryActionTypes.CREATE_CATEGORY_SUCCESS),
       takeUntil(this.destroyed$)
-    ).subscribe(() => this.newCategoryInput = '')
+    ).subscribe(() => {
+      this.newCategoryInput = ''
+      this.showSuccessMessage = true;
+    })
   }
 
   ngOnDestroy() {
@@ -63,6 +79,7 @@ export class BlogSettingsModalComponent implements OnInit, OnDestroy {
   }
 
   onSettingsSectionSelected(section: string) {
+    this.showSuccessMessage = false;
     this.selectedSection = section;
   }
 
@@ -73,11 +90,11 @@ export class BlogSettingsModalComponent implements OnInit, OnDestroy {
     this.store.dispatch(createCategory({ name: this.newCategoryInput }))
   }
 
-  onInputEmitted($event: string) {
-    console.log($event)
-  }
-
-  deleteCategory(category: string) {
+  onDeleteCategoryClicked(category: Category) {
+    const deleteCategoryMessage = `Sure you want to delete a category ${category.name}?`
+    if (confirm(deleteCategoryMessage)) {
+      this.store.dispatch(deleteCategory({ id: category.id }))
+    }
   }
 
   onCancel() {
@@ -94,8 +111,10 @@ export class BlogSettingsModalComponent implements OnInit, OnDestroy {
 
 
   logout() {
-    window.alert('You are about to logout')
-    this.store.dispatch(logout())
+    const logoutMessage = 'Sure you want to leave?'
+    if (confirm(logoutMessage)) {
+      this.store.dispatch(logout())
+    }
   }
 
   onNewBlogClicked() {
@@ -108,5 +127,11 @@ export class BlogSettingsModalComponent implements OnInit, OnDestroy {
 
   onDescriptionChanged(description: string) {
     this.changedBlogDescription = description;
+  }
+
+  onNewCategoryInputChanged($event: string) {
+    this.showSuccessMessage = false;
+    this.newCategoryInput = $event;
+    this.store.dispatch(resetCategoryError())
   }
 }
