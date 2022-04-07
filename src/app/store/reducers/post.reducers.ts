@@ -5,10 +5,10 @@ import * as AuthActions from "../actions/auth.actions";
 
 export interface PostState {
   selectedBlogPosts: BlogPost[],
-  isLoading: boolean,
   postsFromSubscriptions: BlogPost[],
-  selectedPost: BlogPost | null;
   postsBySearchCriteria: BlogPost[],
+  selectedPost: BlogPost | null;
+  isLoading: boolean,
   postsError: any
 }
 

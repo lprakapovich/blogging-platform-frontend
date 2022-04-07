@@ -7,8 +7,9 @@ export interface Blog {
   publications: BlogPost[]
 }
 
-export type BlogId = {
+export class BlogId {
   id: string;
   username: string;
 }
+
 

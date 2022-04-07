@@ -4,10 +4,12 @@ import {NavbarService} from "../../../services/ui/navbar.service";
 import {combineLatest, map, Observable, Subject, Subscription, take} from "rxjs";
 import {Store} from "@ngrx/store";
 import {
+  selectAuthenticatedUserBlogsIds,
+  selectAuthenticatedUserBlogSubscriptions,
   selectIsBlogLoading,
   selectIsBlogOwner,
-  selectSelectedBlog,
-  selectUserBlogIds
+  selectIsSubscriber,
+  selectSelectedBlog
 } from "../../../store/selectors/blog.selectors";
 import {AppMenuModalComponent} from "../../ui-elements/app-menu-modal/app-menu-modal.component";
 import {BlogView} from "../../../models/BlogView";
@@ -19,7 +21,6 @@ import {getPosts} from "../../../store/actions/post.actions";
 import {BlogId} from "../../../models/Blog";
 import {getBlogDetailsAndRedirect} from "../../../store/actions/blog.actions";
 import {Category} from "../../../models/Category";
-import {selectIsSubscriber} from "../../../store/selectors/subscription.selectors";
 import {createSubscription, deleteSubscription} from "../../../store/actions/subscription.actions";
 
 @Component({
@@ -84,11 +85,13 @@ export class BlogComponent implements OnInit, OnDestroy {
 
   private fetchDataFromStore() {
     this.store.dispatch(getPosts({status: 'Published'}));
-    this.userBlogIds$ = this.store.select(selectUserBlogIds);
+    this.userBlogIds$ = this.store.select(selectAuthenticatedUserBlogsIds);
     this.selectedBlogPublications = this.store.select(selectSelectedBlogPosts);
     this.selectedBlog$ = this.store.select(selectSelectedBlog);
     this.isLoading$ = this.store.select(selectIsBlogLoading);
     this.isOwner$ = this.store.select(selectIsBlogOwner)
+
+
 
     this.isLoaded$ = combineLatest([
       this.selectedBlog$, this.selectedBlogPublications, this.isLoading$
@@ -98,6 +101,22 @@ export class BlogComponent implements OnInit, OnDestroy {
           return !!userBlog  && !!publications && !isLoadingAnything;
         })
     )
+
+
+    const subs$ = this.store.select(selectAuthenticatedUserBlogSubscriptions)
+      .pipe(take(1))
+      .subscribe(subs => {
+
+        this.selectedBlog$.pipe(take(1)).subscribe(blog => {
+          console.log(`Selected blog ${blog.id.id},${blog.id.username}`)
+          subs.forEach(s => {
+            console.log(`Subscriptions ${s.id.subscription.id},${s.id.subscription.username}`)
+
+            // console.log(`Are equal? ${ blog.id.id === s.id.subscription.id && blog.id.username === s.id.subscription.username }`)
+          })
+        })
+      })
+
   }
 
   onUserBlogSelectedEvent(blogId: BlogId) {

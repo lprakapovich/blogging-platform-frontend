@@ -5,7 +5,7 @@ import {BlogPost} from "../../../models/BlogPost";
 import {NavbarService} from "../../../services/ui/navbar.service";
 import {Observable} from "rxjs";
 import {Store} from "@ngrx/store";
-import {getBlogDetailsAndRedirect, getBlogsBySearchCriteria} from "../../../store/actions/blog.actions";
+import {getBlogDetailsAndRedirect, getSearchedBlogs} from "../../../store/actions/blog.actions";
 import {selectBlogsBySearchCriteria} from "../../../store/selectors/blog.selectors";
 import {selectPostsBySearchCriteria} from "../../../store/selectors/post.selectors";
 import {getPostsBySearchCriteria} from "../../../store/actions/post.actions";
@@ -37,7 +37,7 @@ export class SearchResultComponent implements OnInit {
       .queryParams
       .subscribe(params => {
         this.searchInput = params['search'];
-        this.store.dispatch(getBlogsBySearchCriteria({payload: this.searchInput}))
+        this.store.dispatch(getSearchedBlogs({payload: this.searchInput}))
         this.store.dispatch(getPostsBySearchCriteria({title: this.searchInput}))
       });
 
@@ -47,7 +47,7 @@ export class SearchResultComponent implements OnInit {
   }
 
   onEnterPressed(searchCriteria: string) {
-    this.store.dispatch(getBlogsBySearchCriteria({payload: searchCriteria}))
+    this.store.dispatch(getSearchedBlogs({payload: searchCriteria}))
     this.store.dispatch(getPostsBySearchCriteria({title: searchCriteria}))
   }
 

@@ -18,5 +18,5 @@ export const createSubscriptionSuccess = createAction(SubscriptionActionTypes.CR
 export const createSubscriptionFailure = createAction(SubscriptionActionTypes.CREATE_SUBSCRIPTION_FAILURE, props<{error: any}>())
 
 export const deleteSubscription = createAction(SubscriptionActionTypes.DELETE_SUBSCRIPTION, props<{blogId: BlogId}>())
-export const deleteSubscriptionSuccess = createAction(SubscriptionActionTypes.DELETE_SUBSCRIPTION_SUCCESS, props<{blogId: BlogId}>())
+export const deleteSubscriptionSuccess = createAction(SubscriptionActionTypes.DELETE_SUBSCRIPTION_SUCCESS, props<{unsubscribedBlogId: BlogId}>())
 export const deleteSubscriptionFailure = createAction(SubscriptionActionTypes.DELETE_SUBSCRIPTION_FAILURE, props<{error: any}>())

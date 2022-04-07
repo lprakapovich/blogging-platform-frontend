@@ -18,8 +18,8 @@
       {{userBlogView.description}}
     </div>
     <app-blog-statistics-data
-      [subscribersNum]="userBlogView.numberOfSubscribers"
-      [subscriptionsNum]="userBlogView.numberOfSubscriptions"
+      [subscribersNum]="userBlogView.subscribers.length"
+      [subscriptionsNum]="userBlogView.subscriptions.length"
       class="blog-section light-grey">
     </app-blog-statistics-data>
     <div class="common-blog-filters">

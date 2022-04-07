@@ -48,11 +48,11 @@ export class SubscriptionEffects {
       ofType(SubscriptionActionTypes.DELETE_SUBSCRIPTION),
       map((action: any) => action.blogId),
       combineLatestWith(this.store.select(selectAuthenticatedUserBlogId)),
-      switchMap(([subscriptionBlogId, {id, username}]) => {
-        return this.subscriptionService.deleteSubscription(id, username, subscriptionBlogId)
+      switchMap(([unsubscribedBlogId, {id, username}]) => {
+        return this.subscriptionService.deleteSubscription(id, username, unsubscribedBlogId)
           .pipe(
             map(() => {
-              return deleteSubscriptionSuccess({blogId : subscriptionBlogId})
+              return deleteSubscriptionSuccess({ unsubscribedBlogId })
             }),
             catchError((error) => of(deleteSubscriptionFailure({error})))
           )

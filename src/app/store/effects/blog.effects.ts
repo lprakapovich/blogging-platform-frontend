@@ -7,9 +7,11 @@ import {
   BlogActionTypes,
   createBlogFailure,
   createBlogSuccess,
+  getBlogDetailsAndRedirectFailure,
   getBlogDetailsAndRedirectSuccess,
-  getBlogDetailsFailure,
-  getBlogsBySearchCriteriaSuccess,
+  getSearchedBlogsFailure,
+  getSearchedBlogsSuccess,
+  getUserBlogsAndRedirectFailure,
   getUserBlogsAndRedirectSuccess,
   updateBlogFailure,
   updateBlogSuccess
@@ -74,16 +76,15 @@ export class BlogEffects {
       }))
   )
 
-  getBlogsBySearchCriteria$ = createEffect(() =>
+  getSearchedBlogs$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(BlogActionTypes.GET_BLOGS_BY_SEARCH_CRITERIA),
+      ofType(BlogActionTypes.GET_SEARCHED_BLOGS),
       map((action: any) => action.payload),
       switchMap((searchCriteria: string) => {
         return this.blogService.getBySearchCriteria(searchCriteria)
           .pipe(
-            map(response => {
-              return getBlogsBySearchCriteriaSuccess({blogs: response})
-            })
+            map(response => getSearchedBlogsSuccess({blogs: response})),
+            catchError((error) => of(getSearchedBlogsFailure({error})))
           )
       })
     )
@@ -98,10 +99,8 @@ export class BlogEffects {
         const isPrincipal = username == principal
         return this.blogService.getBlogDetails(blogId, username)
           .pipe(
-            map((blog) => {
-              return getBlogDetailsAndRedirectSuccess({blog, blogId, isPrincipal})
-            }),
-            catchError((() => of(getBlogDetailsFailure)))
+            map((blog) => getBlogDetailsAndRedirectSuccess({blog, blogId, isPrincipal})),
+            catchError(((error) => of(getBlogDetailsAndRedirectFailure({error}))))
           )
       }))
   )
@@ -109,8 +108,10 @@ export class BlogEffects {
   getBlogDetailsAndRedirectSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(BlogActionTypes.GET_BLOG_DETAILS_AND_REDIRECT_SUCCESS),
-      map((action: any) => action.blogId),
-      tap((blogId) => {
+      // map((action: any) => action.blogId),
+      tap(({blogId, blog}) => {
+        // if user blogs then
+        // console.log(blog.)
         this.router.navigate([`/blog/@${blogId}`])
       })
     ),
@@ -118,23 +119,23 @@ export class BlogEffects {
       dispatch: false
     })
 
+  // init blog after login
   getUserBlogsAndRedirect$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(BlogActionTypes.GET_PRINCIPAL_BLOGS_AND_REDIRECT),
+      ofType(BlogActionTypes.GET_USER_BLOGS_AND_REDIRECT),
       map((action: any) => action.path),
       switchMap((path: string) => {
         return this.blogService.getUserManagedBlogs()
           .pipe(
-            map(blogs => {
-              return getUserBlogsAndRedirectSuccess({blogs, path})
-            })
+            map(blogs => getUserBlogsAndRedirectSuccess({blogs, path})),
+            catchError((error) => of(getUserBlogsAndRedirectFailure({error})))
           )
       })
     ))
 
   getUserBlogsAndRedirectSuccess$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(BlogActionTypes.GET_PRINCIPAL_BLOGS_AND_REDIRECT_SUCCESS),
+      ofType(BlogActionTypes.GET_USER_BLOGS_AND_REDIRECT_SUCCESS),
       map((action: any) => action.path),
       tap((path) => {
         this.router.navigate([`${path}`])

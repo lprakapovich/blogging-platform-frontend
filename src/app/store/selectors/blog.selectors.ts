@@ -1,5 +1,6 @@
 import {createFeatureSelector, createSelector } from "@ngrx/store";
 import {BlogState} from "../reducers/blog.reducers";
+import {BlogId} from "../../models/Blog";
 
 export const selectBlogFeature = createFeatureSelector<BlogState>('blog')
 
@@ -25,7 +26,7 @@ export const selectAuthenticatedUserBlog = createSelector(
 
 export const selectBlogsBySearchCriteria = createSelector(
   selectBlogFeature,
-  state => state.blogsBySearchCriteria
+  state => state.searchedBlogs
 )
 
 export const selectIsBlogLoading = createSelector(
@@ -33,9 +34,9 @@ export const selectIsBlogLoading = createSelector(
   state => state.isLoading
 )
 
-export const selectUserBlogIds = createSelector(
+export const selectAuthenticatedUserBlogsIds = createSelector(
   selectBlogFeature,
-  state => state.userBlogs.map(b => b?.id)
+  state => state.authenticatedUserBlogsIds
 )
 
 export const selectIsBlogOwner = createSelector(
@@ -52,4 +53,14 @@ export const selectSelectedBlogCategories = createSelector(
 export const selectAuthenticatedUserBlogCategories = createSelector(
   selectAuthenticatedUserBlog,
   blog => blog.categories
+)
+
+export const selectAuthenticatedUserBlogSubscriptions = createSelector(
+  selectAuthenticatedUserBlog,
+  blog => blog.subscriptions
+)
+
+export const selectIsSubscriber = (blogId: BlogId) => createSelector(
+  selectAuthenticatedUserBlogSubscriptions,
+  (subscriptions) => subscriptions.some(s => s.id.subscription.id === blogId.id && s.id.subscription.username && blogId.username)
 )
