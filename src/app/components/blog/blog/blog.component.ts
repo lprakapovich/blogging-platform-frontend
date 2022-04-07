@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Router} from "@angular/router";
 import {NavbarService} from "../../../services/ui/navbar.service";
-import {combineLatest, map, Observable, Subscription} from "rxjs";
+import {combineLatest, map, Observable, Subject, Subscription, take} from "rxjs";
 import {Store} from "@ngrx/store";
 import {
   selectIsBlogLoading,
@@ -19,6 +19,8 @@ import {getPosts} from "../../../store/actions/post.actions";
 import {BlogId} from "../../../models/Blog";
 import {getBlogDetailsAndRedirect} from "../../../store/actions/blog.actions";
 import {Category} from "../../../models/Category";
+import {selectIsSubscriber} from "../../../store/selectors/subscription.selectors";
+import {createSubscription, deleteSubscription} from "../../../store/actions/subscription.actions";
 
 @Component({
   selector: 'app-blog',
@@ -27,13 +29,16 @@ import {Category} from "../../../models/Category";
 })
 export class BlogComponent implements OnInit, OnDestroy {
 
+  unsubscribe$ = new Subject<void>();
+
   userBlogIds$: Observable<BlogId[]>;
-  selectedBlog: Observable<BlogView>;
+  selectedBlog$: Observable<BlogView>;
   selectedBlogPublications: Observable<BlogPost[]>;
   isLoading$: Observable<boolean>;
 
   isLoaded$: Observable<boolean>;
   isOwner$: Observable<boolean>;
+  isSubscriber$: Observable<boolean>;
 
   @ViewChild('appMenuModal')
   appMenuModal: AppMenuModalComponent;
@@ -65,6 +70,8 @@ export class BlogComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.appMenuModalSubscription.unsubscribe();
     this.appSettingsModalSubscription.unsubscribe();
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   onNewPostClicked() {
@@ -79,15 +86,17 @@ export class BlogComponent implements OnInit, OnDestroy {
     this.store.dispatch(getPosts({status: 'Published'}));
     this.userBlogIds$ = this.store.select(selectUserBlogIds);
     this.selectedBlogPublications = this.store.select(selectSelectedBlogPosts);
-    this.selectedBlog = this.store.select(selectSelectedBlog);
+    this.selectedBlog$ = this.store.select(selectSelectedBlog);
     this.isLoading$ = this.store.select(selectIsBlogLoading);
     this.isOwner$ = this.store.select(selectIsBlogOwner)
 
     this.isLoaded$ = combineLatest([
-      this.selectedBlog, this.selectedBlogPublications, this.isLoading$
+      this.selectedBlog$, this.selectedBlogPublications, this.isLoading$
       ]).pipe(
-        map(([userBlogIsLoaded, userBlogPublicationsLoaded, isLoadingAnything]) =>
-          !!userBlogIsLoaded  && !!userBlogPublicationsLoaded && !isLoadingAnything)
+        map(([userBlog, publications, isLoadingAnything]) => {
+          this.isSubscriber$ = this.store.select(selectIsSubscriber(userBlog.id))
+          return !!userBlog  && !!publications && !isLoadingAnything;
+        })
     )
   }
 
@@ -123,8 +132,14 @@ export class BlogComponent implements OnInit, OnDestroy {
     this.navbarService.setBlogTemplate();
   }
 
-  onSubscribeCLicked() {
-    console.log(`Subscribe!`)
+  onSubscribeClicked() {
+    combineLatest([
+      this.isSubscriber$, this.selectedBlog$
+    ]).pipe(take(1))
+      .subscribe(([isSubscriber, {id}]) => {
+       isSubscriber ? this.store.dispatch(deleteSubscription({blogId: id})) :
+         this.store.dispatch(createSubscription({blogId: id}));
+      })
   }
 
   onCategorySelected(category: Category) {

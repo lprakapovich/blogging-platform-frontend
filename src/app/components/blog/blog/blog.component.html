@@ -1,5 +1,5 @@
 <div id="blog-container" *ngIf="(isLoaded$ | async); else loadingTemplate;">
-  <div id="blog-information" *ngIf="selectedBlog | async as userBlogView">
+  <div id="blog-information" *ngIf="selectedBlog$ | async as userBlogView">
     <app-author-data
       class="author-data blog-section" [id]="userBlogView.id.id"
       [displayName]="userBlogView.displayName ? userBlogView.displayName : userBlogView.id.id">
@@ -12,7 +12,7 @@
     <app-default-button
       *ngIf="!(isOwner$ | async)"
       class="new-post blog-section"
-      (click)="onSubscribeCLicked()" [ngClass]="'medium reverted'" [label]="'Subscribe'">
+      (click)="onSubscribeClicked()" [ngClass]="'medium reverted'" [label]=" (isSubscriber$ | async) ? 'Unsubscribe' : 'Subscribe'">
     </app-default-button>
     <div class="description blog-section" *ngIf="userBlogView.description">
       {{userBlogView.description}}
@@ -39,6 +39,7 @@
   <div id="blog-posts" *ngIf="selectedBlogPublications | async as userBlogPublications">
     <app-search-bar (searchInputEvent)="onSearchInputEvent($event)"></app-search-bar>
     <div>Am I blog owner? {{ isOwner$ | async }}</div>
+    <div> Am I blog subscriber? {{isSubscriber$ | async }}</div>
     <div id="blog-posts-preview-list" *ngIf="!!userBlogPublications.length; else noBlogPublications">
      <app-blog-post-preview-list [blogPosts]="userBlogPublications"></app-blog-post-preview-list>
     </div>

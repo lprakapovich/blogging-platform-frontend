@@ -46,6 +46,8 @@ import {PostEffects} from "./store/effects/post.effects";
 import {JwtInterceptor} from "./common/http/jwt.interceptor";
 import {categoryReducer} from "./store/reducers/category.reducers";
 import {CategoryEffects} from "./store/effects/category.effects";
+import {subscriptionReducer} from "./store/reducers/subscription.reducers";
+import {SubscriptionEffects} from "./store/effects/subscription.effects";
 
 @NgModule({
   declarations: [
@@ -89,13 +91,15 @@ import {CategoryEffects} from "./store/effects/category.effects";
       auth: authReducer,
       blog: blogReducer,
       post: postReducer,
-      category: categoryReducer
+      category: categoryReducer,
+      subscription: subscriptionReducer
     }),
     EffectsModule.forRoot([
       AuthEffects,
       BlogEffects,
       PostEffects,
-      CategoryEffects
+      CategoryEffects,
+      SubscriptionEffects
     ]),
     StoreDevtoolsModule.instrument({}),
   ],
