@@ -1,7 +1,11 @@
 import {Component} from '@angular/core';
-import {NavbarService} from "../../../services/ui/navbar.service";
+import {NavbarTemplateService} from "../../../services/ui/navbar-template.service";
 import {Store} from "@ngrx/store";
 import {ModalService} from "../../../services/ui/modal.service";
+import {EditorService} from "../../../services/ui/editor.service";
+import {selectAuthenticatedUserBlogId} from "../../../store/selectors/blog.selectors";
+import {take} from "rxjs";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-navbar',
@@ -15,35 +19,48 @@ export class NavbarComponent {
   showRemoveButton: boolean;
 
   constructor(private store: Store,
-              private navbarService: NavbarService,
-              private modalService: ModalService) {
+              private router: Router,
+              private navbarTemplateService: NavbarTemplateService,
+              private modalService: ModalService,
+              private editorService: EditorService) {
 
-    this.template = NavbarService.DEFAULT_TEMPLATE;
+    this.template = NavbarTemplateService.DEFAULT_TEMPLATE;
     this.showRemoveButton = false;
     this.showNavbarMenuModal = false;
 
-    navbarService.getNavbarTemplateChangeSubject().subscribe(template => {
+    navbarTemplateService.getNavbarTemplateChangeSubject().subscribe(template => {
       this.template = template;
     })
 
-    navbarService.getNavbarEditorRemoveButtonSubject().subscribe(show => {
+    navbarTemplateService.getNavbarEditorRemoveButtonSubject().subscribe(show => {
       this.showRemoveButton = show;
     })
   }
 
   onBlogNavbarComponentClicked(tabId: string) {
-    if (this.template === NavbarService.BLOG_TEMPLATE) {
+    if (this.template === NavbarTemplateService.BLOG_TEMPLATE) {
       this.showNavbarMenuModal = tabId == 'profile' ? !this.showNavbarMenuModal : false;
       this.modalService.showAppMenuModal(this.showNavbarMenuModal)
     }
   }
 
-  // navigateToBlog() {
-  //   this.store.select(selectAuthenticatedUserBlogId)
-  //     .pipe(take(1))
-  //     .subscribe(id => {
-  //       this.router.navigate([`/blog/@${id}`])
-  //     })
-  // }
+  onBackClicked() {
+    this.store.select(selectAuthenticatedUserBlogId)
+      .pipe(take(1))
+      .subscribe(blogId => {
+        console.log(blogId.id)
+        this.router.navigate([
+          `/blog/@${blogId.id}`
+        ])
+      })
+  }
+
+  onDeleteClicked() {
+    this.editorService.onDeletePostClicked();
+  }
+
+  onPublishClicked() {
+    this.editorService.onPublishPostClicked();
+  }
 }
 

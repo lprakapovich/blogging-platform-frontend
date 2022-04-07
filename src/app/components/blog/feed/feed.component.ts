@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {NavbarService} from "../../../services/ui/navbar.service";
+import {NavbarTemplateService} from "../../../services/ui/navbar-template.service";
 import {Router} from "@angular/router";
 import {BlogPost} from "../../../models/BlogPost";
 import {Observable, Subscription} from "rxjs";
@@ -48,7 +48,7 @@ export class FeedComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(private store: Store,
               private actions$: Actions,
-              private navbarService: NavbarService,
+              private navbarService: NavbarTemplateService,
               private modalService: ModalService,
               private router: Router) {
 

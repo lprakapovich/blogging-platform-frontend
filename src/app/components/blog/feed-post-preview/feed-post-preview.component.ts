@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {NavbarService} from "../../../services/ui/navbar.service";
+import {NavbarTemplateService} from "../../../services/ui/navbar-template.service";
 import {Router} from "@angular/router";
 import {Observable} from "rxjs";
 import {BlogPost} from "../../../models/BlogPost";
@@ -17,7 +17,7 @@ export class FeedPostPreviewComponent implements OnInit {
   @Output() closeFeedPostPreview: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(private store: Store,
-              private navbarTemplateService: NavbarService,
+              private navbarTemplateService: NavbarTemplateService,
               private router: Router) {
   }
 

@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import {NavbarService} from "../../../services/ui/navbar.service";
+import {NavbarTemplateService} from "../../../services/ui/navbar-template.service";
 import {Observable} from "rxjs";
 import {Store} from "@ngrx/store";
 import {selectLoginIsError, selectLoginIsLoading} from "../../../store/selectors/auth.selectors";
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private navbarTemplateService: NavbarService,
+    private navbarTemplateService: NavbarTemplateService,
     private store: Store) {
 
     this.navbarTemplateService.setDefaultTemplate();

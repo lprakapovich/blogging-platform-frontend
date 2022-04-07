@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavbarService} from "../../../../services/ui/navbar.service";
+import {NavbarTemplateService} from "../../../../services/ui/navbar-template.service";
 
 @Component({
   selector: 'app-editor-page',
@@ -7,7 +7,7 @@ import {NavbarService} from "../../../../services/ui/navbar.service";
   styleUrls: ['./editor-page.component.scss']
 })
 export class EditorPageComponent {
-  constructor(private navbarTemplateService: NavbarService) {
+  constructor(private navbarTemplateService: NavbarTemplateService) {
     this.navbarTemplateService.setEditorTemplate();
   }
 }

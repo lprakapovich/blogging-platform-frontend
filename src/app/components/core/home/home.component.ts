@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {NavbarService} from "../../../services/ui/navbar.service";
+import {Component} from '@angular/core';
+import {NavbarTemplateService} from "../../../services/ui/navbar-template.service";
 import {Router} from "@angular/router";
 
 @Component({
@@ -9,7 +9,7 @@ import {Router} from "@angular/router";
 })
 export class HomeComponent {
 
-  constructor(private navbarTemplateService: NavbarService,
+  constructor(private navbarTemplateService: NavbarTemplateService,
               private router: Router) {
     this.navbarTemplateService.setDefaultTemplate();
   }

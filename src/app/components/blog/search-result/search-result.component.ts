@@ -2,7 +2,7 @@ import {Component, ElementRef, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Blog, BlogId} from "../../../models/Blog";
 import {BlogPost} from "../../../models/BlogPost";
-import {NavbarService} from "../../../services/ui/navbar.service";
+import {NavbarTemplateService} from "../../../services/ui/navbar-template.service";
 import {Observable} from "rxjs";
 import {Store} from "@ngrx/store";
 import {getBlogDetailsAndRedirect, getSearchedBlogs} from "../../../store/actions/blog.actions";
@@ -30,7 +30,7 @@ export class SearchResultComponent implements OnInit {
   constructor(private store: Store,
               private route: ActivatedRoute,
               private elementRef: ElementRef,
-              private navbarService: NavbarService) { }
+              private navbarService: NavbarTemplateService) { }
 
   ngOnInit(): void {
     this.route

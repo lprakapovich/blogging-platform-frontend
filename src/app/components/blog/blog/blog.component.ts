@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Router} from "@angular/router";
-import {NavbarService} from "../../../services/ui/navbar.service";
+import {NavbarTemplateService} from "../../../services/ui/navbar-template.service";
 import {combineLatest, map, Observable, Subject, Subscription, take} from "rxjs";
 import {Store} from "@ngrx/store";
 import {
@@ -55,7 +55,7 @@ export class BlogComponent implements OnInit, OnDestroy {
 
   constructor(private store: Store,
               private router: Router,
-              private navbarService: NavbarService,
+              private navbarService: NavbarTemplateService,
               private modalService: ModalService) {
 
     this.showAppMenuModal = false;

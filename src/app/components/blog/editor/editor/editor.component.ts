@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
-import {NavbarService} from "../../../../services/ui/navbar.service";
+import {NavbarTemplateService} from "../../../../services/ui/navbar-template.service";
 
 @Component({
   selector: 'app-editor',
@@ -9,14 +9,14 @@ import {NavbarService} from "../../../../services/ui/navbar.service";
 export class EditorComponent implements AfterViewInit {
 
   @Input() postTitle = '';
-  @Input() postContent = 'First line<br>Second line<br>Third line<br>';
+  @Input() postContent = '';
 
-  @ViewChild('content') content!: ElementRef;
-  @ViewChild('title') title!: ElementRef;
+  @ViewChild('content') content: ElementRef;
+  @ViewChild('title') title: ElementRef;
 
-  input!: string;
+  input: string;
 
-  public constructor(private navbarService: NavbarService) {}
+  public constructor(private navbarService: NavbarTemplateService) {}
 
   releaseInputOnEnterKeyDown(componentId: string) {
     if (componentId == 'title') {

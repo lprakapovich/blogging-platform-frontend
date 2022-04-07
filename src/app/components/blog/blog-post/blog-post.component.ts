@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {NavbarService} from "../../../services/ui/navbar.service";
+import {NavbarTemplateService} from "../../../services/ui/navbar-template.service";
 import {Observable} from "rxjs";
 import {BlogPost} from "../../../models/BlogPost";
 import {Store} from "@ngrx/store";
@@ -15,7 +15,7 @@ export class BlogPostComponent implements OnInit {
   post$: Observable<BlogPost | null>;
 
   constructor(private store: Store,
-              private navbarService: NavbarService) {
+              private navbarService: NavbarTemplateService) {
   }
 
   ngOnInit(): void {
