@@ -104,8 +104,10 @@
                 </app-default-button>
               </div>
             </div>
-            <div class='error-message' *ngIf="!newCategoryInput && (categoryError$ | async) as categoryError"> {{ categoryError }}</div>
-            <div class="success-message" *ngIf="showSuccessMessage"> Success! Category was created. </div>
+<!--            <div class='error-message' *ngIf="!newCategoryInput && (categoryError$ | async) as categoryError"> {{ categoryError }}</div>-->
+<!--            <div class="success-message" *ngIf="showSuccessMessage"> Success! Category was created. </div>-->
+            <app-error-message *ngIf="!newCategoryInput && (categoryError$ | async) as categoryError"> {{ categoryError }} </app-error-message>
+            <app-success-message *ngIf="showSuccessMessage"> Great! Category was created. </app-success-message>
             <div id="existing-categories-container">
               <ng-container *ngIf="(categories$ | async) as categories; else emptyCategoryList">
                 <div class="category-list">

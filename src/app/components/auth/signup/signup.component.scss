@@ -7,7 +7,7 @@
   align-items: center;
 
   #registration-form {
-    padding: 2rem;
+    padding: 2rem 3rem;
     width: fit-content;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 4px 8px 0 rgba(0, 0, 0, 0.1);
     border-radius: 0.5rem;
@@ -27,7 +27,7 @@
         font-size: 1rem;
         border-radius: 0.2rem;
         padding: 0.75rem;
-        margin: 0.25rem 1rem;
+        margin: 0.25rem 0;
         text-decoration: none;
         border: 1px solid v.$light-grey;
         width: 20rem;
@@ -73,12 +73,6 @@
       border-top-color: grey;
       border-radius: 50%;
       animation: loading-spinner 4s ease;
-    }
-
-    .validation-error {
-      margin-left: 1rem;
-      color: firebrick;
-      font-size: 1rem;
     }
 
     .registration-form-submit-buttons {

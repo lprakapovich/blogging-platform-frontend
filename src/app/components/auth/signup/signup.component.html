@@ -36,35 +36,34 @@
                  [ngClass]="{ 'is-invalid': form['blogUrl'].errors }"/>
         </div>
         <div *ngIf="form['username'].invalid && (form['username'].touched)">
-          <div class="validation-error" *ngIf="form['username'].errors?.['required']">
+          <app-error-message *ngIf="form['username'].errors?.['required']">
             Username is required
-          </div>
-          <div class="validation-error" *ngIf="form['username'].errors?.['minlength']">
+          </app-error-message>
+          <app-error-message *ngIf="form['username'].errors?.['minlength']">
             Username must be at least 5 chars long
-          </div>
+          </app-error-message>
         </div>
         <div *ngIf="form['password'].invalid && (form['password'].touched)">
-          <div class="validation-error" *ngIf="form['password'].errors?.['required']">
+          <app-error-message *ngIf="form['password'].errors?.['required']">
             Password is required
-          </div>
-          <div class="validation-error" *ngIf="form['password'].errors?.['minlength']">
+          </app-error-message>
+          <app-error-message *ngIf="form['password'].errors?.['minlength']">
             Password must be at least 5 chars long
-          </div>
+          </app-error-message>
         </div>
         <div *ngIf="form['blogUrl'].invalid && (form['blogUrl'].touched)">
-          <div class="validation-error" *ngIf="form['blogUrl'].errors?.['required']">
+          <app-error-message *ngIf="form['blogUrl'].errors?.['required']">
             URL is required
-          </div>
-          <div class="validation-error" *ngIf="form['blogUrl'].errors?.['minlength']">
+          </app-error-message>
+          <app-error-message *ngIf="form['blogUrl'].errors?.['minlength']">
             URL be at least 5 chars long
-          </div>
+          </app-error-message>
         </div>
-        <div
-          class="error-message"
-          *ngIf="!form['username'].errors"
+        <app-warning-message
+          *ngIf="!form['username'].errors && (registrationValidationMessage$ | async)"
           [ngClass]="(isUsernameValidationLoading$ | async) ? 'loading-message' : ''">
           {{ (registrationValidationMessage$ | async) }}
-        </div>
+        </app-warning-message>
       </div>
       <div class="registration-form-submit-buttons">
         <button

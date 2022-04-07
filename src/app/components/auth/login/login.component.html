@@ -17,7 +17,7 @@
                    formControlName="password" autocomplete="off" required
                    class="form-control" [ngClass]="{ 'is-invalid': (isLoginFormSubmitted$ | async) && form['password'].errors }"/>
           </div>
-          <div class="error-message" *ngIf="(isLoginError$ | async)"> Authentication failed </div>
+          <app-error-message *ngIf="(isLoginError$ | async)"> Authentication failed </app-error-message>
         </div>
         <div class="login-form-submit-buttons">
           <ng-template></ng-template>

@@ -48,6 +48,9 @@ import {categoryReducer} from "./store/reducers/category.reducers";
 import {CategoryEffects} from "./store/effects/category.effects";
 import {subscriptionReducer} from "./store/reducers/subscription.reducers";
 import {SubscriptionEffects} from "./store/effects/subscription.effects";
+import { ErrorMessageComponent } from './components/ui-elements/error-message/error-message.component';
+import { SuccessMessageComponent } from './components/ui-elements/success-message/success-message.component';
+import { WarningMessageComponent } from './components/ui-elements/warning-message/warning-message.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +83,9 @@ import {SubscriptionEffects} from "./store/effects/subscription.effects";
     AvatarComponent,
     IconComponent,
     FeedPostPreviewComponent,
+    ErrorMessageComponent,
+    SuccessMessageComponent,
+    WarningMessageComponent,
   ],
   imports: [
     BrowserModule,
