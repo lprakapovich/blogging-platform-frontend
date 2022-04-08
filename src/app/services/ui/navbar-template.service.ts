@@ -13,7 +13,7 @@ export class NavbarTemplateService {
   private navbarTemplate = NavbarTemplateService.DEFAULT_TEMPLATE;
 
   private navbarTemplateChange: Subject<string> = new Subject<string>();
-  private navbarShowEditorRemoveButtonChange: Subject<boolean> = new Subject<boolean>();
+  private navbarEditorTemplateRemoveButtonChange: Subject<boolean> = new Subject<boolean>();
 
   constructor() {
     this.navbarTemplateChange.subscribe(value => {
@@ -34,14 +34,14 @@ export class NavbarTemplateService {
   }
 
   adjustRemoveButton(show: boolean) {
-    this.navbarShowEditorRemoveButtonChange.next(show);
+    this.navbarEditorTemplateRemoveButtonChange.next(show);
   }
 
   getNavbarTemplateChangeSubject() {
     return this.navbarTemplateChange;
   }
 
-  getNavbarEditorRemoveButtonSubject() {
-    return this.navbarShowEditorRemoveButtonChange;
+  getNavbarEditorTemplateRemoveButtonSubject() {
+    return this.navbarEditorTemplateRemoveButtonChange;
   }
 }

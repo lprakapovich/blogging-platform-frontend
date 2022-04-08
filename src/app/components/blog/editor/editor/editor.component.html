@@ -1,5 +1,7 @@
 <div id="editor-container">
+  <button (click)="onPublishEventTriggered()"> publ</button>
   <div id="editor-container-header">
+    <div *ngIf="!!modifiedContentInput && !!modifiedTitleInput"> Is modified? {{isModified$ | async}}</div>
     <span class="badge">
       <span #title
             contenteditable="true"
@@ -7,8 +9,9 @@
             class="badge"
             data-placeholder="Title of the post"
             spellcheck="false"
-            [innerText]="postTitle ? postTitle : null"
-            (keydown.enter)="releaseInputOnEnterKeyDown(title.id)">
+            (focusout)="onTitleFocusOut()"
+            [innerText]="modifiedTitleInput ? modifiedTitleInput : null"
+            (keydown.enter)="onTitleEnterKeyDown()">
       </span>
     </span>
   </div>
@@ -20,12 +23,9 @@
               class="badge"
               spellcheck="false"
               data-placeholder="Start typing here..."
-              (focus)="onFocus()"
-              (focusout)="onFocusLost()"
-              (keyup)="onKeyUp($event)"
-              (keydown.enter)="releaseInputOnEnterKeyDown(content.id); lostFocusOnEnter();"
-              [innerHTML]="postContent ?  postContent : null"
-        (input)="onKeyUp(this)">
+              (focusout)="onContentFocusOut()"
+              (keydown.enter)="onContentEnterKeyDown();"
+              [innerHTML]="modifiedContentInput ?  modifiedContentInput : null">
         </span>
       </span>
     </div>

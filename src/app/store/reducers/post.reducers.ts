@@ -10,6 +10,11 @@ export interface PostState {
   selectedPost: BlogPost | null;
   isLoading: boolean,
   postsError: any
+
+  editor: {
+    editedPost: BlogPost | null;
+    isModified: boolean;
+  }
 }
 
 export const initialState: PostState = {
@@ -18,7 +23,12 @@ export const initialState: PostState = {
   postsFromSubscriptions: [],
   selectedPost: null,
   postsBySearchCriteria: [],
-  postsError: null
+  postsError: null,
+
+  editor: {
+    editedPost: null,
+    isModified: false
+  }
 }
 
 export const postReducer = createReducer(
@@ -29,7 +39,7 @@ export const postReducer = createReducer(
     selectedBlogPosts: [],
     isLoading: false,
     postsFromSubscriptions: [],
-    selectedPost: null,
+    selectedPost: {} as BlogPost,
     postsBySearchCriteria: [],
     postsError: null
   })),
@@ -63,7 +73,7 @@ export const postReducer = createReducer(
 
   on(PostActions.resetSelectedPost, (state) => ({
     ...state,
-    selectedPost: null
+    selectedPost: {} as BlogPost
   })),
 
   on(PostActions.getPosts, (state) => ({
@@ -78,6 +88,54 @@ export const postReducer = createReducer(
   })),
 
   on(PostActions.getPostsFailure, (state, action) => ({
+    ...state,
+    isLoading: false,
+    postsError: action.error
+  })),
+
+  on(PostActions.createPost, (state) => ({
+    ...state,
+    isLoading: true
+  })),
+
+  on(PostActions.createPostSuccess, (state) => ({
+    ...state,
+    isLoading: false,
+  })),
+
+  on(PostActions.createPostFailure, (state, action) => ({
+    ...state,
+    isLoading: false,
+    postsError: action.error
+  })),
+
+  on(PostActions.updatePost, (state) => ({
+    ...state,
+    isLoading: true
+  })),
+
+  on(PostActions.updatePostSuccess, (state) => ({
+    ...state,
+    isLoading: false
+  })),
+
+  on(PostActions.updatePostFailure, (state, action) => ({
+    ...state,
+    isLoading: false,
+    postsError: action.error
+  })),
+
+  on(PostActions.deletePost, (state) => ({
+    ...state,
+    isLoading: true
+  })),
+
+  on(PostActions.deletePostSuccess, (state) => ({
+    ...state,
+    isLoading: false
+  })),
+
+  on(PostActions.deletePostFailure, (state, action) => ({
     ...state,
     isLoading: false,
     postsError: action.error

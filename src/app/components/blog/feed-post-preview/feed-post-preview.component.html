@@ -2,8 +2,8 @@
   <div class="feed-post-preview-slide">
     <div *ngIf="selectedPost$ | async; let asyncSelectedPost; ">
       <div class="feed-post-preview-header">
-        <app-avatar class="post-author-avatar" [ngClass]="'small'" [name]="asyncSelectedPost.author"> </app-avatar>
-        <div class="post-author-name"> {{asyncSelectedPost.author}} </div>
+        <app-avatar class="post-author-avatar" [ngClass]="'small'" [name]="asyncSelectedPost.blog.displayName"> </app-avatar>
+        <div class="post-author-name"> {{asyncSelectedPost.blog.displayName}} </div>
         <div class="post-category"> <span class="icon"> &#8594; </span> Reflections </div>
         <app-svg-button (click)="openPost()" [iconTemplate]="'open-post'"></app-svg-button>
         <app-text-button (click)="onClose()"> Close </app-text-button>

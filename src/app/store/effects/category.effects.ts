@@ -38,11 +38,7 @@ export class CategoryEffects {
                 }
               })
             }),
-            catchError((response) => {
-              // todo cleanup
-              console.log(response)
-              return of(createCategoryFailure({error: response.error?.message}))
-            })
+            catchError((response) => of(createCategoryFailure({error: response.error?.message})))
           )
       })
     )

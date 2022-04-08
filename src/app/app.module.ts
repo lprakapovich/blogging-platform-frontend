@@ -51,6 +51,7 @@ import {SubscriptionEffects} from "./store/effects/subscription.effects";
 import { ErrorMessageComponent } from './components/ui-elements/error-message/error-message.component';
 import { SuccessMessageComponent } from './components/ui-elements/success-message/success-message.component';
 import { WarningMessageComponent } from './components/ui-elements/warning-message/warning-message.component';
+import { BlogPostSettingsModalComponent } from './components/blog/blog-post-settings-modal/blog-post-settings-modal.component';
 
 @NgModule({
   declarations: [
@@ -86,6 +87,7 @@ import { WarningMessageComponent } from './components/ui-elements/warning-messag
     ErrorMessageComponent,
     SuccessMessageComponent,
     WarningMessageComponent,
+    BlogPostSettingsModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -107,8 +109,12 @@ import { WarningMessageComponent } from './components/ui-elements/warning-messag
       CategoryEffects,
       SubscriptionEffects
     ]),
-    StoreDevtoolsModule.instrument({}),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: true
+    }),
   ],
+
   providers: [
     HttpClient,
     HttpClientModule,

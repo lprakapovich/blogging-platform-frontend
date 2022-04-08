@@ -27,3 +27,13 @@ export const selectSelectedBlogPosts = createSelector(
   selectPostFeature,
   state => state.selectedBlogPosts
 )
+
+export const selectEditedPost = createSelector(
+  selectPostFeature,
+  state => state.editor.editedPost
+)
+
+export const selectIsModified = (modifiedTitle: string, modifiedContent: any) => createSelector(
+  selectEditedPost,
+  post => (!post) || post.title !== modifiedTitle || post.content !== modifiedContent
+)

@@ -1,6 +1,6 @@
 export enum Status {
-  Draft,
-  Hidden,
-  Scheduled,
-  Published
+  Draft = "DRAFT",
+  Hidden = "HIDDEN",
+  Scheduled = "SCHEDULED",
+  Published = "PUBLISHED"
 }

@@ -55,12 +55,12 @@ export class FeedComponent implements OnInit, AfterViewInit, OnDestroy {
     this.showPostPreview = false;
     this.showAppMenuModal = false;
     this.showAppBlogSettingsModal = false;
-    this.navbarService.setBlogTemplate()
   }
 
   ngOnInit(): void {
     this.fetchDataFromStore()
     this.subscribeToStoreChanges();
+    this.navbarService.setBlogTemplate()
   }
 
   ngAfterViewInit(): void {

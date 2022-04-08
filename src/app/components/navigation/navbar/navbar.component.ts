@@ -32,7 +32,7 @@ export class NavbarComponent {
       this.template = template;
     })
 
-    navbarTemplateService.getNavbarEditorRemoveButtonSubject().subscribe(show => {
+    navbarTemplateService.getNavbarEditorTemplateRemoveButtonSubject().subscribe(show => {
       this.showRemoveButton = show;
     })
   }

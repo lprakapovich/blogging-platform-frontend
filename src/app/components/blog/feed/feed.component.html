@@ -8,10 +8,10 @@
         <div class="feed-grid-item-content">
           <a class="post-card">
             <div class="post-card-header">
-              <app-avatar class="post-card-avatar" name="{{post.author}}" [ngClass]="'small'"></app-avatar>
+              <app-avatar class="post-card-avatar" name="{{post.blog.displayName}}" [ngClass]="'small'"></app-avatar>
               <div class="post-card-author-data">
-                <div class="post-card-author-name"> {{post.author}}</div>
-                <div class="post-card-blog-id">@{{post.blogId}}</div>
+                <div class="post-card-author-name"> {{post.blog.displayName}}</div>
+                <div class="post-card-blog-id">@{{post.blog.id.id}}</div>
               </div>
               <div class="post-card-publication-time"> 5d </div>
             </div>

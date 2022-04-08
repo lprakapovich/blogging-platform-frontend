@@ -31,9 +31,15 @@
              class="editor-navigation-back"> Go Back </a>
       </div>
       <div class="editor-navigation-item">
-        <app-svg-button [iconTemplate]="'check'"></app-svg-button>
-        <app-svg-button *ngIf="showRemoveButton" [iconTemplate]="'delete'" (click)="onDeleteClicked()"></app-svg-button>
-        <app-svg-button [iconTemplate]="'publish'"></app-svg-button>
+        <app-svg-button [iconTemplate]="'check'">
+        </app-svg-button>
+        <app-svg-button *ngIf="showRemoveButton"
+                        [iconTemplate]="'delete'"
+                        (click)="onDeleteClicked()">
+        </app-svg-button>
+        <app-svg-button [iconTemplate]="'publish'"
+                        (click)="onPublishClicked()">
+        </app-svg-button>
       </div>
     </div>
   </div>
