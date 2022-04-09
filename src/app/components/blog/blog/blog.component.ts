@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Router} from "@angular/router";
 import {NavbarTemplateService} from "../../../services/ui/navbar-template.service";
-import {combineLatest, map, Observable, Subject, Subscription, take} from "rxjs";
+import {combineLatest, map, Observable, Subject, Subscription, take, takeUntil} from "rxjs";
 import {Store} from "@ngrx/store";
 import {
   selectAuthenticatedUserBlogsIds,
@@ -34,7 +34,7 @@ export class BlogComponent implements OnInit, OnDestroy {
 
   userBlogIds$: Observable<BlogId[]>;
   selectedBlog$: Observable<BlogView>;
-  selectedBlogPublications: Observable<BlogPost[]>;
+  selectedBlogPublications$: Observable<BlogPost[]>;
   isLoading$: Observable<boolean>;
 
   isLoaded$: Observable<boolean>;
@@ -86,37 +86,20 @@ export class BlogComponent implements OnInit, OnDestroy {
   private fetchDataFromStore() {
     this.store.dispatch(getPosts({status: 'Published'}));
     this.userBlogIds$ = this.store.select(selectAuthenticatedUserBlogsIds);
-    this.selectedBlogPublications = this.store.select(selectSelectedBlogPosts);
+    this.selectedBlogPublications$ = this.store.select(selectSelectedBlogPosts);
     this.selectedBlog$ = this.store.select(selectSelectedBlog);
     this.isLoading$ = this.store.select(selectIsBlogLoading);
     this.isOwner$ = this.store.select(selectIsBlogOwner)
 
-
-
     this.isLoaded$ = combineLatest([
-      this.selectedBlog$, this.selectedBlogPublications, this.isLoading$
+      this.selectedBlog$, this.selectedBlogPublications$, this.isLoading$
       ]).pipe(
+        takeUntil(this.unsubscribe$),
         map(([userBlog, publications, isLoadingAnything]) => {
           this.isSubscriber$ = this.store.select(selectIsSubscriber(userBlog.id))
           return !!userBlog  && !!publications && !isLoadingAnything;
         })
     )
-
-
-    const subs$ = this.store.select(selectAuthenticatedUserBlogSubscriptions)
-      .pipe(take(1))
-      .subscribe(subs => {
-
-        this.selectedBlog$.pipe(take(1)).subscribe(blog => {
-          console.log(`Selected blog ${blog.id.id},${blog.id.username}`)
-          subs.forEach(s => {
-            console.log(`Subscriptions ${s.id.subscription.id},${s.id.subscription.username}`)
-
-            // console.log(`Are equal? ${ blog.id.id === s.id.subscription.id && blog.id.username === s.id.subscription.username }`)
-          })
-        })
-      })
-
   }
 
   onUserBlogSelectedEvent(blogId: BlogId) {

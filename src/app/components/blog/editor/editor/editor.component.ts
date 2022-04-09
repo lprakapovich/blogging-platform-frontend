@@ -25,8 +25,8 @@ export class EditorComponent implements OnDestroy {
   isLoading$: Observable<boolean>;
   isModified$: Observable<boolean>;
 
-  modifiedTitleInput: string;
-  modifiedContentInput: any;
+  modifiedTitleInput: string = '';
+  modifiedContentInput: any = '';
 
   public constructor(private store: Store,
                      private navbarService: NavbarTemplateService,
@@ -81,7 +81,7 @@ export class EditorComponent implements OnDestroy {
 
   onContentEnterKeyDown() {
     // console.log(`Content enter key down`)
-    this.autoSaveInput();
+    // this.autoSaveInput();
   }
 
   onContentFocusOut() {

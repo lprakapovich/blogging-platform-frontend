@@ -52,6 +52,7 @@ import { ErrorMessageComponent } from './components/ui-elements/error-message/er
 import { SuccessMessageComponent } from './components/ui-elements/success-message/success-message.component';
 import { WarningMessageComponent } from './components/ui-elements/warning-message/warning-message.component';
 import { BlogPostSettingsModalComponent } from './components/blog/blog-post-settings-modal/blog-post-settings-modal.component';
+import {PostContentPipe} from "./pipes/PostContentPipe";
 
 @NgModule({
   declarations: [
@@ -88,6 +89,7 @@ import { BlogPostSettingsModalComponent } from './components/blog/blog-post-sett
     SuccessMessageComponent,
     WarningMessageComponent,
     BlogPostSettingsModalComponent,
+    PostContentPipe
   ],
   imports: [
     BrowserModule,

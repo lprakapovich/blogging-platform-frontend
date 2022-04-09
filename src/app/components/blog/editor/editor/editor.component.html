@@ -10,7 +10,7 @@
             data-placeholder="Title of the post"
             spellcheck="false"
             (focusout)="onTitleFocusOut()"
-            [innerText]="modifiedTitleInput ? modifiedTitleInput : null"
+            [innerText]="modifiedTitleInput"
             (keydown.enter)="onTitleEnterKeyDown()">
       </span>
     </span>
@@ -25,7 +25,7 @@
               data-placeholder="Start typing here..."
               (focusout)="onContentFocusOut()"
               (keydown.enter)="onContentEnterKeyDown();"
-              [innerHTML]="modifiedContentInput ?  modifiedContentInput : null">
+              [innerHTML]="modifiedContentInput">
         </span>
       </span>
     </div>

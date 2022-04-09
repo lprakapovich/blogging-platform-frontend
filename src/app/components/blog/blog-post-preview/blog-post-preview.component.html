@@ -1,9 +1,13 @@
 <div class="blog-post-preview-container">
-  <div class="title"> Поиск </div>
-  <p class="content">
-    Я понимаю, что в некоторых местах сейчас такую задачу решать совсем трудно, потому что либо снаряды летают под окном, либо отрезаны от мира. Но давайте представим, что мы решаем ее три месяца назад. Или через пару месяцев.
-     </p>
+  <div class="title"> {{ blogPost.title}} </div>
+  <div> </div>
+  <span class="content"
+        id="content"
+        contenteditable="false"
+        spellcheck="false"
+        [innerHTML]="blogPost.content | postContentPipe">
+  </span>
   <div class="time light-grey">
-    <div>October 9, 2021, 14:40 </div>
+    <div> {{blogPost.createdDateTime | date:'MMM d yyyy, h:mm aa'}} </div>
   </div>
 </div>
