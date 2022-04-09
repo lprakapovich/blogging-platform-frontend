@@ -10,7 +10,7 @@ import {BlogComponent} from './components/blog/blog/blog.component';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
 import {DefaultButtonComponent} from './components/ui-elements/default-button/default-button.component';
 import {SearchBarComponent} from './components/ui-elements/search-bar/search-bar.component';
-import {BlogPostPreviewComponent} from './components/blog/blog-post-preview/blog-post-preview.component';
+import {BlogPostPreviewListItemComponent} from './components/blog/blog-post-preview-list-item/blog-post-preview-list-item.component';
 import {EditorComponent} from './components/blog/editor/editor/editor.component';
 import {EditorPageComponent} from './components/blog/editor/editor-page/editor-page.component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
@@ -53,6 +53,7 @@ import { SuccessMessageComponent } from './components/ui-elements/success-messag
 import { WarningMessageComponent } from './components/ui-elements/warning-message/warning-message.component';
 import { BlogPostSettingsModalComponent } from './components/blog/blog-post-settings-modal/blog-post-settings-modal.component';
 import {PostContentPipe} from "./pipes/PostContentPipe";
+import { BlogPostViewerComponent } from './components/blog/blog-post-viewer/blog-post-viewer.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,7 @@ import {PostContentPipe} from "./pipes/PostContentPipe";
     BlogPostComponent,
     DefaultButtonComponent,
     SearchBarComponent,
-    BlogPostPreviewComponent,
+    BlogPostPreviewListItemComponent,
     EditorComponent,
     EditorPageComponent,
     DropDownMenuComponent,
@@ -89,7 +90,8 @@ import {PostContentPipe} from "./pipes/PostContentPipe";
     SuccessMessageComponent,
     WarningMessageComponent,
     BlogPostSettingsModalComponent,
-    PostContentPipe
+    PostContentPipe,
+    BlogPostViewerComponent
   ],
   imports: [
     BrowserModule,

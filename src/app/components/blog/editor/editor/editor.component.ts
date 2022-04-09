@@ -1,7 +1,7 @@
 import {Component, ElementRef, OnDestroy, ViewChild} from '@angular/core';
 import {NavbarTemplateService} from "../../../../services/ui/navbar-template.service";
 import {EditorService} from "../../../../services/ui/editor.service";
-import {Observable, Subject, take, takeUntil} from "rxjs";
+import {Observable, Subject, takeUntil} from "rxjs";
 import {BlogPost} from "../../../../models/BlogPost";
 import {Store} from "@ngrx/store";
 import {selectIsModified, selectIsPostLoading, selectSelectedPost} from "../../../../store/selectors/post.selectors";
@@ -24,6 +24,9 @@ export class EditorComponent implements OnDestroy {
   selectedPost$: Observable<BlogPost | null>;
   isLoading$: Observable<boolean>;
   isModified$: Observable<boolean>;
+
+  isTitleMissing: boolean;
+  isContentMissing: boolean;
 
   modifiedTitleInput: string = '';
   modifiedContentInput: any = '';
@@ -58,16 +61,25 @@ export class EditorComponent implements OnDestroy {
   }
 
    onPublishEventTriggered() {
-    const createPostData: CreatePostData = {
-      title: this.modifiedTitleInput,
-      content: this.modifiedContentInput,
-      status: Status.Published.toString(),
+    this.autoSaveInput();
+
+    let title = this.modifiedTitleInput.trim();
+    let content = this.modifiedContentInput.trim();
+    let isInputValid = !!content && !!title;
+
+    if (isInputValid) {
+      const createPostData: CreatePostData = {
+        title: title,
+        content: content,
+        status: Status.Published.toString(),
+      }
+      this.store.dispatch(createPost({createPostData}))
+    } else {
+      this.showMissingDataErrorMessage();
     }
-    this.store.dispatch(createPost({createPostData}))
   }
 
   onTitleEnterKeyDown() {
-    // console.log(`Title enter key down`)
     this.title.nativeElement.blur();
     this.content.nativeElement.innerHTML.trimStart();
     this.content.nativeElement.focus();
@@ -75,25 +87,23 @@ export class EditorComponent implements OnDestroy {
   }
 
   onTitleFocusOut() {
-    // console.log(`Title focus lost`)
     this.autoSaveInput();
   }
 
-  onContentEnterKeyDown() {
-    // console.log(`Content enter key down`)
-    // this.autoSaveInput();
-  }
-
   onContentFocusOut() {
-    // console.log(`Content focus lost`)
     this.autoSaveInput();
   }
 
   autoSaveInput() {
     this.modifiedTitleInput = this.title.nativeElement.innerText;
     this.modifiedContentInput = this.content.nativeElement.innerHTML;
-    //
-    // console.log(`Auto saved title: ${this.modifiedTitleInput}`)
-    // console.log(`Auto saved content: ${this.modifiedContentInput}`)
+  }
+
+  hideErrorMessages() {
+    this.editorService.onMissingContentOrTitleErrorChanged(false, false)
+  }
+
+  private showMissingDataErrorMessage() {
+    this.editorService.onMissingContentOrTitleErrorChanged(!this.modifiedContentInput, !this.modifiedTitleInput);
   }
 }

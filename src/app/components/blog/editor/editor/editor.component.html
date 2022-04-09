@@ -1,33 +1,31 @@
+
 <div id="editor-container">
-  <button (click)="onPublishEventTriggered()"> publ</button>
   <div id="editor-container-header">
-    <div *ngIf="!!modifiedContentInput && !!modifiedTitleInput"> Is modified? {{isModified$ | async}}</div>
-    <span class="badge">
+    <div *ngIf="!!modifiedContentInput && !!modifiedTitleInput"> Is modified? {{isModified$ | async}}
+    </div>
       <span #title
             contenteditable="true"
             id="title"
             class="badge"
             data-placeholder="Title of the post"
             spellcheck="false"
+            [ngClass]="isTitleMissing ? 'error' : ''"
             (focusout)="onTitleFocusOut()"
             [innerText]="modifiedTitleInput"
+            (input)="hideErrorMessages()"
             (keydown.enter)="onTitleEnterKeyDown()">
       </span>
-    </span>
   </div>
-  <div #parent>
-    <div>
-      <span>
-        <span id="content" #content
-              contenteditable="true"
-              class="badge"
-              spellcheck="false"
-              data-placeholder="Start typing here..."
-              (focusout)="onContentFocusOut()"
-              (keydown.enter)="onContentEnterKeyDown();"
-              [innerHTML]="modifiedContentInput">
-        </span>
-      </span>
-    </div>
+  <div>
+    <span id="content" #content
+          contenteditable="true"
+          class="badge"
+          spellcheck="false"
+          data-placeholder="Start typing here..."
+          [ngClass]="isContentMissing ? 'error' : ''"
+          (focusout)="onContentFocusOut()"
+          (input)="hideErrorMessages()"
+          [innerHTML]="modifiedContentInput">
+    </span>
   </div>
 </div>
