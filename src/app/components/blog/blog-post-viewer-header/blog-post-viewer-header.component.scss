@@ -1,0 +1,13 @@
+.blog-post-viewer-header-container {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+
+  .blog-post-author-name {
+    margin: 0 0.25rem;
+  }
+
+  span.icon {
+    color: grey;
+  }
+}

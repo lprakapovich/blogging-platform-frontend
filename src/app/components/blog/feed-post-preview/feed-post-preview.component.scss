@@ -15,20 +15,8 @@
     overflow-y: scroll;
 
     .feed-post-preview-header {
-      display: flex;
-      align-items: center;
-      font-size: 1rem;
-
-      * {
-        margin: 0 0.5rem;
-      }
-
-      app-svg-button {
+      .feed-post-preview-header-button {
         margin-left: auto;
-      }
-
-      span.icon {
-        color: grey;
       }
     }
   }

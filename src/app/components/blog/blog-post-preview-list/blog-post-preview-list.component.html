@@ -1,3 +1,7 @@
 <div id="blog-post-preview-list-container">
-    <app-blog-post-preview-list-item *ngFor="let blogPost of blogPosts" [blogPost]="blogPost"></app-blog-post-preview-list-item>
+    <app-blog-post-preview-list-item
+      *ngFor="let blogPost of blogPosts"
+      [blogPost]="blogPost"
+      (click)="onBlogPostSelected(blogPost)">
+    </app-blog-post-preview-list-item>
 </div>

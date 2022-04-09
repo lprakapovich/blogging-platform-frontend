@@ -93,13 +93,14 @@ export class BlogEffects {
   getBlogDetailsAndRedirect$ = createEffect(() =>
     this.actions$.pipe(
       ofType(BlogActionTypes.GET_BLOG_DETAILS_AND_REDIRECT),
+      map((action:any) => (action.blogId)),
       combineLatestWith(
         this.store.select(selectPrincipal)),
-      switchMap(([{blogId, username}, principal]) => {
+      switchMap(([{id, username}, principal]) => {
         const isPrincipal = username == principal
-        return this.blogService.getBlogDetails(blogId, username)
+        return this.blogService.getBlogDetails(id, username)
           .pipe(
-            map((blog) => getBlogDetailsAndRedirectSuccess({blog, blogId, isPrincipal})),
+            map((blog) => getBlogDetailsAndRedirectSuccess({blog, blogId: id, isPrincipal})),
             catchError(((error) => of(getBlogDetailsAndRedirectFailure({error}))))
           )
       }))
@@ -108,10 +109,7 @@ export class BlogEffects {
   getBlogDetailsAndRedirectSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(BlogActionTypes.GET_BLOG_DETAILS_AND_REDIRECT_SUCCESS),
-      // map((action: any) => action.blogId),
-      tap(({blogId, blog}) => {
-        // if user blogs then
-        // console.log(blog.)
+      tap(({blogId}) => {
         this.router.navigate([`/blog/@${blogId}`])
       })
     ),
@@ -119,7 +117,6 @@ export class BlogEffects {
       dispatch: false
     })
 
-  // init blog after login
   getUserBlogsAndRedirect$ = createEffect(() =>
     this.actions$.pipe(
       ofType(BlogActionTypes.GET_USER_BLOGS_AND_REDIRECT),

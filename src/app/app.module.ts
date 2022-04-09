@@ -54,6 +54,8 @@ import { WarningMessageComponent } from './components/ui-elements/warning-messag
 import { BlogPostSettingsModalComponent } from './components/blog/blog-post-settings-modal/blog-post-settings-modal.component';
 import {PostContentPipe} from "./pipes/PostContentPipe";
 import { BlogPostViewerComponent } from './components/blog/blog-post-viewer/blog-post-viewer.component';
+import { BlogPostViewerHeaderComponent } from './components/blog/blog-post-viewer-header/blog-post-viewer-header.component';
+import {BlogNamePipe} from "./pipes/BlogNamePipe";
 
 @NgModule({
   declarations: [
@@ -91,7 +93,9 @@ import { BlogPostViewerComponent } from './components/blog/blog-post-viewer/blog
     WarningMessageComponent,
     BlogPostSettingsModalComponent,
     PostContentPipe,
-    BlogPostViewerComponent
+    BlogNamePipe,
+    BlogPostViewerComponent,
+    BlogPostViewerHeaderComponent,
   ],
   imports: [
     BrowserModule,

@@ -74,6 +74,7 @@ export class FeedComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private fetchDataFromStore() {
+    this.store.dispatch(getPostsFromSubscriptions());
     this.userBlogIds$ = this.store.select(selectAuthenticatedUserBlogsIds);
     this.userBlog$ = this.store.select(selectAuthenticatedUserBlog);
     this.isLoading$ = this.store.select(selectIsPostLoading);
@@ -127,12 +128,9 @@ export class FeedComponent implements OnInit, AfterViewInit, OnDestroy {
     this.showPostPreview = false;
   }
 
-  onUserBlogSelectedEvent(id: BlogId) {
+  onUserBlogSelectedEvent(blogId: BlogId) {
     this.showAppMenuModal = false;
-    this.store.dispatch(getBlogDetailsAndRedirect({
-      blogId: id.id,
-      username: id.username
-    }))
+    this.store.dispatch(getBlogDetailsAndRedirect({ blogId }))
   }
 
   onSettingsSelectedEvent() {

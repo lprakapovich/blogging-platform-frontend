@@ -5,6 +5,8 @@ import {Observable} from "rxjs";
 import {BlogPost} from "../../../models/BlogPost";
 import {Store} from "@ngrx/store";
 import {selectSelectedPost} from "../../../store/selectors/post.selectors";
+import {BlogId} from "../../../models/Blog";
+import {getBlogDetailsAndRedirect} from "../../../store/actions/blog.actions";
 
 @Component({
   selector: 'app-feed-post-preview',
@@ -32,5 +34,9 @@ export class FeedPostPreviewComponent implements OnInit {
 
   openPost() {
     this.router.navigate([`publication/@${"blogId"}/${"postId"}`])
+  }
+
+  onBlogNameClickedEvent(blogId: BlogId) {
+    this.store.dispatch(getBlogDetailsAndRedirect({ blogId }))
   }
 }

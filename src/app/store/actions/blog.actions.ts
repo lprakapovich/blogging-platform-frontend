@@ -1,5 +1,5 @@
 import {createAction, props} from "@ngrx/store";
-import {Blog} from "../../models/Blog";
+import {Blog, BlogId} from "../../models/Blog";
 import {BlogView} from "../../models/BlogView";
 import {UpdateBlogData} from "../../models/data/blog/UpdateBlogData";
 
@@ -30,7 +30,7 @@ export const getUserBlogsAndRedirect = createAction(BlogActionTypes.GET_USER_BLO
 export const getUserBlogsAndRedirectSuccess = createAction(BlogActionTypes.GET_USER_BLOGS_AND_REDIRECT_SUCCESS, props<{blogs: BlogView[], path: string}>());
 export const getUserBlogsAndRedirectFailure = createAction(BlogActionTypes.GET_USER_BLOGS_AND_REDIRECT_FAILURE, props<{error: any}>());
 
-export const getBlogDetailsAndRedirect = createAction(BlogActionTypes.GET_BLOG_DETAILS_AND_REDIRECT, props<{blogId: string, username: string}>())
+export const getBlogDetailsAndRedirect = createAction(BlogActionTypes.GET_BLOG_DETAILS_AND_REDIRECT, props<{blogId: BlogId}>())
 export const getBlogDetailsAndRedirectSuccess = createAction(BlogActionTypes.GET_BLOG_DETAILS_AND_REDIRECT_SUCCESS, props<{blog: BlogView, blogId: string, isPrincipal: boolean}>())
 export const getBlogDetailsAndRedirectFailure = createAction(BlogActionTypes.GET_BLOG_DETAILS_AND_REDIRECT_FAILURE, props<{error: any}>())
 

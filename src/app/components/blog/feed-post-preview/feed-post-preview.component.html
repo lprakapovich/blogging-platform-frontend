@@ -1,16 +1,18 @@
 <div class="feed-post-preview-container">
   <div class="feed-post-preview-slide">
-    <div *ngIf="selectedPost$ | async; let asyncSelectedPost; ">
-      <div class="feed-post-preview-header">
-        <app-avatar class="post-author-avatar" [ngClass]="'small'" [name]="asyncSelectedPost.blog.displayName"> </app-avatar>
-        <div class="post-author-name"> {{asyncSelectedPost.blog.displayName}} </div>
-        <div class="post-category"> <span class="icon"> &#8594; </span> Reflections </div>
-        <app-svg-button (click)="openPost()" [iconTemplate]="'open-post'"></app-svg-button>
+    <div *ngIf="selectedPost$ | async; let selectedPost; ">
+      <app-blog-post-viewer-header class="feed-post-preview-header"
+                                   [blogPost]="selectedPost"
+                                   (blogNameClickEventEmitter)="onBlogNameClickedEvent($event)"
+      >
+        <app-svg-button class="feed-post-preview-header-button"
+                        (click)="openPost()"
+                        [iconTemplate]="'open-post'"></app-svg-button>
         <app-text-button (click)="onClose()"> Close </app-text-button>
-      </div>
+      </app-blog-post-viewer-header>
       <div class="feed-post-preview-article">
-        <div class="feed-post-preview-title"> {{asyncSelectedPost.title}}</div>
-        <div class="feed-post-preview-content" [innerHTML]="asyncSelectedPost.content ? asyncSelectedPost.content : null">
+        <div class="feed-post-preview-title"> {{selectedPost.title}}</div>
+        <div class="feed-post-preview-content" [innerHTML]="selectedPost.content">
         </div>
       </div>
     </div>

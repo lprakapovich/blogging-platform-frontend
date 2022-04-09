@@ -74,10 +74,7 @@ export class SearchResultComponent implements OnInit {
     this.postSearchResultHidden = false;
   }
 
-  onBlogSelected(id: BlogId) {
-    this.store.dispatch(getBlogDetailsAndRedirect({
-      blogId: id.id,
-      username: id.username
-    }))
+  onBlogSelected(blogId: BlogId) {
+    this.store.dispatch(getBlogDetailsAndRedirect({ blogId }))
   }
 }

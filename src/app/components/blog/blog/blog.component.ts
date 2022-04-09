@@ -5,7 +5,6 @@ import {combineLatest, map, Observable, Subject, Subscription, take, takeUntil} 
 import {Store} from "@ngrx/store";
 import {
   selectAuthenticatedUserBlogsIds,
-  selectAuthenticatedUserBlogSubscriptions,
   selectIsBlogLoading,
   selectIsBlogOwner,
   selectIsSubscriber,
@@ -104,10 +103,7 @@ export class BlogComponent implements OnInit, OnDestroy {
 
   onUserBlogSelectedEvent(blogId: BlogId) {
     this.showAppMenuModal = false;
-    this.store.dispatch(getBlogDetailsAndRedirect({
-      blogId: blogId.id,
-      username: blogId.username
-    }))
+    this.store.dispatch(getBlogDetailsAndRedirect({ blogId }))
   }
 
   onSettingsModalClosed() {

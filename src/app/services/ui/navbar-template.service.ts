@@ -6,6 +6,7 @@ import {Subject} from "rxjs";
 })
 export class NavbarTemplateService {
 
+  // todo change to union or enum
   public static BLOG_TEMPLATE = 'blog';
   public static EDITOR_TEMPLATE = 'editor';
   public static DEFAULT_TEMPLATE = 'default';

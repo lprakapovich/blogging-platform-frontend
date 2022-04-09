@@ -4,6 +4,8 @@ import {Observable} from "rxjs";
 import {BlogPost} from "../../../models/BlogPost";
 import {Store} from "@ngrx/store";
 import {selectSelectedPost} from "../../../store/selectors/post.selectors";
+import {BlogId} from "../../../models/Blog";
+import {getBlogDetailsAndRedirect} from "../../../store/actions/blog.actions";
 
 @Component({
   selector: 'app-blog-post',
@@ -21,5 +23,9 @@ export class BlogPostComponent implements OnInit {
   ngOnInit(): void {
     this.navbarService.setBlogTemplate();
     this.post$ = this.store.select(selectSelectedPost);
+  }
+
+  onBlogNameClickedEvent(blogId: BlogId) {
+    this.store.dispatch(getBlogDetailsAndRedirect({ blogId }))
   }
 }
