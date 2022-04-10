@@ -22,7 +22,7 @@ import {Actions, ofType} from "@ngrx/effects";
 })
 export class FeedPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  unsubscribe$: Subject<void>;
+  unsubscribe$ = new Subject<void>();
 
   isLoading$: Observable<boolean>;
   posts$: Observable<BlogPost[]>;

@@ -5,7 +5,7 @@ import {BlogPost} from "../../../models/BlogPost";
 import {Store} from "@ngrx/store";
 import {selectSelectedPost} from "../../../store/selectors/post.selectors";
 import {BlogId} from "../../../models/Blog";
-import {getBlogDetailsAndRedirect} from "../../../store/actions/blog.actions";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-blog-post',
@@ -17,6 +17,7 @@ export class BlogPostComponent implements OnInit {
   post$: Observable<BlogPost | null>;
 
   constructor(private store: Store,
+              private router: Router,
               private navbarService: NavbarTemplateService) {
   }
 
@@ -26,6 +27,6 @@ export class BlogPostComponent implements OnInit {
   }
 
   onBlogNameClickedEvent(blogId: BlogId) {
-    this.store.dispatch(getBlogDetailsAndRedirect({ blogId }))
+    this.router.navigate([`/blog/@${blogId.id}`])
   }
 }

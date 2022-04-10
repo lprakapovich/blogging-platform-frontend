@@ -35,7 +35,7 @@ export class BlogSettingsModalComponent implements OnInit, OnDestroy {
   categoryError$: Observable<string>;
   categories$: Observable<Category[]>;
 
-  unsubscribe$ = new Subject<boolean>();
+  unsubscribe$ = new Subject<void>();
 
   selectedSection: string;
   newCategoryInput: string;
@@ -73,7 +73,7 @@ export class BlogSettingsModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.unsubscribe$.next(true);
+    this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
 
