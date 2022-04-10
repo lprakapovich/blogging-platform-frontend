@@ -9,10 +9,9 @@
             class="badge"
             data-placeholder="Title of the post"
             spellcheck="false"
-            [ngClass]="isTitleMissing ? 'error' : ''"
             (focusout)="onTitleFocusOut()"
             [innerText]="modifiedTitleInput"
-            (input)="hideErrorMessages()"
+            (input)="inputEventEmitter.emit()"
             (keydown.enter)="onTitleEnterKeyDown()">
       </span>
   </div>
@@ -22,9 +21,8 @@
           class="badge"
           spellcheck="false"
           data-placeholder="Start typing here..."
-          [ngClass]="isContentMissing ? 'error' : ''"
           (focusout)="onContentFocusOut()"
-          (input)="hideErrorMessages()"
+          (input)="inputEventEmitter.emit()"
           [innerHTML]="modifiedContentInput">
     </span>
   </div>

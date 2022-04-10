@@ -17,15 +17,17 @@ import {
   updatePostFailure,
   updatePostSuccess
 } from "../actions/post.actions";
-import {catchError, combineLatestWith, map, of, switchMap} from "rxjs";
+import {catchError, combineLatestWith, debounceTime, map, of, switchMap, tap} from "rxjs";
 import {selectAuthenticatedUserBlogId, selectSelectedBlogId} from "../selectors/blog.selectors";
 import {selectPrincipal} from "../selectors/auth.selectors";
+import {Router} from "@angular/router";
 
 @Injectable()
 export class PostEffects {
 
   constructor(
     private store: Store,
+    private router: Router,
     private actions$: Actions,
     private postService: PostService) {
   }
@@ -33,6 +35,7 @@ export class PostEffects {
   createPost$ = createEffect(() =>
   this.actions$.pipe(
     ofType(PostActionTypes.CREATE_POST),
+    debounceTime(1000),
     map((action: any) => action.createPostData),
     combineLatestWith(this.store.select(selectAuthenticatedUserBlogId)),
     switchMap(([createPostData, { id, username}]) => {
@@ -43,6 +46,17 @@ export class PostEffects {
         )
     })
   ))
+
+  createPostSuccess$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(PostActionTypes.CREATE_POST_SUCCESS),
+    map((action: any) => action.createdPost),
+    tap((post) => {
+      console.log(`createPostSuccess for post ${post.id} of blog ${post.blog.id.id},${post.blog.id.username}`)
+      this.router.navigate([`publication/@${post.blog.id}/${post.id}`])
+    })),{
+    dispatch: false
+  })
 
   deletePost$ = createEffect(() =>
   this.actions$.pipe(

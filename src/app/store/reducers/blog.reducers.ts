@@ -94,6 +94,30 @@ export const blogReducer = createReducer(
     selectedBlog: action.blog
   })),
 
+  on(BlogActions.getBlogDetailsAndRedirectFailure, (state, action) => ({
+    ...state,
+    isLoading: false,
+    blogError: action.error
+  })),
+
+  on(BlogActions.getBlogDetails, (state) => ({
+    ...state,
+    isLoading: true,
+  })),
+
+  on(BlogActions.getBlogDetailsSuccess, (state, action) => ({
+    ...state,
+    isLoading: false,
+    authenticatedUserBlog: action.isPrincipal ? action.blog : state.authenticatedUserBlog,
+    selectedBlog: action.blog
+  })),
+
+  on(BlogActions.getBlogDetailsFailure, (state, action) => ({
+    ...state,
+    isLoading: false,
+    blogError: action.error
+  })),
+
   on(BlogActions.getSearchedBlogs, (state) => ({
     ...state,
     isLoading: true,

@@ -3,7 +3,7 @@ import {ActivatedRoute} from "@angular/router";
 import {Blog, BlogId} from "../../../models/Blog";
 import {BlogPost} from "../../../models/BlogPost";
 import {NavbarTemplateService} from "../../../services/ui/navbar-template.service";
-import {Observable} from "rxjs";
+import {Observable, take} from "rxjs";
 import {Store} from "@ngrx/store";
 import {getBlogDetailsAndRedirect, getSearchedBlogs} from "../../../store/actions/blog.actions";
 import {selectBlogsBySearchCriteria} from "../../../store/selectors/blog.selectors";
@@ -35,6 +35,7 @@ export class SearchPageComponent implements OnInit {
   ngOnInit(): void {
     this.route
       .queryParams
+      .pipe(take(1))
       .subscribe(params => {
         this.searchInput = params['search'];
         this.store.dispatch(getSearchedBlogs({payload: this.searchInput}))

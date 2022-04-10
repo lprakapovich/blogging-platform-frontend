@@ -116,11 +116,14 @@ export class BlogPageComponent implements OnInit, OnDestroy {
   }
 
   private subscribeToModalChanges() {
-    this.appMenuModalSubscription = this.modalService.getAppMenuModalSubject()
+    this.modalService.getAppMenuModalSubject()
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe(show =>
         this.showAppMenuModal = show
       );
-    this.appSettingsModalSubscription = this.modalService.getAppSettingsModalSubject()
+
+    this.modalService.getAppSettingsModalSubject()
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe(show =>
         this.showAppBlogSettingsModal = show
       )

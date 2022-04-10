@@ -8,7 +8,7 @@
   </app-text-button>
   <div class="blog-post-category">
     <span class="icon"> &#8594; </span>
-    {{ blogPost.category ? blogPost.category : 'General' }}
+    {{ blogPost.category ? blogPost.category.name : 'General' }}
   </div>
   <ng-content></ng-content>
 </div>

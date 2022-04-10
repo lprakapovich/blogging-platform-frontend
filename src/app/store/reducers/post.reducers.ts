@@ -98,9 +98,10 @@ export const postReducer = createReducer(
     isLoading: true
   })),
 
-  on(PostActions.createPostSuccess, (state) => ({
+  on(PostActions.createPostSuccess, (state, action) => ({
     ...state,
     isLoading: false,
+    selectedPost: action.createdPost
   })),
 
   on(PostActions.createPostFailure, (state, action) => ({

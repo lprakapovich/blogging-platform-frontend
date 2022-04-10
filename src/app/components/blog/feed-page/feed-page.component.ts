@@ -2,7 +2,7 @@ import {AfterViewInit, Component, HostListener, OnDestroy, OnInit, ViewChild} fr
 import {NavbarTemplateService} from "../../../services/ui/navbar-template.service";
 import {Router} from "@angular/router";
 import {BlogPost} from "../../../models/BlogPost";
-import {Observable, Subscription} from "rxjs";
+import {Observable, Subject, takeUntil} from "rxjs";
 import {Store} from "@ngrx/store";
 import {selectIsPostLoading, selectPostsFromSubscriptions} from "../../../store/selectors/post.selectors";
 import {getPostsFromSubscriptions, resetSelectedPost, setSelectedPost} from "../../../store/actions/post.actions";
@@ -22,6 +22,8 @@ import {Actions, ofType} from "@ngrx/effects";
 })
 export class FeedPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
+  unsubscribe$: Subject<void>;
+
   isLoading$: Observable<boolean>;
   posts$: Observable<BlogPost[]>;
   userBlogIds$: Observable<BlogId[]>;
@@ -36,10 +38,6 @@ export class FeedPageComponent implements OnInit, AfterViewInit, OnDestroy {
   showPostPreview: boolean;
   showAppMenuModal: boolean;
   showAppBlogSettingsModal: boolean;
-
-  resizeSubscription: Subscription;
-  appMenuSubscription: Subscription;
-  appSettingsSubscription: Subscription;
 
   @HostListener('window:resize', ['$event'])
   onResize() {
@@ -68,31 +66,35 @@ export class FeedPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.resizeSubscription.unsubscribe();
-    this.appMenuSubscription.unsubscribe();
-    this.appSettingsSubscription.unsubscribe();
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   private fetchDataFromStore() {
     this.store.dispatch(getPostsFromSubscriptions());
+
     this.userBlogIds$ = this.store.select(selectAuthenticatedUserBlogsIds);
     this.userBlog$ = this.store.select(selectAuthenticatedUserBlog);
     this.isLoading$ = this.store.select(selectIsPostLoading);
     this.posts$ = this.store.select(selectPostsFromSubscriptions);
 
     this.actions$.pipe(
+      takeUntil(this.unsubscribe$),
       ofType(BlogActionTypes.GET_USER_BLOGS_AND_REDIRECT_SUCCESS)
     ).subscribe(() => this.store.dispatch(getPostsFromSubscriptions()))
   }
 
   private subscribeToStoreChanges() {
-    this.resizeSubscription = this.isLoading$
+    this.isLoading$
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe(() => this.resizeAllGridItems());
 
-    this.appMenuSubscription = this.modalService.getAppMenuModalSubject()
+    this.modalService.getAppMenuModalSubject()
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe(show => this.showAppMenuModal = show)
 
-    this.appSettingsSubscription = this.modalService.getAppSettingsModalSubject()
+    this.modalService.getAppSettingsModalSubject()
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe(show => this.showAppBlogSettingsModal = show)
   }
 

@@ -9,6 +9,8 @@ import {
   createBlogSuccess,
   getBlogDetailsAndRedirectFailure,
   getBlogDetailsAndRedirectSuccess,
+  getBlogDetailsFailure,
+  getBlogDetailsSuccess,
   getSearchedBlogsFailure,
   getSearchedBlogsSuccess,
   getUserBlogsAndRedirectFailure,
@@ -90,6 +92,23 @@ export class BlogEffects {
     )
   )
 
+  getBlogDetails$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(BlogActionTypes.GET_BLOG_DETAILS),
+      map((action:any) => (action.blogId)),
+      combineLatestWith(
+        this.store.select(selectPrincipal)),
+      switchMap(([{id, username}, principal]) => {
+        const isPrincipal = username == principal
+        return this.blogService.getBlogDetails(id, username)
+          .pipe(
+            map((blog) => getBlogDetailsSuccess({blog, blogId: id, isPrincipal})),
+            catchError(((error) => of(getBlogDetailsFailure({error}))))
+          )
+      }))
+  )
+
+
   getBlogDetailsAndRedirect$ = createEffect(() =>
     this.actions$.pipe(
       ofType(BlogActionTypes.GET_BLOG_DETAILS_AND_REDIRECT),
@@ -110,6 +129,7 @@ export class BlogEffects {
     this.actions$.pipe(
       ofType(BlogActionTypes.GET_BLOG_DETAILS_AND_REDIRECT_SUCCESS),
       tap(({blogId}) => {
+        console.log(`getBlogDetailsAndRedirectSuccess$ redirect to ${blogId}`)
         this.router.navigate([`/blog/@${blogId}`])
       })
     ),

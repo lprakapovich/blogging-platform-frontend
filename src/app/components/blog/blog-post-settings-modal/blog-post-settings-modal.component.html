@@ -1,3 +1,54 @@
 <div class="blog-post-settings-modal-container fullscreen-modal-bg">
-
+  <div class="post-publishing-settings">
+    <div class="post-publishing-settings-header"> Post publishing settings </div>
+    <div class="post-status-settings">
+      <div class="post-status">
+        <div class="status-label">
+          <input type="radio"
+                 id="published-status"
+                 value="Published"
+                 name="post-status"
+                 checked
+                 (change)="onStatusInputChanged($event)">
+          <label for="published-status"> Published </label>
+        </div>
+        <label class="status-label-description" for="published-status"> Will be visible to the audience</label>
+      </div>
+      <div class="post-status">
+        <div class="status-label">
+          <input type="radio"
+                 id="draft-status"
+                 value="Draft"
+                 name="post-status"
+                 (change)="onStatusInputChanged($event)">
+          <label for="draft-status"> Draft </label>
+        </div>
+        <label class="status-label-description" for="draft-status"> Hidden from the audience </label>
+      </div>
+    </div>
+    <div class="post-category-settings">
+      <div class="post-categories-header">
+        {{ !!categories ? 'Assign post to the category' : 'You have no publication categories to assign'}}
+      </div>
+      <div class="post-categories" *ngIf="!!categories">
+        <div *ngFor="let category of categories"
+             (click)="onCategorySelected(category)"
+             [ngClass]="!!selectedCategory && selectedCategory.id === category.id ? 'selected' : ''">
+          <input type="radio" class="hidden" id="{{category.name}}" value="{{category.name}}" name="post-category">
+          <label
+            class="category-label" for="{{category.name}}"> {{category.name}} </label>
+        </div>
+      </div>
+    </div>
+    <div class="post-publishing-buttons">
+      <app-default-button [ngClass]="'medium reverted'"
+                          [label]="'Cancel'"
+                          (click)="onCancelClicked()">
+      </app-default-button>
+      <app-default-button [ngClass]="['medium', isLoading ? 'loading-button' : '']"
+                          [label]="'Publish'"
+                          (click)="onPublishClicked()">
+      </app-default-button>
+    </div>
+  </div>
 </div>

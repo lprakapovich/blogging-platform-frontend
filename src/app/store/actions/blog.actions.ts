@@ -13,7 +13,7 @@ export enum BlogActionTypes {
   UPDATE_BLOG_SUCCESS = "[blog] update blog success",
   UPDATE_BLOG_FAILURE = "[blog] update blog failure",
 
-  GET_USER_BLOGS_AND_REDIRECT = "[blog] get user managed blogs and redirect",
+  GET_USER_BLOGS_AND_REDIRECT = "[blog] get user blogs and redirect",
   GET_USER_BLOGS_AND_REDIRECT_SUCCESS = "[blog] get user blogs and redirect success",
   GET_USER_BLOGS_AND_REDIRECT_FAILURE = "[blog] get user blogs and redirect failure",
 
@@ -21,7 +21,11 @@ export enum BlogActionTypes {
   GET_BLOG_DETAILS_AND_REDIRECT_SUCCESS = "[blog] get blog details and redirect success",
   GET_BLOG_DETAILS_AND_REDIRECT_FAILURE = "[blog] get blog details and redirect failure",
 
-  GET_SEARCHED_BLOGS = "[blog] get blogs by search criteria (display name or description)",
+  GET_BLOG_DETAILS = "[blog] get blog details",
+  GET_BLOG_DETAILS_SUCCESS = "[blog] get blog details success",
+  GET_BLOG_DETAILS_FAILURE = "[blog] get blog details failure",
+
+  GET_SEARCHED_BLOGS = "[blog] get blogs by search criteria",
   GET_SEARCHED_BLOGS_SUCCESS = "[blog] get blogs search criteria success",
   GET_SEARCHED_BLOGS_FAILURE = "[blog] get blogs search criteria failure",
 }
@@ -33,6 +37,10 @@ export const getUserBlogsAndRedirectFailure = createAction(BlogActionTypes.GET_U
 export const getBlogDetailsAndRedirect = createAction(BlogActionTypes.GET_BLOG_DETAILS_AND_REDIRECT, props<{blogId: BlogId}>())
 export const getBlogDetailsAndRedirectSuccess = createAction(BlogActionTypes.GET_BLOG_DETAILS_AND_REDIRECT_SUCCESS, props<{blog: BlogView, blogId: string, isPrincipal: boolean}>())
 export const getBlogDetailsAndRedirectFailure = createAction(BlogActionTypes.GET_BLOG_DETAILS_AND_REDIRECT_FAILURE, props<{error: any}>())
+
+export const getBlogDetails = createAction(BlogActionTypes.GET_BLOG_DETAILS, props<{blogId: BlogId}>())
+export const getBlogDetailsSuccess = createAction(BlogActionTypes.GET_BLOG_DETAILS_SUCCESS, props<{blog: BlogView, blogId: string, isPrincipal: boolean}>())
+export const getBlogDetailsFailure = createAction(BlogActionTypes.GET_BLOG_DETAILS_FAILURE, props<{error: any}>())
 
 export const getSearchedBlogs = createAction(BlogActionTypes.GET_SEARCHED_BLOGS, props<{payload: string}>())
 export const getSearchedBlogsSuccess = createAction(BlogActionTypes.GET_SEARCHED_BLOGS_SUCCESS, props<{blogs: Blog[]}>())
