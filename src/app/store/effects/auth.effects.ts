@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {AuthService} from "../../services/auth.service";
+import {AuthService} from "../../services/api/auth.service";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {catchError, combineLatestWith, debounceTime, map, of, switchMap, tap} from "rxjs";
 import {
@@ -17,7 +17,7 @@ import {RegisterData} from "../../models/data/auth/RegisterData";
 import {createBlog, getUserBlogsAndRedirect} from "../actions/blog.actions";
 import {Router} from "@angular/router";
 import {selectIsAuthenticated} from "../selectors/auth.selectors";
-import {UserService} from "../../services/user.service";
+import {UserService} from "../../services/api/user.service";
 
 @Injectable()
 export class AuthEffects {

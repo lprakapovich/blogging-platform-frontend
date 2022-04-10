@@ -1,13 +1,13 @@
 import {Component, ElementRef, OnDestroy, ViewChild} from '@angular/core';
-import {NavbarTemplateService} from "../../../../services/ui/navbar-template.service";
-import {EditorService} from "../../../../services/ui/editor.service";
+import {NavbarTemplateService} from "../../../services/ui/navbar-template.service";
+import {EditorService} from "../../../services/ui/editor.service";
 import {Observable, Subject, takeUntil} from "rxjs";
-import {BlogPost} from "../../../../models/BlogPost";
+import {BlogPost} from "../../../models/BlogPost";
 import {Store} from "@ngrx/store";
-import {selectIsModified, selectIsPostLoading, selectSelectedPost} from "../../../../store/selectors/post.selectors";
-import {CreatePostData} from "../../../../models/data/post/CreatePostData";
-import {Status} from "../../../../models/Status";
-import {createPost} from "../../../../store/actions/post.actions";
+import {selectIsModified, selectIsPostLoading, selectSelectedPost} from "../../../store/selectors/post.selectors";
+import {CreatePostData} from "../../../models/data/post/CreatePostData";
+import {Status} from "../../../models/Status";
+import {createPost} from "../../../store/actions/post.actions";
 
 @Component({
   selector: 'app-editor',

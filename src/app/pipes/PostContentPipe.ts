@@ -1,7 +1,7 @@
 import {Pipe, PipeTransform} from "@angular/core";
 
-@Pipe({ name: 'postContentPipe'})
-export class PostContentPipe implements PipeTransform {
+@Pipe({ name: 'postContentLength'})
+export class PostContentLengthPipe implements PipeTransform {
 
   private maxContentLength = 500;
 

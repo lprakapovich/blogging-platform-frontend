@@ -6,13 +6,13 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {HomeComponent} from './components/core/home/home.component';
 import {NavbarComponent} from './components/navigation/navbar/navbar.component';
-import {BlogComponent} from './components/blog/blog/blog.component';
+import {BlogPageComponent} from './components/blog/blog-page/blog-page.component';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
 import {DefaultButtonComponent} from './components/ui-elements/default-button/default-button.component';
 import {SearchBarComponent} from './components/ui-elements/search-bar/search-bar.component';
 import {BlogPostPreviewListItemComponent} from './components/blog/blog-post-preview-list-item/blog-post-preview-list-item.component';
-import {EditorComponent} from './components/blog/editor/editor/editor.component';
-import {EditorPageComponent} from './components/blog/editor/editor-page/editor-page.component';
+import {EditorComponent} from './components/blog/editor/editor.component';
+import {EditorPageComponent} from './components/blog/editor-page/editor-page.component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {DropDownMenuComponent} from './components/ui-elements/drop-down-menu/drop-down-menu.component';
 import {SvgButtonComponent} from './components/ui-elements/svg-button/svg-button.component';
@@ -27,9 +27,8 @@ import {DefaultSearchBarComponent} from './components/ui-elements/default-search
 import {LoginComponent} from './components/auth/login/login.component';
 import {SignupComponent} from './components/auth/signup/signup.component';
 import {AppMenuModalComponent} from './components/ui-elements/app-menu-modal/app-menu-modal.component';
-import {ClickOutsideDirective} from './directive/click-outside.directive';
-import {FeedComponent} from './components/blog/feed/feed.component';
-import {SearchResultComponent} from './components/blog/search-result/search-result.component';
+import {FeedPageComponent} from './components/blog/feed-page/feed-page.component';
+import {SearchPageComponent} from './components/blog/search-page/search-page.component';
 import {AvatarComponent} from './components/ui-elements/avatar/avatar.component';
 import {IconComponent} from './components/ui-elements/icon/icon.component';
 import {FeedPostPreviewComponent} from './components/blog/feed-post-preview/feed-post-preview.component';
@@ -52,17 +51,17 @@ import { ErrorMessageComponent } from './components/ui-elements/error-message/er
 import { SuccessMessageComponent } from './components/ui-elements/success-message/success-message.component';
 import { WarningMessageComponent } from './components/ui-elements/warning-message/warning-message.component';
 import { BlogPostSettingsModalComponent } from './components/blog/blog-post-settings-modal/blog-post-settings-modal.component';
-import {PostContentPipe} from "./pipes/PostContentPipe";
+import {PostContentLengthPipe} from "./pipes/PostContentPipe";
 import { BlogPostViewerComponent } from './components/blog/blog-post-viewer/blog-post-viewer.component';
 import { BlogPostViewerHeaderComponent } from './components/blog/blog-post-viewer-header/blog-post-viewer-header.component';
-import {BlogNamePipe} from "./pipes/BlogNamePipe";
+import {BlogDisplayNamePipePipe} from "./pipes/BlogNamePipe";
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     NavbarComponent,
-    BlogComponent,
+    BlogPageComponent,
     BlogPostComponent,
     DefaultButtonComponent,
     SearchBarComponent,
@@ -82,9 +81,8 @@ import {BlogNamePipe} from "./pipes/BlogNamePipe";
     LoginComponent,
     SignupComponent,
     AppMenuModalComponent,
-    ClickOutsideDirective,
-    FeedComponent,
-    SearchResultComponent,
+    FeedPageComponent,
+    SearchPageComponent,
     AvatarComponent,
     IconComponent,
     FeedPostPreviewComponent,
@@ -92,8 +90,8 @@ import {BlogNamePipe} from "./pipes/BlogNamePipe";
     SuccessMessageComponent,
     WarningMessageComponent,
     BlogPostSettingsModalComponent,
-    PostContentPipe,
-    BlogNamePipe,
+    PostContentLengthPipe,
+    BlogDisplayNamePipePipe,
     BlogPostViewerComponent,
     BlogPostViewerHeaderComponent,
   ],

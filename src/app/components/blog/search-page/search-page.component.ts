@@ -11,11 +11,11 @@ import {selectPostsBySearchCriteria} from "../../../store/selectors/post.selecto
 import {getPostsBySearchCriteria} from "../../../store/actions/post.actions";
 
 @Component({
-  selector: 'app-search-result',
-  templateUrl: './search-result.component.html',
-  styleUrls: ['./search-result.component.scss']
+  selector: 'app-search-page',
+  templateUrl: './search-page.component.html',
+  styleUrls: ['./search-page.component.scss']
 })
-export class SearchResultComponent implements OnInit {
+export class SearchPageComponent implements OnInit {
 
   blogsSearchResult$: Observable<Blog[]>;
   postsSearchResult$: Observable<BlogPost[]>;

@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {NavbarTemplateService} from "../../../../services/ui/navbar-template.service";
-import {EditorService} from "../../../../services/ui/editor.service";
+import {NavbarTemplateService} from "../../../services/ui/navbar-template.service";
+import {EditorService} from "../../../services/ui/editor.service";
 import {Subject, takeUntil} from "rxjs";
 
 @Component({

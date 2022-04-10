@@ -1,6 +1,6 @@
 import {Store} from "@ngrx/store";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
-import {SubscriptionService} from "../../services/subscription.service";
+import {SubscriptionService} from "../../services/api/subscription.service";
 import {Injectable} from "@angular/core";
 import {
   createSubscriptionFailure,

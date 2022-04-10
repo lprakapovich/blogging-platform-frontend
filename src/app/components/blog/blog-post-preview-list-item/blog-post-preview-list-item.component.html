@@ -5,7 +5,7 @@
         id="content"
         contenteditable="false"
         spellcheck="false"
-        [innerHTML]="blogPost.content | postContentPipe">
+        [innerHTML]="blogPost.content | postContentLength">
   </span>
   <div class="time light-grey">
     <div> {{blogPost.createdDateTime | date:'MMM d yyyy, h:mm aa'}} </div>

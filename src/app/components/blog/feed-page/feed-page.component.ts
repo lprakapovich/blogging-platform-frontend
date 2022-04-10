@@ -16,11 +16,11 @@ import {BlogId} from "../../../models/Blog";
 import {Actions, ofType} from "@ngrx/effects";
 
 @Component({
-  selector: 'app-feed',
-  templateUrl: './feed.component.html',
-  styleUrls: ['./feed.component.scss']
+  selector: 'app-feed-page',
+  templateUrl: './feed-page.component.html',
+  styleUrls: ['./feed-page.component.scss']
 })
-export class FeedComponent implements OnInit, AfterViewInit, OnDestroy {
+export class FeedPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   isLoading$: Observable<boolean>;
   posts$: Observable<BlogPost[]>;

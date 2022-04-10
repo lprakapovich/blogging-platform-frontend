@@ -1,11 +1,11 @@
 import {Injectable} from "@angular/core";
-import {Blog} from "../models/Blog";
+import {Blog} from "../../models/Blog";
 import {Observable, of} from "rxjs";
-import {environment} from "../../environments/environment";
+import {environment} from "../../../environments/environment";
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {CreateBlogData} from "../models/data/blog/CreateBlogData";
-import {UpdateBlogData} from "../models/data/blog/UpdateBlogData";
-import {BlogView} from "../models/BlogView";
+import {CreateBlogData} from "../../models/data/blog/CreateBlogData";
+import {UpdateBlogData} from "../../models/data/blog/UpdateBlogData";
+import {BlogView} from "../../models/BlogView";
 
 @Injectable({
   "providedIn": 'root'

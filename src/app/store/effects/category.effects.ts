@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {Store} from "@ngrx/store";
-import {CategoryService} from "../../services/category.service";
+import {CategoryService} from "../../services/api/category.service";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {
   CategoryActionTypes,

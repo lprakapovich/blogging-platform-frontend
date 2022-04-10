@@ -23,11 +23,11 @@ import {Category} from "../../../models/Category";
 import {createSubscription, deleteSubscription} from "../../../store/actions/subscription.actions";
 
 @Component({
-  selector: 'app-blog',
-  templateUrl: './blog.component.html',
-  styleUrls: ['./blog.component.scss']
+  selector: 'app-blog-page',
+  templateUrl: './blog-page.component.html',
+  styleUrls: ['./blog-page.component.scss']
 })
-export class BlogComponent implements OnInit, OnDestroy {
+export class BlogPageComponent implements OnInit, OnDestroy {
 
   unsubscribe$ = new Subject<void>();
 

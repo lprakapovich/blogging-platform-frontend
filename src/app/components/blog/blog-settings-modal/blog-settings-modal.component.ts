@@ -35,7 +35,7 @@ export class BlogSettingsModalComponent implements OnInit, OnDestroy {
   categoryError$: Observable<string>;
   categories$: Observable<Category[]>;
 
-  destroyed$ = new Subject<boolean>();
+  unsubscribe$ = new Subject<boolean>();
 
   selectedSection: string;
   newCategoryInput: string;
@@ -51,10 +51,6 @@ export class BlogSettingsModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // if (this.blog && this.blog.description) {
-    //   this.changedBlogDescription = this.blog.description;
-    //   this.changedBlogDisplayName = this.blog.displayName;
-    // }
 
     this.blog$ = this.store.select(selectAuthenticatedUserBlog);
     this.isBlogLoading$ = this.store.select(selectIsBlogLoading);
@@ -67,7 +63,7 @@ export class BlogSettingsModalComponent implements OnInit, OnDestroy {
       ofType(
         CategoryActionTypes.CREATE_CATEGORY_SUCCESS,
         CategoryActionTypes.CREATE_CATEGORY_FAILURE),
-      takeUntil(this.destroyed$)
+      takeUntil(this.unsubscribe$)
     ).subscribe((action: any) => {
       if (action.type === CategoryActionTypes.CREATE_CATEGORY_SUCCESS) {
         this.showSuccessMessage = true;
@@ -77,8 +73,8 @@ export class BlogSettingsModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.destroyed$.next(true);
-    this.destroyed$.complete();
+    this.unsubscribe$.next(true);
+    this.unsubscribe$.complete();
   }
 
   onSettingsSectionSelected(section: string) {

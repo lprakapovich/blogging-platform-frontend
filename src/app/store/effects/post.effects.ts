@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Store} from "@ngrx/store";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
-import {PostService} from "../../services/post.service";
+import {PostService} from "../../services/api/post.service";
 import {
   createPostFailure,
   createPostSuccess,

@@ -1,10 +1,10 @@
 <div class="blog-post-viewer-header-container">
   <app-avatar class="post-author-avatar"
               [ngClass]="'small'"
-              [name]="blogPost.blog | blogNamePipe"> </app-avatar>
+              [name]="blogPost.blog | blogDisplayNamePipe"> </app-avatar>
   <app-text-button (click)="onBlogNameClicked(blogPost.blog)"
                    class="blog-post-author-name">
-    {{ blogPost.blog | blogNamePipe }}
+    {{ blogPost.blog | blogDisplayNamePipe }}
   </app-text-button>
   <div class="blog-post-category">
     <span class="icon"> &#8594; </span>

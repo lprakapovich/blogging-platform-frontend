@@ -10,7 +10,6 @@ export class ModalService {
   private showAppSettingsModalChange: Subject<boolean> = new Subject<boolean>();
 
   showAppMenuModal(show: boolean) {
-    console.log(`Show menu? ${show}`)
     this.showAppMenuModalChange.next(show);
   }
 

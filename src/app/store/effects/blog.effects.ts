@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Store} from "@ngrx/store";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
-import {BlogService} from "../../services/blog.service";
+import {BlogService} from "../../services/api/blog.service";
 import {catchError, combineLatestWith, debounceTime, map, of, switchMap, tap} from "rxjs";
 import {
   BlogActionTypes,

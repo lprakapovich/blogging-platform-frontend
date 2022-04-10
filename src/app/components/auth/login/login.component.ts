@@ -29,8 +29,9 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     this.navbarTemplateService.setDefaultTemplate();
     this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
+      // todo cleanup
+      username: ['hahaha', Validators.required],
+      password: ['hahaha', Validators.required]
     });
   }
 

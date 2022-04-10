@@ -1,10 +1,10 @@
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
-import {BlogPost} from "../models/BlogPost";
-import {environment} from "../../environments/environment";
+import {BlogPost} from "../../models/BlogPost";
+import {environment} from "../../../environments/environment";
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {CreatePostData} from "../models/data/post/CreatePostData";
-import {UpdatePostData} from "../models/data/post/UpdatePostData";
+import {CreatePostData} from "../../models/data/post/CreatePostData";
+import {UpdatePostData} from "../../models/data/post/UpdatePostData";
 
 @Injectable({
   "providedIn": 'root'

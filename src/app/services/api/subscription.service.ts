@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
-import {environment} from "../../environments/environment";
-import {BlogId} from "../models/Blog";
+import {environment} from "../../../environments/environment";
+import {BlogId} from "../../models/Blog";
 import {HttpClient} from "@angular/common/http";
 
 @Injectable({
