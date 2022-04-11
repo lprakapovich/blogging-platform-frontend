@@ -12,11 +12,12 @@ import {
 import {catchError, combineLatestWith, map, of, switchMap} from "rxjs";
 import {selectAuthenticatedUserBlogId} from "../selectors/blog.selectors";
 import {Subscription} from "../../models/Subscription";
+import * as fromSubscription from '../reducers/subscription.reducers'
 
 @Injectable()
 export class SubscriptionEffects {
 
-  constructor(private store: Store,
+  constructor(private store: Store<fromSubscription.SubscriptionState>,
               private actions$: Actions,
               private subscriptionService: SubscriptionService) {
   }

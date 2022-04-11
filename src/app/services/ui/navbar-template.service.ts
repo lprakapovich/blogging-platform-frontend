@@ -10,39 +10,58 @@ export class NavbarTemplateService {
   public static BLOG_TEMPLATE = 'blog';
   public static EDITOR_TEMPLATE = 'editor';
   public static DEFAULT_TEMPLATE = 'default';
+  public static POST_PREVIEW = 'post-preview';
 
   private navbarTemplate = NavbarTemplateService.DEFAULT_TEMPLATE;
 
-  private navbarTemplateChange: Subject<string> = new Subject<string>();
-  private navbarEditorTemplateRemoveButtonChange: Subject<boolean> = new Subject<boolean>();
+  private readonly templateChanged;
+  private readonly showRemoveButtonChanged;
+  private readonly showEditorButtonChanged;
 
   constructor() {
-    this.navbarTemplateChange.subscribe(value => {
+
+   this.templateChanged = new Subject<string>();
+   this.showRemoveButtonChanged = new Subject<boolean>();
+   this.showEditorButtonChanged = new Subject<boolean>();
+
+    this.templateChanged.subscribe(value => {
       this.navbarTemplate = value
     });
   }
 
   setBlogTemplate() {
-    this.navbarTemplateChange.next(NavbarTemplateService.BLOG_TEMPLATE);
+    this.templateChanged.next(NavbarTemplateService.BLOG_TEMPLATE);
   }
 
   setEditorTemplate() {
-    this.navbarTemplateChange.next(NavbarTemplateService.EDITOR_TEMPLATE);
+    this.templateChanged.next(NavbarTemplateService.EDITOR_TEMPLATE);
   }
 
   setDefaultTemplate() {
-    this.navbarTemplateChange.next(NavbarTemplateService.DEFAULT_TEMPLATE);
+    this.templateChanged.next(NavbarTemplateService.DEFAULT_TEMPLATE);
+  }
+
+  setPostPreviewTemplate() {
+    this.templateChanged.next(NavbarTemplateService.POST_PREVIEW);
   }
 
   adjustRemoveButton(show: boolean) {
-    this.navbarEditorTemplateRemoveButtonChange.next(show);
+    this.showRemoveButtonChanged.next(show);
   }
 
-  getNavbarTemplateChangeSubject() {
-    return this.navbarTemplateChange;
+  adjustEditButton(show: boolean) {
+    this.showEditorButtonChanged.next(show)
   }
 
-  getNavbarEditorTemplateRemoveButtonSubject() {
-    return this.navbarEditorTemplateRemoveButtonChange;
+  getTemplateChanged() {
+    return this.templateChanged;
+  }
+
+  getShowRemoveButtonChanged() {
+    return this.showRemoveButtonChanged;
+  }
+
+  getShowEditButtonChanged() {
+    return this.showEditorButtonChanged;
   }
 }

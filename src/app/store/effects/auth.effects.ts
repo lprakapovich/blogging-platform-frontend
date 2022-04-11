@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {AuthService} from "../../services/api/auth.service";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
-import {catchError, combineLatestWith, debounceTime, map, of, switchMap, tap} from "rxjs";
+import {catchError, combineLatestWith, debounceTime, map, of, switchMap, tap, exhaustMap} from "rxjs";
 import {
   AuthActionTypes,
   loginFailure,
@@ -18,12 +18,14 @@ import {createBlog, getUserBlogsAndRedirect} from "../actions/blog.actions";
 import {Router} from "@angular/router";
 import {selectIsAuthenticated} from "../selectors/auth.selectors";
 import {UserService} from "../../services/api/user.service";
+import * as fromAuth from '../reducers/auth.reducers';
+
 
 @Injectable()
 export class AuthEffects {
 
   constructor(
-    private store: Store,
+    private store: Store<fromAuth.AuthState>,
     private actions$: Actions,
     private router: Router,
     private authService: AuthService,
@@ -35,7 +37,7 @@ export class AuthEffects {
       ofType(AuthActionTypes.LOGIN),
       debounceTime(500),
       map((action: any) => action.payload),
-      switchMap((payload: LoginData) => {
+      exhaustMap((payload: LoginData) => {
         return this.authService.login(payload)
           .pipe(
             map(response => {
@@ -89,7 +91,7 @@ export class AuthEffects {
       ofType(AuthActionTypes.REGISTER),
       debounceTime(1500),
       map((action: any) => action.payload),
-      switchMap((payload: RegisterData) => {
+      exhaustMap((payload: RegisterData) => {
         return this.authService.register(payload)
           .pipe(
             map(response => {

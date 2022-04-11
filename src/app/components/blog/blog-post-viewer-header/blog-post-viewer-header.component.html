@@ -10,5 +10,8 @@
     <span class="icon"> &#8594; </span>
     {{ blogPost.category ? blogPost.category.name : 'General' }}
   </div>
+  <div class="blog-post-status header-component" *ngIf="blogPost.status === draft">
+    <app-warning-message> Draft </app-warning-message>
+  </div>
   <ng-content></ng-content>
 </div>

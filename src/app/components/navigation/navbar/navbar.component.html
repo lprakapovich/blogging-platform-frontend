@@ -1,4 +1,35 @@
 <ng-container [ngSwitch]="[template]">
+  <div *ngSwitchCase="'post-preview'">
+    <nav id="post-preview-navigation">
+      <div id="post-preview-navigation-items">
+        <app-svg-button *ngIf="showEditButton"
+                        [ngClass]="'highlighted'"
+                        id="'edit'"
+                        [iconTemplate]="'edit'"
+                        routerLiink="/editor"
+        >
+        </app-svg-button>
+        <app-svg-button [ngClass]="'highlighted'"
+                        id='new-post'
+                        [iconTemplate]="'new-post'"
+                        (click)="onBlogNavbarComponentClicked('new-post');"
+                        routerLink="/editor-page">
+        </app-svg-button>
+        <app-svg-button id="news-feed"
+                        [ngClass]="'highlighted'"
+                        [iconTemplate]="'news-feed'"
+                        (click)="onBlogNavbarComponentClicked('news-feed');"
+                        routerLink="/feed">
+        </app-svg-button>
+        <app-svg-button id="profile"
+                        [ngClass]="'highlighted'"
+                        (click)="onBlogNavbarComponentClicked('profile');"
+                        [iconTemplate]="'profile'">
+        </app-svg-button>
+      </div>
+    </nav>
+  </div>
+
   <div *ngSwitchCase="'blog'">
     <nav id="blog-navigation">
       <div id="blog-navigation-items">

@@ -17,6 +17,7 @@ export class NavbarComponent {
   template: string;
   showNavbarMenuModal: boolean;
   showRemoveButton: boolean;
+  showEditButton: boolean;
 
   constructor(private store: Store,
               private router: Router,
@@ -27,13 +28,18 @@ export class NavbarComponent {
     this.template = NavbarTemplateService.DEFAULT_TEMPLATE;
     this.showRemoveButton = false;
     this.showNavbarMenuModal = false;
+    this.showEditButton = false;
 
-    navbarTemplateService.getNavbarTemplateChangeSubject().subscribe(template => {
+    navbarTemplateService.getTemplateChanged().subscribe(template => {
       this.template = template;
     })
 
-    navbarTemplateService.getNavbarEditorTemplateRemoveButtonSubject().subscribe(show => {
+    navbarTemplateService.getShowRemoveButtonChanged().subscribe(show => {
       this.showRemoveButton = show;
+    })
+
+    navbarTemplateService.getShowEditButtonChanged().subscribe(show => {
+      this.showEditButton = show;
     })
   }
 

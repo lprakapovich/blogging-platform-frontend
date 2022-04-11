@@ -1,6 +1,7 @@
-import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {BlogPost} from "../../../models/BlogPost";
 import {Blog, BlogId} from "../../../models/Blog";
+import {Status} from "../../../models/Status";
 
 @Component({
   selector: 'app-blog-post-viewer-header',
@@ -11,6 +12,8 @@ export class BlogPostViewerHeaderComponent implements OnInit {
 
   @Input() blogPost: BlogPost;
   @Output() blogNameClickEventEmitter = new EventEmitter<BlogId>();
+
+  draft = Status.Draft
 
   constructor() { }
 

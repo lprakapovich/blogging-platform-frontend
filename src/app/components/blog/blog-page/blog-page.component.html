@@ -24,14 +24,18 @@
     </app-blog-statistics-data>
     <div class="common-blog-filters">
       <div class="blog-section" *ngIf="isOwner$ | async">
-        <app-default-list (itemSelectedEmitter)="onStatusSelected($event)" [listItems]="['Scheduled', 'Hidden', 'Drafts']"  [ngClass]="'bordered'"></app-default-list>
+        <app-default-list (itemSelectedEmitter)="onStatusSelected($event)"
+                          [listItemCallbackFormatter]="statusFormatter"
+                          [listItems]="postStatuses"
+                          [ngClass]="'bordered'">
+        </app-default-list>
       </div>
       <div class="blog-section">
         <app-default-list [ngClass]="'bordered'"
                           [listItems]="userBlogView.categories"
                           [listItemCallbackFormatter]="categoryFormatter"
         (itemSelectedEmitter)="onCategorySelected($event)">
-          <div class="default-list-item all"> All Posts </div>
+          <div class="default-list-item all" (click)="getPublishedPosts()"> All Posts </div>
         </app-default-list>
       </div>
     </div>

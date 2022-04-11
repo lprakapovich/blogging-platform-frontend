@@ -11,11 +11,12 @@ import {
 } from "../actions/category.actions";
 import {catchError, combineLatestWith, debounceTime, map, of, switchMap} from "rxjs";
 import {selectAuthenticatedUserBlogId} from "../selectors/blog.selectors";
+import * as fromCategory from '../reducers/category.reducers'
 
 @Injectable()
 export class CategoryEffects {
 
-  constructor(private store: Store,
+  constructor(private store: Store<fromCategory.CategoryState>,
               private actions$: Actions,
               private categoryService: CategoryService
               ) {

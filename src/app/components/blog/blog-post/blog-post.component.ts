@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {NavbarTemplateService} from "../../../services/ui/navbar-template.service";
-import {Observable} from "rxjs";
+import {combineLatest, Observable, Subject, takeUntil} from "rxjs";
 import {BlogPost} from "../../../models/BlogPost";
 import {Store} from "@ngrx/store";
-import {selectSelectedPost} from "../../../store/selectors/post.selectors";
+import {selectIsAuthenticatedUsersPost, selectSelectedPost} from "../../../store/selectors/post.selectors";
 import {BlogId} from "../../../models/Blog";
 import {Router} from "@angular/router";
 
@@ -14,7 +14,10 @@ import {Router} from "@angular/router";
 })
 export class BlogPostComponent implements OnInit {
 
+  unsubscribe$ = new Subject<void>();
+
   post$: Observable<BlogPost | null>;
+  isAuthenticatedUsersPost$: Observable<boolean>;
 
   constructor(private store: Store,
               private router: Router,
@@ -22,8 +25,16 @@ export class BlogPostComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.navbarService.setBlogTemplate();
+    this.navbarService.setPostPreviewTemplate();
     this.post$ = this.store.select(selectSelectedPost);
+    this.isAuthenticatedUsersPost$ = this.store.select(selectIsAuthenticatedUsersPost);
+
+    combineLatest([this.isAuthenticatedUsersPost$])
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(([isAuthenticatedUserPost]) => {
+        console.log(isAuthenticatedUserPost)
+        this.navbarService.adjustEditButton(isAuthenticatedUserPost)
+      })
   }
 
   onBlogNameClickedEvent(blogId: BlogId) {

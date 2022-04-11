@@ -21,6 +21,7 @@ import {BlogId} from "../../../models/Blog";
 import {getBlogDetailsAndRedirect} from "../../../store/actions/blog.actions";
 import {Category} from "../../../models/Category";
 import {createSubscription, deleteSubscription} from "../../../store/actions/subscription.actions";
+import {Status} from "../../../models/Status";
 
 @Component({
   selector: 'app-blog-page',
@@ -48,6 +49,10 @@ export class BlogPageComponent implements OnInit, OnDestroy {
 
   showAppMenuModal: boolean;
   showAppBlogSettingsModal: boolean;
+
+  Draft = Status.Draft
+  Scheduled = Status.Scheduled
+  postStatuses = [this.Draft, this.Scheduled]
 
   constructor(private store: Store,
               private router: Router,
@@ -79,7 +84,8 @@ export class BlogPageComponent implements OnInit, OnDestroy {
   }
 
   private fetchDataFromStore() {
-    this.store.dispatch(getPosts({status: 'Published'}));
+    this.store.dispatch(getPosts({status: this.Draft}));
+
     this.userBlogIds$ = this.store.select(selectAuthenticatedUserBlogsIds);
     this.selectedBlogPublications$ = this.store.select(selectSelectedBlogPosts);
     this.selectedBlog$ = this.store.select(selectSelectedBlog);
@@ -143,9 +149,28 @@ export class BlogPageComponent implements OnInit, OnDestroy {
     this.store.dispatch(getPosts({categoryId: category.id}))
   }
 
-  onStatusSelected(status: string) {
+  onStatusSelected(status: Status) {
     this.store.dispatch(getPosts({status}))
   }
 
   categoryFormatter = (category: Category) => category.name
+
+  statusFormatter = (status: Status) => {
+    switch(status) {
+      case Status.Draft:
+        return 'Draft'
+      case Status.Hidden:
+        return 'Hidden'
+      default:
+        return 'Published'
+    }
+  }
+
+  getPublishedPosts() {
+    this.store.dispatch(getPosts({status: Status.Published}));
+  }
+
+  getDraftPosts() {
+    this.store.dispatch(getPosts({status: Status.Draft}));
+  }
 }

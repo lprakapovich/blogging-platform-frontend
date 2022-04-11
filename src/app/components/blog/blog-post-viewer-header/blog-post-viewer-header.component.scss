@@ -10,4 +10,13 @@
   span.icon {
     color: grey;
   }
+
+  .blog-post-category {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .blog-post-status {
+    margin: 0 0.5rem;
+  }
 }

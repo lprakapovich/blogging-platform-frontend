@@ -17,7 +17,7 @@ import {
   updatePostFailure,
   updatePostSuccess
 } from "../actions/post.actions";
-import {catchError, combineLatestWith, debounceTime, map, of, switchMap, tap} from "rxjs";
+import {catchError, combineLatestWith, debounceTime, exhaustMap, map, of, switchMap, tap, withLatestFrom} from "rxjs";
 import {selectAuthenticatedUserBlogId, selectSelectedBlogId} from "../selectors/blog.selectors";
 import {selectPrincipal} from "../selectors/auth.selectors";
 import {Router} from "@angular/router";
@@ -37,8 +37,8 @@ export class PostEffects {
     ofType(PostActionTypes.CREATE_POST),
     debounceTime(1000),
     map((action: any) => action.createPostData),
-    combineLatestWith(this.store.select(selectAuthenticatedUserBlogId)),
-    switchMap(([createPostData, { id, username}]) => {
+    withLatestFrom(this.store.select(selectAuthenticatedUserBlogId)),
+    exhaustMap(([createPostData, { id, username}]) => {
       return this.postService.createPost(id, username, createPostData)
         .pipe(
           map((createdPost) => createPostSuccess({ createdPost })),

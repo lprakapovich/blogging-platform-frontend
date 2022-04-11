@@ -3,7 +3,7 @@
     <app-blog-post-viewer-header [blogPost]="post"
                                  (blogNameClickEventEmitter)="onBlogNameClickedEvent($event)">
     </app-blog-post-viewer-header>
-    <div class="post-title"> {{post.title }}</div>
-    <div class="post-content" [innerHTML]="post.content"></div>
+    <div class="post-title" aria-disabled="true"> {{post.title }}</div>
+    <div class="post-content" aria-disabled="true" [innerHTML]="post.content"></div>
   </div>
 </div>

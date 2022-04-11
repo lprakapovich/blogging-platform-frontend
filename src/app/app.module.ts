@@ -118,7 +118,11 @@ import {BlogDisplayNamePipePipe} from "./pipes/BlogNamePipe";
   providers: [
     HttpClient,
     HttpClientModule,
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },],
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
+    }],
   bootstrap: [AppComponent],
   exports: [
     ReactiveFormsModule,

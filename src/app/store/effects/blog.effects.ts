@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {Store} from "@ngrx/store";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {BlogService} from "../../services/api/blog.service";
-import {catchError, combineLatestWith, debounceTime, map, of, switchMap, tap} from "rxjs";
+import {catchError, combineLatestWith, debounceTime, exhaustMap, map, of, switchMap, tap, withLatestFrom} from "rxjs";
 import {
   BlogActionTypes,
   createBlogFailure,
@@ -21,12 +21,13 @@ import {
 import {Router} from "@angular/router";
 import {selectPrincipal} from "../selectors/auth.selectors";
 import {selectAuthenticatedUserBlogId} from "../selectors/blog.selectors";
+import * as fromBlog from '../reducers/blog.reducers'
 
 @Injectable()
 export class BlogEffects {
 
   constructor(
-    private store: Store,
+    private store: Store<fromBlog.BlogState>,
     private actions$: Actions,
     private router: Router,
     private blogService: BlogService) {
@@ -36,8 +37,8 @@ export class BlogEffects {
     this.actions$.pipe(
       ofType(BlogActionTypes.CREATE_BLOG),
       map((action: any) => action.blogId),
-      combineLatestWith(this.store.select(selectPrincipal)),
-      switchMap(([blogId, principal]) => {
+      withLatestFrom(this.store.select(selectPrincipal)),
+      exhaustMap(([blogId, principal]) => {
         return this.blogService.createBlog(blogId)
           .pipe(
             map(() => createBlogSuccess({blogId, principal})),

@@ -1,5 +1,6 @@
 import {createFeatureSelector, createSelector} from "@ngrx/store";
 import {PostState} from "../reducers/post.reducers";
+import {selectAuthenticatedUserBlogId} from "./blog.selectors";
 
 export const selectPostFeature = createFeatureSelector<PostState>('post')
 
@@ -21,6 +22,14 @@ export const selectPostsFromSubscriptions = createSelector(
 export const selectSelectedPost = createSelector(
   selectPostFeature,
   state => state.selectedPost
+)
+
+export const selectIsAuthenticatedUsersPost = createSelector(
+  selectAuthenticatedUserBlogId,
+  selectSelectedPost,
+  (authenticatedBlogId, selectedPost) => !selectedPost ? false :
+    selectedPost.blog.id.id === authenticatedBlogId.id &&
+    selectedPost.blog.id.username === authenticatedBlogId.username
 )
 
 export const selectSelectedBlogPosts = createSelector(
