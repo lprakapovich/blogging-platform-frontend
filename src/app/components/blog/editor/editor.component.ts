@@ -20,8 +20,9 @@ export class EditorComponent implements OnInit {
   isLoading$: Observable<boolean>;
   isModified$: Observable<boolean>;
 
-  modifiedTitleInput: string = '';
-  modifiedContentInput: any = '';
+  // todo how to set it ??
+  modifiedTitleInput: string;
+  modifiedContentInput: string;
 
   public constructor(private store: Store) {
   }

@@ -6,7 +6,7 @@
                         [ngClass]="'highlighted'"
                         id="'edit'"
                         [iconTemplate]="'edit'"
-                        routerLiink="/editor"
+                        (click)="onEditClicked()"
         >
         </app-svg-button>
         <app-svg-button [ngClass]="'highlighted'"

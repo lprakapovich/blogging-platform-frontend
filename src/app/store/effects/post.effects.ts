@@ -14,6 +14,8 @@ import {
   getPostsFromSubscriptionsSuccess,
   getPostsSuccess,
   PostActionTypes,
+  setEditedPostFailure,
+  setEditedPostSuccess,
   updatePostFailure,
   updatePostSuccess
 } from "../actions/post.actions";
@@ -21,6 +23,7 @@ import {catchError, combineLatestWith, debounceTime, exhaustMap, map, of, switch
 import {selectAuthenticatedUserBlogId, selectSelectedBlogId} from "../selectors/blog.selectors";
 import {selectPrincipal} from "../selectors/auth.selectors";
 import {Router} from "@angular/router";
+import {selectSelectedPost} from "../selectors/post.selectors";
 
 @Injectable()
 export class PostEffects {
@@ -134,4 +137,17 @@ export class PostEffects {
       })
     )
   )
+
+  setEditedPost$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(PostActionTypes.SET_EDITED_POST),
+    combineLatestWith(
+      this.store.select(selectAuthenticatedUserBlogId),
+      this.store.select(selectSelectedPost)),
+    switchMap(([__, {id, username}, selectedPost]) => {
+      if (selectedPost?.blog.id.id === id && selectedPost?.blog.id.username === username) {
+        return of(setEditedPostSuccess({post: selectedPost}));
+      } else return of(setEditedPostFailure());
+    })
+  ))
 }

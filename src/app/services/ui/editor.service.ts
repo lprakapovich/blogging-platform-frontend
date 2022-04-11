@@ -8,6 +8,7 @@ export class EditorService {
 
   private publishEventChanged = new Subject<void>();
   private deleteEventChanged = new Subject<void>();
+  private editedPostChanged = new Subject<void>();
 
   private missingContentOrTitleErrorChanged = new Subject<{
     isContentMissing: boolean,
@@ -20,6 +21,10 @@ export class EditorService {
 
   onDeletePostClicked() {
     this.deleteEventChanged.next();
+  }
+
+  onEditClicked() {
+    this.editedPostChanged.next();
   }
 
   onMissingContentOrTitleErrorChanged(isContentMissing: boolean, isTitleMissing: boolean) {
@@ -36,5 +41,9 @@ export class EditorService {
 
   getMissingContentOrTitleErrorChanged() {
     return this.missingContentOrTitleErrorChanged;
+  }
+
+  getEditedPostChanged() {
+    return this.editedPostChanged;
   }
 }

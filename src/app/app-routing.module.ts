@@ -14,7 +14,7 @@ const routes: Routes = [
   {path: "register", component: SignupComponent},
   {path: "login", component: LoginComponent},
   {path: "blog/:blogId", component: BlogPageComponent},
-  {path: "editor-page", component: EditorPageComponent},
+  {path: "editor", component: EditorPageComponent},
   {path: "search", component: SearchPageComponent},
   {path: "feed", component: FeedPageComponent},
   {path: "publication/:blogId/:postId", component: BlogPostComponent},

@@ -6,6 +6,9 @@ import {Store} from "@ngrx/store";
 import {selectIsAuthenticatedUsersPost, selectSelectedPost} from "../../../store/selectors/post.selectors";
 import {BlogId} from "../../../models/Blog";
 import {Router} from "@angular/router";
+import {EditorService} from "../../../services/ui/editor.service";
+import {PostActionTypes, setEditedPost} from "../../../store/actions/post.actions";
+import {Actions, ofType} from "@ngrx/effects";
 
 @Component({
   selector: 'app-blog-post',
@@ -20,8 +23,10 @@ export class BlogPostComponent implements OnInit {
   isAuthenticatedUsersPost$: Observable<boolean>;
 
   constructor(private store: Store,
+              private actions$: Actions,
               private router: Router,
-              private navbarService: NavbarTemplateService) {
+              private navbarService: NavbarTemplateService,
+              private editorService: EditorService) {
   }
 
   ngOnInit(): void {
@@ -35,6 +40,21 @@ export class BlogPostComponent implements OnInit {
         console.log(isAuthenticatedUserPost)
         this.navbarService.adjustEditButton(isAuthenticatedUserPost)
       })
+
+    this.editorService.getEditedPostChanged()
+      .pipe(
+        takeUntil(this.unsubscribe$)
+      ).subscribe(() => {
+      this.store.dispatch(setEditedPost())
+    })
+
+    this.actions$.pipe(
+      ofType(
+        PostActionTypes.SET_EDITED_POST_SUCCESS),
+      takeUntil(this.unsubscribe$)
+    ).subscribe(() => {
+      this.router.navigate(['/editor'])
+    })
   }
 
   onBlogNameClickedEvent(blogId: BlogId) {

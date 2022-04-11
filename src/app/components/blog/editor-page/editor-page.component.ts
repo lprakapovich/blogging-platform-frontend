@@ -1,18 +1,18 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {NavbarTemplateService} from "../../../services/ui/navbar-template.service";
 import {EditorService} from "../../../services/ui/editor.service";
-import {Observable, Subject, takeUntil} from "rxjs";
+import {combineLatest, Observable, Subject, takeUntil} from "rxjs";
 import {EditorComponent} from "../editor/editor.component";
 import {CreatePostData} from "../../../models/data/post/CreatePostData";
 import {Status} from "../../../models/Status";
-import {createPost} from "../../../store/actions/post.actions";
+import {createPost, resetEditedPost} from "../../../store/actions/post.actions";
 import {Store} from "@ngrx/store";
 import {Category} from "../../../models/Category";
 import {selectAuthenticatedUserBlogCategories} from "../../../store/selectors/blog.selectors";
 import {BlogPostSettingsModalComponent} from "../blog-post-settings-modal/blog-post-settings-modal.component";
-import {selectIsPostLoading} from "../../../store/selectors/post.selectors";
-import {Actions, ofType} from "@ngrx/effects";
-import {BlogActionTypes} from "../../../store/actions/blog.actions";
+import {selectEditedPost, selectIsPostLoading} from "../../../store/selectors/post.selectors";
+import {Actions} from "@ngrx/effects";
+import {BlogPost} from "../../../models/BlogPost";
 
 @Component({
   selector: 'app-editor-page',
@@ -27,6 +27,7 @@ export class EditorPageComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject<void>();
 
   blogCategories$: Observable<Category[]>;
+  editedPost: Observable<BlogPost | null>;
   isPostLoading$: Observable<boolean>;
 
   isContentMissing: boolean;
@@ -50,6 +51,7 @@ export class EditorPageComponent implements OnInit, OnDestroy {
 
     this.blogCategories$ = this.store.select(selectAuthenticatedUserBlogCategories);
     this.isPostLoading$ = this.store.select(selectIsPostLoading);
+    this.editedPost = this.store.select(selectEditedPost);
 
     this.editorService.getPublishEventChanged()
       .pipe(
@@ -75,17 +77,16 @@ export class EditorPageComponent implements OnInit, OnDestroy {
         this.isTitleMissing = isTitleMissing;
     })
 
-    this.actions$.pipe(
-      ofType(
-        BlogActionTypes.GET_BLOG_DETAILS_SUCCESS),
-      takeUntil(this.unsubscribe$)
-    ).subscribe((action: any) => {
-      let blogId = action.blogId;
-      console.log(`editor-page component from NgInit fetched blogId= ${JSON.stringify(blogId)}`)
-    })
+    combineLatest([this.editedPost])
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(([post]) => {
+        this.editorComponent.modifiedContentInput = post?.content ?? '';
+        this.editorComponent.modifiedTitleInput = post?.title ?? '';
+      })
   }
 
   ngOnDestroy() {
+    this.store.dispatch(resetEditedPost());
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }

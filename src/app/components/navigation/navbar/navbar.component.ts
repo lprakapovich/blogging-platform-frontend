@@ -68,5 +68,9 @@ export class NavbarComponent {
   onPublishClicked() {
     this.editorService.onPublishPostClicked();
   }
+
+  onEditClicked() {
+    this.editorService.onEditClicked();
+  }
 }
 

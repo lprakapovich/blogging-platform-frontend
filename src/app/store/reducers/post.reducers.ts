@@ -141,4 +141,20 @@ export const postReducer = createReducer(
     isLoading: false,
     postsError: action.error
   })),
+
+  on(PostActions.setEditedPostSuccess, (state, action) => ({
+    ...state,
+    editor: {
+      ...state.editor,
+      editedPost: action.post
+    }
+  })),
+
+  on(PostActions.resetEditedPost, (state, action) => ({
+    ...state,
+    editor: {
+      ...state.editor,
+      editedPost: null
+    }
+  }))
 )

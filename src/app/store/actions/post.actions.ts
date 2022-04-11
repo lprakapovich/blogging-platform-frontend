@@ -30,7 +30,12 @@ export enum PostActionTypes {
   GET_POSTS_FROM_SUBSCRIPTIONS_FAILURE = "[post] get most recent posts from subscriptions failure",
 
   SET_SELECTED_POST = "[post] set selected post",
-  RESET_SELECTED_POST = "[post] reset selected post"
+  RESET_SELECTED_POST = "[post] reset selected post",
+
+  SET_EDITED_POST = "[post] set edited post",
+  SET_EDITED_POST_SUCCESS = "[post] set edited post success",
+  SET_EDITED_POST_FAILURE = "[post] set edited post failure",
+  RESET_EDITED_POST = "[post] reset edited post"
 }
 
 export const createPost = createAction(PostActionTypes.CREATE_POST, props<{createPostData: CreatePostData}>())
@@ -55,6 +60,11 @@ export const getPostsFromSubscriptionsFailure = createAction(PostActionTypes.GET
 
 export const setSelectedPost = createAction(PostActionTypes.SET_SELECTED_POST, props<{post: BlogPost}>())
 export const resetSelectedPost = createAction(PostActionTypes.RESET_SELECTED_POST)
+
+export const setEditedPost = createAction(PostActionTypes.SET_EDITED_POST);
+export const setEditedPostSuccess = createAction(PostActionTypes.SET_EDITED_POST_SUCCESS, props<{post: BlogPost}>());
+export const setEditedPostFailure = createAction(PostActionTypes.SET_EDITED_POST_FAILURE);
+export const resetEditedPost = createAction(PostActionTypes.RESET_EDITED_POST);
 
 export const getPosts = createAction(PostActionTypes.GET_POSTS, props<{status?: string, categoryId?: number}>())
 export const getPostsSuccess = createAction(PostActionTypes.GET_POSTS_SUCCESS, props<{posts: BlogPost[]}>())
