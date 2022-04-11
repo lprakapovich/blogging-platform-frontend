@@ -51,6 +51,20 @@ html, body {
     justify-content: center;
     align-items: center;
   }
+
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: v.$extra-light-grey;
+    border-radius: 0.25rem;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: v.$light-grey;
+    cursor: pointer;
+  }
 }
 
 @keyframes loading-spinner {

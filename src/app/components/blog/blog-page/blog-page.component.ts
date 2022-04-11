@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Router} from "@angular/router";
 import {NavbarTemplateService} from "../../../services/ui/navbar-template.service";
-import {combineLatest, map, Observable, Subject, Subscription, take, takeUntil} from "rxjs";
+import {combineLatest, map, Observable, Subject, take, takeUntil} from "rxjs";
 import {Store} from "@ngrx/store";
 import {
   selectAuthenticatedUserBlogsIds,
@@ -49,9 +49,6 @@ export class BlogPageComponent implements OnInit, OnDestroy {
   showAppMenuModal: boolean;
   showAppBlogSettingsModal: boolean;
 
-  appMenuModalSubscription: Subscription;
-  appSettingsModalSubscription: Subscription;
-
   constructor(private store: Store,
               private router: Router,
               private navbarService: NavbarTemplateService,
@@ -68,13 +65,12 @@ export class BlogPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.appMenuModalSubscription.unsubscribe();
-    this.appSettingsModalSubscription.unsubscribe();
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
 
   onNewPostClicked() {
+    console.log('on new post clicked')
     this.router.navigate(['/editor-page']);
   }
 

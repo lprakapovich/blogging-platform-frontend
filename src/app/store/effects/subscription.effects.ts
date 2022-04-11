@@ -29,7 +29,7 @@ export class SubscriptionEffects {
     switchMap(([subscriptionBlogId, {id, username}]) => {
       return this.subscriptionService.addSubscription(id, username, subscriptionBlogId)
         .pipe(
-          map((response) => {
+          map(() => {
             const subscription: Subscription = {
               id: {
                 subscriber: { id, username },
