@@ -65,10 +65,10 @@ export class PostEffects {
   this.actions$.pipe(
     ofType(PostActionTypes.DELETE_POST),
     map((action: any) => action.postId),
-    combineLatestWith(
+    withLatestFrom(
       this.store.select(selectAuthenticatedUserBlogId)
     ),
-    switchMap(([postId, {id, username}]) => {
+    exhaustMap(([postId, {id, username}]) => {
       return this.postService.deletePost(id, username, postId)
         .pipe(
           map(() => deletePostSuccess({ postId })),
@@ -152,10 +152,10 @@ export class PostEffects {
   setEditedPost$ = createEffect(() =>
   this.actions$.pipe(
     ofType(PostActionTypes.SET_EDITED_POST),
-    combineLatestWith(
+    withLatestFrom(
       this.store.select(selectAuthenticatedUserBlogId),
       this.store.select(selectSelectedPost)),
-    switchMap(([__, {id, username}, selectedPost]) => {
+    exhaustMap(([__, {id, username}, selectedPost]) => {
       if (selectedPost?.blog.id.id === id && selectedPost?.blog.id.username === username) {
         return of(setEditedPostSuccess({post: selectedPost}));
       } else return of(setEditedPostFailure());
