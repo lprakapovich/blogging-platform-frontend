@@ -42,6 +42,11 @@ export const selectEditedPost = createSelector(
   state => state.editor.editedPost
 )
 
+export const selectIsEditableMode = createSelector(
+  selectPostFeature,
+  state => state.editor.isEditingMode
+)
+
 export const selectIsModified = (modifiedTitle: string, modifiedContent: any) => createSelector(
   selectEditedPost,
   post => (!post) || post.title !== modifiedTitle || post.content !== modifiedContent

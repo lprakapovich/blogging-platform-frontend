@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Category} from "../../../models/Category";
 import {Status} from "../../../models/Status";
+import {BlogPost} from "../../../models/BlogPost";
 
 @Component({
   selector: 'app-blog-post-settings-modal',
@@ -11,6 +12,7 @@ export class BlogPostSettingsModalComponent implements OnInit {
 
   @Input() isLoading: boolean | null;
   @Input() categories: Category[] | null;
+  @Input() editedPost: BlogPost | null;
 
   @Output() closeModalEventEmitter = new EventEmitter();
   @Output() publishEventEmitter = new EventEmitter<{
@@ -21,10 +23,21 @@ export class BlogPostSettingsModalComponent implements OnInit {
   selectedStatus: Status;
   selectedCategory: Category;
 
+  draft = Status.Draft
+  published = Status.Published
+
   constructor() { }
 
   ngOnInit(): void {
 
+    this.selectedStatus = this.published;
+
+    if (!!this.editedPost) {
+      if (!!this.editedPost.category) {
+        this.selectedCategory = this.editedPost.category;
+      }
+      this.selectedStatus = this.editedPost.status;
+    }
   }
 
   onCategorySelected(category: Category) {

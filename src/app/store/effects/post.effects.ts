@@ -44,7 +44,7 @@ export class PostEffects {
     exhaustMap(([createPostData, { id, username}]) => {
       return this.postService.createPost(id, username, createPostData)
         .pipe(
-          map((createdPost) => createPostSuccess({ createdPost })),
+          map((createdPost) => createPostSuccess({ post: createdPost })),
           catchError((error) => of(createPostFailure({ error })))
         )
     })
@@ -52,10 +52,10 @@ export class PostEffects {
 
   createPostSuccess$ = createEffect(() =>
   this.actions$.pipe(
-    ofType(PostActionTypes.CREATE_POST_SUCCESS),
-    map((action: any) => action.createdPost),
+    ofType(
+      PostActionTypes.CREATE_POST_SUCCESS),
+    map((action: any) => action.post),
     tap((post) => {
-      console.log(`createPostSuccess for post ${post.id} of blog ${post.blog.id.id},${post.blog.id.username}`)
       this.router.navigate([`publication/@${post.blog.id}/${post.id}`])
     })),{
     dispatch: false
@@ -80,17 +80,28 @@ export class PostEffects {
   updatePost$ = createEffect(() =>
   this.actions$.pipe(
     ofType(PostActionTypes.UPDATE_POST),
-    combineLatestWith(
-      this.store.select(selectAuthenticatedUserBlogId)
-    ),
-    switchMap(([{updatePostData, postId}, {id, username}]) => {
+    debounceTime(1000),
+    withLatestFrom(
+      this.store.select(selectAuthenticatedUserBlogId)),
+    exhaustMap(([{updatePostData, postId}, {id, username}]) => {
       return this.postService.updatePost(id, username, postId, updatePostData)
         .pipe(
-          map((updatedPost) => updatePostSuccess({ updatedPost })),
+          map((updatedPost) => updatePostSuccess({ post: updatedPost })),
           catchError((error) => of(updatePostFailure({error})))
         )
     })
   ))
+
+  updatePostSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(
+        PostActionTypes.UPDATE_POST_SUCCESS),
+      map((action: any) => action.post),
+      tap((post) => {
+        this.router.navigate([`publication/@${post.blog.id}/${post.id}`])
+      })),{
+    dispatch: false
+  })
 
   getPosts$ = createEffect(() =>
   this.actions$.pipe(

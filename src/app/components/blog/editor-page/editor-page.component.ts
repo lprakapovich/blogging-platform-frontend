@@ -1,16 +1,15 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {NavbarTemplateService} from "../../../services/ui/navbar-template.service";
 import {EditorService} from "../../../services/ui/editor.service";
-import {combineLatest, Observable, Subject, takeUntil} from "rxjs";
+import {combineLatest, Observable, Subject, take, takeUntil} from "rxjs";
 import {EditorComponent} from "../editor/editor.component";
-import {CreatePostData} from "../../../models/data/post/CreatePostData";
 import {Status} from "../../../models/Status";
-import {createPost, resetEditedPost} from "../../../store/actions/post.actions";
+import {createPost, resetEditedPost, updatePost} from "../../../store/actions/post.actions";
 import {Store} from "@ngrx/store";
 import {Category} from "../../../models/Category";
 import {selectAuthenticatedUserBlogCategories} from "../../../store/selectors/blog.selectors";
 import {BlogPostSettingsModalComponent} from "../blog-post-settings-modal/blog-post-settings-modal.component";
-import {selectEditedPost, selectIsPostLoading} from "../../../store/selectors/post.selectors";
+import {selectEditedPost, selectIsEditableMode, selectIsPostLoading} from "../../../store/selectors/post.selectors";
 import {Actions} from "@ngrx/effects";
 import {BlogPost} from "../../../models/BlogPost";
 
@@ -27,8 +26,9 @@ export class EditorPageComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject<void>();
 
   blogCategories$: Observable<Category[]>;
-  editedPost: Observable<BlogPost | null>;
+  editedPost$: Observable<BlogPost | null>;
   isPostLoading$: Observable<boolean>;
+  isEditableMode$: Observable<boolean>;
 
   isContentMissing: boolean;
   isTitleMissing: boolean;
@@ -51,21 +51,20 @@ export class EditorPageComponent implements OnInit, OnDestroy {
 
     this.blogCategories$ = this.store.select(selectAuthenticatedUserBlogCategories);
     this.isPostLoading$ = this.store.select(selectIsPostLoading);
-    this.editedPost = this.store.select(selectEditedPost);
+    this.editedPost$ = this.store.select(selectEditedPost);
+    this.isEditableMode$ = this.store.select(selectIsEditableMode);
 
     this.editorService.getPublishEventChanged()
       .pipe(
         takeUntil(this.unsubscribe$))
       .subscribe(() => {
-        console.log('event from editorService.getPublishEventChanged()')
-        this.onPublishEventTriggered()
+        this.onShowPostSettingsModal()
       })
 
     this.editorService.getDeleteEventChanged()
       .pipe(
         takeUntil(this.unsubscribe$))
       .subscribe(() =>{
-        console.log('event from editorService.getDeleteEventChanged()')
         this.onDeleteEventTriggered()
       })
 
@@ -76,13 +75,6 @@ export class EditorPageComponent implements OnInit, OnDestroy {
         this.isContentMissing = isContentMissing;
         this.isTitleMissing = isTitleMissing;
     })
-
-    combineLatest([this.editedPost])
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(([post]) => {
-        this.editorComponent.modifiedContentInput = post?.content ?? '';
-        this.editorComponent.modifiedTitleInput = post?.title ?? '';
-      })
   }
 
   ngOnDestroy() {
@@ -91,7 +83,7 @@ export class EditorPageComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
-  private onPublishEventTriggered() {
+  private onShowPostSettingsModal() {
     this.editorComponent.autoSaveInput();
     this.postTitle = this.editorComponent.modifiedTitleInput.trim();
     this.postContent = this.editorComponent.modifiedContentInput.trim();
@@ -127,12 +119,21 @@ export class EditorPageComponent implements OnInit, OnDestroy {
     console.log(JSON.stringify($event.selectedStatus))
     console.log(JSON.stringify($event.selectedCategory))
 
-    const createPostData: CreatePostData = {
+    const postData = {
       title: this.postTitle,
       content: this.postContent,
       status: $event.selectedStatus,
       category: $event.selectedCategory
     }
-    this.store.dispatch(createPost({createPostData}))
+
+    combineLatest([this.isEditableMode$, this.editedPost$])
+      .pipe(take(1))
+      .subscribe(([isEditableMode, post]) => {
+        if (isEditableMode && !!post) {
+          this.store.dispatch(updatePost( { postId: post.id, updatePostData: postData}))
+        } else {
+          this.store.dispatch(createPost({ createPostData: postData }))
+        }
+      })
   }
 }

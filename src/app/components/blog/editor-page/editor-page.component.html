@@ -8,6 +8,7 @@
 <app-blog-post-settings-modal
   *ngIf="showPostSettingsModal"
   #postSettingsComponent
+  [editedPost]="(editedPost$ | async)"
   [isLoading]="(isPostLoading$ | async)"
   [categories]="(blogCategories$ | async)"
   (closeModalEventEmitter)="onClosePostSettingsModal()"

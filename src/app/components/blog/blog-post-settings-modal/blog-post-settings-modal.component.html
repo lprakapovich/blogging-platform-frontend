@@ -8,7 +8,7 @@
                  id="published-status"
                  value="Published"
                  name="post-status"
-                 checked
+                 [checked]="selectedStatus === published"
                  (change)="onStatusInputChanged($event)">
           <label for="published-status"> Published </label>
         </div>
@@ -20,6 +20,7 @@
                  id="draft-status"
                  value="Draft"
                  name="post-status"
+                 [checked]="selectedStatus === draft"
                  (change)="onStatusInputChanged($event)">
           <label for="draft-status"> Draft </label>
         </div>

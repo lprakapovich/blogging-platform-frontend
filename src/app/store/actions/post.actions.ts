@@ -39,11 +39,11 @@ export enum PostActionTypes {
 }
 
 export const createPost = createAction(PostActionTypes.CREATE_POST, props<{createPostData: CreatePostData}>())
-export const createPostSuccess = createAction(PostActionTypes.CREATE_POST_SUCCESS, props<{createdPost: BlogPost}>());
+export const createPostSuccess = createAction(PostActionTypes.CREATE_POST_SUCCESS, props<{post: BlogPost}>());
 export const createPostFailure = createAction(PostActionTypes.CREATE_POST_FAILURE, props<{error: any}>())
 
 export const updatePost = createAction(PostActionTypes.UPDATE_POST, props<{postId: number, updatePostData: UpdatePostData}>())
-export const updatePostSuccess = createAction(PostActionTypes.UPDATE_POST_SUCCESS, props<{updatedPost: BlogPost}>())
+export const updatePostSuccess = createAction(PostActionTypes.UPDATE_POST_SUCCESS, props<{post: BlogPost}>())
 export const updatePostFailure = createAction(PostActionTypes.UPDATE_POST_FAILURE, props<{error: any}>())
 
 export const deletePost = createAction(PostActionTypes.DELETE_POST, props<{postId: number}>())

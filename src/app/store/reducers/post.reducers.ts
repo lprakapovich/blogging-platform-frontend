@@ -2,6 +2,7 @@ import {BlogPost} from "../../models/BlogPost";
 import {createReducer, on} from "@ngrx/store";
 import * as PostActions from '../actions/post.actions';
 import * as AuthActions from "../actions/auth.actions";
+import {PostActionTypes} from "../actions/post.actions";
 
 export interface PostState {
   selectedBlogPosts: BlogPost[],
@@ -14,6 +15,7 @@ export interface PostState {
   editor: {
     editedPost: BlogPost | null;
     isModified: boolean;
+    isEditingMode: boolean;
   }
 }
 
@@ -27,7 +29,8 @@ export const initialState: PostState = {
 
   editor: {
     editedPost: null,
-    isModified: false
+    isModified: false,
+    isEditingMode: false,
   }
 }
 
@@ -101,7 +104,7 @@ export const postReducer = createReducer(
   on(PostActions.createPostSuccess, (state, action) => ({
     ...state,
     isLoading: false,
-    selectedPost: action.createdPost
+    selectedPost: action.post
   })),
 
   on(PostActions.createPostFailure, (state, action) => ({
@@ -115,15 +118,24 @@ export const postReducer = createReducer(
     isLoading: true
   })),
 
-  on(PostActions.updatePostSuccess, (state) => ({
+  on(PostActions.updatePostSuccess, (state, action) => ({
     ...state,
-    isLoading: false
+    isLoading: false,
+    selectedPost: action.post,
+    editor: {
+      ...state.editor,
+      isEditingMode: false
+    }
   })),
 
   on(PostActions.updatePostFailure, (state, action) => ({
     ...state,
     isLoading: false,
-    postsError: action.error
+    postsError: action.error,
+    editor: {
+      ...state.editor,
+      isEditingMode: false,
+    }
   })),
 
   on(PostActions.deletePost, (state) => ({
@@ -142,19 +154,25 @@ export const postReducer = createReducer(
     postsError: action.error
   })),
 
+  on(PostActions.setEditedPost, (state) => ({
+    ...state
+  })),
+
   on(PostActions.setEditedPostSuccess, (state, action) => ({
     ...state,
     editor: {
       ...state.editor,
-      editedPost: action.post
+      editedPost: action.post,
+      isEditingMode: true
     }
   })),
 
-  on(PostActions.resetEditedPost, (state, action) => ({
+  on(PostActions.resetEditedPost, (state) => ({
     ...state,
     editor: {
       ...state.editor,
-      editedPost: null
+      editedPost: null,
+      isEditingMode: false
     }
   }))
 )
