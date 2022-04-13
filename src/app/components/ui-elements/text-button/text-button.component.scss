@@ -1,6 +1,6 @@
 @use 'src/utilities/variables' as v;
 
-.text-button-container {
+.text-button {
   color: black;
   border-radius: 0.5rem;
   display: flex;
@@ -9,7 +9,7 @@
   width: fit-content;
 }
 
-.text-button-container:hover {
+.text-button:hover {
   background-color: v.$extra-light-grey;
   color: black;
   cursor: pointer;
