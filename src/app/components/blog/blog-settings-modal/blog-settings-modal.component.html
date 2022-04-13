@@ -104,24 +104,24 @@
                 </app-default-button>
               </div>
             </div>
-<!--            <div class='error-message' *ngIf="!newCategoryInput && (categoryError$ | async) as categoryError"> {{ categoryError }}</div>-->
-<!--            <div class="success-message" *ngIf="showSuccessMessage"> Success! Category was created. </div>-->
             <app-error-message *ngIf="!newCategoryInput && (categoryError$ | async) as categoryError"> {{ categoryError }} </app-error-message>
             <app-success-message *ngIf="showSuccessMessage"> Great! Category was created. </app-success-message>
             <div id="existing-categories-container">
-              <ng-container *ngIf="(categories$ | async) as categories; else emptyCategoryList">
-                <div class="category-list">
-                  <div *ngFor="let category of categories" class="category-list-item">
-                    <div>{{category.name}}</div>
-                    <div class="category-actions">
-                      <app-svg-button [iconTemplate]="'delete'" (click)="onDeleteCategoryClicked(category)"></app-svg-button>
+              <div  *ngIf="(categories$ | async) as categories">
+                <ng-container *ngIf="categories.length > 0; else emptyCategoryList">
+                  <div class="category-list">
+                    <div *ngFor="let category of categories" class="category-list-item">
+                      <div>{{category.name}}</div>
+                      <div class="category-actions">
+                        <app-svg-button [iconTemplate]="'delete'" (click)="onDeleteCategoryClicked(category)"></app-svg-button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </ng-container>
+                </ng-container>
+              </div>
               <ng-template #emptyCategoryList>
                 <div class="grey category-empty-list">
-                  Categories help designate posts by subject, which helps the reader navigate the blog.
+                  Create a new category to make navigation through the blog easier.
                 </div>
               </ng-template>
             </div>

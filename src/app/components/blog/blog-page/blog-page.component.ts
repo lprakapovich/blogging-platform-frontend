@@ -84,7 +84,8 @@ export class BlogPageComponent implements OnInit, OnDestroy {
   }
 
   private fetchDataFromStore() {
-    this.store.dispatch(getPosts({status: this.Draft}));
+
+    this.store.dispatch(getPosts({status: Status.Published}));
 
     this.userBlogIds$ = this.store.select(selectAuthenticatedUserBlogsIds);
     this.selectedBlogPublications$ = this.store.select(selectSelectedBlogPosts);
@@ -146,7 +147,11 @@ export class BlogPageComponent implements OnInit, OnDestroy {
   }
 
   onCategorySelected(category: Category) {
-    this.store.dispatch(getPosts({categoryId: category.id}))
+    // NOTE filtering by category is only done among published posts
+    this.store.dispatch(getPosts({
+      categoryId: category.id,
+      status: Status.Published
+    }))
   }
 
   onStatusSelected(status: Status) {
@@ -159,18 +164,22 @@ export class BlogPageComponent implements OnInit, OnDestroy {
     switch(status) {
       case Status.Draft:
         return 'Draft'
-      case Status.Hidden:
-        return 'Hidden'
+      case Status.Scheduled:
+        return 'Scheduled'
       default:
         return 'Published'
     }
   }
 
   getPublishedPosts() {
-    this.store.dispatch(getPosts({status: Status.Published}));
+    this.getPosts(Status.Published);
   }
 
   getDraftPosts() {
-    this.store.dispatch(getPosts({status: Status.Draft}));
+    this.getPosts(Status.Draft)
+  }
+
+  getPosts(status: Status) {
+    this.store.dispatch(getPosts( {status }))
   }
 }

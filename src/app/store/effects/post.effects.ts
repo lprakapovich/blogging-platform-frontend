@@ -64,18 +64,36 @@ export class PostEffects {
   deletePost$ = createEffect(() =>
   this.actions$.pipe(
     ofType(PostActionTypes.DELETE_POST),
-    map((action: any) => action.postId),
     withLatestFrom(
-      this.store.select(selectAuthenticatedUserBlogId)
+      this.store.select(selectAuthenticatedUserBlogId),
+      this.store.select(selectSelectedPost)
     ),
-    exhaustMap(([postId, {id, username}]) => {
-      return this.postService.deletePost(id, username, postId)
+    exhaustMap(([__, {id, username}, post]) => {
+      if (!post) return of(deletePostFailure({ error: 'No post selected'}))
+      return this.postService.deletePost(id, username, post.id)
         .pipe(
-          map(() => deletePostSuccess({ postId })),
+          map(() => {
+            console.log(`deletePost$ ${Date.now()}`)
+            return deletePostSuccess({ postId: post.id })
+          }),
           catchError((error) => of(deletePostFailure({ error })))
         )
     })
   ))
+
+  deletePostSuccess$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(PostActionTypes.DELETE_POST_SUCCESS),
+    withLatestFrom(
+      this.store.select(selectAuthenticatedUserBlogId)
+    ),
+    tap(([__, { id }]) => {
+      this.router.navigate([`/blog/@${id}`])
+    })
+  ),
+    {
+      dispatch: false
+    })
 
   updatePost$ = createEffect(() =>
   this.actions$.pipe(

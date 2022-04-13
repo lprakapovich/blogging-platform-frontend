@@ -57,24 +57,6 @@
   }
 }
 
-#loading::after {
-  content: "";
-  position: absolute;
-  width: 32px;
-  height: 32px;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
-  border: 1px solid transparent;
-  border-top-color: black;
-  border-right-color: black;
-  border-bottom-color: black;
-  border-radius: 50%;
-  animation: loading-spinner 3s infinite;
-}
-
 @media only screen and (max-width: 1300px) {
   #blog-container {
     padding: 2rem 1rem;

@@ -3,11 +3,15 @@ import {NavbarTemplateService} from "../../../services/ui/navbar-template.servic
 import {combineLatest, Observable, Subject, takeUntil} from "rxjs";
 import {BlogPost} from "../../../models/BlogPost";
 import {Store} from "@ngrx/store";
-import {selectIsAuthenticatedUsersPost, selectSelectedPost} from "../../../store/selectors/post.selectors";
+import {
+  selectIsAuthenticatedUsersPost,
+  selectIsPostLoading,
+  selectSelectedPost
+} from "../../../store/selectors/post.selectors";
 import {BlogId} from "../../../models/Blog";
 import {Router} from "@angular/router";
 import {EditorService} from "../../../services/ui/editor.service";
-import {PostActionTypes, setEditedPost} from "../../../store/actions/post.actions";
+import {deletePost, PostActionTypes, setEditedPost} from "../../../store/actions/post.actions";
 import {Actions, ofType} from "@ngrx/effects";
 
 @Component({
@@ -21,6 +25,7 @@ export class BlogPostComponent implements OnInit {
 
   post$: Observable<BlogPost | null>;
   isAuthenticatedUsersPost$: Observable<boolean>;
+  isLoading$: Observable<boolean>;
 
   constructor(private store: Store,
               private actions$: Actions,
@@ -33,13 +38,21 @@ export class BlogPostComponent implements OnInit {
     this.navbarService.setPostPreviewTemplate();
     this.post$ = this.store.select(selectSelectedPost);
     this.isAuthenticatedUsersPost$ = this.store.select(selectIsAuthenticatedUsersPost);
+    this.isLoading$ = this.store.select(selectIsPostLoading);
 
     combineLatest([this.isAuthenticatedUsersPost$])
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(([isAuthenticatedUserPost]) => {
-        console.log(isAuthenticatedUserPost)
         this.navbarService.adjustEditButton(isAuthenticatedUserPost)
+        this.navbarService.adjustRemoveButton(isAuthenticatedUserPost);
       })
+
+   this.editorService.getDeleteEventChanged()
+    .pipe(
+      takeUntil(this.unsubscribe$)
+    ).subscribe(() => {
+      this.store.dispatch(deletePost())
+    })
 
     this.editorService.getEditedPostChanged()
       .pipe(

@@ -46,7 +46,7 @@ export const updatePost = createAction(PostActionTypes.UPDATE_POST, props<{postI
 export const updatePostSuccess = createAction(PostActionTypes.UPDATE_POST_SUCCESS, props<{post: BlogPost}>())
 export const updatePostFailure = createAction(PostActionTypes.UPDATE_POST_FAILURE, props<{error: any}>())
 
-export const deletePost = createAction(PostActionTypes.DELETE_POST, props<{postId: number}>())
+export const deletePost = createAction(PostActionTypes.DELETE_POST)
 export const deletePostSuccess = createAction(PostActionTypes.DELETE_POST_SUCCESS, props<{postId: number}>())
 export const deletePostFailure = createAction(PostActionTypes.DELETE_POST_FAILURE, props<{error: any}>())
 

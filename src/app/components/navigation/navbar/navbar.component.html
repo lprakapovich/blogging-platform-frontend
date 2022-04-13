@@ -6,8 +6,11 @@
                         [ngClass]="'highlighted'"
                         id="'edit'"
                         [iconTemplate]="'edit'"
-                        (click)="onEditClicked()"
-        >
+                        (click)="onEditClicked()">
+        </app-svg-button>
+        <app-svg-button *ngIf="showRemoveButton"
+                        [iconTemplate]="'delete'"
+                        (click)="onDeleteClicked()">
         </app-svg-button>
         <app-svg-button [ngClass]="'highlighted'"
                         id='new-post'
@@ -62,12 +65,6 @@
              class="editor-navigation-back"> Go Back </a>
       </div>
       <div class="editor-navigation-item">
-        <app-svg-button [iconTemplate]="'check'">
-        </app-svg-button>
-        <app-svg-button *ngIf="showRemoveButton"
-                        [iconTemplate]="'delete'"
-                        (click)="onDeleteClicked()">
-        </app-svg-button>
         <app-svg-button [iconTemplate]="'publish'"
                         (click)="onPublishClicked()">
         </app-svg-button>

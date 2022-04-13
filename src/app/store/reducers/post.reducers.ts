@@ -2,7 +2,6 @@ import {BlogPost} from "../../models/BlogPost";
 import {createReducer, on} from "@ngrx/store";
 import * as PostActions from '../actions/post.actions';
 import * as AuthActions from "../actions/auth.actions";
-import {PostActionTypes} from "../actions/post.actions";
 
 export interface PostState {
   selectedBlogPosts: BlogPost[],
@@ -104,7 +103,10 @@ export const postReducer = createReducer(
   on(PostActions.createPostSuccess, (state, action) => ({
     ...state,
     isLoading: false,
-    selectedPost: action.post
+    selectedPost: action.post,
+    selectedBlogPosts: [
+      ...state.selectedBlogPosts, action.post
+    ]
   })),
 
   on(PostActions.createPostFailure, (state, action) => ({
@@ -124,8 +126,13 @@ export const postReducer = createReducer(
     selectedPost: action.post,
     editor: {
       ...state.editor,
-      isEditingMode: false
-    }
+      isEditingMode: false,
+      editedPost: null,
+    },
+    selectedBlogPosts: [
+      ...state.selectedBlogPosts.filter(p => p.id !== action.post.id),
+      action.post
+    ]
   })),
 
   on(PostActions.updatePostFailure, (state, action) => ({
@@ -135,6 +142,7 @@ export const postReducer = createReducer(
     editor: {
       ...state.editor,
       isEditingMode: false,
+      editedPost: null
     }
   })),
 
@@ -143,9 +151,15 @@ export const postReducer = createReducer(
     isLoading: true
   })),
 
-  on(PostActions.deletePostSuccess, (state) => ({
+  on(PostActions.deletePostSuccess, (state, action) => ({
     ...state,
-    isLoading: false
+    isLoading: false,
+    selectedPost: state.selectedPost?.id === action.postId ? null : state.selectedPost,
+    selectedBlogPosts: state.selectedBlogPosts.filter(p => p.id !== action.postId),
+    editor: {
+      ...state.editor,
+      editedPost: state.editor.editedPost?.id === action.postId ? null : state.editor.editedPost
+    }
   })),
 
   on(PostActions.deletePostFailure, (state, action) => ({
