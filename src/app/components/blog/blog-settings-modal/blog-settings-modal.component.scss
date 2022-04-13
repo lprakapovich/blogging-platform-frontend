@@ -37,11 +37,11 @@
       }
     }
 
-    .settings-selected-navbar-section {
+    .settings-section {
       flex: 4;
       padding: 1rem;
 
-      #general-container {
+      .general-section-container {
         width: 100%;
 
         .general-item {
@@ -79,7 +79,7 @@
           }
         }
 
-        #general-buttons {
+        .general-action-buttons {
           width: 100%;
           display: flex;
           flex-direction: row;
@@ -91,41 +91,39 @@
         }
       }
 
-      #blogs-container,
-      #categories-container {
+      .new-blog-section-container,
+      .category-section-container {
 
-        #new-blog-container,
-        #new-category-container {
+        .new-blog-container,
+        .new-category-container {
           display: flex;
 
-          #new-blog-input,
-          #new-category-input {
+          .input {
             width: 100%;
           }
 
-          #new-blog-add-btn,
-          #new-category-add-btn {
+          .create-button {
             margin: 0 2rem;
             display: flex;
             align-items: center;
           }
         }
 
-        #existing-categories-container {
+        .existing-category-container {
           padding: 1rem 0;
 
           .category-list {
             overflow-y: scroll;
             max-height: 22rem;
 
-            .category-list-item {
+            .category-item {
               display: flex;
               align-items: center;
               justify-content: space-between;
               padding: 0 1rem;
             }
 
-            .category-list-item:hover {
+            .category-item:hover {
               cursor: pointer;
             }
           }

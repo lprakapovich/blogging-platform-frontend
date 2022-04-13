@@ -26,6 +26,10 @@ import {Category} from "../../../models/Category";
 })
 export class BlogSettingsModalComponent implements OnInit, OnDestroy {
 
+  generalSection = 'General';
+  newBlogSection = 'New Blog';
+  categorySection = 'Categories';
+
   @Output() onCloseEmitter: EventEmitter<void> = new EventEmitter<void>();
 
   blog$: Observable<BlogView>;
@@ -47,7 +51,8 @@ export class BlogSettingsModalComponent implements OnInit, OnDestroy {
 
   constructor(private store: Store,
               private actions$: Actions) {
-    this.selectedSection = 'account';
+
+    this.selectedSection = this.generalSection;
   }
 
   ngOnInit(): void {

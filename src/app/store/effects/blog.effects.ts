@@ -67,7 +67,7 @@ export class BlogEffects {
   updateBlog$ = createEffect(() =>
     this.actions$.pipe(
       ofType(BlogActionTypes.UPDATE_BLOG),
-      debounceTime(500),
+      debounceTime(1000),
       map((action: any) => action.data),
       combineLatestWith(
         this.store.select(selectPrincipalActiveBlogId)),
@@ -83,6 +83,7 @@ export class BlogEffects {
   deleteBlog$ = createEffect(() =>
   this.actions$.pipe(
     ofType(BlogActionTypes.DELETE_BLOG),
+    debounceTime(1000),
     withLatestFrom(
       this.store.select(selectPrincipalActiveBlogId)
     ),

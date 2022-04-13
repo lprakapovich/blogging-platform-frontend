@@ -2,46 +2,35 @@
   <div class="settings">
     <div class="settings-navbar">
       <app-default-list>
-        <div (click)="onSettingsSectionSelected('account')" class="settings-menu-item">
+        <div (click)="onSettingsSectionSelected(generalSection)" class="settings-menu-item">
           <div>
             General
           </div>
         </div>
-        <div (click)="onSettingsSectionSelected('categories')" class="settings-menu-item">
+        <div (click)="onSettingsSectionSelected(categorySection)" class="settings-menu-item">
           <div>
             Categories
           </div>
         </div>
-        <div class="settings-menu-item logout" (click)="logout()">
+        <div (click)="onSettingsSectionSelected(newBlogSection)" class="settings-menu-item">
+          <div>
+            New blog
+          </div>
+        </div>
+        <div class="settings-menu-item" (click)="logout()">
           Logout
         </div>
       </app-default-list>
     </div>
-    <div class="settings-selected-navbar-section">
+    <div class="settings-section">
       <ng-container [ngSwitch]="[selectedSection]">
-        <div *ngSwitchCase="'account'">
-          <div id="general-container">
-<!--            <div class="general-item">-->
-<!--              <div> Management</div>-->
-<!--              <div id="profile-photo">-->
-<!--                <div id="profile-photo-image">-->
-<!--                </div>-->
-<!--                <div>-->
-<!--                  <app-text-button> Upload Image</app-text-button>-->
-<!--                </div>-->
-<!--                <div>-->
-<!--                  <app-text-button> Remove</app-text-button>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
+        <div *ngSwitchCase="generalSection">
+          <div class="general-section-container">
             <div class="general-item">
               <div> Domain </div>
-                <app-default-input
-                  [disabled]="true"
-                  [userInput]="blog.id.id">
-                </app-default-input>
+                <app-default-input [disabled]="true" [userInput]="blog.id.id"></app-default-input>
             </div>
-            <div id="display-name" class="general-item">
+            <div class="general-item">
               <div> Display Name </div>
               <app-default-input
                 [placeholder]="'Your name'"
@@ -49,7 +38,7 @@
                 (userInputEventEmitter)="onDisplayNameChanged($event);">
               </app-default-input>
             </div>
-            <div id="about" class="general-item">
+            <div class="general-item">
               <div> Description </div>
               <app-default-input
                 [placeholder]="'Something about your blog'"
@@ -58,10 +47,14 @@
               ></app-default-input>
             </div>
             <div class="general-item aligned">
-              <app-default-button [ngClass]="'reverted medium'" [label]="'Delete blog'" (click)="onDeleteBlogClicked()"></app-default-button>
+              <app-default-button
+                [ngClass]="['reverted',' medium', (isBlogDeleteLoading$ | async) ? 'loading-button' : '']"
+                [label]="'Delete blog'"
+                (click)="onDeleteBlogClicked()">
+              </app-default-button>
               <app-warning-message> Attention! This will delete all related posts and categories. </app-warning-message>
             </div>
-            <div id="general-buttons" class="general-item">
+            <div class="general-item general-action-buttons">
               <app-default-button
                 (click)="onCancel()"
                 [ngClass]="'medium reverted'"
@@ -76,34 +69,30 @@
             </div>
           </div>
         </div>
-        <div *ngSwitchCase="'categories'">
-          <div id="categories-container">
-            <div id="new-category-container">
-              <div id="new-category-input">
-                <app-default-input (userInputEventEmitter)="onNewCategoryInputChanged($event)"
+        <div *ngSwitchCase="categorySection">
+          <div class="category-section-container">
+            <div class="new-category-container">
+                <app-default-input class="input"
+                                   (userInputEventEmitter)="onNewCategoryInputChanged($event)"
                                    [userInput]="newCategoryInput"
                                    [placeholder]="'New category...'">
                 </app-default-input>
-              </div>
-              <div id="new-category-add-btn">
-                <app-default-button [ngClass]="['medium', (isCategoryLoading$ | async) ? 'loading-button' : '', !newCategoryInput ? 'disabled' : '']"
+                <app-default-button class="create-button"
+                                    [ngClass]="['medium', (isCategoryLoading$ | async) ? 'loading-button' : '', !newCategoryInput ? 'disabled' : '']"
                                     (click)="onNewCategoryClicked()"
                                     [label]="'Create'"
                                     [disabled]="!newCategoryInput">
                 </app-default-button>
-              </div>
             </div>
             <app-error-message *ngIf="!newCategoryInput && (categoryError$ | async) as categoryError"> {{ categoryError }} </app-error-message>
             <app-success-message *ngIf="showSuccessMessage"> Great! Category was created. </app-success-message>
-            <div id="existing-categories-container">
+            <div class="existing-category-container">
               <div  *ngIf="(categories$ | async) as categories">
                 <ng-container *ngIf="categories.length > 0; else emptyCategoryList">
                   <div class="category-list">
-                    <div *ngFor="let category of categories" class="category-list-item">
+                    <div class="category-item" *ngFor="let category of categories">
                       <div>{{category.name}}</div>
-                      <div class="category-actions">
-                        <app-svg-button [iconTemplate]="'delete'" (click)="onDeleteCategoryClicked(category)"></app-svg-button>
-                      </div>
+                      <app-svg-button [iconTemplate]="'delete'" (click)="onDeleteCategoryClicked(category)"></app-svg-button>
                     </div>
                   </div>
                 </ng-container>
@@ -116,18 +105,15 @@
             </div>
           </div>
         </div>
-        <div *ngSwitchCase="'new-blog'">
-          <div id="blogs-container">
-            <div id="new-blog-container">
-              <div id="new-blog-input">
-                <app-default-input (userInputEventEmitter)="newBlog = $event"
-                                   [userInput]="newBlog"
-                                   [placeholder]="'New blog...'">
-                </app-default-input>
-              </div>
-              <div id="new-blog-add-btn">
-                <app-default-button (click)="onNewBlogClicked()" [label]="'Add'"></app-default-button>
-              </div>
+        <div *ngSwitchCase="newBlogSection">
+          <div class="new-blog-section-container">
+            <div class="new-blog-container">
+              <app-default-input class="input"
+                                 (userInputEventEmitter)="newBlog = $event"
+                                 [userInput]="newBlog"
+                                 [placeholder]="'New blog...'">
+              </app-default-input>
+              <app-default-button class="create-button medium" (click)="onNewBlogClicked()" [label]="'Add'"></app-default-button>
             </div>
           </div>
         </div>
