@@ -14,33 +14,48 @@ export const selectSelectedBlogId = createSelector(
   state => state.selectedBlog?.id
 )
 
-export const selectAuthenticatedUserBlogId = createSelector(
+export const selectPrincipalActiveBlogId = createSelector(
   selectBlogFeature,
-  state => state.authenticatedUserBlog?.id
+  state => state.principalActiveBlog?.id
 )
 
-export const selectAuthenticatedUserBlog = createSelector(
+export const selectPrincipalActiveBlog = createSelector(
   selectBlogFeature,
-  state => state.authenticatedUserBlog
+  state => state.principalActiveBlog
 )
 
-export const selectBlogsBySearchCriteria = createSelector(
+export const selectSearchedBlogs = createSelector(
   selectBlogFeature,
-  state => state.searchedBlogs
+  state => state.search.blogs
 )
 
-export const selectIsBlogLoading = createSelector(
+export const selectIsBlogCreateLoading = createSelector(
   selectBlogFeature,
-  state => state.isLoading
+  state => state.loading.isCreateLoading
 )
 
-export const selectAuthenticatedUserBlogsIds = createSelector(
+export const selectIsBlogUpdateLoading = createSelector(
   selectBlogFeature,
-  state => state.authenticatedUserBlogsIds
+  state => state.loading.isUpdateLoading
 )
 
-export const selectIsBlogOwner = createSelector(
-  selectAuthenticatedUserBlogId,
+export const selectIsBlogDeleteLoading = createSelector(
+  selectBlogFeature,
+  state => state.loading.isDeleteLoading
+)
+
+export const selectIsBlogGetLoading = createSelector(
+  selectBlogFeature,
+  state => state.loading.isGetLoading
+)
+
+export const selectPrincipalManagedBlogIds = createSelector(
+  selectBlogFeature,
+  state => state.principalManagedBlogIds
+)
+
+export const selectIsPrincipalBlogOwner = createSelector(
+  selectPrincipalActiveBlogId,
   selectSelectedBlogId,
   (authBlogId, selectedBlogId) => authBlogId === selectedBlogId
 )
@@ -50,17 +65,17 @@ export const selectSelectedBlogCategories = createSelector(
   blog => blog.categories
 )
 
-export const selectAuthenticatedUserBlogCategories = createSelector(
-  selectAuthenticatedUserBlog,
+export const selectActiveBlogCategories = createSelector(
+  selectPrincipalActiveBlog,
   blog => blog.categories
 )
 
-export const selectAuthenticatedUserBlogSubscriptions = createSelector(
-  selectAuthenticatedUserBlog,
+export const selectActiveSubscriptions = createSelector(
+  selectPrincipalActiveBlog,
   blog => blog.subscriptions
 )
 
 export const selectIsSubscriber = (blogId: BlogId) => createSelector(
-  selectAuthenticatedUserBlogSubscriptions,
+  selectActiveSubscriptions,
   (subscriptions) => subscriptions.some(s => s.id.subscription.id === blogId.id && s.id.subscription.username && blogId.username)
 )

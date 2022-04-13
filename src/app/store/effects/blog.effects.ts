@@ -16,14 +16,14 @@ import {
   getBlogDetailsSuccess,
   getSearchedBlogsFailure,
   getSearchedBlogsSuccess,
-  getUserBlogsAndRedirectFailure,
-  getUserBlogsAndRedirectSuccess,
+  getPrincipalBlogsAndRedirectFailure,
+  getPrincipalBlogsAndRedirectSuccess,
   updateBlogFailure,
   updateBlogSuccess
 } from "../actions/blog.actions";
 import {Router} from "@angular/router";
 import {selectPrincipal} from "../selectors/auth.selectors";
-import {selectAuthenticatedUserBlogId, selectAuthenticatedUserBlogsIds} from "../selectors/blog.selectors";
+import {selectPrincipalActiveBlogId, selectPrincipalManagedBlogIds} from "../selectors/blog.selectors";
 import * as fromBlog from '../reducers/blog.reducers'
 import {logout} from "../actions/auth.actions";
 
@@ -70,7 +70,7 @@ export class BlogEffects {
       debounceTime(500),
       map((action: any) => action.data),
       combineLatestWith(
-        this.store.select(selectAuthenticatedUserBlogId)),
+        this.store.select(selectPrincipalActiveBlogId)),
       exhaustMap(([updateData, {id, username}]) => {
         return this.blogService.updateBlog(id, username, updateData)
           .pipe(
@@ -84,7 +84,7 @@ export class BlogEffects {
   this.actions$.pipe(
     ofType(BlogActionTypes.DELETE_BLOG),
     withLatestFrom(
-      this.store.select(selectAuthenticatedUserBlogId)
+      this.store.select(selectPrincipalActiveBlogId)
     ),
     exhaustMap(([__, {id, username}]) => {
       return this.blogService.deleteBlog(id, username)
@@ -99,7 +99,7 @@ export class BlogEffects {
     this.actions$.pipe(
       ofType(BlogActionTypes.DELETE_BLOG_SUCCESS),
       withLatestFrom(
-        this.store.select(selectAuthenticatedUserBlogsIds)
+        this.store.select(selectPrincipalManagedBlogIds)
       ),
       exhaustMap(([{ blogId }, blogsIds]) => {
         if (blogsIds.length == 0)
@@ -167,22 +167,22 @@ export class BlogEffects {
       dispatch: false
     })
 
-  getUserBlogsAndRedirect$ = createEffect(() =>
+  getPrincipalBlogsAndRedirect$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(BlogActionTypes.GET_USER_BLOGS_AND_REDIRECT),
+      ofType(BlogActionTypes.GET_PRINCIPAL_BLOGS_AND_REDIRECT),
       map((action: any) => action.path),
       switchMap((path: string) => {
         return this.blogService.getUserManagedBlogs()
           .pipe(
-            map(blogs => getUserBlogsAndRedirectSuccess({blogs, path})),
-            catchError((error) => of(getUserBlogsAndRedirectFailure({error})))
+            map(blogs => getPrincipalBlogsAndRedirectSuccess({blogs, path})),
+            catchError((error) => of(getPrincipalBlogsAndRedirectFailure({error})))
           )
       })
     ))
 
-  getUserBlogsAndRedirectSuccess$ = createEffect(() =>
+  getPrincipalBlogsAndRedirectSuccess$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(BlogActionTypes.GET_USER_BLOGS_AND_REDIRECT_SUCCESS),
+      ofType(BlogActionTypes.GET_PRINCIPAL_BLOGS_AND_REDIRECT_SUCCESS),
       map((action: any) => action.path),
       tap((path) => {
         this.router.navigate([`${path}`])

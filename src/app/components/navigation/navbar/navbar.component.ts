@@ -3,7 +3,7 @@ import {NavbarTemplateService} from "../../../services/ui/navbar-template.servic
 import {Store} from "@ngrx/store";
 import {ModalService} from "../../../services/ui/modal.service";
 import {EditorService} from "../../../services/ui/editor.service";
-import {selectAuthenticatedUserBlogId} from "../../../store/selectors/blog.selectors";
+import {selectPrincipalActiveBlogId} from "../../../store/selectors/blog.selectors";
 import {take} from "rxjs";
 import {Router} from "@angular/router";
 
@@ -51,7 +51,7 @@ export class NavbarComponent {
   }
 
   onBackClicked() {
-    this.store.select(selectAuthenticatedUserBlogId)
+    this.store.select(selectPrincipalActiveBlogId)
       .pipe(take(1))
       .subscribe(blogId => {
         console.log(blogId.id)

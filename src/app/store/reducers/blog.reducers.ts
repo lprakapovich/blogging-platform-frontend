@@ -7,21 +7,39 @@ import * as SubscriptionActions from "../actions/subscription.actions";
 import * as AuthActions from "../actions/auth.actions";
 
 export interface BlogState {
-  authenticatedUserBlog: BlogView,
-  authenticatedUserBlogsIds: BlogId[],
-  searchedBlogs: Blog[],
-  selectedBlog: BlogView,
-  blogError: string,
-  isLoading: boolean,
+  principalActiveBlog: BlogView,
+  principalManagedBlogIds: BlogId[]
+  selectedBlog: BlogView
+  loading: {
+    isCreateLoading: boolean;
+    isUpdateLoading: boolean;
+    isDeleteLoading: boolean;
+    isGetLoading: boolean;
+  },
+  search: {
+    blogs: Blog[]
+  },
+  error: {
+    responseError: any
+  },
 }
 
 export const initialState: BlogState = {
-  authenticatedUserBlog: {} as BlogView,
-  authenticatedUserBlogsIds: [],
-  searchedBlogs: [],
+  principalActiveBlog: {} as BlogView,
+  principalManagedBlogIds: [],
   selectedBlog: {} as BlogView,
-  blogError: '',
-  isLoading: false,
+  loading: {
+    isCreateLoading: false,
+    isUpdateLoading: false,
+    isDeleteLoading: false,
+    isGetLoading: false
+  },
+  search: {
+    blogs: []
+  },
+  error: {
+    responseError: null
+  },
 }
 
 export const blogReducer = createReducer(
@@ -29,154 +47,236 @@ export const blogReducer = createReducer(
 
   on(BlogActions.createBlog, (state) => ({
     ...state,
-    isLoading: true
+    loading: {
+      ...state.loading,
+      isCreateLoading: true
+    }
   })),
 
   on(BlogActions.createBlogSuccess, (state, action) => ({
     ...state,
-    isLoading: false,
-    authenticatedUserBlog: {
-      id: {
-        id: action.blogId,
-        username: action.principal
-      },
+    principalActiveBlog: {
+      id: { id: action.blogId, username: action.principal },
       subscribers: [],
       subscriptions: [],
       categories: [],
       description: '',
       displayName: ''
     },
-
-    authenticatedUserBlogsIds: [
-      ...state.authenticatedUserBlogsIds,
-      {
-        id: action.blogId,
-        username: action.principal
-      }
-    ],
+    principalManagedBlogIds: [...state.principalManagedBlogIds, { id: action.blogId, username: action.principal }],
+    loading: {
+      ...state.loading,
+      isCreateLoading: false
+    },
   })),
 
   on(BlogActions.createBlogFailure, (state, action) => ({
     ...state,
-    isLoading: false,
-    blogError: action.error
+    loading: {
+      ...state.loading,
+      isCreateLoading: false
+    },
+    error: {
+      responseError: action.error
+    }
   })),
 
   on(BlogActions.updateBlog, (state) => ({
     ...state,
-    isLoading: true
+    loading: {
+      ...state.loading,
+      isUpdateLoading: true
+    },
   })),
 
   on(BlogActions.updateBlogSuccess, (state, action) => ({
     ...state,
-    isLoading: false,
-    authenticatedUserBlog: {
-      ...state.authenticatedUserBlog,
+    loading: {
+      ...state.loading,
+      isUpdateLoading: false
+    },
+    principalActiveBlog: {
+      ...state.principalActiveBlog,
       displayName: action.updatedBlog.displayName,
       description: action.updatedBlog.description
-    }
+    },
+
+    selectedBlog:
+      state.selectedBlog.id.id === action.updatedBlog.id.id &&
+      state.selectedBlog.id.username === action.updatedBlog.id.username ?
+        {...state.selectedBlog,
+          displayName: action.updatedBlog.displayName,
+          description: action.updatedBlog.description} : state.selectedBlog
   })),
 
-  on(BlogActions.updateBlogFailure, (state) => ({
+  on(BlogActions.updateBlogFailure, (state, action) => ({
     ...state,
-    isLoading: false
+    loading: {
+      ...state.loading,
+      isUpdateLoading: false
+    },
+    error: {
+      responseError: action.error
+    }
   })),
 
   on(BlogActions.deleteBlog, (state) => ({
     ...state,
-    isLoading: true
+    loading: {
+      ...state.loading,
+      isDeleteLoading: true
+    },
   })),
 
   on(BlogActions.deleteBlogSuccess, (state, action) => ({
     ...state,
-    isLoading: false,
-    authenticatedUserBlogsIds: state.authenticatedUserBlogsIds.filter(i => i.id !== action.blogId.id)
+    loading: {
+      ...state.loading,
+      isDeleteLoading: false
+    },
+    principalManagedBlogIds: state.principalManagedBlogIds.filter(i => i.id !== action.blogId.id)
   })),
 
   on(BlogActions.deleteBlogFailure, (state, action) => ({
     ...state,
-    isLoading: false,
-    blogError: action.error()
+    loading: {
+      ...state.loading,
+      isDeleteLoading: false
+    },
+    error: {
+      responseError: action.error
+    }
   })),
 
   on(BlogActions.getBlogDetailsAndRedirect, (state) => ({
     ...state,
-    isLoading: true,
+    loading: {
+      ...state.loading,
+      isGetLoading: true
+    },
   })),
 
   on(BlogActions.getBlogDetailsAndRedirectSuccess, (state, action) => ({
     ...state,
-    isLoading: false,
-    authenticatedUserBlog: action.isPrincipal ? action.blog : state.authenticatedUserBlog,
-    selectedBlog: action.blog
+    loading: {
+      ...state.loading,
+      isGetLoading: false
+    },
+    selectedBlog: action.blog,
+    principalActiveBlog: action.isPrincipal ? action.blog : state.principalActiveBlog,
   })),
 
   on(BlogActions.getBlogDetailsAndRedirectFailure, (state, action) => ({
     ...state,
-    isLoading: false,
-    blogError: action.error
+    loading: {
+      ...state.loading,
+      isGetLoading: false
+    },
+    error: {
+      responseError: action.error()
+    }
   })),
 
   on(BlogActions.getBlogDetails, (state) => ({
     ...state,
-    isLoading: true,
+    loading: {
+      ...state.loading,
+      isGetLoading: true
+    },
   })),
 
   on(BlogActions.getBlogDetailsSuccess, (state, action) => ({
     ...state,
-    isLoading: false,
-    authenticatedUserBlog: action.isPrincipal ? action.blog : state.authenticatedUserBlog,
+    loading: {
+      ...state.loading,
+      isGetLoading: false
+    },
+    principalActiveBlog: action.isPrincipal ? action.blog : state.principalActiveBlog,
     selectedBlog: action.blog
   })),
 
   on(BlogActions.getBlogDetailsFailure, (state, action) => ({
     ...state,
-    isLoading: false,
+    loading: {
+      ...state.loading,
+      isGetLoading: false
+    },
     blogError: action.error
   })),
 
   on(BlogActions.getSearchedBlogs, (state) => ({
     ...state,
-    isLoading: true,
-    searchedBlogs: []
+    loading: {
+      ...state.loading,
+      isGetLoading: true
+    },
+    search: {
+      blogs: []
+    }
   })),
 
   on(BlogActions.getSearchedBlogsSuccess, (state, action) => ({
     ...state,
-    isLoading: false,
-    searchedBlogs: action.blogs
+    loading: {
+      ...state.loading,
+      isGetLoading: false
+    },
+    search: {
+      blogs: action.blogs
+    }
   })),
 
-  on(BlogActions.getUserBlogsAndRedirect, (state) => ({
+  on(BlogActions.getSearchedBlogsFailure, (state, action) => ({
     ...state,
-    isLoading: true
+    loading: {
+      ...state.loading,
+      isGetLoading: false
+    },
+    error: {
+      responseError: action.error
+    }
   })),
 
-  on(BlogActions.getUserBlogsAndRedirectSuccess, (state, action) => ({
+  on(BlogActions.getPrincipalBlogsAndRedirect, (state) => ({
     ...state,
-    isLoading: false,
-    authenticatedUserBlogsIds: action.blogs.map(b => b.id),
-    authenticatedUserBlog: action.blogs.length > 0 ? action.blogs[0] : {} as BlogView,
+    loading: {
+      ...state.loading,
+      isGetLoading: true
+    },
+  })),
+
+  on(BlogActions.getPrincipalBlogsAndRedirectSuccess, (state, action) => ({
+    ...state,
+    loading: {
+      ...state.loading,
+      isGetLoading: false
+    },
+    principalManagedBlogIds: action.blogs.map(id => id.id),
+    principalActiveBlog: action.blogs.length > 0 ? action.blogs[0] : {} as BlogView,
     selectedBlog: action.blogs.length > 0 ? action.blogs[0] : {} as BlogView
   })),
 
-  on(BlogActions.getUserBlogsAndRedirectFailure, (state, action) => ({
+  on(BlogActions.getPrincipalBlogsAndRedirectFailure, (state, action) => ({
     ...state,
-    isLoading: false,
-    blogError: action.error
+    loading: {
+      ...state.loading,
+      isGetLoading: false
+    },
+    error: {
+      responseError: action.error
+    }
   })),
 
   // FIXME [category] action in blog reducer
   on(CategoryActions.deleteCategorySuccess, (state, action) => ({
     ...state,
-    isLoading: false,
-    authenticatedUserBlog: {
-      ...state.authenticatedUserBlog,
-      categories: state.authenticatedUserBlog.categories.filter(c => c.id !== action.categoryId)
+    principalActiveBlog: {
+      ...state.principalActiveBlog,
+      categories: state.principalActiveBlog.categories.filter(c => c.id !== action.categoryId)
     },
     selectedBlog: {
       ...state.selectedBlog,
-      categories: state.selectedBlog.id === state.authenticatedUserBlog.id ?
+      categories: state.selectedBlog.id === state.principalActiveBlog.id ?
         state.selectedBlog.categories.filter(c => c.id !== action.categoryId) : state.selectedBlog.categories
     }
   })),
@@ -184,13 +284,13 @@ export const blogReducer = createReducer(
   // FIXME [category] action in blog reducer
   on(CategoryActions.createCategorySuccess, (state, action) => ({
     ...state,
-    authenticatedUserBlog: {
-      ...state.authenticatedUserBlog,
-      categories: [...state.authenticatedUserBlog.categories, action.category]
+    principalActiveBlog: {
+      ...state.principalActiveBlog,
+      categories: [...state.principalActiveBlog.categories, action.category]
     },
     selectedBlog: {
       ...state.selectedBlog,
-      categories: state.selectedBlog.id === state.authenticatedUserBlog.id ?
+      categories: state.selectedBlog.id === state.principalActiveBlog.id ?
         [...state.selectedBlog.categories, action.category] :
         state.selectedBlog.categories
     }
@@ -199,17 +299,17 @@ export const blogReducer = createReducer(
   // FIXME [subscription] action in blog reducer
   on(SubscriptionActions.createSubscriptionSuccess, (state, action) => ({
     ...state,
-    authenticatedUserBlog: {
-      ...state.authenticatedUserBlog,
+    principalActiveBlog: {
+      ...state.principalActiveBlog,
       subscriptions: [
-        ...state.authenticatedUserBlog.subscriptions,
+        ...state.principalActiveBlog.subscriptions,
         action.subscription
       ]
     },
 
     selectedBlog: {
       ...state.selectedBlog,
-      subscriptions: state.selectedBlog.id === state.authenticatedUserBlog.id ?
+      subscriptions: state.selectedBlog.id === state.principalActiveBlog.id ?
         [...state.selectedBlog.subscriptions, action.subscription] :
         state.selectedBlog.subscriptions
     }
@@ -218,14 +318,14 @@ export const blogReducer = createReducer(
   // FIXME [subscription] action in blog reducer
   on(SubscriptionActions.deleteSubscriptionSuccess, (state, action) => ({
     ...state,
-    authenticatedUserBlog: {
-      ...state.authenticatedUserBlog,
-      subscriptions: state.authenticatedUserBlog.subscriptions.filter(s => s.id.subscription !== action.unsubscribedBlogId)
+    principalActiveBlog: {
+      ...state.principalActiveBlog,
+      subscriptions: state.principalActiveBlog.subscriptions.filter(s => s.id.subscription !== action.unsubscribedBlogId)
     },
 
     selectedBlog: {
       ...state.selectedBlog,
-      subscriptions: state.selectedBlog.id === state.authenticatedUserBlog.id ?
+      subscriptions: state.selectedBlog.id === state.principalActiveBlog.id ?
         state.selectedBlog.subscriptions.filter(s => s.id.subscription !== action.unsubscribedBlogId) :
         state.selectedBlog.subscriptions
     }
@@ -234,11 +334,24 @@ export const blogReducer = createReducer(
   // FIXME [auth] action in blog reducer
   on(AuthActions.logout, (state) => ({
     ...state,
-    authenticatedUserBlog: {} as BlogView,
-    authenticatedUserBlogsIds: [],
-    searchedBlogs: [],
+
+    principalActiveBlog: {} as BlogView,
+    principalManagedBlogIds: [],
     selectedBlog: {} as BlogView,
-    blogError: '',
-    isLoading: false,
+
+    error: {
+      responseError: null
+    },
+
+    loading: {
+      isCreateLoading: false,
+      isUpdateLoading: false,
+      isDeleteLoading: false,
+      isGetLoading: false
+    },
+
+    search: {
+      blogs: []
+    }
   })),
 )

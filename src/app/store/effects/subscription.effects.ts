@@ -10,7 +10,7 @@ import {
   SubscriptionActionTypes
 } from "../actions/subscription.actions";
 import {catchError, combineLatestWith, map, of, switchMap} from "rxjs";
-import {selectAuthenticatedUserBlogId} from "../selectors/blog.selectors";
+import {selectPrincipalActiveBlogId} from "../selectors/blog.selectors";
 import {Subscription} from "../../models/Subscription";
 import * as fromSubscription from '../reducers/subscription.reducers'
 
@@ -26,7 +26,7 @@ export class SubscriptionEffects {
   this.actions$.pipe(
     ofType(SubscriptionActionTypes.CREATE_SUBSCRIPTION),
     map((action: any) => action.blogId),
-    combineLatestWith(this.store.select(selectAuthenticatedUserBlogId)),
+    combineLatestWith(this.store.select(selectPrincipalActiveBlogId)),
     switchMap(([subscriptionBlogId, {id, username}]) => {
       return this.subscriptionService.addSubscription(id, username, subscriptionBlogId)
         .pipe(
@@ -48,7 +48,7 @@ export class SubscriptionEffects {
     this.actions$.pipe(
       ofType(SubscriptionActionTypes.DELETE_SUBSCRIPTION),
       map((action: any) => action.blogId),
-      combineLatestWith(this.store.select(selectAuthenticatedUserBlogId)),
+      combineLatestWith(this.store.select(selectPrincipalActiveBlogId)),
       switchMap(([unsubscribedBlogId, {id, username}]) => {
         return this.subscriptionService.deleteSubscription(id, username, unsubscribedBlogId)
           .pipe(

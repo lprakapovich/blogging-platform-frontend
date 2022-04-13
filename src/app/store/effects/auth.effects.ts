@@ -14,7 +14,7 @@ import {
 import {Store} from "@ngrx/store";
 import {LoginData} from "../../models/data/auth/LoginData";
 import {RegisterData} from "../../models/data/auth/RegisterData";
-import {createBlog, getUserBlogsAndRedirect} from "../actions/blog.actions";
+import {createBlog, getPrincipalBlogsAndRedirect} from "../actions/blog.actions";
 import {Router} from "@angular/router";
 import {selectIsAuthenticated} from "../selectors/auth.selectors";
 import {UserService} from "../../services/api/user.service";
@@ -61,7 +61,7 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthActionTypes.LOGIN_SUCCESS),
       switchMap(() =>
-        of(getUserBlogsAndRedirect({path: "/feed"}))
+        of(getPrincipalBlogsAndRedirect({path: "/feed"}))
       )
     ))
 

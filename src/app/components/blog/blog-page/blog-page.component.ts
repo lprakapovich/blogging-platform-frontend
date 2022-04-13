@@ -4,11 +4,10 @@ import {NavbarTemplateService} from "../../../services/ui/navbar-template.servic
 import {combineLatest, map, Observable, Subject, take, takeUntil} from "rxjs";
 import {Store} from "@ngrx/store";
 import {
-  selectAuthenticatedUserBlogsIds,
-  selectIsBlogLoading,
-  selectIsBlogOwner,
+  selectPrincipalManagedBlogIds,
+  selectIsPrincipalBlogOwner,
   selectIsSubscriber,
-  selectSelectedBlog
+  selectSelectedBlog, selectIsBlogGetLoading
 } from "../../../store/selectors/blog.selectors";
 import {AppMenuModalComponent} from "../../ui-elements/app-menu-modal/app-menu-modal.component";
 import {BlogView} from "../../../models/BlogView";
@@ -58,12 +57,13 @@ export class BlogPageComponent implements OnInit, OnDestroy {
               private router: Router,
               private navbarService: NavbarTemplateService,
               private modalService: ModalService) {
-
-    this.showAppMenuModal = false;
-    this.showAppBlogSettingsModal = false;
   }
 
   ngOnInit(): void {
+
+    this.showAppMenuModal = false;
+    this.showAppBlogSettingsModal = false;
+
     this.init();
     this.fetchDataFromStore();
     this.subscribeToModalChanges();
@@ -75,8 +75,7 @@ export class BlogPageComponent implements OnInit, OnDestroy {
   }
 
   onNewPostClicked() {
-    console.log('on new post clicked')
-    this.router.navigate(['/editor-page']);
+    this.router.navigate(['/editor']);
   }
 
   onSearchInputEvent(inputEvent: string) {
@@ -87,11 +86,11 @@ export class BlogPageComponent implements OnInit, OnDestroy {
 
     this.store.dispatch(getPosts({status: Status.Published}));
 
-    this.userBlogIds$ = this.store.select(selectAuthenticatedUserBlogsIds);
+    this.userBlogIds$ = this.store.select(selectPrincipalManagedBlogIds);
     this.selectedBlogPublications$ = this.store.select(selectSelectedBlogPosts);
     this.selectedBlog$ = this.store.select(selectSelectedBlog);
-    this.isLoading$ = this.store.select(selectIsBlogLoading);
-    this.isOwner$ = this.store.select(selectIsBlogOwner)
+    this.isLoading$ = this.store.select(selectIsBlogGetLoading);
+    this.isOwner$ = this.store.select(selectIsPrincipalBlogOwner)
 
     this.isLoaded$ = combineLatest([
       this.selectedBlog$, this.selectedBlogPublications$, this.isLoading$

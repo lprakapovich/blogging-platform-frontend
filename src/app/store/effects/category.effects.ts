@@ -10,7 +10,7 @@ import {
   deleteCategorySuccess
 } from "../actions/category.actions";
 import {catchError, combineLatestWith, debounceTime, map, of, switchMap} from "rxjs";
-import {selectAuthenticatedUserBlogId} from "../selectors/blog.selectors";
+import {selectPrincipalActiveBlogId} from "../selectors/blog.selectors";
 import * as fromCategory from '../reducers/category.reducers'
 
 @Injectable()
@@ -27,7 +27,7 @@ export class CategoryEffects {
       ofType(CategoryActionTypes.CREATE_CATEGORY),
       debounceTime(500),
       map((action: any) => action.name),
-      combineLatestWith(this.store.select(selectAuthenticatedUserBlogId)),
+      combineLatestWith(this.store.select(selectPrincipalActiveBlogId)),
       switchMap(([categoryName, {id, username}]) => {
         return this.categoryService.createCategory(id, username, categoryName)
           .pipe(
@@ -49,7 +49,7 @@ export class CategoryEffects {
     this.actions$.pipe(
       ofType(CategoryActionTypes.DELETE_CATEGORY),
       map((action: any) => action.id),
-      combineLatestWith(this.store.select(selectAuthenticatedUserBlogId)),
+      combineLatestWith(this.store.select(selectPrincipalActiveBlogId)),
       switchMap(([categoryId, {id, username}]) => {
         return this.categoryService.deleteCategory(id, username, categoryId)
           .pipe(

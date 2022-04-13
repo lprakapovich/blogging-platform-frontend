@@ -7,7 +7,7 @@ import {Store} from "@ngrx/store";
 import {selectIsPostLoading, selectPostsFromSubscriptions} from "../../../store/selectors/post.selectors";
 import {getPostsFromSubscriptions, resetSelectedPost, setSelectedPost} from "../../../store/actions/post.actions";
 import {AppMenuModalComponent} from "../../ui-elements/app-menu-modal/app-menu-modal.component";
-import {selectAuthenticatedUserBlog, selectAuthenticatedUserBlogsIds} from "../../../store/selectors/blog.selectors";
+import {selectPrincipalActiveBlog, selectPrincipalManagedBlogIds} from "../../../store/selectors/blog.selectors";
 import {BlogActionTypes, getBlogDetailsAndRedirect} from "../../../store/actions/blog.actions";
 import {BlogSettingsModalComponent} from "../blog-settings-modal/blog-settings-modal.component";
 import {ModalService} from "../../../services/ui/modal.service";
@@ -73,14 +73,14 @@ export class FeedPageComponent implements OnInit, AfterViewInit, OnDestroy {
   private fetchDataFromStore() {
     this.store.dispatch(getPostsFromSubscriptions());
 
-    this.userBlogIds$ = this.store.select(selectAuthenticatedUserBlogsIds);
-    this.userBlog$ = this.store.select(selectAuthenticatedUserBlog);
+    this.userBlogIds$ = this.store.select(selectPrincipalManagedBlogIds);
+    this.userBlog$ = this.store.select(selectPrincipalActiveBlog);
     this.isLoading$ = this.store.select(selectIsPostLoading);
     this.posts$ = this.store.select(selectPostsFromSubscriptions);
 
     this.actions$.pipe(
       takeUntil(this.unsubscribe$),
-      ofType(BlogActionTypes.GET_USER_BLOGS_AND_REDIRECT_SUCCESS)
+      ofType(BlogActionTypes.GET_PRINCIPAL_BLOGS_AND_REDIRECT_SUCCESS)
     ).subscribe(() => this.store.dispatch(getPostsFromSubscriptions()))
   }
 

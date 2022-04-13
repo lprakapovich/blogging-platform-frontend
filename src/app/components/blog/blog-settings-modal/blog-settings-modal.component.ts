@@ -6,9 +6,8 @@ import {UpdateBlogData} from "../../../models/data/blog/UpdateBlogData";
 import {deleteBlog, updateBlog} from "../../../store/actions/blog.actions";
 import {Observable, Subject, takeUntil} from "rxjs";
 import {
-  selectAuthenticatedUserBlog,
-  selectAuthenticatedUserBlogCategories,
-  selectIsBlogLoading
+  selectPrincipalActiveBlog,
+  selectActiveBlogCategories, selectIsBlogUpdateLoading, selectIsBlogDeleteLoading,
 } from "../../../store/selectors/blog.selectors";
 import {
   CategoryActionTypes,
@@ -30,7 +29,8 @@ export class BlogSettingsModalComponent implements OnInit, OnDestroy {
   @Output() onCloseEmitter: EventEmitter<void> = new EventEmitter<void>();
 
   blog$: Observable<BlogView>;
-  isBlogLoading$: Observable<boolean>;
+  isBlogUpdateLoading$: Observable<boolean>;
+  isBlogDeleteLoading$: Observable<boolean>;
   isCategoryLoading$: Observable<boolean>;
   categoryError$: Observable<string>;
   categories$: Observable<Category[]>;
@@ -52,12 +52,12 @@ export class BlogSettingsModalComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    this.blog$ = this.store.select(selectAuthenticatedUserBlog);
-    this.isBlogLoading$ = this.store.select(selectIsBlogLoading);
-
+    this.blog$ = this.store.select(selectPrincipalActiveBlog);
+    this.isBlogUpdateLoading$ = this.store.select(selectIsBlogUpdateLoading);
+    this.isBlogDeleteLoading$ = this.store.select(selectIsBlogDeleteLoading);
     this.isCategoryLoading$ = this.store.select(selectIsCategoryLoading);
     this.categoryError$ = this.store.select(selectCategoryError);
-    this.categories$ = this.store.select(selectAuthenticatedUserBlogCategories);
+    this.categories$ = this.store.select(selectActiveBlogCategories);
 
     this.actions$.pipe(
       ofType(

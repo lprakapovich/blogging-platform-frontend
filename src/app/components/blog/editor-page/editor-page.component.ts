@@ -7,7 +7,7 @@ import {Status} from "../../../models/Status";
 import {createPost, resetEditedPost, updatePost} from "../../../store/actions/post.actions";
 import {Store} from "@ngrx/store";
 import {Category} from "../../../models/Category";
-import {selectAuthenticatedUserBlogCategories} from "../../../store/selectors/blog.selectors";
+import {selectActiveBlogCategories} from "../../../store/selectors/blog.selectors";
 import {BlogPostSettingsModalComponent} from "../blog-post-settings-modal/blog-post-settings-modal.component";
 import {selectEditedPost, selectIsEditableMode, selectIsPostLoading} from "../../../store/selectors/post.selectors";
 import {Actions} from "@ngrx/effects";
@@ -49,7 +49,7 @@ export class EditorPageComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.navbarTemplateService.setEditorTemplate();
 
-    this.blogCategories$ = this.store.select(selectAuthenticatedUserBlogCategories);
+    this.blogCategories$ = this.store.select(selectActiveBlogCategories);
     this.isPostLoading$ = this.store.select(selectIsPostLoading);
     this.editedPost$ = this.store.select(selectEditedPost);
     this.isEditableMode$ = this.store.select(selectIsEditableMode);

@@ -17,9 +17,9 @@ export enum BlogActionTypes {
   DELETE_BLOG_SUCCESS = "[blog] delete blog success",
   DELETE_BLOG_FAILURE = "[blog] delete blog failure",
 
-  GET_USER_BLOGS_AND_REDIRECT = "[blog] get user blogs and redirect",
-  GET_USER_BLOGS_AND_REDIRECT_SUCCESS = "[blog] get user blogs and redirect success",
-  GET_USER_BLOGS_AND_REDIRECT_FAILURE = "[blog] get user blogs and redirect failure",
+  GET_PRINCIPAL_BLOGS_AND_REDIRECT = "[blog] get principal blogs and redirect",
+  GET_PRINCIPAL_BLOGS_AND_REDIRECT_SUCCESS = "[blog] get principal blogs and redirect success",
+  GET_PRINCIPAL_BLOGS_AND_REDIRECT_FAILURE = "[blog] get principal blogs and redirect failure",
 
   GET_BLOG_DETAILS_AND_REDIRECT = "[blog] get blog details and redirect",
   GET_BLOG_DETAILS_AND_REDIRECT_SUCCESS = "[blog] get blog details and redirect success",
@@ -34,9 +34,9 @@ export enum BlogActionTypes {
   GET_SEARCHED_BLOGS_FAILURE = "[blog] get blogs search criteria failure",
 }
 
-export const getUserBlogsAndRedirect = createAction(BlogActionTypes.GET_USER_BLOGS_AND_REDIRECT, props<{path: string}>());
-export const getUserBlogsAndRedirectSuccess = createAction(BlogActionTypes.GET_USER_BLOGS_AND_REDIRECT_SUCCESS, props<{blogs: BlogView[], path: string}>());
-export const getUserBlogsAndRedirectFailure = createAction(BlogActionTypes.GET_USER_BLOGS_AND_REDIRECT_FAILURE, props<{error: any}>());
+export const getPrincipalBlogsAndRedirect = createAction(BlogActionTypes.GET_PRINCIPAL_BLOGS_AND_REDIRECT, props<{path: string}>());
+export const getPrincipalBlogsAndRedirectSuccess = createAction(BlogActionTypes.GET_PRINCIPAL_BLOGS_AND_REDIRECT_SUCCESS, props<{blogs: BlogView[], path: string}>());
+export const getPrincipalBlogsAndRedirectFailure = createAction(BlogActionTypes.GET_PRINCIPAL_BLOGS_AND_REDIRECT_FAILURE, props<{error: any}>());
 
 export const getBlogDetailsAndRedirect = createAction(BlogActionTypes.GET_BLOG_DETAILS_AND_REDIRECT, props<{blogId: BlogId}>())
 export const getBlogDetailsAndRedirectSuccess = createAction(BlogActionTypes.GET_BLOG_DETAILS_AND_REDIRECT_SUCCESS, props<{blog: BlogView, blogId: string, isPrincipal: boolean}>())

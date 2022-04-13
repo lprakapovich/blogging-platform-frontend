@@ -20,7 +20,7 @@ import {
   updatePostSuccess
 } from "../actions/post.actions";
 import {catchError, combineLatestWith, debounceTime, exhaustMap, map, of, switchMap, tap, withLatestFrom} from "rxjs";
-import {selectAuthenticatedUserBlogId, selectSelectedBlogId} from "../selectors/blog.selectors";
+import {selectPrincipalActiveBlogId, selectSelectedBlogId} from "../selectors/blog.selectors";
 import {selectPrincipal} from "../selectors/auth.selectors";
 import {Router} from "@angular/router";
 import {selectSelectedPost} from "../selectors/post.selectors";
@@ -40,7 +40,7 @@ export class PostEffects {
     ofType(PostActionTypes.CREATE_POST),
     debounceTime(1000),
     map((action: any) => action.createPostData),
-    withLatestFrom(this.store.select(selectAuthenticatedUserBlogId)),
+    withLatestFrom(this.store.select(selectPrincipalActiveBlogId)),
     exhaustMap(([createPostData, { id, username}]) => {
       return this.postService.createPost(id, username, createPostData)
         .pipe(
@@ -65,7 +65,7 @@ export class PostEffects {
   this.actions$.pipe(
     ofType(PostActionTypes.DELETE_POST),
     withLatestFrom(
-      this.store.select(selectAuthenticatedUserBlogId),
+      this.store.select(selectPrincipalActiveBlogId),
       this.store.select(selectSelectedPost)
     ),
     exhaustMap(([__, {id, username}, post]) => {
@@ -85,7 +85,7 @@ export class PostEffects {
   this.actions$.pipe(
     ofType(PostActionTypes.DELETE_POST_SUCCESS),
     withLatestFrom(
-      this.store.select(selectAuthenticatedUserBlogId)
+      this.store.select(selectPrincipalActiveBlogId)
     ),
     tap(([__, { id }]) => {
       this.router.navigate([`/blog/@${id}`])
@@ -100,7 +100,7 @@ export class PostEffects {
     ofType(PostActionTypes.UPDATE_POST),
     debounceTime(1000),
     withLatestFrom(
-      this.store.select(selectAuthenticatedUserBlogId)),
+      this.store.select(selectPrincipalActiveBlogId)),
     exhaustMap(([{updatePostData, postId}, {id, username}]) => {
       return this.postService.updatePost(id, username, postId, updatePostData)
         .pipe(
@@ -140,7 +140,7 @@ export class PostEffects {
       ofType(PostActionTypes.GET_POSTS_BY_SEARCH_CRITERIA),
       map((action: any) => action.title),
       combineLatestWith(
-        this.store.select(selectAuthenticatedUserBlogId),
+        this.store.select(selectPrincipalActiveBlogId),
         this.store.select(selectPrincipal)),
       switchMap(([title, {id}, principal]) => {
         return this.postService.getPostsBySearchCriteria(title, id, principal)
@@ -156,7 +156,7 @@ export class PostEffects {
     this.actions$.pipe(
       ofType(PostActionTypes.GET_POSTS_FROM_SUBSCRIPTIONS),
       combineLatestWith(
-        this.store.select(selectAuthenticatedUserBlogId),
+        this.store.select(selectPrincipalActiveBlogId),
         this.store.select(selectPrincipal)),
       switchMap(([__, {id}, principal]) => {
         return this.postService.getPostsFromSubscriptions(id, principal).pipe(
@@ -171,7 +171,7 @@ export class PostEffects {
   this.actions$.pipe(
     ofType(PostActionTypes.SET_EDITED_POST),
     withLatestFrom(
-      this.store.select(selectAuthenticatedUserBlogId),
+      this.store.select(selectPrincipalActiveBlogId),
       this.store.select(selectSelectedPost)),
     exhaustMap(([__, {id, username}, selectedPost]) => {
       if (selectedPost?.blog.id.id === id && selectedPost?.blog.id.username === username) {

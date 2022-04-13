@@ -58,7 +58,7 @@
               ></app-default-input>
             </div>
             <div class="general-item aligned">
-              <app-default-button [ngClass]="'reverted medium'" [label]="'Delete blog'"></app-default-button>
+              <app-default-button [ngClass]="'reverted medium'" [label]="'Delete blog'" (click)="onDeleteBlogClicked()"></app-default-button>
               <app-warning-message> Attention! This will delete all related posts and categories. </app-warning-message>
             </div>
             <div id="general-buttons" class="general-item">
@@ -70,7 +70,7 @@
               <app-default-button
                 id="save-button"
                 (click)="onSave()"
-                [ngClass]="['medium', (isBlogLoading$ | async) ? 'loading-button' : '']"
+                [ngClass]="['medium', (isBlogUpdateLoading$ | async) ? 'loading-button' : '']"
                 [label]="'Save'">
               </app-default-button>
             </div>
