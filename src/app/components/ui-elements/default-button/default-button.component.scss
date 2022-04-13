@@ -1,14 +1,14 @@
 @use "src/utilities/variables" as v;
 
 :host {
-  #btn {
+  .default-button {
     padding: 0.5rem 1rem;
   }
 }
 
 :host {
   &.large {
-    #btn {
+    .default-button {
       font-size: 1.5rem;
       padding: 1rem;
       width: 12rem;
@@ -16,20 +16,20 @@
   }
 
   &.medium {
-    #btn {
+    .default-button {
       font-size: 1rem;
       padding: 0.5rem 1rem;
       min-width: 7rem;
       max-width: 8rem;
 
-      #span {
+      .default-button-span {
         font-size: 0.85rem;
       }
     }
   }
 
   &.small {
-    #btn {
+    .default-button {
       font-size: 1rem;
       padding: 0.5rem 1rem;
       min-width: 4rem;
@@ -38,39 +38,39 @@
   }
 
   &.reverted {
-    #btn {
+    .default-button {
       background-color: white;
       border: 1px solid black;
       color: black;
 
-      #span {
+      .default-button-span {
         font-weight: normal;
       }
     }
   }
 
   &.animated {
-    #btn:hover {
+    .default-button:hover {
       cursor: pointer;
 
-      #span {
+      .default-button-span {
         padding-right: 1.8rem;
       }
 
-      #span:after {
+      .default-button-span:after {
         opacity: 1;
         right: 0;
       }
     }
 
-    #span {
+    .default-button-span {
       cursor: pointer;
       display: inline-block;
       position: relative;
       transition: 0.5s ease;
     }
 
-    #span:after {
+    .default-button-span:after {
       content: '\00bb';
       position: absolute;
       opacity: 0;
@@ -81,7 +81,7 @@
   }
 
   &.loading-button {
-    #btn {
+    .default-button {
       position: relative;
       color: transparent;
 
@@ -104,7 +104,7 @@
   }
 
   &.disabled {
-    #btn {
+    .default-button {
       background-color: v.$grey;
     }
   }
@@ -114,14 +114,14 @@
   }
 }
 
-#btn {
+.default-button {
   border-radius: 2rem;
   background-color: v.$dark-background;
   border: 0.5px solid white;
   color: v.$white-text;
 }
 
-#btn:hover {
+.default-button:hover {
   cursor: pointer;
 }
 
