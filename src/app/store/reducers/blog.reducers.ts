@@ -82,6 +82,23 @@ export const blogReducer = createReducer(
     isLoading: false
   })),
 
+  on(BlogActions.deleteBlog, (state) => ({
+    ...state,
+    isLoading: true
+  })),
+
+  on(BlogActions.deleteBlogSuccess, (state, action) => ({
+    ...state,
+    isLoading: false,
+    authenticatedUserBlogsIds: state.authenticatedUserBlogsIds.filter(i => i.id !== action.blogId.id)
+  })),
+
+  on(BlogActions.deleteBlogFailure, (state, action) => ({
+    ...state,
+    isLoading: false,
+    blogError: action.error()
+  })),
+
   on(BlogActions.getBlogDetailsAndRedirect, (state) => ({
     ...state,
     isLoading: true,
@@ -164,6 +181,7 @@ export const blogReducer = createReducer(
     }
   })),
 
+  // FIXME [category] action in blog reducer
   on(CategoryActions.createCategorySuccess, (state, action) => ({
     ...state,
     authenticatedUserBlog: {
@@ -197,6 +215,7 @@ export const blogReducer = createReducer(
     }
   })),
 
+  // FIXME [subscription] action in blog reducer
   on(SubscriptionActions.deleteSubscriptionSuccess, (state, action) => ({
     ...state,
     authenticatedUserBlog: {

@@ -49,6 +49,12 @@
           width: 100%;
           display: flex;
           flex-direction: column;
+
+          &.aligned {
+            flex-direction: row;
+            gap: 1rem;
+            align-items: center;
+          }
         }
 
         .general-item:last-child {

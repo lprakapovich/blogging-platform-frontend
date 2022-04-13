@@ -13,6 +13,10 @@ export enum BlogActionTypes {
   UPDATE_BLOG_SUCCESS = "[blog] update blog success",
   UPDATE_BLOG_FAILURE = "[blog] update blog failure",
 
+  DELETE_BLOG = "[blog] delete blog",
+  DELETE_BLOG_SUCCESS = "[blog] delete blog success",
+  DELETE_BLOG_FAILURE = "[blog] delete blog failure",
+
   GET_USER_BLOGS_AND_REDIRECT = "[blog] get user blogs and redirect",
   GET_USER_BLOGS_AND_REDIRECT_SUCCESS = "[blog] get user blogs and redirect success",
   GET_USER_BLOGS_AND_REDIRECT_FAILURE = "[blog] get user blogs and redirect failure",
@@ -52,4 +56,8 @@ export const createBlogFailure = createAction(BlogActionTypes.CREATE_BLOG_FAILUR
 
 export const updateBlog = createAction(BlogActionTypes.UPDATE_BLOG, props<{data: UpdateBlogData}>())
 export const updateBlogSuccess = createAction(BlogActionTypes.UPDATE_BLOG_SUCCESS, props<{updatedBlog: BlogView}>())
-export const updateBlogFailure = createAction(BlogActionTypes.UPDATE_BLOG_FAILURE)
+export const updateBlogFailure = createAction(BlogActionTypes.UPDATE_BLOG_FAILURE, props<{error: any}>())
+
+export const deleteBlog = createAction(BlogActionTypes.DELETE_BLOG)
+export const deleteBlogSuccess = createAction(BlogActionTypes.DELETE_BLOG_SUCCESS, props<{blogId: BlogId}>())
+export const deleteBlogFailure = createAction(BlogActionTypes.DELETE_BLOG_FAILURE, props<{error: any}>())

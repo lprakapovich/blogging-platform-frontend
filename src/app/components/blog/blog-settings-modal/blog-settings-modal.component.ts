@@ -3,7 +3,7 @@ import {Store} from "@ngrx/store";
 import {logout} from "../../../store/actions/auth.actions";
 import {BlogView} from "../../../models/BlogView";
 import {UpdateBlogData} from "../../../models/data/blog/UpdateBlogData";
-import {updateBlog} from "../../../store/actions/blog.actions";
+import {deleteBlog, updateBlog} from "../../../store/actions/blog.actions";
 import {Observable, Subject, takeUntil} from "rxjs";
 import {
   selectAuthenticatedUserBlog,
@@ -133,5 +133,9 @@ export class BlogSettingsModalComponent implements OnInit, OnDestroy {
     this.showSuccessMessage = false;
     this.newCategoryInput = $event;
     this.store.dispatch(resetCategoryError())
+  }
+
+  onDeleteBlogClicked() {
+    this.store.dispatch(deleteBlog())
   }
 }

@@ -7,6 +7,9 @@ import {
   BlogActionTypes,
   createBlogFailure,
   createBlogSuccess,
+  deleteBlogFailure,
+  deleteBlogSuccess,
+  getBlogDetailsAndRedirect,
   getBlogDetailsAndRedirectFailure,
   getBlogDetailsAndRedirectSuccess,
   getBlogDetailsFailure,
@@ -20,8 +23,9 @@ import {
 } from "../actions/blog.actions";
 import {Router} from "@angular/router";
 import {selectPrincipal} from "../selectors/auth.selectors";
-import {selectAuthenticatedUserBlogId} from "../selectors/blog.selectors";
+import {selectAuthenticatedUserBlogId, selectAuthenticatedUserBlogsIds} from "../selectors/blog.selectors";
 import * as fromBlog from '../reducers/blog.reducers'
+import {logout} from "../actions/auth.actions";
 
 @Injectable()
 export class BlogEffects {
@@ -42,9 +46,7 @@ export class BlogEffects {
         return this.blogService.createBlog(blogId)
           .pipe(
             map(() => createBlogSuccess({blogId, principal})),
-            catchError(error => of(createBlogFailure({
-              error
-            })))
+            catchError(error => of(createBlogFailure({ error })))
           )
       })
     )
@@ -68,16 +70,44 @@ export class BlogEffects {
       debounceTime(500),
       map((action: any) => action.data),
       combineLatestWith(
-        this.store.select(selectPrincipal),
         this.store.select(selectAuthenticatedUserBlogId)),
-      switchMap(([updateData, principal, {id}]) => {
-        return this.blogService.updateBlog(id, principal, updateData)
+      exhaustMap(([updateData, {id, username}]) => {
+        return this.blogService.updateBlog(id, username, updateData)
           .pipe(
             map((updatedBlog) => updateBlogSuccess({updatedBlog})),
-            catchError((() => of(updateBlogFailure())))
+            catchError(((error) => of(updateBlogFailure({ error }))))
           )
       }))
   )
+
+  deleteBlog$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(BlogActionTypes.DELETE_BLOG),
+    withLatestFrom(
+      this.store.select(selectAuthenticatedUserBlogId)
+    ),
+    exhaustMap(([__, {id, username}]) => {
+      return this.blogService.deleteBlog(id, username)
+        .pipe(
+          map(() => deleteBlogSuccess({ blogId: { id, username}})),
+          catchError((error) => of(deleteBlogFailure({ error })))
+        )
+    })
+  ))
+
+  deleteBlogSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(BlogActionTypes.DELETE_BLOG_SUCCESS),
+      withLatestFrom(
+        this.store.select(selectAuthenticatedUserBlogsIds)
+      ),
+      exhaustMap(([{ blogId }, blogsIds]) => {
+        if (blogsIds.length == 0)
+          return of(logout());
+        else
+          return of(getBlogDetailsAndRedirect({ blogId: blogsIds[0] }));
+      })
+    ))
 
   getSearchedBlogs$ = createEffect(() =>
     this.actions$.pipe(
@@ -108,7 +138,6 @@ export class BlogEffects {
           )
       }))
   )
-
 
   getBlogDetailsAndRedirect$ = createEffect(() =>
     this.actions$.pipe(
