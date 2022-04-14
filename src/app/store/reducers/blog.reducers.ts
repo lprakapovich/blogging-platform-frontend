@@ -50,19 +50,23 @@ export const blogReducer = createReducer(
     loading: {
       ...state.loading,
       isCreateLoading: true
+    },
+    error: {
+      responseError: null
     }
   })),
 
   on(BlogActions.createBlogSuccess, (state, action) => ({
     ...state,
-    principalActiveBlog: {
+    principalActiveBlog: Object.keys(state.principalActiveBlog).length === 0  ? {
       id: { id: action.blogId, username: action.principal },
       subscribers: [],
       subscriptions: [],
       categories: [],
       description: '',
       displayName: ''
-    },
+    } : state.principalActiveBlog,
+
     principalManagedBlogIds: [...state.principalManagedBlogIds, { id: action.blogId, username: action.principal }],
     loading: {
       ...state.loading,
@@ -87,6 +91,9 @@ export const blogReducer = createReducer(
       ...state.loading,
       isUpdateLoading: true
     },
+    error: {
+      responseError: null
+    }
   })),
 
   on(BlogActions.updateBlogSuccess, (state, action) => ({
@@ -126,6 +133,9 @@ export const blogReducer = createReducer(
       ...state.loading,
       isDeleteLoading: true
     },
+    error: {
+      responseError: null
+    }
   })),
 
   on(BlogActions.deleteBlogSuccess, (state, action) => ({

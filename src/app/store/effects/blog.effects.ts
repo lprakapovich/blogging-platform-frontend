@@ -41,12 +41,11 @@ export class BlogEffects {
     this.actions$.pipe(
       ofType(BlogActionTypes.CREATE_BLOG),
       debounceTime(1000),
-      map((action: any) => action.blogId),
       withLatestFrom(this.store.select(selectPrincipal)),
-      exhaustMap(([blogId, principal]) => {
+      exhaustMap(([{blogId, redirectTo}, principal]) => {
         return this.blogService.createBlog(blogId)
           .pipe(
-            map(() => createBlogSuccess({blogId, principal})),
+            map(() => createBlogSuccess({blogId, principal, redirectTo})),
             catchError(error => of(createBlogFailure({ error })))
           )
       })
@@ -56,9 +55,8 @@ export class BlogEffects {
   createBlogSuccess$ = createEffect(() =>
       this.actions$.pipe(
         ofType(BlogActionTypes.CREATE_BLOG_SUCCESS),
-        map((action: any) => action.blogId),
-        tap((blogId: string) => {
-          this.router.navigate(['/feed'])
+        tap(({blogId, redirectTo}) => {
+          if (redirectTo) this.router.navigate([redirectTo])
         })
       ),
     {
@@ -70,7 +68,7 @@ export class BlogEffects {
       ofType(BlogActionTypes.UPDATE_BLOG),
       debounceTime(1000),
       map((action: any) => action.data),
-      combineLatestWith(
+      withLatestFrom(
         this.store.select(selectPrincipalActiveBlogId)),
       exhaustMap(([updateData, {id, username}]) => {
         return this.blogService.updateBlog(id, username, updateData)

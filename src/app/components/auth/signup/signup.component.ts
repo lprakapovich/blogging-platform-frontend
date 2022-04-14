@@ -88,7 +88,6 @@ export class SignupComponent implements OnInit, OnDestroy {
       blogUrl: this.registerForm.get('blogUrl')?.value
     }
     this.store.dispatch(register({payload: registrationData}))
-    this.registerForm.reset();
   }
 
   goToLogin() {

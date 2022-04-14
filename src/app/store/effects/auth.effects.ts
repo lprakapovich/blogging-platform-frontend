@@ -117,7 +117,7 @@ export class AuthEffects {
       ofType(AuthActionTypes.REGISTER_SUCCESS),
       map((action: any) => action.blogId),
       tap((blogId) => {
-        this.store.dispatch(createBlog({blogId}))
+        this.store.dispatch(createBlog({blogId, redirectTo: '/feed'}))
       })
     ),
     {

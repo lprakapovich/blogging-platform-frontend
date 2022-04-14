@@ -59,21 +59,21 @@
       position: relative;
     }
 
-    .loading-message::after {
-      content: "";
-      position: absolute;
-      width: 16px;
-      height: 16px;
-      top: 0;
-      left: 1rem;
-      right: 0;
-      bottom: 0;
-      margin: auto;
-      border: 2px solid transparent;
-      border-top-color: grey;
-      border-radius: 50%;
-      animation: loading-spinner 4s ease;
-    }
+    //.loading-message::after {
+    //  content: "";
+    //  position: absolute;
+    //  width: 16px;
+    //  height: 16px;
+    //  top: 0;
+    //  left: 1rem;
+    //  right: 0;
+    //  bottom: 0;
+    //  margin: auto;
+    //  border: 2px solid transparent;
+    //  border-top-color: grey;
+    //  border-radius: 50%;
+    //  animation: loading-spinner 4s ease;
+    //}
 
     .registration-form-submit-buttons {
       display: flex;

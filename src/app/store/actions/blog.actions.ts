@@ -50,8 +50,8 @@ export const getSearchedBlogs = createAction(BlogActionTypes.GET_SEARCHED_BLOGS,
 export const getSearchedBlogsSuccess = createAction(BlogActionTypes.GET_SEARCHED_BLOGS_SUCCESS, props<{blogs: Blog[]}>())
 export const getSearchedBlogsFailure = createAction(BlogActionTypes.GET_SEARCHED_BLOGS_FAILURE, props<{error: any}>())
 
-export const createBlog = createAction(BlogActionTypes.CREATE_BLOG, props<{blogId: string}>())
-export const createBlogSuccess = createAction(BlogActionTypes.CREATE_BLOG_SUCCESS, props<{blogId: string, principal: string}>());
+export const createBlog = createAction(BlogActionTypes.CREATE_BLOG, props<{blogId: string, redirectTo?: string}>())
+export const createBlogSuccess = createAction(BlogActionTypes.CREATE_BLOG_SUCCESS, props<{blogId: string, principal: string, redirectTo?: string}>());
 export const createBlogFailure = createAction(BlogActionTypes.CREATE_BLOG_FAILURE, props<{error: any}>())
 
 export const updateBlog = createAction(BlogActionTypes.UPDATE_BLOG, props<{data: UpdateBlogData}>())
