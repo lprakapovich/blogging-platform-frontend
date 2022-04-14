@@ -1,4 +1,4 @@
-<div class="blog-settings-modal-container fullscreen-modal-bg" *ngIf="blog$ | async as blog">
+<div class="blog-settings-modal-container fullscreen-modal-bg" *ngIf="activeBlog$ | async as blog">
   <div class="settings">
     <div class="settings-navbar">
       <app-default-list>
@@ -27,7 +27,7 @@
         <div *ngSwitchCase="generalSection">
           <div class="general-section-container">
             <div class="general-item">
-              <div> Domain </div>
+              <div> Active blog unique domain </div>
                 <app-default-input [disabled]="true" [userInput]="blog.id.id"></app-default-input>
             </div>
             <div class="general-item">
@@ -58,7 +58,7 @@
               <app-default-button
                 (click)="onCancel()"
                 [ngClass]="'medium reverted'"
-                [label]="'Cancel'">
+                [label]="'Close'">
               </app-default-button>
               <app-default-button
                 id="save-button"
@@ -85,12 +85,12 @@
                 </app-default-button>
             </div>
             <app-error-message *ngIf="!newCategoryInput && (categoryError$ | async) as categoryError"> {{ categoryError }} </app-error-message>
-            <app-success-message *ngIf="showSuccessMessage"> Great! Category was created. </app-success-message>
+            <app-success-message *ngIf="createCategorySuccess"> Great! Category was created. </app-success-message>
             <div class="existing-category-container">
               <div  *ngIf="(categories$ | async) as categories">
                 <ng-container *ngIf="categories.length > 0; else emptyCategoryList">
-                  <div class="category-list">
-                    <div class="category-item" *ngFor="let category of categories">
+                  <div class="list">
+                    <div class="list-item" *ngFor="let category of categories">
                       <div>{{category.name}}</div>
                       <app-svg-button [iconTemplate]="'delete'" (click)="onDeleteCategoryClicked(category)"></app-svg-button>
                     </div>
@@ -109,12 +109,19 @@
           <div class="new-blog-section-container">
             <div class="new-blog-container">
               <app-default-input class="input"
-                                 (userInputEventEmitter)="newBlog = $event"
-                                 [userInput]="newBlog"
+                                 (userInputEventEmitter)="onNewBlogInputChanged($event)"
+                                 [userInput]="newBlogInput"
                                  [placeholder]="'New blog...'">
               </app-default-input>
-              <app-default-button class="create-button medium" (click)="onNewBlogClicked()" [label]="'Add'"></app-default-button>
+              <app-default-button
+                [ngClass]="[(isBlogCreateLoading | async) ? 'loading-button' : '', !newBlogInput ? 'disabled' : '']"
+                class="create-button medium"
+                (click)="onNewBlogClicked()"
+                [label]="'Add'">
+              </app-default-button>
             </div>
+            <app-error-message *ngIf="!newBlogInput && (blogError$ | async) as blogError"> Error! Make sure input is unique. </app-error-message>
+            <app-success-message *ngIf="createBlogSuccess"> Great! New blog was created. </app-success-message>
           </div>
         </div>
       </ng-container>

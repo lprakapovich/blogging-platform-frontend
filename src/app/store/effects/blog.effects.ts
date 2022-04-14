@@ -40,6 +40,7 @@ export class BlogEffects {
   createBlog$ = createEffect(() =>
     this.actions$.pipe(
       ofType(BlogActionTypes.CREATE_BLOG),
+      debounceTime(1000),
       map((action: any) => action.blogId),
       withLatestFrom(this.store.select(selectPrincipal)),
       exhaustMap(([blogId, principal]) => {

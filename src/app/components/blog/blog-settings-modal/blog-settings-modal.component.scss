@@ -112,18 +112,18 @@
         .existing-category-container {
           padding: 1rem 0;
 
-          .category-list {
+          .list {
             overflow-y: scroll;
             max-height: 22rem;
 
-            .category-item {
+            .list-item {
               display: flex;
               align-items: center;
               justify-content: space-between;
               padding: 0 1rem;
             }
 
-            .category-item:hover {
+            .list-item:hover {
               cursor: pointer;
             }
           }

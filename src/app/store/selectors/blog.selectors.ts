@@ -79,3 +79,8 @@ export const selectIsSubscriber = (blogId: BlogId) => createSelector(
   selectActiveSubscriptions,
   (subscriptions) => subscriptions.some(s => s.id.subscription.id === blogId.id && s.id.subscription.username && blogId.username)
 )
+
+export const selectBlogError = createSelector(
+  selectBlogFeature,
+  state => state.error.responseError
+)

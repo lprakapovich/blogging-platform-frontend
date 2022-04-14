@@ -3,11 +3,16 @@ import {Store} from "@ngrx/store";
 import {logout} from "../../../store/actions/auth.actions";
 import {BlogView} from "../../../models/BlogView";
 import {UpdateBlogData} from "../../../models/data/blog/UpdateBlogData";
-import {deleteBlog, updateBlog} from "../../../store/actions/blog.actions";
+import {BlogActionTypes, createBlog, deleteBlog, updateBlog} from "../../../store/actions/blog.actions";
 import {Observable, Subject, takeUntil} from "rxjs";
 import {
+  selectActiveBlogCategories,
+  selectBlogError,
+  selectIsBlogCreateLoading,
+  selectIsBlogDeleteLoading,
+  selectIsBlogUpdateLoading,
   selectPrincipalActiveBlog,
-  selectActiveBlogCategories, selectIsBlogUpdateLoading, selectIsBlogDeleteLoading,
+  selectPrincipalManagedBlogIds,
 } from "../../../store/selectors/blog.selectors";
 import {
   CategoryActionTypes,
@@ -18,6 +23,7 @@ import {
 import {selectCategoryError, selectIsCategoryLoading} from "../../../store/selectors/category.selectors";
 import {Actions, ofType} from "@ngrx/effects";
 import {Category} from "../../../models/Category";
+import {BlogId} from "../../../models/Blog";
 
 @Component({
   selector: 'app-blog-settings-modal',
@@ -32,19 +38,23 @@ export class BlogSettingsModalComponent implements OnInit, OnDestroy {
 
   @Output() onCloseEmitter: EventEmitter<void> = new EventEmitter<void>();
 
-  blog$: Observable<BlogView>;
+  activeBlog$: Observable<BlogView>;
+  isBlogCreateLoading: Observable<boolean>;
   isBlogUpdateLoading$: Observable<boolean>;
   isBlogDeleteLoading$: Observable<boolean>;
+  blogError$: Observable<any>;
+
+  categories$: Observable<Category[]>;
   isCategoryLoading$: Observable<boolean>;
   categoryError$: Observable<string>;
-  categories$: Observable<Category[]>;
 
   unsubscribe$ = new Subject<void>();
 
   selectedSection: string;
   newCategoryInput: string;
-  newBlog: string;
-  showSuccessMessage: boolean;
+  newBlogInput: string;
+  createCategorySuccess: boolean;
+  createBlogSuccess: boolean;
 
   changedBlogDisplayName: string;
   changedBlogDescription: string;
@@ -57,9 +67,15 @@ export class BlogSettingsModalComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    this.blog$ = this.store.select(selectPrincipalActiveBlog);
+    this.createBlogSuccess = false;
+    this.createCategorySuccess = false;
+
+    this.activeBlog$ = this.store.select(selectPrincipalActiveBlog);
+    this.isBlogCreateLoading = this.store.select(selectIsBlogCreateLoading);
     this.isBlogUpdateLoading$ = this.store.select(selectIsBlogUpdateLoading);
     this.isBlogDeleteLoading$ = this.store.select(selectIsBlogDeleteLoading);
+    this.blogError$ = this.store.select(selectBlogError);
+
     this.isCategoryLoading$ = this.store.select(selectIsCategoryLoading);
     this.categoryError$ = this.store.select(selectCategoryError);
     this.categories$ = this.store.select(selectActiveBlogCategories);
@@ -67,13 +83,27 @@ export class BlogSettingsModalComponent implements OnInit, OnDestroy {
     this.actions$.pipe(
       ofType(
         CategoryActionTypes.CREATE_CATEGORY_SUCCESS,
-        CategoryActionTypes.CREATE_CATEGORY_FAILURE),
+        CategoryActionTypes.CREATE_CATEGORY_FAILURE
+        ),
       takeUntil(this.unsubscribe$)
     ).subscribe((action: any) => {
       if (action.type === CategoryActionTypes.CREATE_CATEGORY_SUCCESS) {
-        this.showSuccessMessage = true;
+        this.createCategorySuccess = true;
       }
       this.newCategoryInput = ''
+    })
+
+    this.actions$.pipe(
+      ofType(
+        BlogActionTypes.CREATE_BLOG_SUCCESS,
+        BlogActionTypes.CREATE_BLOG_FAILURE
+      ),
+      takeUntil(this.unsubscribe$)
+    ).subscribe((action: any) => {
+      if (action.type === BlogActionTypes.CREATE_BLOG_SUCCESS) {
+        this.createBlogSuccess = true;
+      }
+      this.newBlogInput = '';
     })
   }
 
@@ -83,7 +113,7 @@ export class BlogSettingsModalComponent implements OnInit, OnDestroy {
   }
 
   onSettingsSectionSelected(section: string) {
-    this.showSuccessMessage = false;
+    this.createCategorySuccess = false;
     this.selectedSection = section;
   }
 
@@ -95,7 +125,7 @@ export class BlogSettingsModalComponent implements OnInit, OnDestroy {
   }
 
   onDeleteCategoryClicked(category: Category) {
-    this.showSuccessMessage = false;
+    this.createCategorySuccess = false;
     const deleteCategoryMessage = `Sure you want to delete a category ${category.name}?`
     if (confirm(deleteCategoryMessage)) {
       this.store.dispatch(deleteCategory({ id: category.id }))
@@ -123,7 +153,13 @@ export class BlogSettingsModalComponent implements OnInit, OnDestroy {
   }
 
   onNewBlogClicked() {
+    if (!!this.newBlogInput) {
+      this.store.dispatch(createBlog( { blogId: this.newBlogInput }))
+    }
+  }
 
+  onDeleteBlogClicked() {
+    this.store.dispatch(deleteBlog())
   }
 
   onDisplayNameChanged(displayName: string) {
@@ -135,12 +171,13 @@ export class BlogSettingsModalComponent implements OnInit, OnDestroy {
   }
 
   onNewCategoryInputChanged($event: string) {
-    this.showSuccessMessage = false;
+    this.createCategorySuccess = false;
     this.newCategoryInput = $event;
     this.store.dispatch(resetCategoryError())
   }
 
-  onDeleteBlogClicked() {
-    this.store.dispatch(deleteBlog())
+  onNewBlogInputChanged($event: string) {
+    this.createBlogSuccess = false;
+    this.newBlogInput = $event;
   }
 }
