@@ -2,7 +2,7 @@ import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@a
 import {Observable, Subject, takeUntil} from "rxjs";
 import {BlogPost} from "../../../models/BlogPost";
 import {Store} from "@ngrx/store";
-import {selectEditedPost, selectIsPostLoading} from "../../../store/selectors/post.selectors";
+import {selectEditedPost} from "../../../store/selectors/post.selectors";
 
 @Component({
   selector: 'app-editor',
@@ -19,7 +19,6 @@ export class EditorComponent implements OnInit {
   unsubscribe$ = new Subject<void>();
 
   editedPost$: Observable<BlogPost | null>;
-  isLoading$: Observable<boolean>;
   isModified$: Observable<boolean>;
 
   modifiedTitleInput: string = '';
@@ -30,7 +29,6 @@ export class EditorComponent implements OnInit {
 
   ngOnInit() {
     this.editedPost$ = this.store.select(selectEditedPost);
-    this.isLoading$ = this.store.select(selectIsPostLoading);
 
     this.editedPost$
       .pipe(takeUntil(this.unsubscribe$))

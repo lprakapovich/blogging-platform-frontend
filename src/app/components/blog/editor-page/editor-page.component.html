@@ -9,7 +9,7 @@
   *ngIf="showPostSettingsModal"
   #postSettingsComponent
   [editedPost]="(editedPost$ | async)"
-  [isLoading]="(isPostLoading$ | async)"
+  [isLoading]="(isPostCreateLoading$ | async) || (isPostUpdateLoading$| async)"
   [categories]="(blogCategories$ | async)"
   (closeModalEventEmitter)="onClosePostSettingsModal()"
   (publishEventEmitter)="onPublishEvent($event)">

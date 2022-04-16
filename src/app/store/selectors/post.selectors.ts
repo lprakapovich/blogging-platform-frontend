@@ -4,14 +4,29 @@ import {selectPrincipalActiveBlogId} from "./blog.selectors";
 
 export const selectPostFeature = createFeatureSelector<PostState>('post')
 
-export const selectPostsBySearchCriteria = createSelector(
+export const selectSearchedPosts = createSelector(
   selectPostFeature,
-  state => state.postsBySearchCriteria
+  state => state.search.searchedPosts
 )
 
-export const selectIsPostLoading = createSelector(
+export const selectIsPostCreateLoading = createSelector(
   selectPostFeature,
-  state => state.isLoading
+  state => state.loading.isCreateLoading
+)
+
+export const selectIsPostUpdateLoading = createSelector(
+  selectPostFeature,
+  state => state.loading.isUpdateLoading
+)
+
+export const selectIsPostDeleteLoading = createSelector(
+  selectPostFeature,
+  state => state.loading.isDeleteLoading
+)
+
+export const selectIsPostGetLoading = createSelector(
+  selectPostFeature,
+  state => state.loading.isGetLoading
 )
 
 export const selectPostsFromSubscriptions = createSelector(

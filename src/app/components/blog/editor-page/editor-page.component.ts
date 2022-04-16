@@ -9,7 +9,12 @@ import {Store} from "@ngrx/store";
 import {Category} from "../../../models/Category";
 import {selectActiveBlogCategories} from "../../../store/selectors/blog.selectors";
 import {BlogPostSettingsModalComponent} from "../blog-post-settings-modal/blog-post-settings-modal.component";
-import {selectEditedPost, selectIsEditableMode, selectIsPostLoading} from "../../../store/selectors/post.selectors";
+import {
+  selectEditedPost,
+  selectIsEditableMode,
+  selectIsPostCreateLoading,
+  selectIsPostUpdateLoading
+} from "../../../store/selectors/post.selectors";
 import {Actions} from "@ngrx/effects";
 import {BlogPost} from "../../../models/BlogPost";
 
@@ -27,7 +32,9 @@ export class EditorPageComponent implements OnInit, OnDestroy {
 
   blogCategories$: Observable<Category[]>;
   editedPost$: Observable<BlogPost | null>;
-  isPostLoading$: Observable<boolean>;
+  isPostCreateLoading$: Observable<boolean>;
+  isPostUpdateLoading$: Observable<boolean>;
+
   isEditableMode$: Observable<boolean>;
 
   isContentMissing: boolean;
@@ -50,7 +57,8 @@ export class EditorPageComponent implements OnInit, OnDestroy {
     this.navbarTemplateService.setEditorTemplate();
 
     this.blogCategories$ = this.store.select(selectActiveBlogCategories);
-    this.isPostLoading$ = this.store.select(selectIsPostLoading);
+    this.isPostCreateLoading$ = this.store.select(selectIsPostCreateLoading);
+    this.isPostUpdateLoading$ = this.store.select(selectIsPostUpdateLoading);
     this.editedPost$ = this.store.select(selectEditedPost);
     this.isEditableMode$ = this.store.select(selectIsEditableMode);
 

@@ -3,11 +3,7 @@ import {NavbarTemplateService} from "../../../services/ui/navbar-template.servic
 import {Observable, Subject, takeUntil} from "rxjs";
 import {BlogPost} from "../../../models/BlogPost";
 import {Store} from "@ngrx/store";
-import {
-  selectIsAuthenticatedUsersPost,
-  selectIsPostLoading,
-  selectSelectedPost
-} from "../../../store/selectors/post.selectors";
+import {selectIsAuthenticatedUsersPost, selectSelectedPost} from "../../../store/selectors/post.selectors";
 import {BlogId} from "../../../models/Blog";
 import {Router} from "@angular/router";
 import {EditorService} from "../../../services/ui/editor.service";
@@ -38,7 +34,6 @@ export class BlogPostComponent implements OnInit {
     this.navbarService.setPostPreviewTemplate();
     this.post$ = this.store.select(selectSelectedPost);
     this.isAuthenticatedUsersPost$ = this.store.select(selectIsAuthenticatedUsersPost);
-    this.isLoading$ = this.store.select(selectIsPostLoading);
 
     this.isAuthenticatedUsersPost$
       .pipe(takeUntil(this.unsubscribe$))

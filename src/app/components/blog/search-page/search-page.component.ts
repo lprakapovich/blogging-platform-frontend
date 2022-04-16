@@ -7,7 +7,7 @@ import {Observable, take} from "rxjs";
 import {Store} from "@ngrx/store";
 import {getBlogDetailsAndRedirect, getSearchedBlogs} from "../../../store/actions/blog.actions";
 import {selectSearchedBlogs} from "../../../store/selectors/blog.selectors";
-import {selectPostsBySearchCriteria} from "../../../store/selectors/post.selectors";
+import {selectSearchedPosts} from "../../../store/selectors/post.selectors";
 import {getPostsBySearchCriteria} from "../../../store/actions/post.actions";
 
 @Component({
@@ -44,7 +44,7 @@ export class SearchPageComponent implements OnInit {
 
     this.navbarService.setBlogTemplate();
     this.blogsSearchResult$ = this.store.select(selectSearchedBlogs);
-    this.postsSearchResult$ = this.store.select(selectPostsBySearchCriteria);
+    this.postsSearchResult$ = this.store.select(selectSearchedPosts);
   }
 
   onEnterPressed(searchCriteria: string) {

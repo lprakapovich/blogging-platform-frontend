@@ -4,7 +4,7 @@ import {Router} from "@angular/router";
 import {BlogPost} from "../../../models/BlogPost";
 import {Observable, Subject, takeUntil} from "rxjs";
 import {Store} from "@ngrx/store";
-import {selectIsPostLoading, selectPostsFromSubscriptions} from "../../../store/selectors/post.selectors";
+import {selectIsPostGetLoading, selectPostsFromSubscriptions} from "../../../store/selectors/post.selectors";
 import {getPostsFromSubscriptions, resetSelectedPost, setSelectedPost} from "../../../store/actions/post.actions";
 import {selectPrincipalActiveBlog} from "../../../store/selectors/blog.selectors";
 import {BlogActionTypes} from "../../../store/actions/blog.actions";
@@ -22,7 +22,7 @@ export class FeedPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   unsubscribe$ = new Subject<void>();
 
-  isLoading$: Observable<boolean>;
+  isGetLoading$: Observable<boolean>;
   posts$: Observable<BlogPost[]>;
   userBlogIds$: Observable<BlogId[]>;
   userBlog$: Observable<BlogView>;
@@ -62,7 +62,7 @@ export class FeedPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.store.dispatch(getPostsFromSubscriptions());
 
     this.userBlog$ = this.store.select(selectPrincipalActiveBlog);
-    this.isLoading$ = this.store.select(selectIsPostLoading);
+    this.isGetLoading$ = this.store.select(selectIsPostGetLoading);
     this.posts$ = this.store.select(selectPostsFromSubscriptions);
 
     this.actions$.pipe(
@@ -72,7 +72,7 @@ export class FeedPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private subscribeToStoreChanges() {
-    this.isLoading$
+    this.isGetLoading$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(() => this.resizeAllGridItems());
   }

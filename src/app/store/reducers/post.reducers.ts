@@ -4,33 +4,57 @@ import * as PostActions from '../actions/post.actions';
 import * as AuthActions from "../actions/auth.actions";
 
 export interface PostState {
+  selectedPost: BlogPost | null;
   selectedBlogPosts: BlogPost[],
   postsFromSubscriptions: BlogPost[],
-  postsBySearchCriteria: BlogPost[],
-  selectedPost: BlogPost | null;
-  isLoading: boolean,
-  postsError: any
+
+  search: {
+    searchedPosts: BlogPost[],
+  }
+
+  loading: {
+    isCreateLoading: boolean;
+    isUpdateLoading: boolean;
+    isDeleteLoading: boolean;
+    isGetLoading: boolean;
+  },
 
   editor: {
     editedPost: BlogPost | null;
     isModified: boolean;
     isEditingMode: boolean;
-  }
+  },
+
+  error: {
+    responseError: any
+  },
 }
 
 export const initialState: PostState = {
   selectedBlogPosts: [],
-  isLoading: false,
   postsFromSubscriptions: [],
   selectedPost: null,
-  postsBySearchCriteria: [],
-  postsError: null,
+
+  search: {
+    searchedPosts: []
+  },
+
+  loading: {
+    isCreateLoading: false,
+    isUpdateLoading: false,
+    isDeleteLoading: false,
+    isGetLoading: false
+  },
 
   editor: {
     editedPost: null,
     isModified: false,
     isEditingMode: false,
-  }
+  },
+
+  error: {
+    responseError: null
+  },
 }
 
 export const postReducer = createReducer(
@@ -39,33 +63,88 @@ export const postReducer = createReducer(
   on(AuthActions.logout, (state) => ({
     ...state,
     selectedBlogPosts: [],
-    isLoading: false,
     postsFromSubscriptions: [],
-    selectedPost: {} as BlogPost,
-    postsBySearchCriteria: [],
-    postsError: null
+    selectedPost: null,
+
+    search: {
+      searchedPosts: []
+    },
+
+    loading: {
+      isCreateLoading: false,
+      isUpdateLoading: false,
+      isDeleteLoading: false,
+      isGetLoading: false
+    },
+
+    editor: {
+      editedPost: null,
+      isModified: false,
+      isEditingMode: false,
+    },
+
+    error: {
+      responseError: null
+    },
+
   })),
 
   on(PostActions.getPostsBySearchCriteria, (state) => ({
     ...state,
-    isLoading: true
+    loading: {
+      ...state.loading,
+      isGetLoading: true
+    }
   })),
 
   on(PostActions.getPostsBySearchCriteriaSuccess, (state, action) => ({
     ...state,
-    isLoading: false,
-    postsBySearchCriteria: action.posts
+    loading: {
+      ...state.loading,
+      isGetLoading: false
+    },
+    search: {
+      searchedPosts: action.posts
+    }
+  })),
+
+  on(PostActions.getPostsBySearchCriteriaFailure, (state, action) => ({
+    ...state,
+    loading: {
+      ...state.loading,
+      isGetLoading: false
+    },
+    error: {
+      responseError: action.error
+    }
   })),
 
   on(PostActions.getPostsFromSubscriptions, (state) => ({
     ...state,
-    isLoading: true
+    loading: {
+      ...state.loading,
+      isGetLoading: true
+    }
   })),
 
   on(PostActions.getPostsFromSubscriptionsSuccess, (state, action) => ({
     ...state,
-    isLoading: false,
+    loading: {
+      ...state.loading,
+      isGetLoading: false
+    },
     postsFromSubscriptions: action.posts
+  })),
+
+  on(PostActions.getPostsFromSubscriptionsFailure, (state, action) => ({
+    ...state,
+    loading: {
+      ...state.loading,
+      isGetLoading: false
+    },
+    error: {
+      responseError: action.error
+    }
   })),
 
   on(PostActions.setSelectedPost, (state, action) => ({
@@ -80,29 +159,46 @@ export const postReducer = createReducer(
 
   on(PostActions.getPosts, (state) => ({
     ...state,
-    isLoading: true
+    loading: {
+      ...state.loading,
+      isGetLoading: true
+    }
   })),
 
   on(PostActions.getPostsSuccess, (state, action) => ({
     ...state,
-    isLoading: false,
+    loading: {
+      ...state.loading,
+      isGetLoading: false
+    },
     selectedBlogPosts: action.posts
   })),
 
   on(PostActions.getPostsFailure, (state, action) => ({
     ...state,
-    isLoading: false,
-    postsError: action.error
+    loading: {
+      ...state.loading,
+      isGetLoading: false
+    },
+    error: {
+      responseError: action.error
+    }
   })),
 
   on(PostActions.createPost, (state) => ({
     ...state,
-    isLoading: true
+    loading: {
+      ...state.loading,
+      isCreateLoading: true
+    },
   })),
 
   on(PostActions.createPostSuccess, (state, action) => ({
     ...state,
-    isLoading: false,
+    loading: {
+      ...state.loading,
+      isCreateLoading: false
+    },
     selectedPost: action.post,
     selectedBlogPosts: [
       ...state.selectedBlogPosts, action.post
@@ -111,18 +207,29 @@ export const postReducer = createReducer(
 
   on(PostActions.createPostFailure, (state, action) => ({
     ...state,
-    isLoading: false,
-    postsError: action.error
+    loading: {
+      ...state.loading,
+      isCreateLoading: false
+    },
+    error: {
+      responseError: action.error
+    }
   })),
 
   on(PostActions.updatePost, (state) => ({
     ...state,
-    isLoading: true
+    loading: {
+      ...state.loading,
+      isUpdateLoading: true
+    },
   })),
 
   on(PostActions.updatePostSuccess, (state, action) => ({
     ...state,
-    isLoading: false,
+    loading: {
+      ...state.loading,
+      isUpdateLoading: false
+    },
     selectedPost: action.post,
     editor: {
       ...state.editor,
@@ -137,8 +244,13 @@ export const postReducer = createReducer(
 
   on(PostActions.updatePostFailure, (state, action) => ({
     ...state,
-    isLoading: false,
-    postsError: action.error,
+    loading: {
+      ...state.loading,
+      isUpdateLoading: false
+    },
+    error: {
+      responseError: action.error()
+    },
     editor: {
       ...state.editor,
       isEditingMode: false,
@@ -148,12 +260,18 @@ export const postReducer = createReducer(
 
   on(PostActions.deletePost, (state) => ({
     ...state,
-    isLoading: true
+    loading: {
+      ...state.loading,
+      isDeleteLoading: true
+    },
   })),
 
   on(PostActions.deletePostSuccess, (state, action) => ({
     ...state,
-    isLoading: false,
+    loading: {
+      ...state.loading,
+      isDeleteLoading: false
+    },
     selectedPost: state.selectedPost?.id === action.postId ? null : state.selectedPost,
     selectedBlogPosts: state.selectedBlogPosts.filter(p => p.id !== action.postId),
     editor: {
@@ -164,8 +282,13 @@ export const postReducer = createReducer(
 
   on(PostActions.deletePostFailure, (state, action) => ({
     ...state,
-    isLoading: false,
-    postsError: action.error
+    loading: {
+      ...state.loading,
+      isDeleteLoading: false
+    },
+    error: {
+      responseError: action.error
+    }
   })),
 
   on(PostActions.setEditedPost, (state) => ({
