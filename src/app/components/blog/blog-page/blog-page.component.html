@@ -1,4 +1,4 @@
-<div id="blog-container" *ngIf="(isLoaded$ | async); else loadingTemplate;">
+<div id="blog-container">
   <div id="blog-information" *ngIf="selectedBlog$ | async as userBlogView">
     <app-author-data
       class="author-data blog-section" [id]="userBlogView.id.id"
@@ -48,21 +48,9 @@
      <app-blog-post-preview-list [blogPosts]="userBlogPublications"></app-blog-post-preview-list>
     </div>
     <ng-template #noBlogPublications>
-      <div class="no-blog-publications-message"> Blog has no publications yet </div>
+      <div class="no-blog-publications-message"> No publications matching criteria </div>
     </ng-template>
   </div>
-  <app-menu-modal #appMenuModal
-                  id="app-menu-modal"
-                  [hidden]="!showAppMenuModal"
-                  [userBlogIds]="(userBlogIds$ | async)"
-                  (settingsEmitter)="onSettingsSelectedEvent()"
-                  (userBlogSelectedEmitter)="onUserBlogSelectedEvent($event)">
-  </app-menu-modal>
-  <app-blog-settings-modal #appBlogSettingsModal
-                           id="app-blog-settings-modal"
-                           (onCloseEmitter)="onSettingsModalClosed()"
-                           [hidden]="!showAppBlogSettingsModal">
-  </app-blog-settings-modal>
 </div>
 
 <ng-template #loadingTemplate>

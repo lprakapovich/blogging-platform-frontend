@@ -67,7 +67,6 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log('destroy SignupComponent');
     this.registerForm.reset();
     this.validatedUsername = '';
     this.unsubscribe$.next();
@@ -82,12 +81,12 @@ export class SignupComponent implements OnInit, OnDestroy {
     if (this.registerForm.invalid) {
       return;
     }
-    const registrationData = {
+    const registerData = {
       username: this.registerForm.get('username')?.value,
       password: this.registerForm.get('password')?.value,
       blogUrl: this.registerForm.get('blogUrl')?.value
     }
-    this.store.dispatch(register({payload: registrationData}))
+    this.store.dispatch(register({registerData}))
   }
 
   goToLogin() {

@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {AuthService} from "../../services/api/auth.service";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
-import {catchError, combineLatestWith, debounceTime, map, of, switchMap, tap, exhaustMap} from "rxjs";
+import {catchError, combineLatestWith, debounceTime, exhaustMap, map, of, switchMap, tap} from "rxjs";
 import {
   AuthActionTypes,
   loginFailure,
@@ -35,8 +35,8 @@ export class AuthEffects {
   login$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActionTypes.LOGIN),
-      debounceTime(500),
-      map((action: any) => action.payload),
+      debounceTime(1000),
+      map((action: any) => action.loginData),
       exhaustMap((payload: LoginData) => {
         return this.authService.login(payload)
           .pipe(
@@ -47,11 +47,7 @@ export class AuthEffects {
               }
             )}
             ),
-            catchError(error => of(loginFailure(
-              {
-                error
-              }
-            )))
+            catchError(error => of(loginFailure({ error })))
           )
       })
     )
@@ -65,48 +61,23 @@ export class AuthEffects {
       )
     ))
 
-  validateUsername$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(AuthActionTypes.VALIDATE_USERNAME),
-      debounceTime(1000),
-      map((action: any) => action.principal),
-      switchMap((username: string) => {
-        return this.userService.validateUsername(username)
-          .pipe(
-            map(() => validateUsernameSuccess({username})),
-            catchError(err =>{
-              return of(validateUsernameFailure(
-                {
-                  error: err.error
-                }
-              ))
-            })
-          )
-      })
-    )
-  )
-
   register$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActionTypes.REGISTER),
-      debounceTime(1500),
-      map((action: any) => action.payload),
-      exhaustMap((payload: RegisterData) => {
-        return this.authService.register(payload)
+      debounceTime(1000),
+      map((action: any) => action.registerData),
+      exhaustMap((registerData: RegisterData) => {
+        return this.authService.register(registerData)
           .pipe(
-            map(response => {
-              return registerSuccess(
+            map(response => registerSuccess(
                 {
-                  principal: payload.username,
+                  principal: registerData.username,
                   token: response.token,
-                  blogId: payload.blogUrl,
+                  blogId: registerData.blogUrl,
                 }
               )
-            }
             ),
-            catchError(error => of(registerFailure(
-              error
-            )))
+            catchError(error => of(registerFailure(error)))
           )
       })
     )
@@ -135,6 +106,20 @@ export class AuthEffects {
     {
       dispatch: false
     }
+  )
+
+  validateUsername$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActionTypes.VALIDATE_USERNAME),
+      debounceTime(1000),
+      switchMap(({principal}) => {
+        return this.userService.validateUsername(principal)
+          .pipe(
+            map(() => validateUsernameSuccess({principal })),
+            catchError(err => of(validateUsernameFailure({error: err.error })))
+          )
+      })
+    )
   )
 
   checkAuthenticationAndRedirect$ = createEffect(() =>

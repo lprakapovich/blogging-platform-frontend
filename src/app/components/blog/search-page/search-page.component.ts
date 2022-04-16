@@ -38,7 +38,7 @@ export class SearchPageComponent implements OnInit {
       .pipe(take(1))
       .subscribe(params => {
         this.searchInput = params['search'];
-        this.store.dispatch(getSearchedBlogs({payload: this.searchInput}))
+        this.store.dispatch(getSearchedBlogs({searchCriteria: this.searchInput}))
         this.store.dispatch(getPostsBySearchCriteria({title: this.searchInput}))
       });
 
@@ -48,7 +48,7 @@ export class SearchPageComponent implements OnInit {
   }
 
   onEnterPressed(searchCriteria: string) {
-    this.store.dispatch(getSearchedBlogs({payload: searchCriteria}))
+    this.store.dispatch(getSearchedBlogs({searchCriteria: searchCriteria}))
     this.store.dispatch(getPostsBySearchCriteria({title: searchCriteria}))
   }
 

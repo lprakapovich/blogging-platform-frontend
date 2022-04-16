@@ -9,7 +9,7 @@ import {
   deleteSubscriptionSuccess,
   SubscriptionActionTypes
 } from "../actions/subscription.actions";
-import {catchError, combineLatestWith, map, of, switchMap} from "rxjs";
+import {catchError, exhaustMap, map, of, withLatestFrom} from "rxjs";
 import {selectPrincipalActiveBlogId} from "../selectors/blog.selectors";
 import {Subscription} from "../../models/Subscription";
 import * as fromSubscription from '../reducers/subscription.reducers'
@@ -25,16 +25,15 @@ export class SubscriptionEffects {
   createSubscription = createEffect(() =>
   this.actions$.pipe(
     ofType(SubscriptionActionTypes.CREATE_SUBSCRIPTION),
-    map((action: any) => action.blogId),
-    combineLatestWith(this.store.select(selectPrincipalActiveBlogId)),
-    switchMap(([subscriptionBlogId, {id, username}]) => {
-      return this.subscriptionService.addSubscription(id, username, subscriptionBlogId)
+    withLatestFrom(this.store.select(selectPrincipalActiveBlogId)),
+    exhaustMap(([{ blogId }, {id, username}]) => {
+      return this.subscriptionService.addSubscription(id, username, blogId)
         .pipe(
           map(() => {
             const subscription: Subscription = {
               id: {
                 subscriber: { id, username },
-                subscription: subscriptionBlogId
+                subscription: blogId
               }
             }
             return createSubscriptionSuccess({subscription}) }
@@ -47,14 +46,11 @@ export class SubscriptionEffects {
   deleteSubscription$ = createEffect(() =>
     this.actions$.pipe(
       ofType(SubscriptionActionTypes.DELETE_SUBSCRIPTION),
-      map((action: any) => action.blogId),
-      combineLatestWith(this.store.select(selectPrincipalActiveBlogId)),
-      switchMap(([unsubscribedBlogId, {id, username}]) => {
-        return this.subscriptionService.deleteSubscription(id, username, unsubscribedBlogId)
+      withLatestFrom(this.store.select(selectPrincipalActiveBlogId)),
+      exhaustMap(([{blogId}, {id, username}]) => {
+        return this.subscriptionService.deleteSubscription(id, username, blogId)
           .pipe(
-            map(() => {
-              return deleteSubscriptionSuccess({ unsubscribedBlogId })
-            }),
+            map(() => deleteSubscriptionSuccess({ unsubscribedBlogId: blogId })),
             catchError((error) => of(deleteSubscriptionFailure({error})))
           )
       })

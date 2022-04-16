@@ -9,7 +9,7 @@ import {
   deleteCategoryFailure,
   deleteCategorySuccess
 } from "../actions/category.actions";
-import {catchError, combineLatestWith, debounceTime, map, of, switchMap} from "rxjs";
+import {catchError, debounceTime, exhaustMap, map, of, withLatestFrom} from "rxjs";
 import {selectPrincipalActiveBlogId} from "../selectors/blog.selectors";
 import * as fromCategory from '../reducers/category.reducers'
 
@@ -18,27 +18,18 @@ export class CategoryEffects {
 
   constructor(private store: Store<fromCategory.CategoryState>,
               private actions$: Actions,
-              private categoryService: CategoryService
-              ) {
+              private categoryService: CategoryService) {
   }
 
   createCategory$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CategoryActionTypes.CREATE_CATEGORY),
-      debounceTime(500),
-      map((action: any) => action.name),
-      combineLatestWith(this.store.select(selectPrincipalActiveBlogId)),
-      switchMap(([categoryName, {id, username}]) => {
-        return this.categoryService.createCategory(id, username, categoryName)
+      debounceTime(1000),
+      withLatestFrom(this.store.select(selectPrincipalActiveBlogId)),
+      exhaustMap(([{name}, {id, username}]) => {
+        return this.categoryService.createCategory(id, username, name)
           .pipe(
-            map((categoryId: any) => {
-              return createCategorySuccess({
-                category: {
-                  id: categoryId,
-                  name: categoryName
-                }
-              })
-            }),
+            map((id: any) => createCategorySuccess({ category: { id, name} })),
             catchError((response) => of(createCategoryFailure({error: response.error?.message})))
           )
       })
@@ -49,8 +40,8 @@ export class CategoryEffects {
     this.actions$.pipe(
       ofType(CategoryActionTypes.DELETE_CATEGORY),
       map((action: any) => action.id),
-      combineLatestWith(this.store.select(selectPrincipalActiveBlogId)),
-      switchMap(([categoryId, {id, username}]) => {
+      withLatestFrom(this.store.select(selectPrincipalActiveBlogId)),
+      exhaustMap(([categoryId, {id, username}]) => {
         return this.categoryService.deleteCategory(id, username, categoryId)
           .pipe(
             map(() => deleteCategorySuccess({categoryId})),

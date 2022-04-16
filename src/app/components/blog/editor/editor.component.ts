@@ -1,5 +1,5 @@
 import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import {combineLatest, Observable, Subject, takeUntil} from "rxjs";
+import {Observable, Subject, takeUntil} from "rxjs";
 import {BlogPost} from "../../../models/BlogPost";
 import {Store} from "@ngrx/store";
 import {selectEditedPost, selectIsPostLoading} from "../../../store/selectors/post.selectors";
@@ -22,7 +22,6 @@ export class EditorComponent implements OnInit {
   isLoading$: Observable<boolean>;
   isModified$: Observable<boolean>;
 
-  // todo how to set it ??
   modifiedTitleInput: string = '';
   modifiedContentInput: string = '';
 
@@ -33,9 +32,9 @@ export class EditorComponent implements OnInit {
     this.editedPost$ = this.store.select(selectEditedPost);
     this.isLoading$ = this.store.select(selectIsPostLoading);
 
-    combineLatest([this.editedPost$])
+    this.editedPost$
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(([post]) => {
+      .subscribe((post) => {
         this.modifiedContentInput = post?.content ?? '';
         this.modifiedTitleInput = post?.title ?? '';
       })

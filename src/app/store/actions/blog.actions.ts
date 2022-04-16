@@ -46,7 +46,7 @@ export const getBlogDetails = createAction(BlogActionTypes.GET_BLOG_DETAILS, pro
 export const getBlogDetailsSuccess = createAction(BlogActionTypes.GET_BLOG_DETAILS_SUCCESS, props<{blog: BlogView, blogId: string, isPrincipal: boolean}>())
 export const getBlogDetailsFailure = createAction(BlogActionTypes.GET_BLOG_DETAILS_FAILURE, props<{error: any}>())
 
-export const getSearchedBlogs = createAction(BlogActionTypes.GET_SEARCHED_BLOGS, props<{payload: string}>())
+export const getSearchedBlogs = createAction(BlogActionTypes.GET_SEARCHED_BLOGS, props<{searchCriteria: string}>())
 export const getSearchedBlogsSuccess = createAction(BlogActionTypes.GET_SEARCHED_BLOGS_SUCCESS, props<{blogs: Blog[]}>())
 export const getSearchedBlogsFailure = createAction(BlogActionTypes.GET_SEARCHED_BLOGS_FAILURE, props<{error: any}>())
 

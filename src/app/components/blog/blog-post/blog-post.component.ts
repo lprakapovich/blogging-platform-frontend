@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {NavbarTemplateService} from "../../../services/ui/navbar-template.service";
-import {combineLatest, Observable, Subject, takeUntil} from "rxjs";
+import {Observable, Subject, takeUntil} from "rxjs";
 import {BlogPost} from "../../../models/BlogPost";
 import {Store} from "@ngrx/store";
 import {
@@ -40,9 +40,9 @@ export class BlogPostComponent implements OnInit {
     this.isAuthenticatedUsersPost$ = this.store.select(selectIsAuthenticatedUsersPost);
     this.isLoading$ = this.store.select(selectIsPostLoading);
 
-    combineLatest([this.isAuthenticatedUsersPost$])
+    this.isAuthenticatedUsersPost$
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(([isAuthenticatedUserPost]) => {
+      .subscribe((isAuthenticatedUserPost) => {
         this.navbarService.adjustEditButton(isAuthenticatedUserPost)
         this.navbarService.adjustRemoveButton(isAuthenticatedUserPost);
       })

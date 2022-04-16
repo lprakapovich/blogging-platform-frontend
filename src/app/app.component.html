@@ -2,5 +2,15 @@
   <app-navbar id="navbar"></app-navbar>
   <div>
     <router-outlet></router-outlet>
+    <app-menu-modal #appMenuModal
+                    [hidden]="!showAppMenuModal"
+                    [userBlogIds]="(userBlogIds$ | async)"
+                    (settingsEmitter)="onSettingsSelectedEvent()"
+                    (userBlogSelectedEmitter)="onUserBlogSelectedEvent($event)">
+    </app-menu-modal>
+    <app-blog-settings-modal #appBlogSettingsModal
+                             (onCloseEmitter)="onSettingsModalClosed()"
+                             [hidden]="!showAppBlogSettingsModal">
+    </app-blog-settings-modal>
   </div>
 </div>

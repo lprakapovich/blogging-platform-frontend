@@ -12,7 +12,6 @@ import {
   selectIsBlogDeleteLoading,
   selectIsBlogUpdateLoading,
   selectPrincipalActiveBlog,
-  selectPrincipalManagedBlogIds,
 } from "../../../store/selectors/blog.selectors";
 import {
   CategoryActionTypes,
@@ -23,7 +22,6 @@ import {
 import {selectCategoryError, selectIsCategoryLoading} from "../../../store/selectors/category.selectors";
 import {Actions, ofType} from "@ngrx/effects";
 import {Category} from "../../../models/Category";
-import {BlogId} from "../../../models/Blog";
 
 @Component({
   selector: 'app-blog-settings-modal',
@@ -144,10 +142,10 @@ export class BlogSettingsModalComponent implements OnInit, OnDestroy {
     this.store.dispatch(updateBlog({data}))
   }
 
-
   logout() {
     const logoutMessage = 'Sure you want to leave?'
     if (confirm(logoutMessage)) {
+      this.onCloseEmitter.emit();
       this.store.dispatch(logout())
     }
   }

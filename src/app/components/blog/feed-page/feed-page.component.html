@@ -28,19 +28,6 @@
     <app-feed-post-preview (closeFeedPostPreview)="closePostPreview();">
     </app-feed-post-preview>
   </div>
-  <app-menu-modal #appMenuModal
-                  id="app-menu-modal"
-                  (settingsEmitter)="onSettingsSelectedEvent()"
-                  (userBlogSelectedEmitter)="onUserBlogSelectedEvent($event)"
-                  [hidden]="!showAppMenuModal"
-                  [userBlogIds]="(userBlogIds$ | async)">
-  </app-menu-modal>
-
-  <app-blog-settings-modal #appBlogSettingsModal
-                           (onCloseEmitter)="onSettingsModalClosed()"
-                           [hidden]="!showAppBlogSettingsModal"
-                           id="app-blog-settings-modal">
-  </app-blog-settings-modal>
 </div>
 
 <ng-template #loadingTemplate>

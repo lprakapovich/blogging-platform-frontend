@@ -1,23 +1,19 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {NavbarTemplateService} from "../../../services/ui/navbar-template.service";
-import {combineLatest, map, Observable, Subject, take, takeUntil} from "rxjs";
+import {combineLatest, Observable, Subject, take, takeUntil} from "rxjs";
 import {Store} from "@ngrx/store";
 import {
-  selectPrincipalManagedBlogIds,
+  selectIsBlogGetLoading,
   selectIsPrincipalBlogOwner,
   selectIsSubscriber,
-  selectSelectedBlog, selectIsBlogGetLoading
+  selectSelectedBlog
 } from "../../../store/selectors/blog.selectors";
-import {AppMenuModalComponent} from "../../ui-elements/app-menu-modal/app-menu-modal.component";
 import {BlogView} from "../../../models/BlogView";
-import {BlogSettingsModalComponent} from "../blog-settings-modal/blog-settings-modal.component";
-import {ModalService} from "../../../services/ui/modal.service";
 import {BlogPost} from "../../../models/BlogPost";
 import {selectSelectedBlogPosts} from "../../../store/selectors/post.selectors";
 import {getPosts} from "../../../store/actions/post.actions";
 import {BlogId} from "../../../models/Blog";
-import {getBlogDetailsAndRedirect} from "../../../store/actions/blog.actions";
 import {Category} from "../../../models/Category";
 import {createSubscription, deleteSubscription} from "../../../store/actions/subscription.actions";
 import {Status} from "../../../models/Status";
@@ -40,33 +36,18 @@ export class BlogPageComponent implements OnInit, OnDestroy {
   isOwner$: Observable<boolean>;
   isSubscriber$: Observable<boolean>;
 
-  @ViewChild('appMenuModal')
-  appMenuModal: AppMenuModalComponent;
-
-  @ViewChild('appBlogSettingsModal')
-  appBlogSettingsModal: BlogSettingsModalComponent;
-
-  showAppMenuModal: boolean;
-  showAppBlogSettingsModal: boolean;
-
   Draft = Status.Draft
   Scheduled = Status.Scheduled
   postStatuses = [this.Draft, this.Scheduled]
 
   constructor(private store: Store,
               private router: Router,
-              private navbarService: NavbarTemplateService,
-              private modalService: ModalService) {
+              private navbarService: NavbarTemplateService) {
   }
 
   ngOnInit(): void {
-
-    this.showAppMenuModal = false;
-    this.showAppBlogSettingsModal = false;
-
     this.init();
     this.fetchDataFromStore();
-    this.subscribeToModalChanges();
   }
 
   ngOnDestroy() {
@@ -84,51 +65,19 @@ export class BlogPageComponent implements OnInit, OnDestroy {
 
   private fetchDataFromStore() {
 
-    this.store.dispatch(getPosts({status: Status.Published}));
+    this.getPublishedPosts()
 
-    this.userBlogIds$ = this.store.select(selectPrincipalManagedBlogIds);
     this.selectedBlogPublications$ = this.store.select(selectSelectedBlogPosts);
     this.selectedBlog$ = this.store.select(selectSelectedBlog);
     this.isLoading$ = this.store.select(selectIsBlogGetLoading);
     this.isOwner$ = this.store.select(selectIsPrincipalBlogOwner)
 
-    this.isLoaded$ = combineLatest([
-      this.selectedBlog$, this.selectedBlogPublications$, this.isLoading$
-      ]).pipe(
-        takeUntil(this.unsubscribe$),
-        map(([userBlog, publications, isLoadingAnything]) => {
-          this.isSubscriber$ = this.store.select(selectIsSubscriber(userBlog.id))
-          return !!userBlog  && !!publications && !isLoadingAnything;
-        })
-    )
-  }
-
-  onUserBlogSelectedEvent(blogId: BlogId) {
-    this.showAppMenuModal = false;
-    this.store.dispatch(getBlogDetailsAndRedirect({ blogId }))
-  }
-
-  onSettingsModalClosed() {
-    this.modalService.showAppSettingsModal(false)
-  }
-
-  onSettingsSelectedEvent() {
-    this.modalService.showAppMenuModal(false);
-    this.modalService.showAppSettingsModal(true);
-  }
-
-  private subscribeToModalChanges() {
-    this.modalService.getAppMenuModalSubject()
+    this.selectedBlog$
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(show =>
-        this.showAppMenuModal = show
-      );
-
-    this.modalService.getAppSettingsModalSubject()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(show =>
-        this.showAppBlogSettingsModal = show
-      )
+      .subscribe(userBlog => {
+        this.isSubscriber$ = this.store.select(selectIsSubscriber(userBlog.id))
+        this.getPublishedPosts();
+      })
   }
 
   private init() {
@@ -136,17 +85,16 @@ export class BlogPageComponent implements OnInit, OnDestroy {
   }
 
   onSubscribeClicked() {
-    combineLatest([
-      this.isSubscriber$, this.selectedBlog$
-    ]).pipe(take(1))
+    combineLatest([this.isSubscriber$, this.selectedBlog$])
+      .pipe(take(1))
       .subscribe(([isSubscriber, {id}]) => {
-       isSubscriber ? this.store.dispatch(deleteSubscription({blogId: id})) :
+       isSubscriber ?
+         this.store.dispatch(deleteSubscription({blogId: id})) :
          this.store.dispatch(createSubscription({blogId: id}));
       })
   }
 
   onCategorySelected(category: Category) {
-    // NOTE filtering by category is only done among published posts
     this.store.dispatch(getPosts({
       categoryId: category.id,
       status: Status.Published

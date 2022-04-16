@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {NavbarTemplateService} from "../../../services/ui/navbar-template.service";
@@ -12,7 +12,7 @@ import {login} from "../../../store/actions/auth.actions"
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit {
 
   isLoading$: Observable<boolean>;
   isLoginFormSubmitted$: Observable<boolean>;
@@ -20,7 +20,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   loginForm: FormGroup;
 
-  // todo display validation errors
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -40,10 +39,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.isLoginError$ = this.store.select(selectLoginIsError)
   }
 
-  ngOnDestroy() {
-    console.log('destroy LoginComponent')
-  }
-
   get form() {
     return this.loginForm.controls;
   }
@@ -56,7 +51,7 @@ export class LoginComponent implements OnInit, OnDestroy {
        username: this.loginForm.get('username')?.value,
        password: this.loginForm.get('password')?.value
     }
-    this.store.dispatch(login({payload: loginData}));
+    this.store.dispatch(login({loginData}));
   }
 
   navigateToRegister() {

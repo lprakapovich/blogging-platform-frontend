@@ -23,17 +23,17 @@ export enum AuthActionTypes {
   REDIRECT_IF_AUTHENTICATED = '[auth] redirect to main if authenticated',
 }
 
-export const login = createAction(AuthActionTypes.LOGIN, props<{payload: LoginData}>());
+export const login = createAction(AuthActionTypes.LOGIN, props<{loginData: LoginData}>());
 export const loginSuccess = createAction(AuthActionTypes.LOGIN_SUCCESS, props<{token: string, principal: string}>());
 export const loginFailure = createAction(AuthActionTypes.LOGIN_FAILURE, props<{error: any}>());
 
-export const register = createAction(AuthActionTypes.REGISTER, props<{payload: RegisterData}>());
+export const register = createAction(AuthActionTypes.REGISTER, props<{registerData: RegisterData}>());
 export const registerSuccess = createAction(AuthActionTypes.REGISTER_SUCCESS, props<{token: string, principal: string, blogId: string}>());
 export const registerFailure = createAction(AuthActionTypes.REGISTER_FAILURE, props<{error: any}>());
 
 export const validateUsername = createAction(AuthActionTypes.VALIDATE_USERNAME, props<{principal: string}>());
 export const validateUsernameFailure = createAction(AuthActionTypes.VALIDATE_USERNAME_FAILURE, props<{error: string}>());
-export const validateUsernameSuccess = createAction(AuthActionTypes.VALIDATE_USERNAME_SUCCESS, props<{username: string}>());
+export const validateUsernameSuccess = createAction(AuthActionTypes.VALIDATE_USERNAME_SUCCESS, props<{principal: string}>());
 
 export const logout = createAction(AuthActionTypes.LOGOUT);
 

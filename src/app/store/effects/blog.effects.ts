@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {Store} from "@ngrx/store";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {BlogService} from "../../services/api/blog.service";
-import {catchError, combineLatestWith, debounceTime, exhaustMap, map, of, switchMap, tap, withLatestFrom} from "rxjs";
+import {catchError, debounceTime, exhaustMap, map, of, switchMap, tap, withLatestFrom} from "rxjs";
 import {
   BlogActionTypes,
   createBlogFailure,
@@ -14,10 +14,10 @@ import {
   getBlogDetailsAndRedirectSuccess,
   getBlogDetailsFailure,
   getBlogDetailsSuccess,
-  getSearchedBlogsFailure,
-  getSearchedBlogsSuccess,
   getPrincipalBlogsAndRedirectFailure,
   getPrincipalBlogsAndRedirectSuccess,
+  getSearchedBlogsFailure,
+  getSearchedBlogsSuccess,
   updateBlogFailure,
   updateBlogSuccess
 } from "../actions/blog.actions";
@@ -67,11 +67,9 @@ export class BlogEffects {
     this.actions$.pipe(
       ofType(BlogActionTypes.UPDATE_BLOG),
       debounceTime(1000),
-      map((action: any) => action.data),
-      withLatestFrom(
-        this.store.select(selectPrincipalActiveBlogId)),
-      exhaustMap(([updateData, {id, username}]) => {
-        return this.blogService.updateBlog(id, username, updateData)
+      withLatestFrom(this.store.select(selectPrincipalActiveBlogId)),
+      exhaustMap(([{ data }, {id, username}]) => {
+        return this.blogService.updateBlog(id, username, data)
           .pipe(
             map((updatedBlog) => updateBlogSuccess({updatedBlog})),
             catchError(((error) => of(updateBlogFailure({ error }))))
@@ -80,40 +78,34 @@ export class BlogEffects {
   )
 
   deleteBlog$ = createEffect(() =>
-  this.actions$.pipe(
-    ofType(BlogActionTypes.DELETE_BLOG),
-    debounceTime(1000),
-    withLatestFrom(
-      this.store.select(selectPrincipalActiveBlogId)
-    ),
-    exhaustMap(([__, {id, username}]) => {
-      return this.blogService.deleteBlog(id, username)
-        .pipe(
-          map(() => deleteBlogSuccess({ blogId: { id, username}})),
-          catchError((error) => of(deleteBlogFailure({ error })))
-        )
-    })
-  ))
+    this.actions$.pipe(
+      ofType(BlogActionTypes.DELETE_BLOG),
+      debounceTime(1000),
+      withLatestFrom(this.store.select(selectPrincipalActiveBlogId)),
+      exhaustMap(([__, {id, username}]) => {
+        return this.blogService.deleteBlog(id, username)
+          .pipe(
+            map(() => deleteBlogSuccess({ blogId: { id, username}})),
+            catchError((error) => of(deleteBlogFailure({ error })))
+          )
+      })
+    ))
 
   deleteBlogSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(BlogActionTypes.DELETE_BLOG_SUCCESS),
-      withLatestFrom(
-        this.store.select(selectPrincipalManagedBlogIds)
-      ),
+      withLatestFrom(this.store.select(selectPrincipalManagedBlogIds)),
       exhaustMap(([{ blogId }, blogsIds]) => {
-        if (blogsIds.length == 0)
-          return of(logout());
-        else
-          return of(getBlogDetailsAndRedirect({ blogId: blogsIds[0] }));
+        return (blogsIds.length == 0) ?
+          of(logout()) :
+          of(getBlogDetailsAndRedirect({ blogId: blogsIds[0] }));
       })
     ))
 
   getSearchedBlogs$ = createEffect(() =>
     this.actions$.pipe(
       ofType(BlogActionTypes.GET_SEARCHED_BLOGS),
-      map((action: any) => action.payload),
-      switchMap((searchCriteria: string) => {
+      switchMap(({searchCriteria}) => {
         return this.blogService.getBySearchCriteria(searchCriteria)
           .pipe(
             map(response => getSearchedBlogsSuccess({blogs: response})),
@@ -127,9 +119,8 @@ export class BlogEffects {
     this.actions$.pipe(
       ofType(BlogActionTypes.GET_BLOG_DETAILS),
       map((action:any) => (action.blogId)),
-      combineLatestWith(
-        this.store.select(selectPrincipal)),
-      switchMap(([{id, username}, principal]) => {
+      withLatestFrom(this.store.select(selectPrincipal)),
+      exhaustMap(([{id, username}, principal]) => {
         const isPrincipal = username == principal
         return this.blogService.getBlogDetails(id, username)
           .pipe(
@@ -143,9 +134,8 @@ export class BlogEffects {
     this.actions$.pipe(
       ofType(BlogActionTypes.GET_BLOG_DETAILS_AND_REDIRECT),
       map((action:any) => (action.blogId)),
-      combineLatestWith(
-        this.store.select(selectPrincipal)),
-      switchMap(([{id, username}, principal]) => {
+      withLatestFrom(this.store.select(selectPrincipal)),
+      exhaustMap(([{id, username}, principal]) => {
         const isPrincipal = username == principal
         return this.blogService.getBlogDetails(id, username)
           .pipe(
@@ -159,7 +149,6 @@ export class BlogEffects {
     this.actions$.pipe(
       ofType(BlogActionTypes.GET_BLOG_DETAILS_AND_REDIRECT_SUCCESS),
       tap(({blogId}) => {
-        console.log(`getBlogDetailsAndRedirectSuccess$ redirect to ${blogId}`)
         this.router.navigate([`/blog/@${blogId}`])
       })
     ),

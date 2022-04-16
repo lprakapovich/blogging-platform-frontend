@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {NavbarTemplateService} from "../../../services/ui/navbar-template.service";
 import {EditorService} from "../../../services/ui/editor.service";
-import {combineLatest, Observable, Subject, take, takeUntil} from "rxjs";
+import {Observable, Subject, take, takeUntil, withLatestFrom} from "rxjs";
 import {EditorComponent} from "../editor/editor.component";
 import {Status} from "../../../models/Status";
 import {createPost, resetEditedPost, updatePost} from "../../../store/actions/post.actions";
@@ -61,13 +61,6 @@ export class EditorPageComponent implements OnInit, OnDestroy {
         this.onShowPostSettingsModal()
       })
 
-    this.editorService.getDeleteEventChanged()
-      .pipe(
-        takeUntil(this.unsubscribe$))
-      .subscribe(() =>{
-        this.onDeleteEventTriggered()
-      })
-
     this.editorService.getMissingContentOrTitleErrorChanged()
       .pipe(
         takeUntil(this.unsubscribe$))
@@ -96,10 +89,6 @@ export class EditorPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  private onDeleteEventTriggered() {
-
-  }
-
   private showMissingDataErrorMessage() {
     this.editorService.onMissingContentOrTitleErrorChanged(
       !this.editorComponent.modifiedContentInput,
@@ -126,9 +115,10 @@ export class EditorPageComponent implements OnInit, OnDestroy {
       category: $event.selectedCategory
     }
 
-    combineLatest([this.isEditableMode$, this.editedPost$])
-      .pipe(take(1))
-      .subscribe(([isEditableMode, post]) => {
+    this.editedPost$.pipe(
+      withLatestFrom(this.isEditableMode$),
+      take(1))
+      .subscribe(([post, isEditableMode]) => {
         if (isEditableMode && !!post) {
           this.store.dispatch(updatePost( { postId: post.id, updatePostData: postData}))
         } else {
