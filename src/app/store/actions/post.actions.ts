@@ -55,7 +55,7 @@ export const getPostsBySearchCriteriaSuccess = createAction(PostActionTypes.GET_
 export const getPostsBySearchCriteriaFailure = createAction(PostActionTypes.GET_POSTS_BY_SEARCH_CRITERIA_FAILURE, props<{error: any}>())
 
 export const getPostsFromSubscriptions = createAction(PostActionTypes.GET_POSTS_FROM_SUBSCRIPTIONS)
-export const getPostsFromSubscriptionsSuccess = createAction(PostActionTypes.GET_POSTS_FROM_SUBSCRIPTIONS_SUCCESS, props<{posts: BlogPost[] }>())
+export const getPostsFromSubscriptionsSuccess = createAction(PostActionTypes.GET_POSTS_FROM_SUBSCRIPTIONS_SUCCESS, props<{posts: BlogPost[], push: boolean}>())
 export const getPostsFromSubscriptionsFailure = createAction(PostActionTypes.GET_POSTS_FROM_SUBSCRIPTIONS_FAILURE, props<{error: any}>())
 
 export const setSelectedPost = createAction(PostActionTypes.SET_SELECTED_POST, props<{post: BlogPost}>())
@@ -67,5 +67,5 @@ export const setEditedPostFailure = createAction(PostActionTypes.SET_EDITED_POST
 export const resetEditedPost = createAction(PostActionTypes.RESET_EDITED_POST);
 
 export const getPosts = createAction(PostActionTypes.GET_POSTS, props<{status?: string, categoryId?: number}>())
-export const getPostsSuccess = createAction(PostActionTypes.GET_POSTS_SUCCESS, props<{posts: BlogPost[]}>())
+export const getPostsSuccess = createAction(PostActionTypes.GET_POSTS_SUCCESS, props<{posts: BlogPost[], push: boolean}>())
 export const getPostsFailure = createAction(PostActionTypes.GET_POSTS_FAILURE, props<{error: any}>())

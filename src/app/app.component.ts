@@ -9,6 +9,8 @@ import {AppMenuModalComponent} from "./components/ui-elements/app-menu-modal/app
 import {BlogSettingsModalComponent} from "./components/blog/blog-settings-modal/blog-settings-modal.component";
 import {getBlogDetailsAndRedirect} from "./store/actions/blog.actions";
 import {selectPrincipalManagedBlogIds} from "./store/selectors/blog.selectors";
+import {PageService} from "./services/ui/page.service";
+import {resetPage} from "./store/actions/page.actions";
 
 @Component({
   selector: 'app-root',
@@ -30,11 +32,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
   userBlogIds$: Observable<BlogId[]>;
 
-
   constructor(private store: Store,
               private router: Router,
               private navbarService: NavbarTemplateService,
-              private modalService: ModalService) {
+              private modalService: ModalService,
+              private pageService: PageService) {
   }
 
   ngOnInit(): void {
@@ -49,6 +51,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   onUserBlogSelectedEvent(blogId: BlogId) {
     this.showAppMenuModal = false;
+    this.store.dispatch(resetPage())
     this.store.dispatch(getBlogDetailsAndRedirect({ blogId }))
   }
 
@@ -77,5 +80,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private fetchDataFromStore() {
     this.userBlogIds$ = this.store.select(selectPrincipalManagedBlogIds);
+  }
+
+  onScrollDown() {
+    this.pageService.incrementPage();
   }
 }

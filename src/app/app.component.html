@@ -1,4 +1,9 @@
-<div id="app-container">
+<div id="app-container"
+     infinite-scroll
+     [scrollWindow]="false"
+     (scrolled)="onScrollDown()"
+     [infiniteScrollDistance]="3"
+     [infiniteScrollThrottle]="150">
   <app-navbar id="navbar"></app-navbar>
   <div>
     <router-outlet></router-outlet>

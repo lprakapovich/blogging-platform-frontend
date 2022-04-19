@@ -23,6 +23,7 @@ import {catchError, debounceTime, exhaustMap, map, of, switchMap, tap, withLates
 import {selectPrincipalActiveBlogId, selectSelectedBlogId} from "../selectors/blog.selectors";
 import {Router} from "@angular/router";
 import {selectSelectedPost} from "../selectors/post.selectors";
+import {selectCurrentPage} from "../selectors/page.selectors";
 
 @Injectable()
 export class PostEffects {
@@ -121,11 +122,15 @@ export class PostEffects {
     this.actions$.pipe(
       ofType(PostActionTypes.GET_POSTS),
       withLatestFrom(
-        this.store.select(selectSelectedBlogId)),
-      switchMap(([{status, categoryId}, blogId]: any) => {
-        return this.postService.getPosts(blogId.id, blogId.username, status, categoryId)
+        this.store.select(selectSelectedBlogId),
+        this.store.select(selectCurrentPage)),
+      switchMap(([{status, categoryId}, blogId, page]) => {
+        return this.postService.getPosts(blogId.id, blogId.username, status, categoryId, page)
           .pipe(
-            map(posts => getPostsSuccess({posts})),
+            map(posts => {
+              let push = !!page;
+              return getPostsSuccess({posts, push})
+            }),
             catchError(error => of(getPostsFailure({error})))
           )
       })
@@ -151,10 +156,14 @@ export class PostEffects {
     this.actions$.pipe(
       ofType(PostActionTypes.GET_POSTS_FROM_SUBSCRIPTIONS),
       withLatestFrom(
-        this.store.select(selectPrincipalActiveBlogId)),
-      switchMap(([__, {id, username}]) => {
-        return this.postService.getPostsFromSubscriptions(id, username).pipe(
-          map(response => getPostsFromSubscriptionsSuccess({posts: response})),
+        this.store.select(selectPrincipalActiveBlogId),
+        this.store.select(selectCurrentPage)),
+      switchMap(([__, {id, username}, page]) => {
+        return this.postService.getPostsFromSubscriptions(id, username, page).pipe(
+          map(posts => {
+            let push = !!page;
+            return getPostsFromSubscriptionsSuccess({posts, push});
+          }),
           catchError((error) => of(getPostsFromSubscriptionsFailure({error})))
         )
       })

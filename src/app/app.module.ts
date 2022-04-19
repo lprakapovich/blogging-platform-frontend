@@ -52,6 +52,8 @@ import {PostContentLengthPipe} from "./pipes/PostContentPipe";
 import { BlogPostViewerComponent } from './components/blog/blog-post-viewer/blog-post-viewer.component';
 import { BlogPostViewerHeaderComponent } from './components/blog/blog-post-viewer-header/blog-post-viewer-header.component';
 import {BlogDisplayNamePipePipe} from "./pipes/BlogNamePipe";
+import {InfiniteScrollModule} from 'ngx-infinite-scroll';
+import {pageReducer} from "./store/reducers/page.reducers";
 
 @NgModule({
   declarations: [
@@ -95,19 +97,21 @@ import {BlogDisplayNamePipePipe} from "./pipes/BlogNamePipe";
     ReactiveFormsModule,
     HttpClientModule,
     FontAwesomeModule,
+    InfiniteScrollModule,
     StoreModule.forRoot( {
       auth: authReducer,
       blog: blogReducer,
       post: postReducer,
       category: categoryReducer,
-      subscription: subscriptionReducer
+      subscription: subscriptionReducer,
+      page: pageReducer
     }),
     EffectsModule.forRoot([
       AuthEffects,
       BlogEffects,
       PostEffects,
       CategoryEffects,
-      SubscriptionEffects
+      SubscriptionEffects,
     ]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,

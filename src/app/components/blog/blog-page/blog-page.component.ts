@@ -17,11 +17,13 @@ import {BlogId} from "../../../models/Blog";
 import {Category} from "../../../models/Category";
 import {createSubscription, deleteSubscription} from "../../../store/actions/subscription.actions";
 import {Status} from "../../../models/Status";
+import {PageService} from "../../../services/ui/page.service";
+import {resetPage} from "../../../store/actions/page.actions";
 
 @Component({
   selector: 'app-blog-page',
   templateUrl: './blog-page.component.html',
-  styleUrls: ['./blog-page.component.scss']
+  styleUrls: ['./blog-page.component.scss'],
 })
 export class BlogPageComponent implements OnInit, OnDestroy {
 
@@ -37,12 +39,15 @@ export class BlogPageComponent implements OnInit, OnDestroy {
   isSubscriber$: Observable<boolean>;
 
   Draft = Status.Draft
-  Scheduled = Status.Scheduled
-  postStatuses = [this.Draft, this.Scheduled]
+  Published = Status.Published
+
+  statuses = [this.Draft, this.Published]
+  currentStatus = this.Published;
 
   constructor(private store: Store,
               private router: Router,
-              private navbarService: NavbarTemplateService) {
+              private navbarService: NavbarTemplateService,
+              private pageService: PageService) {
   }
 
   ngOnInit(): void {
@@ -51,27 +56,24 @@ export class BlogPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.store.dispatch(resetPage())
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
 
-  onNewPostClicked() {
-    this.router.navigate(['/editor']);
-  }
-
-  onSearchInputEvent(inputEvent: string) {
-    console.log(inputEvent)
-  }
-
   private fetchDataFromStore() {
-
     this.getPublishedPosts()
+    this.listenToPageChanged();
 
     this.selectedBlogPublications$ = this.store.select(selectSelectedBlogPosts);
     this.selectedBlog$ = this.store.select(selectSelectedBlog);
     this.isLoading$ = this.store.select(selectIsBlogGetLoading);
-    this.isOwner$ = this.store.select(selectIsPrincipalBlogOwner)
+    this.isOwner$ = this.store.select(selectIsPrincipalBlogOwner);
 
+    this.listenToSelectedBlogChanged();
+  }
+
+  private listenToSelectedBlogChanged() {
     this.selectedBlog$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(userBlog => {
@@ -80,8 +82,24 @@ export class BlogPageComponent implements OnInit, OnDestroy {
       })
   }
 
+  private listenToPageChanged() {
+    this.pageService.getCurrentPageChanged()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(() => {
+        this.getPosts();
+      })
+  }
+
   private init() {
     this.navbarService.setBlogTemplate();
+  }
+
+  onNewPostClicked() {
+    this.router.navigate(['/editor']);
+  }
+
+  onSearchInputEvent(inputEvent: string) {
+    console.log(inputEvent)
   }
 
   onSubscribeClicked() {
@@ -126,7 +144,9 @@ export class BlogPageComponent implements OnInit, OnDestroy {
     this.getPosts(Status.Draft)
   }
 
-  getPosts(status: Status) {
-    this.store.dispatch(getPosts( {status }))
+  getPosts(status?: Status) {
+    this.store.dispatch(getPosts( {status: status ?? this.currentStatus }))
   }
 }
+
+

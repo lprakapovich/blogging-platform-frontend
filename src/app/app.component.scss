@@ -1,11 +1,12 @@
 @use "src/utilities/variables" as v;
 
 #app-container {
-  height: 100%;
+  height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
   font-size: 18px;
+  overflow-y: scroll;
 
   div {
     margin: 0;

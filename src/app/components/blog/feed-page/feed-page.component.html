@@ -1,19 +1,20 @@
-<div *ngIf="!(isGetLoading$ | async); else loadingTemplate">
+<div>
   <div class="feed-container" aria-disabled="true" [ngClass]="showPostPreview ? 'inactive' : 'active'">
     <div class="feed-container-label"> My Feed </div>
-    <app-search-bar id="search-bar" (enterEvent)="onEnterPressed($event)"></app-search-bar>
+    <app-search-bar id="search-bar" (enterEvent)="onSearchBarEnter($event)"></app-search-bar>
     <div class="empty-feed-message" *ngIf="(posts$|async)?.length === 0"> Search for new blogs and publications </div>
+
     <div class="feed-grid" *ngIf="posts$|async; let asyncPostList">
-      <div class="feed-grid-item" *ngFor="let post of asyncPostList" (click)="openPostPreview(post)">
+      <div class="feed-grid-item" *ngFor="let post of asyncPostList" (click)="onPostPreviewOpen(post)">
         <div class="feed-grid-item-content">
           <a class="post-card">
             <div class="post-card-header">
-              <app-avatar class="post-card-avatar" name="{{post.blog.displayName}}" [ngClass]="'small'"></app-avatar>
+              <app-avatar class="post-card-avatar" name="{{post.blog | blogDisplayNamePipe }}" [ngClass]="'small'"></app-avatar>
               <div class="post-card-author-data">
                 <div class="post-card-author-name"> {{post.blog.displayName}}</div>
                 <div class="post-card-blog-id">@{{post.blog.id.id}}</div>
               </div>
-              <div class="post-card-publication-time"> 5d </div>
+              <div class="post-card-publication-time"> {{ post.createdDateTime | date:'MMM d yyyy, h:mm aa'}} </div>
             </div>
             <div class="post-card-content">
               <div class="post-card-title"> {{post.title}}</div>
@@ -24,8 +25,9 @@
       </div>
     </div>
   </div>
+
   <div class="feed-post-preview-modal-container" [hidden]="!showPostPreview">
-    <app-feed-post-preview (closeFeedPostPreview)="closePostPreview();">
+    <app-feed-post-preview (closeFeedPostPreview)="onPostPreviewClose()">
     </app-feed-post-preview>
   </div>
 </div>

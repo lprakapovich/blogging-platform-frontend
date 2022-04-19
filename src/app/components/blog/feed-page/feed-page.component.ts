@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, HostListener, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {NavbarTemplateService} from "../../../services/ui/navbar-template.service";
 import {Router} from "@angular/router";
 import {BlogPost} from "../../../models/BlogPost";
@@ -12,15 +12,17 @@ import {ModalService} from "../../../services/ui/modal.service";
 import {BlogView} from "../../../models/BlogView";
 import {BlogId} from "../../../models/Blog";
 import {Actions, ofType} from "@ngrx/effects";
+import {resetPage} from "../../../store/actions/page.actions";
+import {PageService} from "../../../services/ui/page.service";
 
 @Component({
   selector: 'app-feed-page',
   templateUrl: './feed-page.component.html',
   styleUrls: ['./feed-page.component.scss']
 })
-export class FeedPageComponent implements OnInit, AfterViewInit, OnDestroy {
+export class FeedPageComponent implements OnInit, OnDestroy {
 
-  unsubscribe$ = new Subject<void>();
+  unsubscribe$;
 
   isGetLoading$: Observable<boolean>;
   posts$: Observable<BlogPost[]>;
@@ -29,37 +31,32 @@ export class FeedPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   showPostPreview: boolean;
 
-  @HostListener('window:resize', ['$event'])
-  onResize() {
-    this.resizeAllGridItems();
-  }
-
   constructor(private store: Store,
               private actions$: Actions,
               private navbarService: NavbarTemplateService,
               private modalService: ModalService,
+              private pageService: PageService,
               private router: Router) {
 
     this.showPostPreview = false;
+    this.unsubscribe$ = new Subject<void>();
   }
 
   ngOnInit(): void {
     this.fetchDataFromStore()
-    this.subscribeToStoreChanges();
+    this.listenToPageChanged();
     this.navbarService.setBlogTemplate()
   }
 
-  ngAfterViewInit(): void {
-     this.resizeAllGridItems();
-  }
-
   ngOnDestroy() {
+    this.store.dispatch(resetPage())
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
 
   private fetchDataFromStore() {
-    this.store.dispatch(getPostsFromSubscriptions());
+
+    this.fetchPostsFromSubscriptions();
 
     this.userBlog$ = this.store.select(selectPrincipalActiveBlog);
     this.isGetLoading$ = this.store.select(selectIsPostGetLoading);
@@ -71,40 +68,28 @@ export class FeedPageComponent implements OnInit, AfterViewInit, OnDestroy {
     ).subscribe(() => this.store.dispatch(getPostsFromSubscriptions()))
   }
 
-  private subscribeToStoreChanges() {
-    this.isGetLoading$
+  private listenToPageChanged() {
+    this.pageService.getCurrentPageChanged()
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(() => this.resizeAllGridItems());
+      .subscribe(() => this.fetchPostsFromSubscriptions())
   }
 
-  onEnterPressed($event: any) {
+  private fetchPostsFromSubscriptions() {
+    this.store.dispatch(getPostsFromSubscriptions());
+  }
+
+  onSearchBarEnter($event: any) {
     this.router.navigate(['/search'],  { queryParams: { search: $event } })
   }
 
-  resizeGridItem(item: any) {
-    const grid = document.getElementsByClassName("feed-grid")[0];
-    const rowHeight = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-auto-rows'));
-    const rowGap = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-row-gap'));
-    const rowSpan = Math.ceil((item.querySelector('.feed-grid-item-content')
-      .getBoundingClientRect().height +rowGap) / (rowHeight + rowGap));
-    item.style.gridRowEnd = "span "+ rowSpan;
-  }
-
-   resizeAllGridItems(){
-    let gridItems = document.getElementsByClassName("feed-grid-item");
-    for (let gridItem of Array.of(gridItems)) {
-      this.resizeGridItem(gridItem)
-    }
-  }
-
-  openPostPreview(post: BlogPost) {
+  onPostPreviewOpen(post: BlogPost) {
     this.store.dispatch(setSelectedPost({post}))
     if (!this.showPostPreview) {
       this.showPostPreview = true;
     }
   }
 
-  closePostPreview() {
+  onPostPreviewClose() {
     this.store.dispatch(resetSelectedPost())
     this.showPostPreview = false;
   }

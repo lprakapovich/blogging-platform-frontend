@@ -133,7 +133,7 @@ export const postReducer = createReducer(
       ...state.loading,
       isGetLoading: false
     },
-    postsFromSubscriptions: action.posts
+    postsFromSubscriptions: action.push ? [...state.postsFromSubscriptions, ...action.posts] : action.posts
   })),
 
   on(PostActions.getPostsFromSubscriptionsFailure, (state, action) => ({
@@ -171,7 +171,7 @@ export const postReducer = createReducer(
       ...state.loading,
       isGetLoading: false
     },
-    selectedBlogPosts: action.posts
+    selectedBlogPosts: action.push ? [...state.selectedBlogPosts, ...action.posts] : action.posts
   })),
 
   on(PostActions.getPostsFailure, (state, action) => ({

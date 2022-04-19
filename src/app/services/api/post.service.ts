@@ -31,22 +31,26 @@ export class PostService {
     return this.httpClient.delete(url)
   }
 
-  getPosts(blogId: string, principal: string, status?: string, categoryId?: string) {
+  getPosts(blogId: string, principal: string, status?: string, categoryId?: string, page?: number) {
     const url = `${this.publicationServiceUrl}/${blogId},${principal}/publications`;
     const params = new HttpParams()
       .set('status', status ?? '')
-      .set('categoryId', categoryId ?? '');
+      .set('categoryId', categoryId ?? '')
+      .set('page', page ?? 0);
     return this.httpClient.get<BlogPost[]>(url, { params })
   }
 
   getPostsBySearchCriteria(criteria: string, blogId: string, principal: string): Observable<BlogPost[]>{
     const url = `${this.publicationServiceUrl}/${blogId},${principal}/publications/search`
-    const params = new HttpParams().set('criteria', criteria);
+    const params = new HttpParams()
+      .set('criteria', criteria);
     return this.httpClient.get<BlogPost[]>(url, { params })
   }
 
-  getPostsFromSubscriptions(blogId: string, principal: string): Observable<any> {
+  getPostsFromSubscriptions(blogId: string, principal: string, page?: number): Observable<any> {
     const url = `${this.publicationServiceUrl}/${blogId},${principal}/publications/subscriptions`
-    return this.httpClient.get(url)
+    const params = new HttpParams()
+      .set('page', page ?? 0);
+    return this.httpClient.get(url, { params })
   }
 }

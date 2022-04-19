@@ -53,16 +53,15 @@ html, body {
   }
 
   ::-webkit-scrollbar {
-    width: 5px;
+    width: 10px;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: v.$extra-light-grey;
+    background: v.$light-grey;
     border-radius: 0.25rem;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: v.$light-grey;
     cursor: pointer;
   }
 }
