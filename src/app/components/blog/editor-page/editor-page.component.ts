@@ -111,17 +111,18 @@ export class EditorPageComponent implements OnInit, OnDestroy {
     this.showPostSettingsModal = false;
   }
 
-  onPublishEvent($event: { selectedStatus: Status; selectedCategory: Category }) {
+  onPublishEvent($event: { selectedStatus: Status; selectedCategory?: Category }) {
 
-    console.log(JSON.stringify($event.selectedStatus))
-    console.log(JSON.stringify($event.selectedCategory))
-
-    const postData = {
+    let baseData = {
       title: this.postTitle,
       content: this.postContent,
       status: $event.selectedStatus,
-      category: $event.selectedCategory
     }
+
+    let postData = !!$event.selectedCategory ? {
+      ...baseData,
+      category: $event.selectedCategory
+    } : baseData;
 
     this.editedPost$.pipe(
       withLatestFrom(this.isEditableMode$),

@@ -12,7 +12,7 @@
                  (change)="onStatusInputChanged($event)">
           <label for="published-status"> Published </label>
         </div>
-        <label class="status-label-description" for="published-status"> Will be visible to the audience</label>
+        <label class="status-label-description" for="published-status"> Will be visible to the audience </label>
       </div>
       <div class="post-status">
         <div class="status-label">
@@ -38,6 +38,11 @@
           <input type="radio" class="hidden" id="{{category.name}}" value="{{category.name}}" name="post-category">
           <label
             class="category-label" for="{{category.name}}"> {{category.name}} </label>
+        </div>
+        <div [ngClass]="!selectedCategory ? 'selected' : ''"
+        (click)="onCategorySelected(null)">
+          <input type="radio" class="hidden" id="no-category" value="no-category" name="post-category">
+          <label class="no-category-label" for="no-category"> Not specified </label>
         </div>
       </div>
     </div>

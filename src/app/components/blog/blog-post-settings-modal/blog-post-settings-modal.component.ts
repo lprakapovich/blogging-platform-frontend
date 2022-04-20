@@ -17,11 +17,11 @@ export class BlogPostSettingsModalComponent implements OnInit {
   @Output() closeModalEventEmitter = new EventEmitter();
   @Output() publishEventEmitter = new EventEmitter<{
     selectedStatus: Status,
-    selectedCategory: Category
+    selectedCategory?: Category
   }>();
 
   selectedStatus: Status;
-  selectedCategory: Category;
+  selectedCategory: Category | null;
 
   draft = Status.Draft
   published = Status.Published
@@ -40,7 +40,7 @@ export class BlogPostSettingsModalComponent implements OnInit {
     }
   }
 
-  onCategorySelected(category: Category) {
+  onCategorySelected(category: Category | null) {
     this.selectedCategory = category;
   }
 
@@ -53,9 +53,17 @@ export class BlogPostSettingsModalComponent implements OnInit {
   }
 
   onPublishClicked() {
-    this.publishEventEmitter.emit({
-      selectedCategory: this.selectedCategory,
+
+    let baseEmitData = {
       selectedStatus: this.selectedStatus
-    })
+    }
+
+    let emitData = !!this.selectedCategory ? {
+        ...baseEmitData,
+      selectedCategory: this.selectedCategory
+    } : baseEmitData;
+
+    console.log(JSON.stringify(emitData))
+    this.publishEventEmitter.emit(emitData)
   }
 }

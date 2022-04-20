@@ -66,7 +66,8 @@
         overflow-y: scroll;
         max-height: 10rem;
 
-        .category-label {
+        .category-label,
+        .no-category-label {
           background-color: white;
           border: 1px solid v.$light-grey;
           color: v.$light-grey;
@@ -81,7 +82,8 @@
         }
 
         .selected {
-          .category-label {
+          .category-label,
+          .no-category-label {
             border: 1px solid black;
             color: black;
           }
