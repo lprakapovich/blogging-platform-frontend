@@ -28,11 +28,11 @@ export class FeedPostPreviewComponent implements OnInit {
     this.selectedPost$ = this.store.select(selectSelectedPost)
   }
 
-  onClose() {
+  onPostClose() {
     this.closeFeedPostPreview.emit();
   }
 
-  openPost() {
+  onPostOpen() {
     this.router.navigate([`publication/@${"blogId"}/${"postId"}`])
   }
 

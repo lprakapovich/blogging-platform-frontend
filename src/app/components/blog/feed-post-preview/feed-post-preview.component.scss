@@ -16,7 +16,9 @@
 
     .feed-post-preview-header {
       .feed-post-preview-header-button {
-        margin-left: auto;
+        &.close {
+          margin-left: auto;
+        }
       }
     }
   }

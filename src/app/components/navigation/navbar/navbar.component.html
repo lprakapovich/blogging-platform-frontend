@@ -1,7 +1,7 @@
 <ng-container [ngSwitch]="[template]">
   <div *ngSwitchCase="'post-preview'">
-    <nav id="post-preview-navigation">
-      <div id="post-preview-navigation-items">
+    <nav class="post-preview-navigation">
+      <div class="post-preview-navigation-items">
         <app-svg-button *ngIf="showEditButton"
                         [ngClass]="'highlighted'"
                         id="'edit'"
@@ -34,8 +34,8 @@
   </div>
 
   <div *ngSwitchCase="'blog'">
-    <nav id="blog-navigation">
-      <div id="blog-navigation-items">
+    <nav class="blog-navigation">
+      <div class="blog-navigation-items">
         <app-svg-button [ngClass]="'highlighted'"
                         id='new-post'
                         [iconTemplate]="'new-post'"
@@ -58,23 +58,25 @@
   </div>
 
   <div *ngSwitchCase="'editor'">
-    <div id="editor-navigation">
-      <div class="editor-navigation-item">
+    <div class="editor-navigation">
+      <div class="editor-navigation-items">
+        <div class="editor-navigation-item">
           <a routerlinkactive="activeButton"
              (click)="onBackClicked()"
              class="editor-navigation-back"> Go Back </a>
-      </div>
-      <div class="editor-navigation-item">
-        <app-svg-button [iconTemplate]="'publish'"
-                        (click)="onPublishClicked()">
-        </app-svg-button>
+        </div>
+        <div class="editor-navigation-item">
+          <app-svg-button [iconTemplate]="'publish'"
+                          (click)="onPublishClicked()">
+          </app-svg-button>
+        </div>
       </div>
     </div>
   </div>
 
   <div *ngSwitchDefault>
-    <div id="default-navigation">
-      <div id="default-navigation-items">
+    <div class="default-navigation">
+      <div class="default-navigation-items">
         <div class="label"> editee. </div>
       </div>
     </div>

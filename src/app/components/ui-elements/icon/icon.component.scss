@@ -1,3 +1,11 @@
 .icon {
   margin: 0.25rem;
+  padding: 0.5rem;
+
+  .fi {
+    font-size: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }

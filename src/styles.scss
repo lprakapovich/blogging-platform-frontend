@@ -1,4 +1,6 @@
 @use "utilities/variables" as v;
+@import url('https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css');
+@import url('https://cdn-uicons.flaticon.com/uicons-regular-straight/css/uicons-regular-straight.css');
 
 html, body {
   min-height: 100%;
@@ -35,7 +37,10 @@ html, body {
     font-weight: 1000;
     margin: 0.25rem 0;
     font-family: 'Open Sans', sans-serif;
+  }
 
+  .icon {
+    font-size: 1rem;
   }
 
   .fullscreen-modal-bg {
