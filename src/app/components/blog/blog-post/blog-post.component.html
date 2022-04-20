@@ -1,7 +1,7 @@
 <div *ngIf="(post$ | async); let post" class="blog-post-container">
   <div class="post">
     <app-blog-post-viewer-header [blogPost]="post"
-                                 (blogNameClickEventEmitter)="onBlogNameClickedEvent($event)">
+                                 (blogNameClickEventEmitter)="onBlogSelected($event)">
     </app-blog-post-viewer-header>
     <div class="post-title" aria-disabled="true"> {{post.title }}</div>
     <div class="post-content" aria-disabled="true" [innerHTML]="post.content"></div>

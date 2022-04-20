@@ -48,11 +48,11 @@
       <div *ngIf="asyncPostList && asyncPostList.length > 0; else noPosts">
         <div class="search-result-item"
              *ngFor="let post of (!!postSearchResultLimit ? asyncPostList.slice(0, postSearchResultLimit) : asyncPostList)">
-          <div class="post-search-result-item-wrapper">
+          <div class="post-search-result-item-wrapper" (click)="onPostSelected(post)">
             <app-icon [iconTemplate]="'post'"></app-icon>
             <div>
               <div class="post-title-search-result-item">{{post.title}}</div>
-              <div class="post-author-search-result-item">@{{post.blog.id}}</div>
+              <div class="post-author-search-result-item">@{{post.blog.id.id}}</div>
             </div>
           </div>
         </div>

@@ -9,6 +9,7 @@ import {Router} from "@angular/router";
 import {EditorService} from "../../../services/ui/editor.service";
 import {deletePost, PostActionTypes, setEditedPost} from "../../../store/actions/post.actions";
 import {Actions, ofType} from "@ngrx/effects";
+import {getBlogDetailsAndRedirect} from "../../../store/actions/blog.actions";
 
 @Component({
   selector: 'app-blog-post',
@@ -65,7 +66,7 @@ export class BlogPostComponent implements OnInit {
     })
   }
 
-  onBlogNameClickedEvent(blogId: BlogId) {
-    this.router.navigate([`/blog/@${blogId.id}`])
+  onBlogSelected(blogId: BlogId) {
+    this.store.dispatch(getBlogDetailsAndRedirect({ blogId }))
   }
 }

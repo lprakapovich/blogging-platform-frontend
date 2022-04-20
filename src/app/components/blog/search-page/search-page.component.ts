@@ -1,5 +1,5 @@
 import {Component, ElementRef, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Blog, BlogId} from "../../../models/Blog";
 import {BlogPost} from "../../../models/BlogPost";
 import {NavbarTemplateService} from "../../../services/ui/navbar-template.service";
@@ -8,7 +8,7 @@ import {Store} from "@ngrx/store";
 import {getBlogDetailsAndRedirect, getSearchedBlogs} from "../../../store/actions/blog.actions";
 import {selectSearchedBlogs} from "../../../store/selectors/blog.selectors";
 import {selectSearchedPosts} from "../../../store/selectors/post.selectors";
-import {getPostsBySearchCriteria} from "../../../store/actions/post.actions";
+import {getPostsBySearchCriteria, setSelectedPost} from "../../../store/actions/post.actions";
 
 @Component({
   selector: 'app-search-page',
@@ -30,7 +30,8 @@ export class SearchPageComponent implements OnInit {
   constructor(private store: Store,
               private route: ActivatedRoute,
               private elementRef: ElementRef,
-              private navbarService: NavbarTemplateService) { }
+              private navbarService: NavbarTemplateService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.route
@@ -77,5 +78,10 @@ export class SearchPageComponent implements OnInit {
 
   onBlogSelected(blogId: BlogId) {
     this.store.dispatch(getBlogDetailsAndRedirect({ blogId }))
+  }
+
+  onPostSelected(post: BlogPost) {
+    this.store.dispatch(setSelectedPost({post}))
+    this.router.navigate([`publication/@${"blogId"}/${"postId"}`])
   }
 }

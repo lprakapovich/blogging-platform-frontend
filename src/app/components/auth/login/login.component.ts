@@ -29,8 +29,8 @@ export class LoginComponent implements OnInit {
     this.navbarTemplateService.setDefaultTemplate();
     this.loginForm = this.formBuilder.group({
       // todo cleanup
-      username: ['hahaha', Validators.required],
-      password: ['hahaha', Validators.required]
+      username: ['lprakapovich', Validators.required],
+      password: ['lprakapovich', Validators.required]
     });
   }
 
