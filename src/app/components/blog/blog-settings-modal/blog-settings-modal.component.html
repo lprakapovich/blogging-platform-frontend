@@ -120,7 +120,7 @@
                 [label]="'Add'">
               </app-default-button>
             </div>
-            <app-error-message *ngIf="!newBlogInput && (blogError$ | async) as blogError"> Error! Make sure input is unique. </app-error-message>
+            <app-error-message *ngIf="!newBlogInput && (blogError$ | async) as blogError"> Error! Make sure blog ID is unique. </app-error-message>
             <app-success-message *ngIf="createBlogSuccess"> Great! New blog was created. Go to menu to access it. </app-success-message>
           </div>
         </div>
