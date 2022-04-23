@@ -319,7 +319,8 @@ export const blogReducer = createReducer(
 
     selectedBlog: {
       ...state.selectedBlog,
-      subscriptions: state.selectedBlog.id === state.principalActiveBlog.id ?
+      subscriptions: state.selectedBlog.id.id === state.principalActiveBlog.id.id &&
+      state.selectedBlog.id.username === state.principalActiveBlog.id.username ?
         [...state.selectedBlog.subscriptions, action.subscription] :
         state.selectedBlog.subscriptions
     }
@@ -330,13 +331,19 @@ export const blogReducer = createReducer(
     ...state,
     principalActiveBlog: {
       ...state.principalActiveBlog,
-      subscriptions: state.principalActiveBlog.subscriptions.filter(s => s.id.subscription !== action.unsubscribedBlogId)
+      subscriptions: state.principalActiveBlog.subscriptions.filter(
+        s => s.id.subscription.id !== action.unsubscribedBlogId.id &&
+          s.id.subscription.username !== action.unsubscribedBlogId.username)
     },
 
     selectedBlog: {
       ...state.selectedBlog,
-      subscriptions: state.selectedBlog.id === state.principalActiveBlog.id ?
-        state.selectedBlog.subscriptions.filter(s => s.id.subscription !== action.unsubscribedBlogId) :
+      subscriptions: state.selectedBlog.id.id === state.principalActiveBlog.id.id &&
+      state.selectedBlog.id.username === state.principalActiveBlog.id.username ?
+
+        state.selectedBlog.subscriptions.filter(s =>
+          s.id.subscription.id !== action.unsubscribedBlogId.id &&
+          s.id.subscription.username !== action.unsubscribedBlogId.username) :
         state.selectedBlog.subscriptions
     }
   })),
