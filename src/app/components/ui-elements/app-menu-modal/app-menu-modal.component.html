@@ -5,7 +5,10 @@
           <i class="icon fi fi-rr-settings"></i>
         </div>
         <div *ngIf="userBlogIds">
-          <div *ngFor="let userBlogId of userBlogIds" class="menu-item blog-id" (click)="onUserBlogSelected(userBlogId)">
+          <div *ngFor="let userBlogId of userBlogIds"
+               class="menu-item blog-id"
+               [ngClass]="activeBlogId && activeBlogId.id === userBlogId.id ? 'active' : ''"
+               (click)="onUserBlogSelected(userBlogId)">
             <div class="user-blog-id">@{{userBlogId.id}}</div>
           </div>
         </div>

@@ -44,10 +44,8 @@ export class NavbarComponent {
   }
 
   onBlogNavbarComponentClicked(tabId: string) {
-    if (this.template === NavbarTemplateService.BLOG_TEMPLATE) {
       this.showNavbarMenuModal = tabId == 'profile' ? !this.showNavbarMenuModal : false;
-      this.modalService.showAppMenuModal(this.showNavbarMenuModal)
-    }
+      this.modalService.showAppMenuModal(this.showNavbarMenuModal);
   }
 
   onBackClicked() {

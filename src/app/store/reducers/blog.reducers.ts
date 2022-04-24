@@ -286,7 +286,7 @@ export const blogReducer = createReducer(
     },
     selectedBlog: {
       ...state.selectedBlog,
-      categories: state.selectedBlog.id === state.principalActiveBlog.id ?
+      categories: state.selectedBlog.id.id === state.principalActiveBlog.id.id && state.selectedBlog.id.username === state.principalActiveBlog.id.username ?
         state.selectedBlog.categories.filter(c => c.id !== action.categoryId) : state.selectedBlog.categories
     }
   })),
@@ -300,7 +300,7 @@ export const blogReducer = createReducer(
     },
     selectedBlog: {
       ...state.selectedBlog,
-      categories: state.selectedBlog.id === state.principalActiveBlog.id ?
+      categories: state.selectedBlog.id.id === state.principalActiveBlog.id.id && state.selectedBlog.id.username === state.principalActiveBlog.id.username ?
         [...state.selectedBlog.categories, action.category] :
         state.selectedBlog.categories
     }
@@ -319,8 +319,7 @@ export const blogReducer = createReducer(
 
     selectedBlog: {
       ...state.selectedBlog,
-      subscriptions: state.selectedBlog.id.id === state.principalActiveBlog.id.id &&
-      state.selectedBlog.id.username === state.principalActiveBlog.id.username ?
+      subscriptions: state.selectedBlog.id.id === state.principalActiveBlog.id.id && state.selectedBlog.id.username === state.principalActiveBlog.id.username ?
         [...state.selectedBlog.subscriptions, action.subscription] :
         state.selectedBlog.subscriptions
     }
@@ -332,18 +331,21 @@ export const blogReducer = createReducer(
     principalActiveBlog: {
       ...state.principalActiveBlog,
       subscriptions: state.principalActiveBlog.subscriptions.filter(
-        s => s.id.subscription.id !== action.unsubscribedBlogId.id &&
-          s.id.subscription.username !== action.unsubscribedBlogId.username)
+        s => s.id.subscription.id !== action.unsubscribedBlogId.id && s.id.subscription.username !== action.unsubscribedBlogId.username)
     },
 
     selectedBlog: {
       ...state.selectedBlog,
-      subscriptions: state.selectedBlog.id.id === state.principalActiveBlog.id.id &&
-      state.selectedBlog.id.username === state.principalActiveBlog.id.username ?
 
+      // if selected blog is principalActive
+      subscriptions: state.selectedBlog.id.id === state.principalActiveBlog.id.id && state.selectedBlog.id.username === state.principalActiveBlog.id.username ?
+
+        // then filter subscription out
         state.selectedBlog.subscriptions.filter(s =>
           s.id.subscription.id !== action.unsubscribedBlogId.id &&
           s.id.subscription.username !== action.unsubscribedBlogId.username) :
+
+        // or else leave as it was
         state.selectedBlog.subscriptions
     }
   })),

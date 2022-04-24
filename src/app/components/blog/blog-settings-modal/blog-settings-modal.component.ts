@@ -103,6 +103,11 @@ export class BlogSettingsModalComponent implements OnInit, OnDestroy {
       }
       this.newBlogInput = '';
     })
+
+    this.actions$.pipe(
+        ofType(BlogActionTypes.DELETE_BLOG_SUCCESS),
+        takeUntil(this.unsubscribe$)
+    ).subscribe(() => this.onCloseEmitter.emit())
   }
 
   ngOnDestroy() {
@@ -136,8 +141,8 @@ export class BlogSettingsModalComponent implements OnInit, OnDestroy {
 
   onSave() {
     const data: UpdateBlogData = {
-      displayName: this.changedBlogDisplayName,
-      description: this.changedBlogDescription
+      displayName: this.changedBlogDisplayName.trim(),
+      description: this.changedBlogDescription.trim()
     }
     this.store.dispatch(updateBlog({data}))
   }

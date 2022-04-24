@@ -9,6 +9,7 @@ import {BlogId} from "../../../models/Blog";
 export class AppMenuModalComponent {
 
   @Input() userBlogIds: BlogId[] | null = [] ;
+  @Input() activeBlogId: BlogId | null;
 
   @Output() userBlogSelectedEmitter = new EventEmitter<BlogId>();
   @Output() settingsEmitter = new EventEmitter<void>();

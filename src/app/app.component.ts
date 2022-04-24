@@ -8,7 +8,7 @@ import {ModalService} from "./services/ui/modal.service";
 import {AppMenuModalComponent} from "./components/ui-elements/app-menu-modal/app-menu-modal.component";
 import {BlogSettingsModalComponent} from "./components/blog/blog-settings-modal/blog-settings-modal.component";
 import {getBlogDetailsAndRedirect} from "./store/actions/blog.actions";
-import {selectPrincipalManagedBlogIds} from "./store/selectors/blog.selectors";
+import {selectPrincipalActiveBlogId, selectPrincipalManagedBlogIds} from "./store/selectors/blog.selectors";
 import {PageService} from "./services/ui/page.service";
 import {resetPage} from "./store/actions/page.actions";
 
@@ -31,6 +31,7 @@ export class AppComponent implements OnInit, OnDestroy {
   showAppBlogSettingsModal: boolean;
 
   userBlogIds$: Observable<BlogId[]>;
+  activeBlogId$: Observable<BlogId>;
 
   constructor(private store: Store,
               private router: Router,
@@ -80,6 +81,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private fetchDataFromStore() {
     this.userBlogIds$ = this.store.select(selectPrincipalManagedBlogIds);
+    this.activeBlogId$ = this.store.select(selectPrincipalActiveBlogId);
   }
 
   onScrollDown() {
