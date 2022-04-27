@@ -21,8 +21,9 @@ export class EditorComponent implements OnInit {
   editedPost$: Observable<BlogPost | null>;
   isModified$: Observable<boolean>;
 
-  modifiedTitleInput: string = '';
-  modifiedContentInput: string = '';
+  modifiedTitleInputText: string = '';
+  modifiedContentInputText: string = '';
+  modifiedContentInput: any = '';
 
   public constructor(private store: Store) {
   }
@@ -34,7 +35,7 @@ export class EditorComponent implements OnInit {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((post) => {
         this.modifiedContentInput = post?.content ?? '';
-        this.modifiedTitleInput = post?.title ?? '';
+        this.modifiedTitleInputText = post?.title ?? '';
       })
   }
 
@@ -54,7 +55,8 @@ export class EditorComponent implements OnInit {
   }
 
   autoSaveInput() {
-    this.modifiedTitleInput = this.title.nativeElement.innerText;
+    this.modifiedTitleInputText = this.title.nativeElement.innerText;
     this.modifiedContentInput = this.content.nativeElement.innerHTML;
+    this.modifiedContentInputText = this.content.nativeElement.innerText;
   }
 }

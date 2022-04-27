@@ -39,9 +39,6 @@ export class EditorPageComponent implements OnInit, OnDestroy {
 
   isContentMissing: boolean;
   isTitleMissing: boolean;
-  postContent: any;
-  postTitle: any;
-
   showPostSettingsModal: boolean;
 
   constructor(
@@ -86,21 +83,20 @@ export class EditorPageComponent implements OnInit, OnDestroy {
 
   private onShowPostSettingsModal() {
     this.editorComponent.autoSaveInput();
-    this.postTitle = this.editorComponent.modifiedTitleInput.trim();
-    this.postContent = this.editorComponent.modifiedContentInput.trim();
-    let isInputValid = !!this.postTitle && !!this.postContent;
+
+    let postTitleText = this.editorComponent.modifiedTitleInputText.trim();
+    let postContentText = this.editorComponent.modifiedContentInputText.trim();
+    let isInputValid = !!postTitleText && !!postContentText;
 
     if (isInputValid) {
       this.showPostSettingsModal = true;
     } else {
-      this.showMissingDataErrorMessage();
+      this.showMissingDataErrorMessage(postTitleText, postContentText);
     }
   }
 
-  private showMissingDataErrorMessage() {
-    this.editorService.onMissingContentOrTitleErrorChanged(
-      !this.editorComponent.modifiedContentInput,
-      !this.editorComponent.modifiedTitleInput);
+  private showMissingDataErrorMessage(title: string, content: string) {
+    this.editorService.onMissingContentOrTitleErrorChanged(!content, !title);
   }
 
   hideErrorMessages() {
@@ -113,9 +109,12 @@ export class EditorPageComponent implements OnInit, OnDestroy {
 
   onPublishEvent($event: { selectedStatus: Status; selectedCategory?: Category }) {
 
+    let trimmedTitle = this.editorComponent.modifiedTitleInputText.trim();
+    let trimmedContent = this.editorComponent.modifiedContentInput.trim();
+
     let baseData = {
-      title: this.postTitle,
-      content: this.postContent,
+      title: trimmedTitle,
+      content: trimmedContent,
       status: $event.selectedStatus,
     }
 

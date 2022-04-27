@@ -7,7 +7,7 @@
             data-placeholder="Title of the post"
             spellcheck="false"
             (focusout)="onTitleFocusOut()"
-            [innerText]="modifiedTitleInput"
+            [innerText]="modifiedTitleInputText"
             (input)="inputEventEmitter.emit()"
             (keydown.enter)="onTitleEnterKeyDown()">
       </span>
