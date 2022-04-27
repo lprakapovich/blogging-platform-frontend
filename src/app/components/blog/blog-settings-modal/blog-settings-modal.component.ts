@@ -125,6 +125,7 @@ export class BlogSettingsModalComponent implements OnInit, OnDestroy {
   }
 
   onNewCategoryClicked() {
+    this.newCategoryInput = this.newCategoryInput.trim();
     if (!this.newCategoryInput) {
       return;
     }

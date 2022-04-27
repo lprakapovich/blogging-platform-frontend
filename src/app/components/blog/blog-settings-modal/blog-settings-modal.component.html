@@ -78,7 +78,8 @@
                                    [placeholder]="'New category...'">
                 </app-default-input>
                 <app-default-button class="create-button"
-                                    [ngClass]="['medium', (isCategoryLoading$ | async) ? 'loading-button' : '', !newCategoryInput ? 'disabled' : '']"
+                                    [ngClass]="['medium', (isCategoryLoading$ | async) ? 'loading-button' : '',
+                                     !newCategoryInput?.trim()? 'disabled' : '']"
                                     (click)="onNewCategoryClicked()"
                                     [label]="'Create'"
                                     [disabled]="!newCategoryInput">
