@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {BlogPost} from "../../../models/BlogPost";
+import {Status} from "../../../models/Status";
 
 @Component({
   selector: 'app-blog-post-preview-list-item',
@@ -9,6 +10,8 @@ import {BlogPost} from "../../../models/BlogPost";
 export class BlogPostPreviewListItemComponent implements OnInit {
 
   @Input() blogPost: BlogPost;
+
+  draft = Status.Draft;
 
   constructor() { }
 

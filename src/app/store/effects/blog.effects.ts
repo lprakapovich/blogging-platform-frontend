@@ -68,8 +68,9 @@ export class BlogEffects {
       ofType(BlogActionTypes.UPDATE_BLOG),
       debounceTime(1000),
       withLatestFrom(this.store.select(selectPrincipalActiveBlogId)),
-      exhaustMap(([{ data }, {id, username}]) => {
-        return this.blogService.updateBlog(id, username, data)
+      exhaustMap(([{ updateBlogData }, {id, username}]) => {
+        console.log('blog reducer update')
+        return this.blogService.updateBlog(id, username, updateBlogData)
           .pipe(
             map((updatedBlog) => updateBlogSuccess({updatedBlog})),
             catchError(((error) => of(updateBlogFailure({ error }))))

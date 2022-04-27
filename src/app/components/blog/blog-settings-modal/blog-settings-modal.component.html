@@ -17,7 +17,7 @@
             New blog
           </div>
         </div>
-        <div class="settings-menu-item" (click)="logout()">
+        <div class="settings-menu-item" (click)="onLogout()">
           Logout
         </div>
       </app-default-list>
@@ -50,7 +50,7 @@
               <app-default-button
                 [ngClass]="['reverted',' medium', (isBlogDeleteLoading$ | async) ? 'loading-button' : '']"
                 [label]="'Delete blog'"
-                (click)="onDeleteBlogClicked()">
+                (click)="onDeleteBlog()">
               </app-default-button>
               <app-warning-message> Attention! This will delete all related posts and categories. </app-warning-message>
             </div>

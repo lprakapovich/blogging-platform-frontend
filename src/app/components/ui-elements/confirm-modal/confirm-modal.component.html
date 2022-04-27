@@ -1,0 +1,19 @@
+<div class="confirm-modal-container fullscreen-modal-bg">
+  <div class="confirm-modal-content">
+    <div class="confirm-action">
+      <ng-content></ng-content>
+    </div>
+    <div class="confirm-action-buttons">
+      <app-default-button
+        [ngClass]="'medium reverted'"
+        [label]="'Cancel'"
+        (click)="confirmEmitter.emit(false)">
+      </app-default-button>
+      <app-default-button
+        [ngClass]="['medium', loading ? 'loading-button' : '']"
+        [label]="'Confirm'"
+        (click)="confirmEmitter.emit(true)">
+      </app-default-button>
+    </div>
+  </div>
+</div>

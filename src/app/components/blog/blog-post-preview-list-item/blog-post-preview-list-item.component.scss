@@ -6,6 +6,11 @@
   margin: 1rem 0;
   transition: border ease 500ms;
 
+  .title-container {
+    display: flex;
+    gap: 0.5rem;
+  }
+
   .title {
     font-size: 1.5rem;
     font-weight: 750;

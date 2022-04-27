@@ -54,7 +54,7 @@ export const createBlog = createAction(BlogActionTypes.CREATE_BLOG, props<{blogI
 export const createBlogSuccess = createAction(BlogActionTypes.CREATE_BLOG_SUCCESS, props<{blogId: string, principal: string, redirectTo?: string}>());
 export const createBlogFailure = createAction(BlogActionTypes.CREATE_BLOG_FAILURE, props<{error: any}>())
 
-export const updateBlog = createAction(BlogActionTypes.UPDATE_BLOG, props<{data: UpdateBlogData}>())
+export const updateBlog = createAction(BlogActionTypes.UPDATE_BLOG, props<{updateBlogData: UpdateBlogData}>())
 export const updateBlogSuccess = createAction(BlogActionTypes.UPDATE_BLOG_SUCCESS, props<{updatedBlog: BlogView}>())
 export const updateBlogFailure = createAction(BlogActionTypes.UPDATE_BLOG_FAILURE, props<{error: any}>())
 

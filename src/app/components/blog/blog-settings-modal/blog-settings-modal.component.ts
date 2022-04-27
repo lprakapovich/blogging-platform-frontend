@@ -1,10 +1,9 @@
 import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {Store} from "@ngrx/store";
-import {logout} from "../../../store/actions/auth.actions";
 import {BlogView} from "../../../models/BlogView";
 import {UpdateBlogData} from "../../../models/data/blog/UpdateBlogData";
-import {BlogActionTypes, createBlog, deleteBlog, updateBlog} from "../../../store/actions/blog.actions";
-import {Observable, Subject, takeUntil} from "rxjs";
+import {BlogActionTypes, createBlog, updateBlog} from "../../../store/actions/blog.actions";
+import {Observable, Subject, take, takeUntil} from "rxjs";
 import {
   selectActiveBlogCategories,
   selectBlogError,
@@ -13,12 +12,7 @@ import {
   selectIsBlogUpdateLoading,
   selectPrincipalActiveBlog,
 } from "../../../store/selectors/blog.selectors";
-import {
-  CategoryActionTypes,
-  createCategory,
-  deleteCategory,
-  resetCategoryError
-} from "../../../store/actions/category.actions";
+import {CategoryActionTypes, createCategory, resetCategoryError} from "../../../store/actions/category.actions";
 import {selectCategoryError, selectIsCategoryLoading} from "../../../store/selectors/category.selectors";
 import {Actions, ofType} from "@ngrx/effects";
 import {Category} from "../../../models/Category";
@@ -34,7 +28,10 @@ export class BlogSettingsModalComponent implements OnInit, OnDestroy {
   newBlogSection = 'New Blog';
   categorySection = 'Categories';
 
-  @Output() onCloseEmitter: EventEmitter<void> = new EventEmitter<void>();
+  @Output() onCloseEmitter = new EventEmitter<void>();
+  @Output() onLogoutEmitter = new EventEmitter<void>();
+  @Output() onDeleteBlogEmitter = new EventEmitter<void>();
+  @Output() onDeleteCategoryEmitter = new EventEmitter<Category>();
 
   activeBlog$: Observable<BlogView>;
   isBlogCreateLoading: Observable<boolean>;
@@ -108,6 +105,13 @@ export class BlogSettingsModalComponent implements OnInit, OnDestroy {
         ofType(BlogActionTypes.DELETE_BLOG_SUCCESS),
         takeUntil(this.unsubscribe$)
     ).subscribe(() => this.onCloseEmitter.emit())
+
+    this.activeBlog$.pipe(
+      take(1)
+    ).subscribe(blog => {
+      this.changedBlogDisplayName = blog.displayName;
+      this.changedBlogDescription = blog.description
+    })
   }
 
   ngOnDestroy() {
@@ -129,40 +133,38 @@ export class BlogSettingsModalComponent implements OnInit, OnDestroy {
 
   onDeleteCategoryClicked(category: Category) {
     this.createCategorySuccess = false;
-    const deleteCategoryMessage = `Sure you want to delete a category ${category.name}?`
-    if (confirm(deleteCategoryMessage)) {
-      this.store.dispatch(deleteCategory({ id: category.id }))
+    this.onDeleteCategoryEmitter.emit(category);
+  }
+
+  onSave() {
+    console.log('on save')
+    console.log('desc' + this.changedBlogDescription)
+    console.log('name' + this.changedBlogDisplayName)
+
+    const data: UpdateBlogData = {
+      displayName: this.changedBlogDisplayName?.trim(),
+      description: this.changedBlogDescription?.trim()
     }
+
+    this.store.dispatch(updateBlog({updateBlogData: data}))
   }
 
   onCancel() {
     this.onCloseEmitter.emit();
   }
 
-  onSave() {
-    const data: UpdateBlogData = {
-      displayName: this.changedBlogDisplayName.trim(),
-      description: this.changedBlogDescription.trim()
-    }
-    this.store.dispatch(updateBlog({data}))
+  onLogout() {
+    this.onLogoutEmitter.emit();
   }
 
-  logout() {
-    const logoutMessage = 'Sure you want to leave?'
-    if (confirm(logoutMessage)) {
-      this.onCloseEmitter.emit();
-      this.store.dispatch(logout())
-    }
+  onDeleteBlog() {
+    this.onDeleteBlogEmitter.emit();
   }
 
   onNewBlogClicked() {
     if (!!this.newBlogInput) {
       this.store.dispatch(createBlog( { blogId: this.newBlogInput }))
     }
-  }
-
-  onDeleteBlogClicked() {
-    this.store.dispatch(deleteBlog())
   }
 
   onDisplayNameChanged(displayName: string) {

@@ -1,0 +1,21 @@
+.confirm-modal-container {
+
+  .confirm-modal-content {
+    padding: 1rem 2rem;
+    background: white;
+    height: fit-content;
+    border-radius: 1rem;
+    margin: 1rem;
+
+    .confirm-action {
+      font-size: 1rem;
+      font-weight: 750;
+      margin-bottom: 1rem;
+    }
+
+    .confirm-action-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+  }
+}

@@ -7,3 +7,10 @@
     <div class="post-content" aria-disabled="true" [innerHTML]="post.content"></div>
   </div>
 </div>
+<app-confirm-modal
+  *ngIf="showConfirmPostDeletionModal"
+  [loading]="isPostDeleteLoading$ | async"
+  (confirmEmitter)="onConfirmDialogEvent($event)">
+  Delete publication?
+</app-confirm-modal>
+

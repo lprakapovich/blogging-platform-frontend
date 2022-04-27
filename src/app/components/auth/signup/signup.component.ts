@@ -29,6 +29,8 @@ export class SignupComponent implements OnInit, OnDestroy {
   validatedUsername: string;
   registerForm: FormGroup;
 
+  passwordsMatch: boolean;
+
   constructor(
     private store: Store,
     private actions$: Actions,
@@ -40,17 +42,29 @@ export class SignupComponent implements OnInit, OnDestroy {
     this.validatedUsername = '';
 
     this.registerForm = this.formBuilder.group({
-      blogUrl: ['', [
-        Validators.required,
-        Validators.minLength(2)],
+      blogUrl: ['',
+        [
+          Validators.required,
+          Validators.minLength(4)
+        ],
       ],
-      username: ['', [
-        Validators.required,
-        Validators.minLength(2)]
+      username: ['',
+        [
+          Validators.required,
+          Validators.minLength(4)
+        ]
       ],
-      password: ['', [
-        Validators.required,
-        Validators.minLength(2)]
+      password: ['',
+        [
+          Validators.required,
+          Validators.minLength(4)
+        ]
+      ],
+      confirmPassword: ['',
+        [
+          Validators.required,
+          Validators.minLength(4)
+        ]
       ]
     });
 
@@ -58,6 +72,9 @@ export class SignupComponent implements OnInit, OnDestroy {
     this.isRegisterError$ = this.store.select(selectRegisterIsError);
     this.isUsernameValidationLoading$ = this.store.select(selectUsernameValidationIsLoading);
     this.registrationValidationMessage$ = this.store.select(selectValidationMessage);
+
+    this.passwordsMatch = this.registerForm.get('password')?.value ===
+      this.registerForm.get('confirmPassword')?.value;
 
     this.actions$.pipe(
       ofType(AuthActionTypes.VALIDATE_USERNAME_SUCCESS),

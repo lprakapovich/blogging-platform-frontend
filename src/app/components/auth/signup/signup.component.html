@@ -27,6 +27,15 @@
                  [ngClass]="{ 'is-invalid': form['password'].errors }"/>
         </div>
         <div class="form-group">
+          <input type="password"
+                 id="confirmPassword"
+                 placeholder="Confirm password"
+                 formControlName="confirmPassword"
+                 autocomplete="off"
+                 class="form-control"
+                 [ngClass]="{ 'is-invalid': form['confirmPassword'].errors }"/>
+        </div>
+        <div class="form-group">
           <input type="text"
                  id="blogUrl"
                  placeholder="@url"
@@ -51,6 +60,11 @@
             Password must be at least 5 chars long
           </app-error-message>
         </div>
+        <div *ngIf="form['confirmPassword'].touched">
+          <app-error-message *ngIf="form['confirmPassword'].value !== form['password'].value">
+            Passwords do not match
+          </app-error-message>
+        </div>
         <div *ngIf="form['blogUrl'].invalid && (form['blogUrl'].touched)">
           <app-error-message *ngIf="form['blogUrl'].errors?.['required']">
             URL is required
@@ -69,8 +83,8 @@
         <button
           class="registration-button"
           (click)="onSignUp()"
-          [disabled]="registerForm.invalid || (isUsernameValidationLoading$ | async) || (registrationValidationMessage$ | async)"
-          [ngClass]="[registerForm.invalid || (isUsernameValidationLoading$ | async) || (registrationValidationMessage$ | async) ? 'disabled' : 'enabled',
+          [disabled]="registerForm.invalid || (isUsernameValidationLoading$ | async) || (registrationValidationMessage$ | async) || !passwordsMatch"
+          [ngClass]="[registerForm.invalid || (isUsernameValidationLoading$ | async) || (registrationValidationMessage$ | async) || !passwordsMatch? 'disabled' : 'enabled',
           (isLoading$ | async) ? 'loading-button' : '']">
           <label id="registration-button-label">Create a blog</label>
         </button>

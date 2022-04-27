@@ -64,6 +64,7 @@ export class PostEffects {
   deletePost$ = createEffect(() =>
     this.actions$.pipe(
       ofType(PostActionTypes.DELETE_POST),
+      debounceTime(1000),
       withLatestFrom(
         this.store.select(selectPrincipalActiveBlogId),
         this.store.select(selectSelectedPost)

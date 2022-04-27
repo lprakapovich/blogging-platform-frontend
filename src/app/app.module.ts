@@ -23,7 +23,7 @@ import {TextButtonComponent} from './components/ui-elements/text-button/text-but
 import {DefaultInputComponent} from './components/ui-elements/default-input/default-input.component';
 import {LoginComponent} from './components/auth/login/login.component';
 import {SignupComponent} from './components/auth/signup/signup.component';
-import {AppMenuModalComponent} from './components/ui-elements/app-menu-modal/app-menu-modal.component';
+import {AppMenuModalComponent} from './components/navigation/app-menu-modal/app-menu-modal.component';
 import {FeedPageComponent} from './components/blog/feed-page/feed-page.component';
 import {SearchPageComponent} from './components/blog/search-page/search-page.component';
 import {AvatarComponent} from './components/ui-elements/avatar/avatar.component';
@@ -54,6 +54,7 @@ import { BlogPostViewerHeaderComponent } from './components/blog/blog-post-viewe
 import {BlogDisplayNamePipePipe} from "./pipes/BlogNamePipe";
 import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import {pageReducer} from "./store/reducers/page.reducers";
+import { ConfirmModalComponent } from './components/ui-elements/confirm-modal/confirm-modal.component';
 
 @NgModule({
   declarations: [
@@ -90,6 +91,7 @@ import {pageReducer} from "./store/reducers/page.reducers";
     BlogDisplayNamePipePipe,
     BlogPostViewerComponent,
     BlogPostViewerHeaderComponent,
+    ConfirmModalComponent,
   ],
   imports: [
     BrowserModule,

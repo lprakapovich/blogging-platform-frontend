@@ -109,6 +109,7 @@ export const blogReducer = createReducer(
     },
 
     selectedBlog:
+      Object.keys(state.selectedBlog).length > 0 &&
       state.selectedBlog.id.id === action.updatedBlog.id.id &&
       state.selectedBlog.id.username === action.updatedBlog.id.username ?
         {...state.selectedBlog,

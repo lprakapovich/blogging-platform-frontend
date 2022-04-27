@@ -3,7 +3,11 @@ import {NavbarTemplateService} from "../../../services/ui/navbar-template.servic
 import {Observable, Subject, takeUntil} from "rxjs";
 import {BlogPost} from "../../../models/BlogPost";
 import {Store} from "@ngrx/store";
-import {selectIsAuthenticatedUsersPost, selectSelectedPost} from "../../../store/selectors/post.selectors";
+import {
+  selectIsPostDeleteLoading,
+  selectIsPrincipalsPost,
+  selectSelectedPost
+} from "../../../store/selectors/post.selectors";
 import {BlogId} from "../../../models/Blog";
 import {Router} from "@angular/router";
 import {EditorService} from "../../../services/ui/editor.service";
@@ -21,8 +25,10 @@ export class BlogPostComponent implements OnInit {
   unsubscribe$ = new Subject<void>();
 
   post$: Observable<BlogPost | null>;
-  isAuthenticatedUsersPost$: Observable<boolean>;
-  isLoading$: Observable<boolean>;
+  isPrincipalsPost$: Observable<boolean>;
+
+  isPostDeleteLoading$: Observable<boolean>;
+  showConfirmPostDeletionModal: boolean;
 
   constructor(private store: Store,
               private actions$: Actions,
@@ -34,9 +40,10 @@ export class BlogPostComponent implements OnInit {
   ngOnInit(): void {
     this.navbarService.setPostPreviewTemplate();
     this.post$ = this.store.select(selectSelectedPost);
-    this.isAuthenticatedUsersPost$ = this.store.select(selectIsAuthenticatedUsersPost);
+    this.isPrincipalsPost$ = this.store.select(selectIsPrincipalsPost);
+    this.isPostDeleteLoading$ = this.store.select(selectIsPostDeleteLoading);
 
-    this.isAuthenticatedUsersPost$
+    this.isPrincipalsPost$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((isAuthenticatedUserPost) => {
         this.navbarService.adjustEditButton(isAuthenticatedUserPost)
@@ -47,7 +54,7 @@ export class BlogPostComponent implements OnInit {
     .pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe(() => {
-      this.store.dispatch(deletePost())
+      this.showConfirmPostDeletionModal = true;
     })
 
     this.editorService.getEditedPostChanged()
@@ -64,9 +71,26 @@ export class BlogPostComponent implements OnInit {
     ).subscribe(() => {
       this.router.navigate(['/editor'])
     })
+
+    this.actions$.pipe(
+      ofType(
+        PostActionTypes.DELETE_POST_SUCCESS,
+        PostActionTypes.DELETE_POST_FAILURE
+      ), takeUntil(this.unsubscribe$)
+    ).subscribe(() => {
+      this.showConfirmPostDeletionModal = false;
+    })
   }
 
   onBlogSelected(blogId: BlogId) {
     this.store.dispatch(getBlogDetailsAndRedirect({ blogId }))
+  }
+
+  onConfirmDialogEvent(confirmed: boolean) {
+    if (confirmed) {
+      this.store.dispatch(deletePost())
+    } else {
+      this.showConfirmPostDeletionModal = false;
+    }
   }
 }

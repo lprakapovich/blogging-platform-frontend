@@ -40,6 +40,7 @@ export class EditorPageComponent implements OnInit, OnDestroy {
   isContentMissing: boolean;
   isTitleMissing: boolean;
   showPostSettingsModal: boolean;
+  showConfirmDialogModal: boolean;
 
   constructor(
     private store: Store,
@@ -48,6 +49,7 @@ export class EditorPageComponent implements OnInit, OnDestroy {
     private editorService: EditorService
   ) {
     this.showPostSettingsModal = false;
+    this.showConfirmDialogModal = false;
   }
 
   ngOnInit() {

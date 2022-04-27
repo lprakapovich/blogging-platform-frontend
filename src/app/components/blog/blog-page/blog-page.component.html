@@ -42,8 +42,6 @@
   </div>
   <div id="blog-posts" *ngIf="selectedBlogPublications$ | async as userBlogPublications">
     <app-search-bar (searchInputEvent)="onSearchInputEvent($event)"></app-search-bar>
-    <div>Am I blog owner? {{ isOwner$ | async }}</div>
-    <div> Am I blog subscriber? {{isSubscriber$ | async }}</div>
     <div id="blog-posts-preview-list" *ngIf="!!userBlogPublications.length; else noBlogPublications">
      <app-blog-post-preview-list [blogPosts]="userBlogPublications"></app-blog-post-preview-list>
     </div>

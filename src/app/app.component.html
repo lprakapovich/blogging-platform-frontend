@@ -8,7 +8,7 @@
   <div>
     <router-outlet></router-outlet>
     <app-menu-modal #appMenuModal
-                    [hidden]="!showAppMenuModal"
+                    *ngIf="showAppMenuModal"
                     [userBlogIds]="(userBlogIds$ | async)"
                     [activeBlogId]="(activeBlogId$ | async)"
                     (settingsEmitter)="onSettingsSelectedEvent()"
@@ -16,7 +16,25 @@
     </app-menu-modal>
     <app-blog-settings-modal #appBlogSettingsModal
                              (onCloseEmitter)="onSettingsModalClosed()"
-                             [hidden]="!showAppBlogSettingsModal">
+                             (onLogoutEmitter)="onLogout()"
+                             (onDeleteBlogEmitter)="onDeleteBlog()"
+                             (onDeleteCategoryEmitter)="onDeleteCategory($event)"
+                             *ngIf="showAppBlogSettingsModal">
     </app-blog-settings-modal>
+    <app-confirm-modal
+      *ngIf="showConfirmLogoutModal"
+      (confirmEmitter)="onLogoutConfirmed($event)">
+      Sure you want to logout?
+    </app-confirm-modal>
+    <app-confirm-modal
+      *ngIf="showConfirmBlogDeletionModal"
+      (confirmEmitter)="onDeleteBlogConfirmed($event)">
+      Delete this blog?
+    </app-confirm-modal>
+    <app-confirm-modal
+      *ngIf="showConfirmCategoryDeletionModal"
+      (confirmEmitter)="onDeleteCategoryConfirmed($event)">
+      Delete selected category?
+    </app-confirm-modal>
   </div>
 </div>

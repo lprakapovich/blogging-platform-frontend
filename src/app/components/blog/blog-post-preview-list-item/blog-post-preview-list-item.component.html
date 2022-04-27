@@ -1,6 +1,8 @@
 <div class="blog-post-preview-container">
-  <div class="title"> {{ blogPost.title}} </div>
-  <div> </div>
+  <div class="title-container">
+    <div class="title"> {{ blogPost.title }} </div>
+    <app-warning-message *ngIf="blogPost.status === draft"> Draft </app-warning-message>
+  </div>
   <span class="content"
         id="content"
         contenteditable="false"

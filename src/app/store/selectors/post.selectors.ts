@@ -39,7 +39,7 @@ export const selectSelectedPost = createSelector(
   state => state.selectedPost
 )
 
-export const selectIsAuthenticatedUsersPost = createSelector(
+export const selectIsPrincipalsPost = createSelector(
   selectPrincipalActiveBlogId,
   selectSelectedPost,
   (authenticatedBlogId, selectedPost) => !selectedPost ? false :
