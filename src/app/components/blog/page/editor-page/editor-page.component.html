@@ -3,7 +3,7 @@
     <app-error-message *ngIf="isTitleMissing"> Title is missing</app-error-message>
     <app-error-message *ngIf="isContentMissing"> Content is missing</app-error-message>
   </div>
-  <app-editor #editorComponent (inputEventEmitter)="hideErrorMessages()"></app-editor>
+  <app-editor id="editor-component" #editorComponent (inputEventEmitter)="hideErrorMessages()"></app-editor>
 </div>
 <app-blog-post-settings-modal
   *ngIf="showPostSettingsModal"

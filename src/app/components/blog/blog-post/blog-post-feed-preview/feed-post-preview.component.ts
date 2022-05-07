@@ -1,12 +1,12 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {NavbarTemplateService} from "../../../services/ui/navbar-template.service";
+import {NavbarTemplateService} from "../../../../services/ui/navbar-template.service";
 import {Router} from "@angular/router";
 import {Observable} from "rxjs";
-import {BlogPost} from "../../../models/BlogPost";
+import {BlogPost} from "../../../../models/BlogPost";
 import {Store} from "@ngrx/store";
-import {selectSelectedPost} from "../../../store/selectors/post.selectors";
-import {BlogId} from "../../../models/Blog";
-import {getBlogDetailsAndRedirect} from "../../../store/actions/blog.actions";
+import {selectSelectedPost} from "../../../../store/selectors/post.selectors";
+import {BlogId} from "../../../../models/Blog";
+import {getBlogDetailsAndRedirect} from "../../../../store/actions/blog.actions";
 
 @Component({
   selector: 'app-feed-post-preview',

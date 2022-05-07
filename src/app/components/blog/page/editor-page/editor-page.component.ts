@@ -1,22 +1,22 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {NavbarTemplateService} from "../../../services/ui/navbar-template.service";
-import {EditorService} from "../../../services/ui/editor.service";
+import {NavbarTemplateService} from "../../../../services/ui/navbar-template.service";
+import {EditorService} from "../../../../services/ui/editor.service";
 import {Observable, Subject, take, takeUntil, withLatestFrom} from "rxjs";
-import {EditorComponent} from "../editor/editor.component";
-import {Status} from "../../../models/Status";
-import {createPost, resetEditedPost, updatePost} from "../../../store/actions/post.actions";
+import {EditorComponent} from "../../editor/editor.component";
+import {Status} from "../../../../models/Status";
+import {createPost, resetEditedPost, updatePost} from "../../../../store/actions/post.actions";
 import {Store} from "@ngrx/store";
-import {Category} from "../../../models/Category";
-import {selectActiveBlogCategories} from "../../../store/selectors/blog.selectors";
-import {BlogPostSettingsModalComponent} from "../blog-post-settings-modal/blog-post-settings-modal.component";
+import {Category} from "../../../../models/Category";
+import {selectActiveBlogCategories} from "../../../../store/selectors/blog.selectors";
+import {BlogPostSettingsModalComponent} from "../../blog-post/blog-post-settings-modal/blog-post-settings-modal.component";
 import {
   selectEditedPost,
   selectIsEditableMode,
   selectIsPostCreateLoading,
   selectIsPostUpdateLoading
-} from "../../../store/selectors/post.selectors";
+} from "../../../../store/selectors/post.selectors";
 import {Actions} from "@ngrx/effects";
-import {BlogPost} from "../../../models/BlogPost";
+import {BlogPost} from "../../../../models/BlogPost";
 
 @Component({
   selector: 'app-editor-page',

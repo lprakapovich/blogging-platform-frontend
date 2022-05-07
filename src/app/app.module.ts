@@ -5,31 +5,31 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {NavbarComponent} from './components/navigation/navbar/navbar.component';
-import {BlogPageComponent} from './components/blog/blog-page/blog-page.component';
+import {BlogPageComponent} from './components/blog/page/blog-page/blog-page.component';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
 import {DefaultButtonComponent} from './components/ui-elements/default-button/default-button.component';
 import {SearchBarComponent} from './components/ui-elements/search-bar/search-bar.component';
-import {BlogPostPreviewListItemComponent} from './components/blog/blog-post-preview-list-item/blog-post-preview-list-item.component';
+import {BlogPostPreviewListItemComponent} from './components/blog/blog-post/blog-post-preview-list-item/blog-post-preview-list-item.component';
 import {EditorComponent} from './components/blog/editor/editor.component';
-import {EditorPageComponent} from './components/blog/editor-page/editor-page.component';
+import {EditorPageComponent} from './components/blog/page/editor-page/editor-page.component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {SvgButtonComponent} from './components/ui-elements/svg-button/svg-button.component';
-import {AuthorDataComponent} from './components/blog/author-data/author-data.component';
-import {BlogStatisticsDataComponent} from './components/blog/blog-statistics-data/blog-statistics-data.component';
-import {BlogPostPreviewListComponent} from './components/blog/blog-post-preview-list/blog-post-preview-list.component';
+import {AuthorDataComponent} from './components/blog/blog/author-data/author-data.component';
+import {BlogStatisticsDataComponent} from './components/blog/blog/blog-statistics-data/blog-statistics-data.component';
+import {BlogPostPreviewListComponent} from './components/blog/blog-post/blog-post-preview-list/blog-post-preview-list.component';
 import {DefaultListComponent} from './components/ui-elements/default-list/default-list.component';
-import {BlogSettingsModalComponent} from './components/blog/blog-settings-modal/blog-settings-modal.component';
+import {BlogSettingsModalComponent} from './components/blog/blog/blog-settings-modal/blog-settings-modal.component';
 import {TextButtonComponent} from './components/ui-elements/text-button/text-button.component';
 import {DefaultInputComponent} from './components/ui-elements/default-input/default-input.component';
 import {LoginComponent} from './components/auth/login/login.component';
 import {SignupComponent} from './components/auth/signup/signup.component';
 import {AppMenuModalComponent} from './components/navigation/app-menu-modal/app-menu-modal.component';
-import {FeedPageComponent} from './components/blog/feed-page/feed-page.component';
-import {SearchPageComponent} from './components/blog/search-page/search-page.component';
+import {FeedPageComponent} from './components/blog/page/feed-page/feed-page.component';
+import {SearchPageComponent} from './components/blog/page/search-page/search-page.component';
 import {AvatarComponent} from './components/ui-elements/avatar/avatar.component';
 import {IconComponent} from './components/ui-elements/icon/icon.component';
-import {FeedPostPreviewComponent} from './components/blog/feed-post-preview/feed-post-preview.component';
-import {BlogPostComponent} from "./components/blog/blog-post/blog-post.component";
+import {FeedPostPreviewComponent} from './components/blog/blog-post/blog-post-feed-preview/feed-post-preview.component';
+import {BlogPostPageComponent} from "./components/blog/page/blog-post-page/blog-post-page.component";
 import {StoreModule} from '@ngrx/store';
 import {AuthEffects} from "./store/effects/auth.effects";
 import {EffectsModule} from "@ngrx/effects";
@@ -47,10 +47,9 @@ import {SubscriptionEffects} from "./store/effects/subscription.effects";
 import { ErrorMessageComponent } from './components/ui-elements/error-message/error-message.component';
 import { SuccessMessageComponent } from './components/ui-elements/success-message/success-message.component';
 import { WarningMessageComponent } from './components/ui-elements/warning-message/warning-message.component';
-import { BlogPostSettingsModalComponent } from './components/blog/blog-post-settings-modal/blog-post-settings-modal.component';
+import { BlogPostSettingsModalComponent } from './components/blog/blog-post/blog-post-settings-modal/blog-post-settings-modal.component';
 import {PostContentLengthPipe} from "./pipes/PostContentPipe";
-import { BlogPostViewerComponent } from './components/blog/blog-post-viewer/blog-post-viewer.component';
-import { BlogPostViewerHeaderComponent } from './components/blog/blog-post-viewer-header/blog-post-viewer-header.component';
+import { BlogPostHeaderComponent } from './components/blog/blog-post/blog-post-header/blog-post-header.component';
 import {BlogDisplayNamePipePipe} from "./pipes/BlogNamePipe";
 import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import {pageReducer} from "./store/reducers/page.reducers";
@@ -61,7 +60,7 @@ import { ConfirmModalComponent } from './components/ui-elements/confirm-modal/co
     AppComponent,
     NavbarComponent,
     BlogPageComponent,
-    BlogPostComponent,
+    BlogPostPageComponent,
     DefaultButtonComponent,
     SearchBarComponent,
     BlogPostPreviewListItemComponent,
@@ -89,8 +88,7 @@ import { ConfirmModalComponent } from './components/ui-elements/confirm-modal/co
     BlogPostSettingsModalComponent,
     PostContentLengthPipe,
     BlogDisplayNamePipePipe,
-    BlogPostViewerComponent,
-    BlogPostViewerHeaderComponent,
+    BlogPostHeaderComponent,
     ConfirmModalComponent,
   ],
   imports: [

@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {BlogPost} from "../../../models/BlogPost";
-import {Status} from "../../../models/Status";
+import {BlogPost} from "../../../../models/BlogPost";
+import {Status} from "../../../../models/Status";
 
 @Component({
   selector: 'app-blog-post-preview-list-item',

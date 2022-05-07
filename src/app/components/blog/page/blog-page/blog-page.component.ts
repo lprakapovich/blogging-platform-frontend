@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-import {NavbarTemplateService} from "../../../services/ui/navbar-template.service";
+import {NavbarTemplateService} from "../../../../services/ui/navbar-template.service";
 import {combineLatest, Observable, Subject, take, takeUntil} from "rxjs";
 import {Store} from "@ngrx/store";
 import {
@@ -8,17 +8,17 @@ import {
   selectIsPrincipalBlogOwner,
   selectIsSubscriber,
   selectSelectedBlog
-} from "../../../store/selectors/blog.selectors";
-import {BlogView} from "../../../models/BlogView";
-import {BlogPost} from "../../../models/BlogPost";
-import {selectSelectedBlogPosts} from "../../../store/selectors/post.selectors";
-import {getPosts} from "../../../store/actions/post.actions";
-import {BlogId} from "../../../models/Blog";
-import {Category} from "../../../models/Category";
-import {createSubscription, deleteSubscription} from "../../../store/actions/subscription.actions";
-import {Status} from "../../../models/Status";
-import {PageService} from "../../../services/ui/page.service";
-import {resetPage} from "../../../store/actions/page.actions";
+} from "../../../../store/selectors/blog.selectors";
+import {BlogView} from "../../../../models/BlogView";
+import {BlogPost} from "../../../../models/BlogPost";
+import {selectSelectedBlogPosts} from "../../../../store/selectors/post.selectors";
+import {getPosts} from "../../../../store/actions/post.actions";
+import {BlogId} from "../../../../models/Blog";
+import {Category} from "../../../../models/Category";
+import {createSubscription, deleteSubscription} from "../../../../store/actions/subscription.actions";
+import {Status} from "../../../../models/Status";
+import {PageService} from "../../../../services/ui/page.service";
+import {resetPage} from "../../../../store/actions/page.actions";
 
 @Component({
   selector: 'app-blog-page',

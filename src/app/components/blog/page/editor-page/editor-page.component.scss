@@ -1,7 +1,11 @@
 #editor-page-container {
   height: 100%;
   background-color: white;
-  padding: 0 20rem;
+  padding: 0 10rem;
+
+  #editor-component {
+    border: 1px solid black;
+  }
 
   .error-message-container {
     position: absolute;

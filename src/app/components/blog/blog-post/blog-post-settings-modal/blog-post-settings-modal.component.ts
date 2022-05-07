@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Category} from "../../../models/Category";
-import {Status} from "../../../models/Status";
-import {BlogPost} from "../../../models/BlogPost";
+import {Category} from "../../../../models/Category";
+import {Status} from "../../../../models/Status";
+import {BlogPost} from "../../../../models/BlogPost";
 
 @Component({
   selector: 'app-blog-post-settings-modal',

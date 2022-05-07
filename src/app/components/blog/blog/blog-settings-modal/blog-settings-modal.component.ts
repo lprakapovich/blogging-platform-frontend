@@ -1,8 +1,8 @@
 import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {Store} from "@ngrx/store";
-import {BlogView} from "../../../models/BlogView";
-import {UpdateBlogData} from "../../../models/data/blog/UpdateBlogData";
-import {BlogActionTypes, createBlog, updateBlog} from "../../../store/actions/blog.actions";
+import {BlogView} from "../../../../models/BlogView";
+import {UpdateBlogData} from "../../../../models/data/blog/UpdateBlogData";
+import {BlogActionTypes, createBlog, updateBlog} from "../../../../store/actions/blog.actions";
 import {Observable, Subject, take, takeUntil} from "rxjs";
 import {
   selectActiveBlogCategories,
@@ -11,11 +11,11 @@ import {
   selectIsBlogDeleteLoading,
   selectIsBlogUpdateLoading,
   selectPrincipalActiveBlog,
-} from "../../../store/selectors/blog.selectors";
-import {CategoryActionTypes, createCategory, resetCategoryError} from "../../../store/actions/category.actions";
-import {selectCategoryError, selectIsCategoryLoading} from "../../../store/selectors/category.selectors";
+} from "../../../../store/selectors/blog.selectors";
+import {CategoryActionTypes, createCategory, resetCategoryError} from "../../../../store/actions/category.actions";
+import {selectCategoryError, selectIsCategoryLoading} from "../../../../store/selectors/category.selectors";
 import {Actions, ofType} from "@ngrx/effects";
-import {Category} from "../../../models/Category";
+import {Category} from "../../../../models/Category";
 
 @Component({
   selector: 'app-blog-settings-modal',

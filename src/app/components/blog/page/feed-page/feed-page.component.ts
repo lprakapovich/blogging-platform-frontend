@@ -1,19 +1,19 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {NavbarTemplateService} from "../../../services/ui/navbar-template.service";
+import {NavbarTemplateService} from "../../../../services/ui/navbar-template.service";
 import {Router} from "@angular/router";
-import {BlogPost} from "../../../models/BlogPost";
+import {BlogPost} from "../../../../models/BlogPost";
 import {Observable, Subject, takeUntil} from "rxjs";
 import {Store} from "@ngrx/store";
-import {selectIsPostGetLoading, selectPostsFromSubscriptions} from "../../../store/selectors/post.selectors";
-import {getPostsFromSubscriptions, resetSelectedPost, setSelectedPost} from "../../../store/actions/post.actions";
-import {selectPrincipalActiveBlog} from "../../../store/selectors/blog.selectors";
-import {BlogActionTypes} from "../../../store/actions/blog.actions";
-import {ModalService} from "../../../services/ui/modal.service";
-import {BlogView} from "../../../models/BlogView";
-import {BlogId} from "../../../models/Blog";
+import {selectIsPostGetLoading, selectPostsFromSubscriptions} from "../../../../store/selectors/post.selectors";
+import {getPostsFromSubscriptions, resetSelectedPost, setSelectedPost} from "../../../../store/actions/post.actions";
+import {selectPrincipalActiveBlog} from "../../../../store/selectors/blog.selectors";
+import {BlogActionTypes} from "../../../../store/actions/blog.actions";
+import {ModalService} from "../../../../services/ui/modal.service";
+import {BlogView} from "../../../../models/BlogView";
+import {BlogId} from "../../../../models/Blog";
 import {Actions, ofType} from "@ngrx/effects";
-import {resetPage} from "../../../store/actions/page.actions";
-import {PageService} from "../../../services/ui/page.service";
+import {resetPage} from "../../../../store/actions/page.actions";
+import {PageService} from "../../../../services/ui/page.service";
 
 @Component({
   selector: 'app-feed-page',

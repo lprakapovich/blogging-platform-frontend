@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {BlogPost} from "../../../models/BlogPost";
+import {BlogPost} from "../../../../models/BlogPost";
 import {Router} from "@angular/router";
 import {Store} from "@ngrx/store";
-import {setSelectedPost} from "../../../store/actions/post.actions";
+import {setSelectedPost} from "../../../../store/actions/post.actions";
 
 @Component({
   selector: 'app-blog-post-preview-list',

@@ -59,13 +59,24 @@ export const blogReducer = createReducer(
   on(BlogActions.createBlogSuccess, (state, action) => ({
     ...state,
     principalActiveBlog: Object.keys(state.principalActiveBlog).length === 0  ? {
-      id: { id: action.blogId, username: action.principal },
-      subscribers: [],
-      subscriptions: [],
-      categories: [],
-      description: '',
-      displayName: ''
+      id: {
+        id: action.blogId, username: action.principal },
+        subscribers: [],
+        subscriptions: [],
+        categories: [],
+        description: '',
+        displayName: ''
     } : state.principalActiveBlog,
+
+    selectedBlog: Object.keys(state.selectedBlog).length === 0  ? {
+      id: {
+        id: action.blogId, username: action.principal },
+        subscribers: [],
+        subscriptions: [],
+        categories: [],
+        description: '',
+        displayName: ''
+    } : state.selectedBlog,
 
     principalManagedBlogIds: [...state.principalManagedBlogIds, { id: action.blogId, username: action.principal }],
     loading: {

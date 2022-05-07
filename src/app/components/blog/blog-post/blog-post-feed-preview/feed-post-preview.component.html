@@ -1,9 +1,9 @@
 <div class="feed-post-preview-container">
   <div class="feed-post-preview-slide">
     <div *ngIf="selectedPost$ | async; let selectedPost; ">
-      <app-blog-post-viewer-header class="feed-post-preview-header"
-                                   [blogPost]="selectedPost"
-                                   (blogNameClickEventEmitter)="onBlogNameClickedEvent($event)">
+      <app-blog-post-header class="feed-post-preview-header"
+                            [blogPost]="selectedPost"
+                            (blogNameClickEventEmitter)="onBlogNameClickedEvent($event)">
         <app-text-button (click)="onPostClose()"
                          class="feed-post-preview-header-button close">
           Close
@@ -12,7 +12,7 @@
                         (click)="onPostOpen()"
                         [iconTemplate]="'open-post'">
         </app-svg-button>
-      </app-blog-post-viewer-header>
+      </app-blog-post-header>
       <div class="feed-post-preview-article">
         <div class="feed-post-preview-title"> {{selectedPost.title}}</div>
         <div class="feed-post-preview-content" [innerHTML]="selectedPost.content">

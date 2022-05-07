@@ -1,26 +1,26 @@
 import {Component, OnInit} from '@angular/core';
-import {NavbarTemplateService} from "../../../services/ui/navbar-template.service";
+import {NavbarTemplateService} from "../../../../services/ui/navbar-template.service";
 import {Observable, Subject, takeUntil} from "rxjs";
-import {BlogPost} from "../../../models/BlogPost";
+import {BlogPost} from "../../../../models/BlogPost";
 import {Store} from "@ngrx/store";
 import {
   selectIsPostDeleteLoading,
   selectIsPrincipalsPost,
   selectSelectedPost
-} from "../../../store/selectors/post.selectors";
-import {BlogId} from "../../../models/Blog";
+} from "../../../../store/selectors/post.selectors";
+import {BlogId} from "../../../../models/Blog";
 import {Router} from "@angular/router";
-import {EditorService} from "../../../services/ui/editor.service";
-import {deletePost, PostActionTypes, setEditedPost} from "../../../store/actions/post.actions";
+import {EditorService} from "../../../../services/ui/editor.service";
+import {deletePost, PostActionTypes, setEditedPost} from "../../../../store/actions/post.actions";
 import {Actions, ofType} from "@ngrx/effects";
-import {getBlogDetailsAndRedirect} from "../../../store/actions/blog.actions";
+import {getBlogDetailsAndRedirect} from "../../../../store/actions/blog.actions";
 
 @Component({
   selector: 'app-blog-post',
-  templateUrl: './blog-post.component.html',
-  styleUrls: ['./blog-post.component.scss']
+  templateUrl: './blog-post-page.component.html',
+  styleUrls: ['./blog-post-page.component.scss']
 })
-export class BlogPostComponent implements OnInit {
+export class BlogPostPageComponent implements OnInit {
 
   unsubscribe$ = new Subject<void>();
 

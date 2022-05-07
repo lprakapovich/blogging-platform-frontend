@@ -6,7 +6,7 @@ import {Router} from "@angular/router";
 import {NavbarTemplateService} from "./services/ui/navbar-template.service";
 import {ModalService} from "./services/ui/modal.service";
 import {AppMenuModalComponent} from "./components/navigation/app-menu-modal/app-menu-modal.component";
-import {BlogSettingsModalComponent} from "./components/blog/blog-settings-modal/blog-settings-modal.component";
+import {BlogSettingsModalComponent} from "./components/blog/blog/blog-settings-modal/blog-settings-modal.component";
 import {deleteBlog, getBlogDetailsAndRedirect} from "./store/actions/blog.actions";
 import {selectPrincipalActiveBlogId, selectPrincipalManagedBlogIds} from "./store/selectors/blog.selectors";
 import {PageService} from "./services/ui/page.service";
