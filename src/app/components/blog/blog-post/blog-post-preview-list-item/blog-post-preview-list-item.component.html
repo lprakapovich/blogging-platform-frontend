@@ -10,6 +10,6 @@
         [innerHTML]="blogPost.content | postContentLength">
   </span>
   <div class="time light-grey">
-    <div> {{blogPost.createdDateTime | date:'MMM d yyyy, h:mm aa'}} </div>
+    <div> {{ (blogPost.updatedDateTime ? blogPost.updatedDateTime : blogPost.createdDateTime) | date:'MMM d yyyy, h:mm aa'}} </div>
   </div>
 </div>
