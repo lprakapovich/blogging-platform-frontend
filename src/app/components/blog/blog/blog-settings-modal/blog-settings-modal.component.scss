@@ -41,9 +41,18 @@
       flex: 4;
       padding: 1rem;
 
+      display: flex;
+      flex-direction: column;
+
+      .settings-section-buttons {
+        display: flex;
+        justify-content: end;
+        margin-top: auto;
+        padding-right: 2rem;
+      }
+
       .general-section-container {
         width: 100%;
-
         .general-item {
           margin-bottom: 1rem;
           width: 100%;

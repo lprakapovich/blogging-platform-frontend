@@ -23,55 +23,56 @@
       </app-default-list>
     </div>
     <div class="settings-section">
-      <ng-container [ngSwitch]="[selectedSection]">
-        <div *ngSwitchCase="generalSection">
-          <div class="general-section-container">
-            <div class="general-item">
-              <div> Active blog unique domain </div>
+      <div>
+        <ng-container [ngSwitch]="[selectedSection]">
+          <div *ngSwitchCase="generalSection">
+            <div class="general-section-container">
+              <div class="general-item">
+                <div> Active blog unique domain </div>
                 <app-default-input [disabled]="true" [userInput]="blog.id.id"></app-default-input>
-            </div>
-            <div class="general-item">
-              <div> Display Name </div>
-              <app-default-input
-                [placeholder]="'Your name'"
-                [userInput]="blog.displayName"
-                (userInputEventEmitter)="onDisplayNameChanged($event);">
-              </app-default-input>
-            </div>
-            <div class="general-item">
-              <div> Description </div>
-              <app-default-input
-                [placeholder]="'Something about your blog'"
-                [userInput]="blog.description"
-                (userInputEventEmitter)="onDescriptionChanged($event)"
-              ></app-default-input>
-            </div>
-            <div class="general-item aligned">
-              <app-default-button
-                [ngClass]="['reverted',' medium', (isBlogDeleteLoading$ | async) ? 'loading-button' : '']"
-                [label]="'Delete blog'"
-                (click)="onDeleteBlog()">
-              </app-default-button>
-              <app-warning-message> Attention! This will delete all related posts and categories. </app-warning-message>
-            </div>
-            <div class="general-item general-action-buttons">
-              <app-default-button
-                (click)="onCancel()"
-                [ngClass]="'medium reverted'"
-                [label]="'Close'">
-              </app-default-button>
-              <app-default-button
-                id="save-button"
-                (click)="onSave()"
-                [ngClass]="['medium', (isBlogUpdateLoading$ | async) ? 'loading-button' : '']"
-                [label]="'Save'">
-              </app-default-button>
+              </div>
+              <div class="general-item">
+                <div> Display Name </div>
+                <app-default-input
+                  [placeholder]="'Your name'"
+                  [userInput]="blog.displayName"
+                  (userInputEventEmitter)="onDisplayNameChanged($event);">
+                </app-default-input>
+              </div>
+              <div class="general-item">
+                <div> Description </div>
+                <app-default-input
+                  [placeholder]="'Something about your blog'"
+                  [userInput]="blog.description"
+                  (userInputEventEmitter)="onDescriptionChanged($event)"
+                ></app-default-input>
+              </div>
+              <div class="general-item aligned">
+                <app-default-button
+                  [ngClass]="['reverted',' medium', (isBlogDeleteLoading$ | async) ? 'loading-button' : '']"
+                  [label]="'Delete blog'"
+                  (click)="onDeleteBlog()">
+                </app-default-button>
+                <app-warning-message> Attention! This will delete all related posts and categories. </app-warning-message>
+              </div>
+              <div class="general-item general-action-buttons">
+                <app-default-button
+                  (click)="onCancel()"
+                  [ngClass]="'medium reverted'"
+                  [label]="'Close'">
+                </app-default-button>
+                <app-default-button
+                  id="save-button"
+                  (click)="onSave()"
+                  [ngClass]="['medium', (isBlogUpdateLoading$ | async) ? 'loading-button' : '']"
+                  [label]="'Save'">
+                </app-default-button>
+              </div>
             </div>
           </div>
-        </div>
-        <div *ngSwitchCase="categorySection">
-          <div class="category-section-container">
-            <div class="new-category-container">
+          <div *ngSwitchCase="categorySection">
+            <div class="category-section-container">
+              <div class="new-category-container">
                 <app-default-input class="input"
                                    (userInputEventEmitter)="onNewCategoryInputChanged($event)"
                                    [userInput]="newCategoryInput"
@@ -84,48 +85,56 @@
                                     [label]="'Create'"
                                     [disabled]="!newCategoryInput">
                 </app-default-button>
-            </div>
-            <app-error-message *ngIf="!newCategoryInput && (categoryError$ | async) as categoryError"> {{ categoryError }} </app-error-message>
-            <app-success-message *ngIf="createCategorySuccess"> Great! Category was created. </app-success-message>
-            <div class="existing-category-container">
-              <div  *ngIf="(categories$ | async) as categories">
-                <ng-container *ngIf="categories.length > 0; else emptyCategoryList">
-                  <div class="list">
-                    <div class="list-item" *ngFor="let category of categories">
-                      <div>{{category.name}}</div>
-                      <app-svg-button [iconTemplate]="'delete'" (click)="onDeleteCategoryClicked(category)"></app-svg-button>
-                    </div>
-                  </div>
-                </ng-container>
               </div>
-              <ng-template #emptyCategoryList>
-                <div class="grey category-empty-list">
-                  Create a new category to make navigation through the blog easier.
+              <app-error-message *ngIf="!newCategoryInput && (categoryError$ | async) as categoryError"> {{ categoryError }} </app-error-message>
+              <app-success-message *ngIf="createCategorySuccess"> Great! Category was created. </app-success-message>
+              <div class="existing-category-container">
+                <div  *ngIf="(categories$ | async) as categories">
+                  <ng-container *ngIf="categories.length > 0; else emptyCategoryList">
+                    <div class="list">
+                      <div class="list-item" *ngFor="let category of categories">
+                        <div>{{category.name}}</div>
+                        <app-svg-button [iconTemplate]="'delete'" (click)="onDeleteCategoryClicked(category)"></app-svg-button>
+                      </div>
+                    </div>
+                  </ng-container>
                 </div>
-              </ng-template>
+                <ng-template #emptyCategoryList>
+                  <div class="grey category-empty-list">
+                    Create a new category to make navigation through the blog easier.
+                  </div>
+                </ng-template>
+              </div>
             </div>
           </div>
-        </div>
-        <div *ngSwitchCase="newBlogSection">
-          <div class="new-blog-section-container">
-            <div class="new-blog-container">
-              <app-default-input class="input"
-                                 (userInputEventEmitter)="onNewBlogInputChanged($event)"
-                                 [userInput]="newBlogInput"
-                                 [placeholder]="'New blog...'">
-              </app-default-input>
-              <app-default-button
-                [ngClass]="[(isBlogCreateLoading | async) ? 'loading-button' : '', !newBlogInput ? 'disabled' : '']"
-                class="create-button medium"
-                (click)="onNewBlogClicked()"
-                [label]="'Add'">
-              </app-default-button>
+          <div *ngSwitchCase="newBlogSection">
+            <div class="new-blog-section-container">
+              <div class="new-blog-container">
+                <app-default-input class="input"
+                                   (userInputEventEmitter)="onNewBlogInputChanged($event)"
+                                   [userInput]="newBlogInput"
+                                   [placeholder]="'New blog...'">
+                </app-default-input>
+                <app-default-button
+                  [ngClass]="[(isBlogCreateLoading | async) ? 'loading-button' : '', !newBlogInput ? 'disabled' : '']"
+                  class="create-button medium"
+                  (click)="onNewBlogClicked()"
+                  [label]="'Add'">
+                </app-default-button>
+              </div>
+              <app-error-message *ngIf="!newBlogInput && (blogError$ | async) as blogError"> Error! Make sure blog ID is unique. </app-error-message>
+              <app-success-message *ngIf="createBlogSuccess"> Great! New blog was created. Go to menu to access it. </app-success-message>
             </div>
-            <app-error-message *ngIf="!newBlogInput && (blogError$ | async) as blogError"> Error! Make sure blog ID is unique. </app-error-message>
-            <app-success-message *ngIf="createBlogSuccess"> Great! New blog was created. Go to menu to access it. </app-success-message>
           </div>
-        </div>
-      </ng-container>
+        </ng-container>
+      </div>
+      <div class="settings-section-buttons" *ngIf="selectedSection !== generalSection">
+        <app-default-button
+          (click)="onCancel()"
+          [ngClass]="'medium reverted'"
+          [label]="'Close'">
+        </app-default-button>
+      </div>
     </div>
   </div>
 </div>
